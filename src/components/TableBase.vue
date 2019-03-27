@@ -25,29 +25,72 @@
           y: 25,
           width: 150,
           height: 110,
-           strokeWidth: 0,
+          strokeWidth: 0,
           fill: 'white',
           shadowBlur: 0
         }"
     />
     <v-text
       :config="{
-            text: 'Nama Table',
+            text: this.tableName,
             x: 15,
             y: 8,
             fill:'white'
           }"
     />
-    <v-image
-      :config="{
-            image: image,
+    <template v-for="(coloumnKey,index) in Object.keys(coloumns)">
+      <div v-bind:key="coloumnKey">
+        <!-- Primary key image -->
+        <v-image
+          v-if="coloumns[coloumnKey].primaryKey===true"
+          :config="{
+            image: primaryKey,
             width: 13,
             height: 13,
             x: 5,
-            y: 5+30-2,
+            y: (5+30-2)+(index*20),
           }"
-    />
-    <v-text
+        />
+        <!-- end primary key image -->
+        <v-image
+          v-else-if="coloumns[coloumnKey].allowNull===false"
+          :config="{
+            image: imageNotNull,
+            width: 13,
+            height: 13,
+            x: 5,
+            y: (5+30-2)+(index*20),
+          }"
+        />
+        <v-image
+          v-else-if="coloumns[coloumnKey].allowNull===true"
+          :config="{
+            image: imageNull,
+            width: 13,
+            height: 13,
+            x: 5,
+            y: (5+30-2)+(index*20),
+          }"
+        />
+        <v-text
+          :config="{
+            text: coloumnKey,
+            x: 23,
+            y: (5+30)+(index*20),
+          }"
+        />
+        <v-text
+          :config="{
+            text: coloumns[coloumnKey].dataType,
+            x: 0,            
+            y: (5+30)+(index*20),
+            width: 145,
+            align: 'right'
+          }"
+        />
+      </div>
+    </template>
+    <!-- <v-text
       :config="{
             text: 'Kolom',
             x: 23,
@@ -111,19 +154,19 @@
             x: 7,
             y: 5+30+20+20+25+20,
           }"
-    />
+    />-->
   </v-group>
 </template>
 
 <script>
-import lion from "../assets/primary-key.png";
+import primaryKeyImage from "../assets/primary-key.png";
 import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
   props: ["potition"],
   methods: {
     dragmove(val) {
-      this.$emit("changedPotition", val);
+      this.$emit("changedPotition", val, this.tableName);
       // eslint-disable-next-line
       // console.log(JSON.stringify(val));
     },
@@ -138,11 +181,11 @@ export default {
     reaCalculatePointAsscotiation() {}
   },
   mounted() {
-    const image = new window.Image();
-    image.src = lion;
-    image.onload = () => {
+    const primaryKey = new window.Image();
+    primaryKey.src = primaryKeyImage;
+    primaryKey.onload = () => {
       // set image only when it is loaded
-      this.image = image;
+      this.primaryKey = primaryKey;
     };
     const imageNotNull = new window.Image();
     imageNotNull.src = notNull;
@@ -160,26 +203,56 @@ export default {
   },
   data() {
     return {
-      image: null,
+      primaryKey: null,
       imageNotNull: null,
       imageNull: null,
-      configKonva: {
-        width: 200,
-        height: 200
-      },
-      pointAssotiation: {
-        left: [],
-        right: [],
-        top: [],
-        bottom: []
-      },
-      configCircle: {
-        x: 100,
-        y: 100,
-        radius: 70,
-        fill: "red",
-        stroke: "black",
-        strokeWidth: 4
+      tableName: "rujak",
+      coloumns: {
+        id: {
+          comment: "",
+          dataType: "int(32)",
+          default: "",
+          primaryKey: true,
+          allowNull: false,
+          unique: false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          foreignKey: {
+            tableName: "tableName",
+            coloumnName: "key"
+          }
+        },
+        nama: {
+          comment: "",
+          dataType: "varcahar(20)",
+          default: "",
+          primaryKey: false,
+          allowNull: false,
+          unique: false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          foreignKey: {
+            tableName: "tableName",
+            coloumnName: "key"
+          }
+        },
+        umur: {
+          comment: "",
+          dataType: "varcahar(20)",
+          default: "",
+          primaryKey: false,
+          allowNull: true,
+          unique: false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          foreignKey: {
+            tableName: "tableName",
+            coloumnName: "key"
+          }
+        }
       }
     };
   }
