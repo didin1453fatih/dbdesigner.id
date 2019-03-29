@@ -170,8 +170,9 @@ export default {
       // eslint-disable-next-line
       // console.log(JSON.stringify(val));
     },
-    clickEvent: () => {
-      window.alert("makan");
+    clickEvent() {
+      // window.alert("makan");
+      this.$emit("editDataTable", "this.coloumns");
     },
     halo: () => {
       // eslint-disable-next-line

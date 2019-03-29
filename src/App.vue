@@ -5,6 +5,7 @@
         <v-stage :config="configKonva">
           <v-layer>
             <table-base
+              @editDataTable="editDataTable"
               @changedPotition="table1Change"
               :potition="{
           x:20,
@@ -12,6 +13,7 @@
         }"
             />
             <table-base
+              @editDataTable="editDataTable"
               @changedPotition="table2Change"
               :potition="{  
            x:250,
@@ -28,7 +30,8 @@
         <a-button type="primary" @click="showDrawer">Open</a-button>
       </a-col>
     </a-row>
-    <a-drawer
+    <config-table :visible="visible" @close="onClose"/>
+    <!-- <a-drawer
       title="Rujak"
       placement="right"
       :width="520"
@@ -36,13 +39,13 @@
       @close="onClose"
       :visible="visible"
     >
-      <div>
-        <!-- <a-table :columns="columns" :dataSource="data" bordered>
+    <div>-->
+    <!-- <a-table :columns="columns" :dataSource="data" bordered>
           <template slot="name" slot-scope="text">
             <span v-if="'John Brown'===text">hhhh</span>
           </template>
-        </a-table>-->
-        <table border="1" width="100%">
+    </a-table>-->
+    <!-- <table border="1" width="100%">
           <tr>
             <td>
               <span style="margin-left:10px">Column Name</span>
@@ -69,8 +72,8 @@
               </span>
             </td>
             <td>
-              <a-input placeholder="Data Type"/>
-              <!-- <a-select
+    <a-input placeholder="Data Type"/>-->
+    <!-- <a-select
                 showSearch
                 placeholder="Select a person"
                 optionFilterProp="children"
@@ -83,8 +86,8 @@
                 <a-select-option value="jack">Varchar</a-select-option>
                 <a-select-option value="lucy">Big Int</a-select-option>
                 <a-select-option value="tom">Tom</a-select-option>
-              </a-select>-->
-            </td>
+    </a-select>-->
+    <!-- </td>
             <td align="center">
               <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
             </td>
@@ -116,8 +119,8 @@
               </span>
             </td>
             <td>
-              <a-input placeholder="Data Type"/>
-              <!-- <a-select
+    <a-input placeholder="Data Type"/>-->
+    <!-- <a-select
                 showSearch
                 placeholder="Select a person"
                 optionFilterProp="children"
@@ -130,8 +133,8 @@
                 <a-select-option value="jack">Varchar</a-select-option>
                 <a-select-option value="lucy">Big Int</a-select-option>
                 <a-select-option value="tom">Tom</a-select-option>
-              </a-select>-->
-            </td>
+    </a-select>-->
+    <!-- </td>
             <td align="center">
               <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
             </td>
@@ -151,8 +154,8 @@
               <a-icon type="edit" />
             </td>
           </tr>
-        </table>
-        <!-- <a-row>
+    </table>-->
+    <!-- <a-row>
           <a-col :span="1">
             <img
               src="./assets/primary-key.png"
@@ -169,8 +172,8 @@
           <a-col :span="3">
             <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
             <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
-        </a-col>-->
-        <!-- <a-col :span="3">
+    </a-col>-->
+    <!-- <a-col :span="3">
             <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
           </a-col>
           <a-col :span="3">
@@ -178,11 +181,11 @@
           </a-col>
           <a-col :span="3">
             <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
-        </a-col>-->
-        <!-- </a-row> -->
+    </a-col>-->
+    <!-- </a-row> -->
 
-        <!--  -->
-        <!-- <a-select
+    <!--  -->
+    <!-- <a-select
           mode="multiple"
           placeholder="Inserted are removed"
           :value="selectedItems"
@@ -190,15 +193,16 @@
           style="width: 100%"
         >
           <a-select-option v-for="item in filteredOptions" :key="item" :value="item">{{item}}</a-select-option>
-        </a-select>-->
-      </div>
-    </a-drawer>
+    </a-select>-->
+    <!-- </div>
+    </a-drawer>-->
   </div>
 </template>
 
 <script>
 import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
+import ConfigTable from "./components/ConfigTableBase.vue";
 import lion from "./assets/perimary-key-yellow-dark.png";
 const OPTIONS = ["PK", "NN", "UQ", "UN", "AI"];
 const columns = [
@@ -248,9 +252,14 @@ const data = [
 export default {
   components: {
     TableBase,
-    ConnectorBase
+    ConnectorBase,
+    ConfigTable
   },
   methods: {
+    editDataTable() {
+      // window.alert("---" + val);
+      this.visible=true
+    },
     filterOption(input, option) {
       return (
         option.componentOptions.children[0].text
