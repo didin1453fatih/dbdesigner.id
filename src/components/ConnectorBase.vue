@@ -7,6 +7,13 @@
 <script>
 export default {
   props: ["points"],
+  watch:{
+    points(val){
+      this.lineConfig.points=val
+      // window.alert('halooo')
+      return val
+    }
+  },
   methods: {
     clickEvent: () => {
       window.alert("makan line");
@@ -20,7 +27,7 @@ export default {
         y: 0,
         points: this.points,
         strokeWidth: 1,
-        tension: 2,
+        tension: 0.5,
         closed: false,
         stroke: "black"
       }

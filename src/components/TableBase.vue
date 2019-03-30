@@ -163,7 +163,7 @@ import primaryKeyImage from "../assets/primary-key.png";
 import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
-  props: ["potition"],
+  props: ["potition","coloumns", "tableName"],
   methods: {
     dragmove(val) {
       this.$emit("changedPotition", val, this.tableName);
@@ -207,54 +207,54 @@ export default {
       primaryKey: null,
       imageNotNull: null,
       imageNull: null,
-      tableName: "rujak",
-      coloumns: {
-        id: {
-          comment: "",
-          dataType: "int(32)",
-          default: "",
-          primaryKey: true,
-          allowNull: false,
-          unique: false,
-          unsigned: false,
-          zeroFill: false,
-          autoIncrement: false,
-          foreignKey: {
-            tableName: "tableName",
-            coloumnName: "key"
-          }
-        },
-        nama: {
-          comment: "",
-          dataType: "varcahar(20)",
-          default: "",
-          primaryKey: false,
-          allowNull: false,
-          unique: false,
-          unsigned: false,
-          zeroFill: false,
-          autoIncrement: false,
-          foreignKey: {
-            tableName: "tableName",
-            coloumnName: "key"
-          }
-        },
-        umur: {
-          comment: "",
-          dataType: "varcahar(20)",
-          default: "",
-          primaryKey: false,
-          allowNull: true,
-          unique: false,
-          unsigned: false,
-          zeroFill: false,
-          autoIncrement: false,
-          foreignKey: {
-            tableName: "tableName",
-            coloumnName: "key"
-          }
-        }
-      }
+      // tableName: "rujak",
+      // coloumns: {
+      //   id: {
+      //     comment: "",
+      //     dataType: "int(32)",
+      //     default: "",
+      //     primaryKey: true,
+      //     allowNull: false,
+      //     unique: false,
+      //     unsigned: false,
+      //     zeroFill: false,
+      //     autoIncrement: false,
+      //     foreignKey: {
+      //       tableName: "tableName",
+      //       coloumnName: "key"
+      //     }
+      //   },
+      //   nama: {
+      //     comment: "",
+      //     dataType: "varcahar(20)",
+      //     default: "",
+      //     primaryKey: false,
+      //     allowNull: false,
+      //     unique: false,
+      //     unsigned: false,
+      //     zeroFill: false,
+      //     autoIncrement: false,
+      //     foreignKey: {
+      //       tableName: "tableName",
+      //       coloumnName: "key"
+      //     }
+      //   },
+      //   umur: {
+      //     comment: "",
+      //     dataType: "varcahar(20)",
+      //     default: "",
+      //     primaryKey: false,
+      //     allowNull: true,
+      //     unique: false,
+      //     unsigned: false,
+      //     zeroFill: false,
+      //     autoIncrement: false,
+      //     foreignKey: {
+      //       tableName: "tableName",
+      //       coloumnName: "key"
+      //     }
+      //   }
+      // }
     };
   }
 };
