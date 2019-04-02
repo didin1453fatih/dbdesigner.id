@@ -222,7 +222,6 @@ export default {
       this.dataDiagram[tableName].association.forEach(async assoc => {
         if (assoc.type === "belong") {
           await this.connectorNew.forEach(async conn => {
-
             if (
               conn.tail.table === tableName &&
               assoc.foreignKey === conn.tail.coloumn
@@ -230,18 +229,19 @@ export default {
               var tmp = [
                 val.currentTarget.attrs.x + assoc.potition.x,
                 val.currentTarget.attrs.y + assoc.potition.y,
-                conn.points[0]-conn.points[4],
-                conn.points[1]-conn.points[5],
+                conn.points[0] - conn.points[4],
+                conn.points[1] - conn.points[5],
                 conn.points[4],
                 conn.points[5]
               ];
-              conn.points[2]=tmp[2]
-              conn.points[3]=tmp[3]              
-              conn.points[0]=tmp[0]
-              conn.points[1]=tmp[1]
-              conn.points[4]=tmp[4]
-              conn.points[5]=tmp[5]
-                          // eslint-disable-next-line
+              conn.points=tmp
+              // conn.points[2] = tmp[2];
+              // conn.points[3] = tmp[3];
+              // conn.points[0] = tmp[0];
+              // conn.points[1] = tmp[1];
+              // conn.points[4] = tmp[4];
+              // conn.points[5] = tmp[5];
+              // eslint-disable-next-line
               console.log("conn " + JSON.stringify(conn.points));
               // conn.points[0] = val.currentTarget.attrs.x + assoc.potition.x;
               // conn.points[1] = val.currentTarget.attrs.y + assoc.potition.y;
@@ -256,12 +256,22 @@ export default {
               conn.head.table === tableName &&
               assoc.sourceKey === conn.head.coloumn
             ) {
-              conn.points[4] = val.currentTarget.attrs.x + assoc.potition.x;
-              conn.points[5] = val.currentTarget.attrs.y + assoc.potition.y;
+
+              var tmp = [
+                conn.points[0] ,
+                conn.points[1] ,
+                conn.points[0] - conn.points[4],
+                conn.points[1] - conn.points[5],
+                val.currentTarget.attrs.x + assoc.potition.x,
+                val.currentTarget.attrs.y + assoc.potition.y
+              ];
+              conn.points=tmp
+              // conn.points[4] = val.currentTarget.attrs.x + assoc.potition.x;
+              // conn.points[5] = val.currentTarget.attrs.y + assoc.potition.y;
               // var i=await Math.abs(conn.points[0]-conn.points[4])
               // var l=await Math.abs(conn.points[1]-conn.points[5])
-              conn.points[2] = 300;
-              conn.points[3] = 300;
+              // conn.points[2] = 300;
+              // conn.points[3] = 300;
             }
           });
         }
@@ -287,6 +297,17 @@ export default {
       this.image = image;
     };
     // this.getPoints("sopir");
+    // setInterval(() => {
+    //   this.connectorNew.forEach(conn => {
+    //     conn.points = [250, 100, 100, 100, 30, 110];
+    //   });
+    // }, 2000);
+
+    // setInterval(() => {
+    //   this.connectorNew.forEach(conn => {
+    //     conn.points = [0, 100, 100, 0, 30, 110];
+    //   });
+    // }, 4000);
   },
   computed: {
     filteredOptions() {
