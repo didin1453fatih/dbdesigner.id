@@ -30,7 +30,7 @@
             />-->
             <connector-base
               v-for="connector in connectorNew"
-              :key="connector.head.table"
+              :key="connector.key"
               :points="connector.points"
             />
 
@@ -332,6 +332,7 @@ export default {
       visible: false,
       connectorNew: [
         {
+          key:'mobil#id$sopir#mobil_id',
           // head is belong
           head: {
             table: "mobil",
@@ -345,6 +346,7 @@ export default {
           points: [250, 100, 100, 100, 30, 110]
         },
         {
+          key:'mobil#id$kernet#mobil_id',
           // head is belong
           head: {
             table: "mobil",
