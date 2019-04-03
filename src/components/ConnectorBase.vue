@@ -1,16 +1,32 @@
 <template>
-  <v-group @click="clickEvent">
+  <!-- <v-group @click="clickEvent">
     <v-line :config="lineConfig"/>
-  </v-group>
+  </v-group> -->
+  <v-line :config="{
+        x: 0,
+        y: 0,
+        points: this.points,
+        strokeWidth: 1,
+        tension: 1,
+        closed: false,
+        stroke: 'black',
+        shadowBlur: this.lineStyle.shadowBlur,
+        shadowColor:this.lineStyle.shadowColor,
+      }"/>
 </template>
 
 <script>
 export default {
-  props: ["points"],
+  props: ["points","lineStyle"],
   watch:{
     points(val){
       this.lineConfig.points=val
       // window.alert('halooo')
+      return val
+    },
+    lineStyle(val){
+      this.lineConfig.shadowBlur=val.shadowBlur
+      this.lineConfig.shadowColor=val.shadowColor
       return val
     }
   },
@@ -27,9 +43,11 @@ export default {
         y: 0,
         points: this.points,
         strokeWidth: 1,
-        tension: 0.5,
+        tension: 1,
         closed: false,
-        stroke: "black"
+        stroke: "black",
+        shadowBlur: this.lineStyle.shadowBlur,
+        shadowColor:this.lineStyle.shadowColor,
       }
     };
   }

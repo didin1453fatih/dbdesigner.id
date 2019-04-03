@@ -5,10 +5,12 @@
       y: potition.y,
     }"
     @dragmove="dragmove"
-    @click="clickEvent"
+    @dblclick="clickEvent"
     :draggable="true"
   >
     <v-rect
+      @mouseover="selectRelation"
+      @mouseout="deselectRelation"
       :config="{
           x: 0,
           y: 0,
@@ -72,22 +74,46 @@
             y: (5+30-2)+(index*20),
           }"
         />
-        <v-text
-          :config="{
+        <!-- <div v-if="isSelectRelation===true"> -->
+          <v-text
+            :config="{
+            text: coloumnKey,
+            x: 23,
+            y: (5+30)+(index*20),
+            shadowBlur: coloumns[coloumnKey].style.shadowBlur,
+            shadowColor:coloumns[coloumnKey].style.shadowColor,
+          }"
+          />
+          <v-text
+            :config="{
+            text: coloumns[coloumnKey].dataType,
+            x: 0,            
+            y: (5+30)+(index*20),
+            width: 145,
+            shadowBlur: coloumns[coloumnKey].style.shadowBlur,
+            shadowColor:coloumns[coloumnKey].style.shadowColor,
+            align: 'right'
+          }"
+          />
+        <!-- </div>
+        <div v-else-if="isSelectRelation===false">
+          <v-text
+            :config="{
             text: coloumnKey,
             x: 23,
             y: (5+30)+(index*20),
           }"
-        />
-        <v-text
-          :config="{
+          />
+          <v-text
+            :config="{
             text: coloumns[coloumnKey].dataType,
             x: 0,            
             y: (5+30)+(index*20),
             width: 145,
             align: 'right'
           }"
-        />
+          />
+        </div> -->
       </div>
     </template>
     <!-- <v-text
@@ -163,8 +189,18 @@ import primaryKeyImage from "../assets/primary-key.png";
 import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
-  props: ["potition","coloumns", "tableName"],
+  props: ["potition", "coloumns", "tableName"],
   methods: {
+    selectRelation() {
+      this.$emit('seeRelation',true, this.tableName)
+      // this.isSelectRelation=true
+      // window.alert('select relation')
+    },
+    deselectRelation(){
+      this.$emit('seeRelation',false, this.tableName)
+      // this.isSelectRelation=false
+      // window.alert('deselect relation')
+    },
     dragmove(val) {
       this.$emit("changedPotition", val, this.tableName);
       // eslint-disable-next-line
@@ -204,9 +240,10 @@ export default {
   },
   data() {
     return {
+      isSelectRelation: false,
       primaryKey: null,
       imageNotNull: null,
-      imageNull: null,
+      imageNull: null
       // tableName: "rujak",
       // coloumns: {
       //   id: {

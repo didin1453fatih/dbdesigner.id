@@ -6,6 +6,7 @@
         <v-stage :config="configKonva">
           <v-layer>
             <table-base
+              @seeRelation="seeRelation"
               v-for="tableKey in Object.keys(dataDiagram)"
               v-bind:key="tableKey"
               @editDataTable="editDataTable"
@@ -32,6 +33,7 @@
               v-for="connector in connectorNew"
               :key="connector.key"
               :points="connector.points"
+              :lineStyle="connector.lineStyle"
             />
 
             <!-- </div> -->
@@ -106,95 +108,6 @@ export default {
     ConfigTable
   },
   methods: {
-    async setPoints(tableName) {
-      // eslint-disable-next-line
-      // console.log(tableName)
-      var coloumnCount = 0;
-      var coloumnKeyArray = Object.keys(this.dataDiagram[tableName].coloumns);
-      await coloumnKeyArray.forEach(async coloumnKey => {
-        coloumnCount++;
-        if (
-          this.dataDiagram[tableName].coloumns[coloumnKey].foreignKey === true
-        ) {
-          var sourceTable = this.dataDiagram[tableName].coloumns[coloumnKey]
-            .foreignKeyProperties.tableName;
-          var sourceColoumn = this.dataDiagram[tableName].coloumns[coloumnKey]
-            .foreignKeyProperties.coloumnName;
-          var key =
-            tableName +
-            "#" +
-            coloumnKey +
-            "$" +
-            sourceTable +
-            "#" +
-            sourceColoumn;
-          // "sopir#mobil_id$mobil#id"
-
-          // window.alert(JSON.stringify(this.connectors[key]))
-          await this.connectorArray.forEach(async connector => {
-            if (connector.code === key) {
-              connector.points = [
-                this.dataDiagram[tableName].potition.x,
-                this.dataDiagram[tableName].potition.y + 35 + coloumnCount * 15,
-                this.dataDiagram[sourceTable].potition.x,
-                this.dataDiagram[sourceTable].potition.y
-              ];
-            }
-          });
-        } else {
-          var keyNonFK =
-            sourceTable +
-            "#" +
-            sourceColoumn +
-            "$" +
-            tableName +
-            "#" +
-            coloumnKey;
-          // window.alert(keyNonFK)
-          await this.connectorArray.forEach(async connector => {
-            if (connector.code === keyNonFK) {
-              connector.points = [
-                this.dataDiagram[tableName].potition.x,
-                this.dataDiagram[tableName].potition.y + 35 + coloumnCount * 15,
-                this.dataDiagram[sourceTable].potition.x,
-                this.dataDiagram[sourceTable].potition.y
-              ];
-            }
-          });
-        }
-      });
-    },
-    // async getPoints(tableName) {
-    //   // window.alert(JSON.stringify(tableName));
-    //   // window.alert(JSON.stringify(this.dataDiagram["sopir"]));
-    //   var coloumnKeyArray = Object.keys(this.dataDiagram[tableName].coloumns);
-    //   await coloumnKeyArray.forEach(coloumnKey => {
-    //     // window.alert(coloumnKey+"get points " + JSON.stringify(this.dataDiagram[tableName].coloumns[coloumnKey]));
-    //     if (this.dataDiagram[tableName].coloumns[coloumnKey].foreignKey === true) {
-    //       var sourceTable=this.dataDiagram[tableName].coloumns[coloumnKey].foreignKeyProperties.tableName
-    //       var sourceColoumn=this.dataDiagram[tableName].coloumns[coloumnKey].foreignKeyProperties.coloumnName
-    //       var key=tableName+'#'+coloumnKey+'$'+sourceTable+'#'+sourceColoumn
-    //       // "sopir#mobil_id$mobil#id"
-
-    //       // window.alert(JSON.stringify(this.connectors[key]))
-    //       this.connectors[key]=null
-    //       this.connectors[key]=[
-    //         this.dataDiagram[tableName].potition.x,
-    //         this.dataDiagram[tableName].potition.y,
-    //         this.dataDiagram[sourceTable].potition.x,
-    //         this.dataDiagram[sourceTable].potition.y,
-    //       ]
-    //       // eslint-disable-next-line
-    //       console.log("yeyeyyyy " + JSON.stringify(this.connectors));
-    //       // window.alert(JSON.stringify(this.connectors[key]))
-    //       // connectors[key]=[]
-    //       // window.alert(
-    //       //   "foregn Key " + this.dataDiagram[tableName][coloumnKey].foreignKey
-    //       // );
-    //     }
-    //   });
-    //   return tableName;
-    // },
     editDataTable() {
       // window.alert("---" + val);
       this.visible = true;
@@ -215,6 +128,92 @@ export default {
     onClose() {
       this.visible = false;
     },
+    seeRelation(status, tableName) {
+      // this.dataDiagram[tableName].coloumn.forEach(coloumn=>{
+
+      // })
+      this.dataDiagram[tableName].association.forEach(async assoc => {
+        if (assoc.type === "belong") {
+          if (status === true) {
+            this.dataDiagram[tableName].coloumns[
+              assoc.foreignKey
+            ].style.shadowBlur = 5;
+            this.dataDiagram[tableName].coloumns[
+              assoc.foreignKey
+            ].style.shadowColor = "green";
+            this.dataDiagram[assoc.table].coloumns[
+              assoc.targetKey
+            ].style.shadowBlur = 5;
+            this.dataDiagram[assoc.table].coloumns[
+              assoc.targetKey
+            ].style.shadowColor = "green";
+            await this.connectorNew.forEach(async conn => {
+              if (
+                conn.tail.table === tableName &&
+                assoc.foreignKey === conn.tail.coloumn
+              ) {
+                conn.lineStyle.shadowBlur = 5;
+                conn.lineStyle.shadowColor = "green";
+              }
+            });
+          } else {
+            this.dataDiagram[tableName].coloumns[
+              assoc.foreignKey
+            ].style.shadowBlur = 0;
+            this.dataDiagram[assoc.table].coloumns[
+              assoc.targetKey
+            ].style.shadowBlur = 0;
+            await this.connectorNew.forEach(async conn => {
+              if (
+                conn.tail.table === tableName &&
+                assoc.foreignKey === conn.tail.coloumn
+              ) {
+                conn.lineStyle.shadowBlur = 0;
+              }
+            });
+          }
+        } else if (assoc.type === "has") {
+          if (status === true) {
+            this.dataDiagram[tableName].coloumns[
+              assoc.sourceKey
+            ].style.shadowBlur = 5;
+            this.dataDiagram[tableName].coloumns[
+              assoc.sourceKey
+            ].style.shadowColor = "#00D2FF";
+            this.dataDiagram[assoc.table].coloumns[
+              assoc.foreignKey
+            ].style.shadowBlur = 5;
+            this.dataDiagram[assoc.table].coloumns[
+              assoc.foreignKey
+            ].style.shadowColor = "#00D2FF";
+            await this.connectorNew.forEach(async conn => {
+              if (
+                conn.head.table === tableName &&
+                assoc.sourceKey === conn.head.coloumn
+              ) {
+                conn.lineStyle.shadowBlur = 5;
+                conn.lineStyle.shadowColor = "#00D2FF";
+              }
+            });
+          } else {
+            this.dataDiagram[tableName].coloumns[
+              assoc.sourceKey
+            ].style.shadowBlur = 0;
+            this.dataDiagram[assoc.table].coloumns[
+              assoc.foreignKey
+            ].style.shadowBlur = 0;
+            await this.connectorNew.forEach(async conn => {
+              if (
+                conn.head.table === tableName &&
+                assoc.sourceKey === conn.head.coloumn
+              ) {
+                conn.lineStyle.shadowBlur = 0;
+              }
+            });
+          }
+        }
+      });
+    },
     async table1Change(val, tableName) {
       this.dataDiagram[tableName].potition.x = val.currentTarget.attrs.x;
       this.dataDiagram[tableName].potition.y = val.currentTarget.attrs.y;
@@ -229,25 +228,12 @@ export default {
               var tmp = [
                 val.currentTarget.attrs.x + assoc.potition.x,
                 val.currentTarget.attrs.y + assoc.potition.y,
-                conn.points[0] - conn.points[4],
-                conn.points[1] - conn.points[5],
+                conn.points[0] - 30,
+                conn.points[1] - 30,
                 conn.points[4],
                 conn.points[5]
               ];
-              conn.points=tmp
-              // conn.points[2] = tmp[2];
-              // conn.points[3] = tmp[3];
-              // conn.points[0] = tmp[0];
-              // conn.points[1] = tmp[1];
-              // conn.points[4] = tmp[4];
-              // conn.points[5] = tmp[5];
-              // eslint-disable-next-line
-              console.log("conn " + JSON.stringify(conn.points));
-              // conn.points[0] = val.currentTarget.attrs.x + assoc.potition.x;
-              // conn.points[1] = val.currentTarget.attrs.y + assoc.potition.y;
-
-              // conn.points[2]= 300// await Math.abs(conn.points[0]-conn.points[4])
-              // conn.points[3]= 300//await Math.abs(conn.points[1]-conn.points[5])
+              conn.points = tmp;
             }
           });
         } else if (assoc.type === "has") {
@@ -256,16 +242,15 @@ export default {
               conn.head.table === tableName &&
               assoc.sourceKey === conn.head.coloumn
             ) {
-
               var tmp = [
-                conn.points[0] ,
-                conn.points[1] ,
-                conn.points[0] - conn.points[4],
-                conn.points[1] - conn.points[5],
+                conn.points[0],
+                conn.points[1],
+                conn.points[0] - 30,
+                conn.points[1] - 30,
                 val.currentTarget.attrs.x + assoc.potition.x,
                 val.currentTarget.attrs.y + assoc.potition.y
               ];
-              conn.points=tmp
+              conn.points = tmp;
               // conn.points[4] = val.currentTarget.attrs.x + assoc.potition.x;
               // conn.points[5] = val.currentTarget.attrs.y + assoc.potition.y;
               // var i=await Math.abs(conn.points[0]-conn.points[4])
@@ -332,7 +317,7 @@ export default {
       visible: false,
       connectorNew: [
         {
-          key:'mobil#id$sopir#mobil_id',
+          key: "mobil#id$sopir#mobil_id",
           // head is belong
           head: {
             table: "mobil",
@@ -343,10 +328,14 @@ export default {
             table: "sopir",
             coloumn: "mobil_id"
           },
-          points: [250, 100, 100, 100, 30, 110]
+          points: [250, 100, 100, 100, 30, 110],
+          lineStyle: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          }
         },
         {
-          key:'mobil#id$kernet#mobil_id',
+          key: "mobil#id$kernet#mobil_id",
           // head is belong
           head: {
             table: "mobil",
@@ -357,7 +346,11 @@ export default {
             table: "kernet",
             coloumn: "mobil_id"
           },
-          points: [450, 100, 100, 100, 30, 110]
+          points: [450, 100, 100, 100, 30, 110],
+          lineStyle: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          }
         }
       ],
       connectorArray: [
@@ -392,7 +385,11 @@ export default {
               unsigned: false,
               zeroFill: false,
               autoIncrement: false,
-              foreignKey: false
+              foreignKey: false,
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
+              }
             },
             jumlah_roda: {
               comment: "",
@@ -404,7 +401,11 @@ export default {
               unsigned: false,
               zeroFill: false,
               autoIncrement: false,
-              foreignKey: false
+              foreignKey: false,
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
+              }
             }
           },
           association: [
@@ -446,7 +447,11 @@ export default {
               unsigned: false,
               zeroFill: false,
               autoIncrement: false,
-              foreignKey: false
+              foreignKey: false,
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
+              }
             },
             umur: {
               comment: "",
@@ -458,7 +463,11 @@ export default {
               unsigned: false,
               zeroFill: false,
               autoIncrement: false,
-              foreignKey: false
+              foreignKey: false,
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
+              }
             },
             mobil_id: {
               comment: "",
@@ -474,6 +483,10 @@ export default {
               foreignKeyProperties: {
                 tableName: "mobil",
                 coloumnName: "id"
+              },
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
               }
             }
           },
@@ -506,7 +519,11 @@ export default {
               unsigned: false,
               zeroFill: false,
               autoIncrement: false,
-              foreignKey: false
+              foreignKey: false,
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
+              }
             },
             umur: {
               comment: "",
@@ -518,7 +535,11 @@ export default {
               unsigned: false,
               zeroFill: false,
               autoIncrement: false,
-              foreignKey: false
+              foreignKey: false,
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
+              }
             },
             mobil_id: {
               comment: "",
@@ -534,6 +555,10 @@ export default {
               foreignKeyProperties: {
                 tableName: "mobil",
                 coloumnName: "id"
+              },
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
               }
             }
           },
