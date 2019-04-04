@@ -5,6 +5,14 @@
       <a-col :span="17">
         <v-stage :config="configKonva">
           <v-layer>
+
+            <connector-base
+              v-for="connector in connectorNew"
+              :key="connector.key"
+              :points="connector.points"
+              :lineStyle="connector.lineStyle"
+            />
+
             <table-base
               @seeRelation="seeRelation"
               v-for="tableKey in Object.keys(dataDiagram)"
@@ -29,12 +37,7 @@
                 :key="connector.code"
                 :points="connector.points"
             />-->
-            <connector-base
-              v-for="connector in connectorNew"
-              :key="connector.key"
-              :points="connector.points"
-              :lineStyle="connector.lineStyle"
-            />
+
 
             <!-- </div> -->
             <!-- <connector-base :points="[20, 50, 250, 50]"/> -->
