@@ -1,29 +1,10 @@
-# graphich-model
+# Fatih DB Designer
+This is simple and open source db designer based on vueJS framework, html5, canvasJS and nodeJS as backend. 
 
-## Project setup
-```
-npm install
-```
+The goal of this project is to make database designer is cheap for every one and have best technology and feature.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+I hove this project can help student, small startup to make great app with cheap tools.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+I don't know the best of technology for solve everyone problem in database design. I need your feedback for improve this project.
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![](/docs/images/templete_static_detail_of_table.png)
