@@ -74,17 +74,17 @@
             y: (5+30-2)+(index*20),
           }"
         />
-          <v-text
-            :config="{
+        <v-text
+          :config="{
             text: coloumnKey,
             x: 23,
             y: (5+30)+(index*20),
             shadowBlur: coloumns[coloumnKey].style.shadowBlur,
             shadowColor:coloumns[coloumnKey].style.shadowColor,
           }"
-          />
-          <v-text
-            :config="{
+        />
+        <v-text
+          :config="{
             text: coloumns[coloumnKey].dataType,
             x: 0,            
             y: (5+30)+(index*20),
@@ -93,7 +93,7 @@
             shadowColor:coloumns[coloumnKey].style.shadowColor,
             align: 'right'
           }"
-          />
+        />
       </div>
     </template>
   </v-group>
@@ -107,13 +107,22 @@ export default {
   props: ["potition", "coloumns", "tableName"],
   methods: {
     selectRelation() {
-      this.$emit('highlight',true, this.tableName)
+      this.$emit("highlight",{
+         status: true, 
+         tableName: this.tableName
+      });
     },
-    deselectRelation(){
-      this.$emit('highlight',false, this.tableName)
+    deselectRelation() {
+      this.$emit("highlight", {
+        status:false,
+        tableName: this.tableName
+      });
     },
     dragmove(val) {
-      this.$emit("changedPotition", val, this.tableName);
+      this.$emit("changedPotition", {
+        value: val,
+        tableName: this.tableName
+      });
     },
     clickEvent() {
       this.$emit("editDataTable", this.tableName);
@@ -147,7 +156,7 @@ export default {
       isSelectRelation: false,
       primaryKey: null,
       imageNotNull: null,
-      imageNull: null    
+      imageNull: null
     };
   }
 };

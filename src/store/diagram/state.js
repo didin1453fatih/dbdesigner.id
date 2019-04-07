@@ -1,5 +1,5 @@
 export default {
-  connector: [
+  connectorNew: [
     {
       key: "mobil#id$sopir#mobil_id",
       // head is belong
