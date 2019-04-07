@@ -50,7 +50,7 @@
         <a-button type="primary" @click="showDrawer">Open</a-button>
       </a-col>
     </a-row>
-    <config-table :visible="visible" @close="onClose"/>
+    <config-table :visible="visible" :tableName="editTableName" :tableProperties="editTableProperties" @close="onClose"/>
   </div>
 </template>
 
@@ -111,8 +111,11 @@ export default {
     ConfigTable
   },
   methods: {
-    editDataTable() {
-      // window.alert("---" + val);
+    editDataTable(tableName) {
+      // this.editTableName=tableName
+      this.editTableName=tableName
+      this.editTableProperties=this.dataDiagram[tableName]
+      // window.alert(JSON.stringify(this.editTableProperties));
       this.visible = true;
     },
     filterOption(input, option) {
@@ -313,6 +316,8 @@ export default {
   },
   data() {
     return {
+      editTableProperties:{},
+      editTableName:null,
       data,
       columns,
       suze: "small",
@@ -418,8 +423,8 @@ export default {
               foreignKey: "mobil_id",
               sourceKey: "id",
               potition: {
-                x: 0,
-                y: 0
+                x: 100,
+                y: 50
               }
             },
             {
@@ -428,8 +433,8 @@ export default {
               foreignKey: "mobil_id",
               sourceKey: "id",
               potition: {
-                x: 0,
-                y: 35
+                x: 100,
+                y: 50
               }
             }
           ]
@@ -500,7 +505,7 @@ export default {
               foreignKey: "mobil_id",
               targetKey: "id",
               potition: {
-                x: 0,
+                x: 100,
                 y: 50
               }
             }
@@ -572,7 +577,7 @@ export default {
               foreignKey: "mobil_id",
               targetKey: "id",
               potition: {
-                x: 0,
+                x: 100,
                 y: 50
               }
             }

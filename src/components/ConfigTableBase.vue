@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    title="Rujak"
+    :title="tableName"
     placement="right"
     :width="520"
     :closable="false"
@@ -23,133 +23,129 @@
           <td width="9%" align="center">AI</td>
           <td width="7%" align="center"></td>
         </tr>
-        <tr>
-          <td @dblclick="changeEditableColoumnName">
-            <table border="0">
-              <tr>
-                <td>
-                  <span style="margin-left:7px">
-                    <img
-                      src="../assets/primary-key.png"
-                      width="14px"
-                      style="vertical-align: baseline; margin-right:3px"
+        <template v-for="(keyColoumn,index) in Object.keys(tableProperties.coloumns)">
+          <tr v-bind:key="keyColoumn">
+            <td >
+              <table border="0">
+                <tr>
+                  <td>
+                    <span
+                      style="margin-left:7px"
+                      v-if="tableProperties.coloumns[keyColoumn].primaryKey"
                     >
-                  </span>
-                </td>
-                <td>
-                  <a-input
-                    @blur="isEditColoumnName = false"
-                    ref="searchLL"
-                    v-show="isEditColoumnName===true"
-                    size="small"
-                    placeholder="small size"
-                  />
-                  <span v-show="isEditColoumnName===false">id</span>
-                </td>
-              </tr>
-            </table>
-          </td>
-          <td @dblclick="changeEditableColoumnType">
-            <a-input
-              @blur="isEditColoumnType = false"
-              ref="searchLL"
-              v-show="isEditColoumnType===true"
-              size="small"
-              placeholder="small size"
-            />
-            <span v-show="isEditColoumnType===false" style="margin-left:12px">varchar(10)</span>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-icon @click="showDetail(1)" type="caret-down"/>
-          </td>
-        </tr>
-        <template v-if="showDetailcoloumn===1">
-          <tr>
-            <td colspan="8">
-              <div style="margin:15px;">
-                <a-row align="bottom" type="flex">
-                  <a-col :span="5">
-                    <span style="padding-right:5px">Default</span>
-                  </a-col>
-                  <a-col :span="18">
-                    <a-input style="width:130px" size="small" placeholder="small size"/>
-                  </a-col>
-                </a-row>
-                <a-row style="margin-top:5px" align="bottom" type="flex">
-                  <a-col :span="5">
-                    <span style="padding-right:5px">Foregn Key</span>
-                  </a-col>
-                  <a-col :span="18">
-                    <a-checkbox style="padding0;margin:0"></a-checkbox>
-                  </a-col>
-                </a-row>
-                <a-row style="margin-top:5px" align="bottom" type="flex">
-                  <a-col :span="5">
-                    <span style="padding-right:5px">Ref. Table</span>
-                  </a-col>
-                  <a-col :span="18">
-                    <a-input style="width:130px" size="small" placeholder="small size"/>
-                  </a-col>
-                </a-row>
-                <a-row style="margin-top:5px" align="bottom" type="flex">
-                  <a-col :span="5">Ref. Column</a-col>
-                  <a-col :span="18">
-                    <a-input style="width:130px" size="small" placeholder="small size"/>
-                  </a-col>
-                </a-row>
-              </div>
+                      <img
+                        src="../assets/primary-key.png"
+                        width="14px"
+                        style="vertical-align: baseline; margin-right:3px"
+                      >
+                    </span>
+                    <span
+                      style="margin-left:7px"
+                      v-else-if="tableProperties.coloumns[keyColoumn].allowNull===false"
+                    >
+                      <img
+                        src="../assets/icons8-diamonds-40.png"
+                        width="14px"
+                        style="vertical-align: baseline; margin-right:5px"
+                      >
+                    </span>
+                  </td>
+                  <td @dblclick="isEditColoumnName=keyColoumn">
+                    <a-input
+                      @blur="isEditColoumnName = false"
+                      ref="searchLL"
+                      v-if="isEditColoumnName===keyColoumn"
+                      size="small"
+                      placeholder="small size"
+                      :value="keyColoumn"
+                    />
+                    <span v-else >{{keyColoumn}}</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td @dblclick="changeEditableColoumnType">
+              <a-input
+                @blur="isEditColoumnType = false"
+                ref="searchLL"
+                v-show="isEditColoumnType===true"
+                size="small"
+                placeholder="small size"
+                :value="tableProperties.coloumns[keyColoumn].dataType"
+              />
+              <span
+                v-show="isEditColoumnType===false"
+                style="margin-left:12px"
+              >{{tableProperties.coloumns[keyColoumn].dataType}}</span>
+            </td>
+            <td align="center">
+              <a-checkbox></a-checkbox>
+            </td>
+            <td align="center">
+              <a-checkbox></a-checkbox>
+            </td>
+            <td align="center">
+              <a-checkbox></a-checkbox>
+            </td>
+            <td align="center">
+              <a-checkbox></a-checkbox>
+            </td>
+            <td align="center">
+              <a-checkbox></a-checkbox>
+            </td>
+            <td align="center">
+              <a-icon v-if="showDetailcoloumn===index" @click="showDetailcoloumn=-1" type="caret-up" />
+              <a-icon v-else  @click="showDetail(index)" type="caret-down"/>              
             </td>
           </tr>
-        </template>
+          <template v-if="showDetailcoloumn===index">
+            <tr v-bind:key="keyColoumn">
+              <td colspan="8">
+                <div style="margin:15px;">
+                  <a-row align="bottom" type="flex">
+                    <a-col :span="5">
+                      <span style="padding-right:5px">Default</span>
+                    </a-col>
+                    <a-col :span="18">
+                      <a-input style="width:130px" size="small" placeholder="small size"/>
+                    </a-col>
+                  </a-row>
+                  <a-row style="margin-top:5px" align="bottom" type="flex">
+                    <a-col :span="5">
+                      <span style="padding-right:5px">Foregn Key</span>
+                    </a-col>
+                    <a-col :span="18">
+                      <a-checkbox style="padding:0;margin:0"></a-checkbox>
+                    </a-col>
+                  </a-row>
+                  <a-row style="margin-top:5px" align="bottom" type="flex">
+                    <a-col :span="5">
+                      <span style="padding-right:5px">Ref. Table</span>
+                    </a-col>
+                    <a-col :span="18">
+                      <a-input style="width:130px" size="small" placeholder="small size"/>
+                    </a-col>
+                  </a-row>
+                  <a-row style="margin-top:5px" align="bottom" type="flex">
+                    <a-col :span="5">Ref. Column</a-col>
+                    <a-col :span="18">
+                      <a-input style="width:130px" size="small" placeholder="small size"/>
+                    </a-col>
+                  </a-row>
 
-        <tr>
-          <td>
-            <span style="margin-left:10px">
-              <img
-                src="../assets/icons8-diamonds-40.png"
-                width="14px"
-                style="vertical-align: baseline; margin-right:5px"
-              >
-              <span>id</span>
-            </span>
-          </td>
-          <td>
-            <span style="margin-left:12px">varchar(10)</span>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox></a-checkbox>
-          </td>
-          <td align="center">
-            <a-icon type="edit"/>
-          </td>
-        </tr>
+                  <a-row style="margin-top:15px" align="bottom" type="flex">
+                    <a-col :span="4">
+                      <a-button type="dashed" size="small">Cancel</a-button>
+                    </a-col>
+                    <a-col :span="3">
+                      <a-button  size="small" style="color: rgba(0, 0, 0, 0.65);">Save</a-button>
+                    </a-col>
+                  </a-row>                                  
+                </div>
+              </td>
+            </tr>
+          </template>
+        </template>
       </table>
     </div>
   </a-drawer>
@@ -157,10 +153,14 @@
 
 <script>
 export default {
-  props: ["visible"],
+  props: ["visible", "tableProperties", "tableName"],
   methods: {
     showDetail(val) {
-      this.showDetailcoloumn = val;
+      if (val === this.showDetailcoloumn) {
+        this.showDetailcoloumn = -1;
+      } else {
+        this.showDetailcoloumn = val;
+      }
     },
     onClose() {
       this.$emit("close");
@@ -184,7 +184,7 @@ export default {
     return {
       isEditColoumnName: false,
       isEditColoumnType: false,
-      showDetailcoloumn:3
+      showDetailcoloumn: 3
     };
   }
 };

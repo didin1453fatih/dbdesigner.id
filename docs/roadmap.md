@@ -19,6 +19,7 @@
 
 ### 18 mei 2019
 - [ ] Can load schema from mysql
+- [ ] Implement https://www.npmjs.com/package/vue-focus for better experience
 
 ### 8 june 2019
 - [ ] Implementation direct sysncronyzation from fatih.koee.fun using openVPN connection.

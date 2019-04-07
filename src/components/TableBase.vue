@@ -208,7 +208,7 @@ export default {
     },
     clickEvent() {
       // window.alert("makan");
-      this.$emit("editDataTable", "this.coloumns");
+      this.$emit("editDataTable", this.tableName);
     },
     halo: () => {
       // eslint-disable-next-line
