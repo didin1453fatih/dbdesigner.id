@@ -23,9 +23,11 @@ import { Icon } from 'ant-design-vue';
 Vue.use(Icon);
 Vue.use(DatePicker);
 Vue.use(VueKonva)
+import { store } from "./store/index";
 
 Vue.config.productionTip = false
 
 new Vue({
+  store: store,
   render: h => h(App),
 }).$mount('#app')
