@@ -10,6 +10,7 @@
 - [ ] Simple backend with login using github
 - [ ] Can to save table and model 
 - [ ] Can Load table and model
+- [ ] Centralize table description using vueX
 
 ### 27 april 2019
 - [ ] Can export to sql script
