@@ -1,7 +1,4 @@
 <template>
-  <!-- <v-group @click="clickEvent">
-    <v-line :config="lineConfig"/>
-  </v-group> -->
   <v-line :config="{
         x: 0,
         y: 0,
@@ -21,7 +18,6 @@ export default {
   watch:{
     points(val){
       this.lineConfig.points=val
-      // window.alert('halooo')
       return val
     },
     lineStyle(val){

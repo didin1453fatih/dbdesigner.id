@@ -14,7 +14,7 @@
             />
 
             <table-base
-              @seeRelation="seeRelation"
+              @highlight="highlight"
               v-for="tableKey in Object.keys(dataDiagram)"
               v-bind:key="tableKey"
               @editDataTable="editDataTable"
@@ -64,7 +64,7 @@ export default {
     onClose() {
       this.visible = false;
     },
-    seeRelation(status, tableName) {
+    highlight(status, tableName) {
       this.dataDiagram[tableName].association.forEach(async assoc => {
         if (assoc.type === "belong") {
           if (status === true) {
