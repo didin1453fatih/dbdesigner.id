@@ -1,11 +1,9 @@
 <template>
   <div>
-    <div>{{JSON.stringify(connectors)}}</div>
     <a-row>
       <a-col :span="17">
         <v-stage :config="configKonva">
           <v-layer>
-
             <connector-base
               v-for="connector in connectorNew"
               :key="connector.key"
@@ -31,15 +29,22 @@
         <a-button type="primary" @click="showDrawer">Open</a-button>
       </a-col>
     </a-row>
-    <config-table :visible="visible" :tableName="editTableName" :tableProperties="editTableProperties" @close="onClose"/>
+    <config-table
+      :visible="visible"
+      :tableName="editTableName"
+      :tableProperties="editTableProperties"
+      @close="onClose"
+    />
   </div>
 </template>
 
 <script>
+// import { mapState } from "vuex";
+// import { mapMutations } from "vuex";
+// import { mapActions } from "vuex";
 import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
 import ConfigTable from "./components/ConfigTableBase.vue";
-
 
 export default {
   components: {
@@ -48,10 +53,13 @@ export default {
     ConfigTable
   },
   methods: {
+    // ...mapMutations("DetailPenggunaan", {
+    //   setStokId: "stokId"
+    // }),
     editDataTable(tableName) {
       // this.editTableName=tableName
-      this.editTableName=tableName
-      this.editTableProperties=this.dataDiagram[tableName]
+      this.editTableName = tableName;
+      this.editTableProperties = this.dataDiagram[tableName];
       // window.alert(JSON.stringify(this.editTableProperties));
       this.visible = true;
     },
@@ -190,15 +198,85 @@ export default {
       });
     }
   },
-  mounted() {
-  },
-  computed: {
-    
+  mounted() {},
+    computed: {
+    // ...mapState("diagram", {
+    //   dataDiagram: state => state.dataDiagram,
+      // loadingData: state => state.loadingData,
+      // totalData: state => state.totalData,
+      // pageSize: state => state.pageSize,
+      // namaSelectedReagen: state => state.namaSelectedReagen,
+      // namaSelectedStok: state => state.namaSelectedStok,
+      // selectedReagen: state => state.selectedReagen,
+      // kodeStokInput: state => state.kodeStokInput,
+      // jumlahStok: state => state.jumlahStok
+    // })
   },
   data() {
     return {
-      editTableProperties:{},
-      editTableName:null,
+      editTableProperties: {
+              potition: {
+            x: 30,
+            y: 110
+          },
+          coloumns: {
+            id: {
+              comment: "",
+              dataType: "varchar(31)",
+              default: "",
+              primaryKey: true,
+              allowNull: false,
+              unique: false,
+              unsigned: false,
+              zeroFill: false,
+              autoIncrement: false,
+              foreignKey: false,
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
+              }
+            },
+            jumlah_roda: {
+              comment: "",
+              dataType: "int(32)",
+              default: "",
+              primaryKey: false,
+              allowNull: false,
+              unique: false,
+              unsigned: false,
+              zeroFill: false,
+              autoIncrement: false,
+              foreignKey: false,
+              style: {
+                shadowBlur: 0,
+                shadowColor: "green"
+              }
+            }
+          },
+          association: [
+            {
+              type: "has",
+              table: "sopir",
+              foreignKey: "mobil_id",
+              sourceKey: "id",
+              potition: {
+                x: 100,
+                y: 50
+              }
+            },
+            {
+              type: "has",
+              table: "kernet",
+              foreignKey: "mobil_id",
+              sourceKey: "id",
+              potition: {
+                x: 100,
+                y: 50
+              }
+            }
+          ]
+      },
+      editTableName: 'mobil',
       selectedItems: [],
       visible: false,
       connectorNew: [

@@ -244,5 +244,70 @@ export default {
         }
       ]
     }
+  },
+  configTable: {
+    tableName: "mobil",
+    properties: {
+      potition: {
+        x: 30,
+        y: 110
+      },
+      coloumns: {
+        id: {
+          comment: "",
+          dataType: "varchar(31)",
+          default: "",
+          primaryKey: true,
+          allowNull: false,
+          unique: false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          foreignKey: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          }
+        },
+        jumlah_roda: {
+          comment: "",
+          dataType: "int(32)",
+          default: "",
+          primaryKey: false,
+          allowNull: false,
+          unique: false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          foreignKey: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          }
+        }
+      },
+      association: [
+        {
+          type: "has",
+          table: "sopir",
+          foreignKey: "mobil_id",
+          sourceKey: "id",
+          potition: {
+            x: 100,
+            y: 50
+          }
+        },
+        {
+          type: "has",
+          table: "kernet",
+          foreignKey: "mobil_id",
+          sourceKey: "id",
+          potition: {
+            x: 100,
+            y: 50
+          }
+        }
+      ]
+    }
   }
 };
