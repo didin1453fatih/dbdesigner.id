@@ -155,16 +155,73 @@ export default {
    *  newColoumn : string
    * }
    */
-  updateColoumnTable(state, raw) {
+  async updateColoumnTable(state, raw) {
+    // async function loop(items, callback) {
+    //   for (var a = 0; a < items.length; a++) {
+    //     // eslint-disable-next-line
+    //     await callback(items[a]);
+    //   }
+    // }
+
     var oldColoumn = raw.oldColoumn;
     var newColoumn = raw.newColoumn;
     var tableName = raw.tableName;
+
+    for (var a = 0; a < state.dataDiagram[tableName].association.length; a++) {
+      // eslint-disable-next-line
+      if(state.dataDiagram[tableName].association[a].type==='belong'){
+        if(state.dataDiagram[tableName].association[a].foreignKey===oldColoumn){
+          state.dataDiagram[tableName].association[a].foreignKey=newColoumn
+          // in this must change in asscociation table source
+            for (var b=0; b<state.dataDiagram[state.dataDiagram[tableName].association[a].table].association.length;b++){
+            if(state.dataDiagram[state.dataDiagram[tableName].association[a].table].association[b].type==='has'){
+              if(state.dataDiagram[state.dataDiagram[tableName].association[a].table].association[b].table===tableName&&state.dataDiagram[state.dataDiagram[tableName].association[a].table].association[b].foreignKey===oldColoumn){
+                state.dataDiagram[state.dataDiagram[tableName].association[a].table].association[b].foreignKey=newColoumn
+
+                // for(var c=0;c<state.connectorNew.length;c++){
+                //   if(
+                //     state.connectorNew[c].tail.table===tableName&&
+                //     state.connectorNew[c].tail.coloumn===oldColoumn &&
+
+                //     state.connectorNew[c].head.table===state.dataDiagram[tableName].association[a].table&&
+                //     state.connectorNew[c].head.coloumn===oldColoumn &&
+                //     ){
+
+                //     }
+                // }
+              }
+            }
+        }
+      }
+      
+    }
+  }
+    // await loop(state.dataDiagram[tableName].association, async assoc=>{
+    // // .forEach(
+    //     if(assoc.type==='belong'){
+    //       if(assoc.foreignKey===oldColoumn){
+    //         assoc.foreignKey=newColoumn
+    //         // in this must change in asscociation table source
+    //         // await .forEach(
+    //           await loop(state.dataDiagram[assoc.table].association, async assocSource=>{
+    //           if(assocSource.type==='has'){
+    //             if(assocSource.table===tableName&&assocSource.foreignKey===oldColoumn){
+    //               assocSource.foreignKey=newColoumn
+    //             }
+    //           }
+
+    //         })
+    //       }
+    //     }
+    // })
     // eslint-disable-next-line
     console.log('before coloumn' + JSON.stringify(state.dataDiagram[tableName]))
     var tmpColoumn =JSON.parse(JSON.stringify(state.dataDiagram[tableName].coloumns[oldColoumn]))
     delete state.dataDiagram[tableName].coloumns[oldColoumn];
     state.dataDiagram[tableName].coloumns[newColoumn] = tmpColoumn;
+    state.dataDiagram[tableName].potition.x++
     // eslint-disable-next-line
-    console.log('new coloumn' + JSON.stringify(state.dataDiagram[tableName]))
+    // console.log('new coloumn' + JSON.stringify(state.dataDiagram[tableName]))
   }
 };
+

@@ -2,12 +2,12 @@ export default {
   connectorNew: [
     {
       key: "mobil#id$sopir#mobil_id",
-      // head is belong
+      // head is has
       head: {
         table: "mobil",
         coloumn: "id"
       },
-      // tail is has
+      // tail is belong
       tail: {
         table: "sopir",
         coloumn: "mobil_id"

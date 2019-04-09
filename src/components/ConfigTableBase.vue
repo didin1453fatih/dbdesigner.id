@@ -26,9 +26,9 @@
         <template v-for="(keyColoumn,index) in Object.keys(tableProperties.coloumns)">
           <tr v-bind:key="keyColoumn">
             <td>
-              <table border="0">
+              <table border="0" width="100%">
                 <tr>
-                  <td>
+                  <td width="15%" align="left">
                     <span
                       style="margin-left:7px"
                       v-if="tableProperties.coloumns[keyColoumn].primaryKey"
@@ -50,33 +50,38 @@
                       >
                     </span>
                   </td>
-                  <td @dblclick="isEditColoumnName=keyColoumn">
+                  <td  align="left">
                     <a-input
                       @blur="isEditColoumnName = false"
                       ref="searchLL"
-                      v-if="isEditColoumnName===keyColoumn"
+                      v-if="showDetailcoloumn===index"
                       size="small"
                       placeholder="small size"
-                      v-model="newColoumnName"                      
+                      v-model="newColoumnName"
                     />
-                    <span v-else>{{keyColoumn}}</span>
+                    <div
+                      @click="showDetail(index,keyColoumn)"
+                      v-else
+                      style="width:100%"
+                    >{{keyColoumn}}</div>
                   </td>
                 </tr>
               </table>
             </td>
-            <td @dblclick="changeEditableColoumnType">
+            <td>
               <a-input
                 @blur="isEditColoumnType = false"
                 ref="searchLL"
-                v-show="isEditColoumnType===true"
+                v-if="showDetailcoloumn===index"
                 size="small"
                 placeholder="small size"
-                :value="tableProperties.coloumns[keyColoumn].dataType"
+                v-model="newDataType"
               />
-              <span
-                v-show="isEditColoumnType===false"
-                style="margin-left:12px"
-              >{{tableProperties.coloumns[keyColoumn].dataType}}</span>
+              <div
+                @click="showDetail(index,keyColoumn)"
+                v-else
+                style="margin-left:12px; width:100%"
+              >{{tableProperties.coloumns[keyColoumn].dataType}}</div>
             </td>
             <td align="center">
               <a-checkbox></a-checkbox>
@@ -99,7 +104,7 @@
                 @click="showDetailcoloumn=-1"
                 type="caret-up"
               />
-              <a-icon v-else @click="showDetail(index)" type="caret-down"/>
+              <a-icon v-else @click="showDetail(index,keyColoumn)" type="caret-down"/>
             </td>
           </tr>
           <template v-if="showDetailcoloumn===index">
@@ -139,10 +144,18 @@
 
                   <a-row style="margin-top:15px" align="bottom" type="flex">
                     <a-col :span="4">
-                      <a-button type="dashed" size="small">Cancel</a-button>
+                      <a-button
+                        @click="cancelEdit(index,keyColoumn)"
+                        type="dashed"
+                        size="small"
+                      >Cancel</a-button>
                     </a-col>
                     <a-col :span="3">
-                      <a-button @click="saveChange(keyColoumn)" size="small" style="color: rgba(0, 0, 0, 0.65);">Save</a-button>
+                      <a-button
+                        @click="saveChange(keyColoumn)"
+                        size="small"
+                        style="color: rgba(0, 0, 0, 0.65);"
+                      >Save</a-button>
                     </a-col>
                   </a-row>
                 </div>
@@ -167,13 +180,15 @@ export default {
     })
   },
   methods: {
-    saveChange(coloumn){
+    saveChange(coloumn) {
       this.updateColoumnTable({
         newColoumn: this.newColoumnName,
         tableName: this.tableName,
         oldColoumn: coloumn
       });
-
+    },
+    cancelEdit() {
+      this.showDetailcoloumn = -1;
     },
     changeColoumnName(val) {
       // eslint-disable-next-line
@@ -191,9 +206,9 @@ export default {
       setVisibleConfigTable: "setVisibleConfigTable",
       updateColoumnTable: "updateColoumnTable"
     }),
-    showDetail(val) {
-      this.newColoumnName=this.showDetailcoloumn
-      // this.newDataType=this.tableProperties[this.tableName].coloumns[this.showDetailcoloumn].dataType
+    showDetail(val, keyColoumn) {
+      this.newColoumnName = keyColoumn;
+      this.newDataType = this.tableProperties.coloumns[keyColoumn].dataType;
       if (val === this.showDetailcoloumn) {
         this.showDetailcoloumn = -1;
       } else {
@@ -220,10 +235,10 @@ export default {
   },
   data() {
     return {
-      newColoumnName:'',
-      newComment:'',
-      newDataType:'',
-      newDefault:'',
+      newColoumnName: "",
+      newComment: "",
+      newDataType: "",
+      newDefault: "",
       isEditColoumnName: false,
       isEditColoumnType: false,
       showDetailcoloumn: 3
