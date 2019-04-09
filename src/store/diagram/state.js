@@ -309,5 +309,6 @@ export default {
         }
       ]
     }
-  }
+  },
+  visibleConfigTable:false
 };

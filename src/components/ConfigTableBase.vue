@@ -25,7 +25,7 @@
         </tr>
         <template v-for="(keyColoumn,index) in Object.keys(tableProperties.coloumns)">
           <tr v-bind:key="keyColoumn">
-            <td >
+            <td>
               <table border="0">
                 <tr>
                   <td>
@@ -57,9 +57,9 @@
                       v-if="isEditColoumnName===keyColoumn"
                       size="small"
                       placeholder="small size"
-                      :value="keyColoumn"
+                      v-model="newColoumnName"                      
                     />
-                    <span v-else >{{keyColoumn}}</span>
+                    <span v-else>{{keyColoumn}}</span>
                   </td>
                 </tr>
               </table>
@@ -94,12 +94,16 @@
               <a-checkbox></a-checkbox>
             </td>
             <td align="center">
-              <a-icon v-if="showDetailcoloumn===index" @click="showDetailcoloumn=-1" type="caret-up" />
-              <a-icon v-else  @click="showDetail(index)" type="caret-down"/>              
+              <a-icon
+                v-if="showDetailcoloumn===index"
+                @click="showDetailcoloumn=-1"
+                type="caret-up"
+              />
+              <a-icon v-else @click="showDetail(index)" type="caret-down"/>
             </td>
           </tr>
           <template v-if="showDetailcoloumn===index">
-            <tr v-bind:key="keyColoumn">
+            <tr v-bind:key="keyColoumn+index">
               <td colspan="8">
                 <div style="margin:15px;">
                   <a-row align="bottom" type="flex">
@@ -138,9 +142,9 @@
                       <a-button type="dashed" size="small">Cancel</a-button>
                     </a-col>
                     <a-col :span="3">
-                      <a-button  size="small" style="color: rgba(0, 0, 0, 0.65);">Save</a-button>
+                      <a-button @click="saveChange(keyColoumn)" size="small" style="color: rgba(0, 0, 0, 0.65);">Save</a-button>
                     </a-col>
-                  </a-row>                                  
+                  </a-row>
                 </div>
               </td>
             </tr>
@@ -152,10 +156,44 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { mapMutations } from "vuex";
 export default {
-  props: ["visible", "tableProperties", "tableName"],
+  computed: {
+    ...mapState("diagram", {
+      tableProperties: state => state.configTable.properties,
+      tableName: state => state.configTable.tableName,
+      visible: state => state.visibleConfigTable
+    })
+  },
   methods: {
+    saveChange(coloumn){
+      this.updateColoumnTable({
+        newColoumn: this.newColoumnName,
+        tableName: this.tableName,
+        oldColoumn: coloumn
+      });
+
+    },
+    changeColoumnName(val) {
+      // eslint-disable-next-line
+      console.log("val " + JSON.stringify(val.target.value));
+      // var oldColoumn = this.isEditColoumnName;
+      // // eslint-disable-next-line
+      // console.log("oldData " + oldColoumn);
+      // this.updateColoumnTable({
+      //   newColoumn: val.target.value,
+      //   tableName: this.tableName,
+      //   oldColoumn: oldColoumn
+      // });
+    },
+    ...mapMutations("diagram", {
+      setVisibleConfigTable: "setVisibleConfigTable",
+      updateColoumnTable: "updateColoumnTable"
+    }),
     showDetail(val) {
+      this.newColoumnName=this.showDetailcoloumn
+      // this.newDataType=this.tableProperties[this.tableName].coloumns[this.showDetailcoloumn].dataType
       if (val === this.showDetailcoloumn) {
         this.showDetailcoloumn = -1;
       } else {
@@ -163,7 +201,7 @@ export default {
       }
     },
     onClose() {
-      this.$emit("close");
+      this.setVisibleConfigTable(false);
     },
     changeEditableColoumnName() {
       if (this.isEditColoumnName === true) {
@@ -182,6 +220,10 @@ export default {
   },
   data() {
     return {
+      newColoumnName:'',
+      newComment:'',
+      newDataType:'',
+      newDefault:'',
       isEditColoumnName: false,
       isEditColoumnType: false,
       showDetailcoloumn: 3

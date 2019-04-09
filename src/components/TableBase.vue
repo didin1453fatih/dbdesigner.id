@@ -100,12 +100,21 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import primaryKeyImage from "../assets/primary-key.png";
 import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
   props: ["potition", "coloumns", "tableName"],
+  // watch:{
+  //   coloumns(val){
+  //     window.alert('val '+val)
+  //   }
+  // },
   methods: {
+    ...mapMutations("diagram", {
+      setConfigTable: "setConfigTable"
+    }),
     selectRelation() {
       this.$emit("highlight",{
          status: true, 
@@ -125,7 +134,8 @@ export default {
       });
     },
     clickEvent() {
-      this.$emit("editDataTable", this.tableName);
+      this.$emit("editDataTable");
+      this.setConfigTable(this.tableName)
     },
     addPointAssotiation() {},
     reaCalculatePointAsscotiation() {}

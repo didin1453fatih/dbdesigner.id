@@ -1,7 +1,12 @@
 export default {
+  /**
+   *
+   * @param {*} state
+   * @param { value : value of x  and y } raw
+   */
   changeTablePotition(state, raw) {
-    var val=raw.value
-    var tableName= raw.tableName
+    var val = raw.value;
+    var tableName = raw.tableName;
     state.dataDiagram[tableName].potition.x = val.currentTarget.attrs.x;
     state.dataDiagram[tableName].potition.y = val.currentTarget.attrs.y;
     state.dataDiagram[tableName].association.forEach(async assoc => {
@@ -42,9 +47,14 @@ export default {
       }
     });
   },
-  highlightRelation(state,raw){
-    var status=raw.status
-    var tableName= raw.tableName
+  /**
+   *
+   * @param {*} state
+   * @param {status: boolean, tableName: string} raw
+   */
+  highlightRelation(state, raw) {
+    var status = raw.status;
+    var tableName = raw.tableName;
     state.dataDiagram[tableName].association.forEach(async assoc => {
       if (assoc.type === "belong") {
         if (status === true) {
@@ -127,7 +137,34 @@ export default {
       }
     });
   },
-  // updateDataTable(state,raw){
-
-  // }
+  setConfigTable(state, tableName) {
+    state.configTable.tableName = tableName;
+    state.configTable.properties = state.dataDiagram[tableName];
+    state.visibleConfigTable = true;
+  },
+  setVisibleConfigTable(state, val) {
+    state.visibleConfigTable = val;
+  },
+  /**
+   *
+   * @param {*} state
+   * @param {*} raw
+   * {
+   *  oldColoumn: string
+   *  tableName:string
+   *  newColoumn : string
+   * }
+   */
+  updateColoumnTable(state, raw) {
+    var oldColoumn = raw.oldColoumn;
+    var newColoumn = raw.newColoumn;
+    var tableName = raw.tableName;
+    // eslint-disable-next-line
+    console.log('before coloumn' + JSON.stringify(state.dataDiagram[tableName]))
+    var tmpColoumn =JSON.parse(JSON.stringify(state.dataDiagram[tableName].coloumns[oldColoumn]))
+    delete state.dataDiagram[tableName].coloumns[oldColoumn];
+    state.dataDiagram[tableName].coloumns[newColoumn] = tmpColoumn;
+    // eslint-disable-next-line
+    console.log('new coloumn' + JSON.stringify(state.dataDiagram[tableName]))
+  }
 };

@@ -1,34 +1,26 @@
 <template>
   <div>
-    <a-row>
-      <a-col :span="17">
-        <v-stage :config="configKonva">
-          <v-layer>
-            <connector-base
-              v-for="connector in connectorNew"
-              :key="connector.key"
-              :points="connector.points"
-              :lineStyle="connector.lineStyle"
-            />
+    <v-stage :config="configKonva">
+      <v-layer>
+        <connector-base
+          v-for="connector in connectorNew"
+          :key="connector.key"
+          :points="connector.points"
+          :lineStyle="connector.lineStyle"
+        />
 
-            <table-base
-              @highlight="highlightRelation"
-              v-for="tableKey in Object.keys(dataDiagram)"
-              v-bind:key="tableKey"
-              @editDataTable="editDataTable"
-              @changedPotition="changeTablePotition"
-              :coloumns="dataDiagram[tableKey].coloumns"
-              :tableName="tableKey"
-              :potition="dataDiagram[tableKey].potition"
-            />
-          </v-layer>
-        </v-stage>
-      </a-col>
-      <a-col :span="6">
-        <a-button>Default</a-button>
-        <a-button type="primary" @click="showDrawer">Open</a-button>
-      </a-col>
-    </a-row>
+        <table-base
+          @highlight="highlightRelation"
+          v-for="tableKey in Object.keys(dataDiagram)"
+          v-bind:key="tableKey"
+          @editDataTable="editDataTable"
+          @changedPotition="changeTablePotition"
+          :coloumns="dataDiagram[tableKey].coloumns"
+          :tableName="tableKey"
+          :potition="dataDiagram[tableKey].potition"
+        />
+      </v-layer>
+    </v-stage>
     <config-table
       :visible="visible"
       :tableName="editTableName"
@@ -57,9 +49,9 @@ export default {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation"
     }),
-    editDataTable(tableName) {
-      this.editTableName = tableName;
-      this.editTableProperties = this.dataDiagram[tableName];
+    editDataTable() {
+      // this.editTableName = tableName;
+      // this.editTableProperties = this.dataDiagram[tableName];
       this.visible = true;
     },
     showDrawer() {
