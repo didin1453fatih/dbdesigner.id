@@ -1,6 +1,6 @@
 <template>
   <a-drawer
-    :title="tableName"
+    :title="dataDiagramNew[tableKeyConfig].table_name"
     placement="right"
     :width="520"
     :closable="false"
@@ -23,7 +23,9 @@
           <td width="9%" align="center">AI</td>
           <td width="7%" align="center"></td>
         </tr>
-        <template v-for="(keyColoumn,index) in Object.keys(tableProperties.coloumns)">
+        <template
+          v-for="(keyColoumn,index) in Object.keys(dataDiagramNew[tableKeyConfig].coloumns)"
+        >
           <tr v-bind:key="keyColoumn">
             <td>
               <table border="0" width="100%">
@@ -31,7 +33,7 @@
                   <td width="15%" align="left">
                     <span
                       style="margin-left:7px"
-                      v-if="tableProperties.coloumns[keyColoumn].primaryKey"
+                      v-if="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].primaryKey"
                     >
                       <img
                         src="../assets/primary-key.png"
@@ -41,7 +43,7 @@
                     </span>
                     <span
                       style="margin-left:7px"
-                      v-else-if="tableProperties.coloumns[keyColoumn].allowNull===false"
+                      v-else-if="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].notNull===true"
                     >
                       <img
                         src="../assets/icons8-diamonds-40.png"
@@ -49,21 +51,36 @@
                         style="vertical-align: baseline; margin-right:5px"
                       >
                     </span>
+                    <span
+                      style="margin-left:7px"
+                      v-else-if="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].notNull===false"
+                    >
+                      <img
+                        src="../assets/icons8-diamonds-40-white.png"
+                        width="14px"
+                        style="vertical-align: baseline; margin-right:5px"
+                      >
+                    </span>
                   </td>
-                  <td  align="left">
+                  <td align="left">
                     <a-input
                       @blur="isEditColoumnName = false"
                       ref="searchLL"
                       v-if="showDetailcoloumn===index"
                       size="small"
                       placeholder="small size"
-                      v-model="newColoumnName"
+                      @input="updateColoumnName({
+                        tableKey_id:tableKeyConfig,
+                        coloumn_id:keyColoumn,
+                        newName:$event.target.value
+                      })"
+                      :value="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name"
                     />
                     <div
                       @click="showDetail(index,keyColoumn)"
                       v-else
                       style="width:100%"
-                    >{{keyColoumn}}</div>
+                    >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name}}</div>
                   </td>
                 </tr>
               </table>
@@ -81,22 +98,57 @@
                 @click="showDetail(index,keyColoumn)"
                 v-else
                 style="margin-left:12px; width:100%"
-              >{{tableProperties.coloumns[keyColoumn].dataType}}</div>
+              >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].dataType}}</div>
             </td>
             <td align="center">
-              <a-checkbox></a-checkbox>
+              <a-checkbox
+                @change="updatePrimaryKey({
+                tableKey_id:tableKeyConfig,
+                coloumn_id:keyColoumn,
+                primaryKey:$event.target.checked
+              })"
+                :checked="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].primaryKey"
+              ></a-checkbox>
             </td>
             <td align="center">
-              <a-checkbox></a-checkbox>
+              <a-checkbox
+                @change="updateNotNull({
+                  tableKey_id:tableKeyConfig,
+                  coloumn_id:keyColoumn,
+                  notNull:$event.target.checked
+                })"
+                :checked="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].notNull"
+              ></a-checkbox>
             </td>
             <td align="center">
-              <a-checkbox></a-checkbox>
+              <a-checkbox
+                @change="updateUnique({
+                  tableKey_id:tableKeyConfig,
+                  coloumn_id:keyColoumn,
+                  unique:$event.target.checked
+              })"
+                :checked="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].unique"
+              ></a-checkbox>
             </td>
             <td align="center">
-              <a-checkbox></a-checkbox>
+              <a-checkbox
+                @change="updateUnsigned({
+                  tableKey_id:tableKeyConfig,
+                  coloumn_id:keyColoumn,
+                  unsigned:$event.target.checked                
+              })"
+                :checked="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].unsigned"
+              ></a-checkbox>
             </td>
             <td align="center">
-              <a-checkbox></a-checkbox>
+              <a-checkbox
+                @change="updateAutoIncrement({
+                  tableKey_id:tableKeyConfig,
+                  coloumn_id:keyColoumn,
+                  autoIncrement:$event.target.checked                                
+              })"
+                :checked="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].autoIncrement"
+              ></a-checkbox>
             </td>
             <td align="center">
               <a-icon
@@ -116,7 +168,7 @@
                       <span style="padding-right:5px">Default</span>
                     </a-col>
                     <a-col :span="18">
-                      <a-input style="width:130px" size="small" placeholder="small size"/>
+                      <a-input style="width:170px" size="small" placeholder="small size"/>
                     </a-col>
                   </a-row>
                   <a-row style="margin-top:5px" align="bottom" type="flex">
@@ -124,25 +176,85 @@
                       <span style="padding-right:5px">Foregn Key</span>
                     </a-col>
                     <a-col :span="18">
-                      <a-checkbox style="padding:0;margin:0"></a-checkbox>
+                      <a-checkbox
+                        @change="updateForeignKeyStatus({
+                          tableKey_id:tableKeyConfig,
+                          coloumn_id:keyColoumn,
+                          foreignKey:$event.target.checked
+                        })"
+                        :checked="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].foreignKey"
+                        style="padding:0;margin:0"
+                      ></a-checkbox>
                     </a-col>
                   </a-row>
-                  <a-row style="margin-top:5px" align="bottom" type="flex">
+                  <a-row style="margin-top:5px" align="top" type="flex">
+                    <a-col :span="5" align="top">
+                      <span style="padding-right:5px" align="top">Comments</span>
+                    </a-col>
+                    <a-col :span="18" align="top">
+                      <a-textarea
+                        style="width:170px"
+                        size="small"
+                        placeholder="Give note  of your table"
+                        autosize
+                      />
+                    </a-col>
+                  </a-row>
+                  <a-row
+                    v-if="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].foreignKey"
+                    style="margin-top:5px"
+                    align="bottom"
+                    type="flex"
+                  >
                     <a-col :span="5">
                       <span style="padding-right:5px">Ref. Table</span>
                     </a-col>
                     <a-col :span="18">
-                      <a-input style="width:130px" size="small" placeholder="small size"/>
+                      <a-select
+                        size="small"
+                        :value="dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id"
+                        style="width: 170px"
+                        @change="updateAssociationBelongTableName({
+                          selectedNewTable:$event,
+                          table_id:tableKeyConfig,
+                          association_id:dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id
+                        })"
+                      >
+                        <a-select-option
+                          size="small"
+                          v-for="keyTable in Object.keys(dataDiagramNew)"
+                          :key="keyTable"
+                          :value="keyTable"
+                        >{{dataDiagramNew[keyTable].table_name}}</a-select-option>
+                      </a-select>
                     </a-col>
                   </a-row>
-                  <a-row style="margin-top:5px" align="bottom" type="flex">
+                  <a-row
+                    v-if="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].foreignKey"
+                    style="margin-top:5px"
+                    align="bottom"
+                    type="flex"
+                  >
                     <a-col :span="5">Ref. Column</a-col>
                     <a-col :span="18">
-                      <a-input style="width:130px" size="small" placeholder="small size"/>
+                      <a-select
+                        :value="dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].targetKey_id"
+                        size="small"
+                        style="width: 170px"
+                      >
+                        <a-select-option
+                          size="small"
+                          v-for="keyColoumnRef in Object.keys(dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns)"
+                          :value="keyColoumnRef"
+                          :key="keyColoumnRef"
+                        >{{dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns[keyColoumnRef].coloumn_name}}
+                        </a-select-option>
+                      </a-select>
+                      <!-- <a-input style="width:170px" size="small" placeholder="small size"/> -->
                     </a-col>
                   </a-row>
 
-                  <a-row style="margin-top:15px" align="bottom" type="flex">
+                  <!-- <a-row style="margin-top:15px" align="bottom" type="flex">
                     <a-col :span="4">
                       <a-button
                         @click="cancelEdit(index,keyColoumn)"
@@ -157,7 +269,7 @@
                         style="color: rgba(0, 0, 0, 0.65);"
                       >Save</a-button>
                     </a-col>
-                  </a-row>
+                  </a-row>-->
                 </div>
               </td>
             </tr>
@@ -176,7 +288,9 @@ export default {
     ...mapState("diagram", {
       tableProperties: state => state.configTable.properties,
       tableName: state => state.configTable.tableName,
-      visible: state => state.visibleConfigTable
+      visible: state => state.visibleConfigTable,
+      dataDiagramNew: state => state.dataDiagramNew,
+      tableKeyConfig: state => state.tableKeyConfig
     })
   },
   methods: {
@@ -187,28 +301,34 @@ export default {
         oldColoumn: coloumn
       });
     },
+    // updateAssociationBelongTableName(selectedNewTable, association_id) {
+    //   // this.updateAssociation
+    //   // eslint-disable-next-line
+    //   console.log(JSON.stringify(value) + " | " + JSON.stringify(option));
+    // },
     cancelEdit() {
       this.showDetailcoloumn = -1;
     },
-    changeColoumnName(val) {
-      // eslint-disable-next-line
-      console.log("val " + JSON.stringify(val.target.value));
-      // var oldColoumn = this.isEditColoumnName;
-      // // eslint-disable-next-line
-      // console.log("oldData " + oldColoumn);
-      // this.updateColoumnTable({
-      //   newColoumn: val.target.value,
-      //   tableName: this.tableName,
-      //   oldColoumn: oldColoumn
-      // });
-    },
     ...mapMutations("diagram", {
       setVisibleConfigTable: "setVisibleConfigTable",
-      updateColoumnTable: "updateColoumnTable"
+      updateColoumnTable: "updateColoumnTable",
+      updateColoumnName: "updateColoumnName",
+      updatePrimaryKey: "updatePrimaryKey",
+      updateNotNull: "updateAllowNull",
+      updateForeignKeyStatus: "updateForeignKeyStatus",
+      updateUnique: "updateUnique",
+      updateUnsigned: "updateUnsigned",
+      updateAutoIncrement: "updateAutoIncrement",
+      updateAssociation: "updateAssociation",
+      updateAssociationBelongTableName: "updateAssociationBelongTableName"
     }),
     showDetail(val, keyColoumn) {
-      this.newColoumnName = keyColoumn;
-      this.newDataType = this.tableProperties.coloumns[keyColoumn].dataType;
+      this.newColoumnName = this.dataDiagramNew[this.tableKeyConfig].coloumns[
+        keyColoumn
+      ].coloumn_name;
+      this.newDataType = this.dataDiagramNew[this.tableKeyConfig].coloumns[
+        keyColoumn
+      ].dataType;
       if (val === this.showDetailcoloumn) {
         this.showDetailcoloumn = -1;
       } else {
@@ -218,6 +338,9 @@ export default {
     onClose() {
       this.setVisibleConfigTable(false);
     },
+    // updatePrimaryKey(t) {
+    //   window.alert(JSON.stringify(t));
+    // },
     changeEditableColoumnName() {
       if (this.isEditColoumnName === true) {
         this.isEditColoumnName = false;
@@ -235,6 +358,7 @@ export default {
   },
   data() {
     return {
+      selectedTable: null,
       newColoumnName: "",
       newComment: "",
       newDataType: "",

@@ -55,7 +55,7 @@
         />
         <!-- end primary key image -->
         <v-image
-          v-else-if="coloumns[coloumnKey].allowNull===false"
+          v-else-if="coloumns[coloumnKey].notNull===true"
           :config="{
             image: imageNotNull,
             width: 13,
@@ -65,7 +65,7 @@
           }"
         />
         <v-image
-          v-else-if="coloumns[coloumnKey].allowNull===true"
+          v-else-if="coloumns[coloumnKey].notNull===false"
           :config="{
             image: imageNull,
             width: 13,
@@ -76,7 +76,7 @@
         />
         <v-text
           :config="{
-            text: coloumnKey,
+            text: coloumns[coloumnKey].coloumn_name,
             x: 23,
             y: (5+30)+(index*20),
             shadowBlur: coloumns[coloumnKey].style.shadowBlur,
@@ -105,7 +105,7 @@ import primaryKeyImage from "../assets/primary-key.png";
 import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
-  props: ["potition", "coloumns", "tableName"],
+  props: ["potition", "coloumns", "tableName", 'tableKey'],
   // watch:{
   //   coloumns(val){
   //     window.alert('val '+val)
@@ -113,29 +113,31 @@ export default {
   // },
   methods: {
     ...mapMutations("diagram", {
-      setConfigTable: "setConfigTable"
+      setConfigTable: "setConfigTable",
+      setTableKeyConfig:"setTableKeyConfig"
     }),
     selectRelation() {
       this.$emit("highlight",{
          status: true, 
-         tableName: this.tableName
+         tableKey: this.tableKey
       });
     },
     deselectRelation() {
       this.$emit("highlight", {
         status:false,
-        tableName: this.tableName
+        tableKey: this.tableKey
       });
     },
     dragmove(val) {
       this.$emit("changedPotition", {
         value: val,
-        tableName: this.tableName
+        tableKey: this.tableKey
       });
     },
     clickEvent() {
       this.$emit("editDataTable");
-      this.setConfigTable(this.tableName)
+      // this.setConfigTable(this.tableName)
+      this.setTableKeyConfig(this.tableKey)
     },
     addPointAssotiation() {},
     reaCalculatePointAsscotiation() {}

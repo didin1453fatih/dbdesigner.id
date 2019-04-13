@@ -3,21 +3,22 @@
     <v-stage :config="configKonva">
       <v-layer>
         <connector-base
-          v-for="connector in connectorNew"
-          :key="connector.key"
-          :points="connector.points"
-          :lineStyle="connector.lineStyle"
+          v-for="connectorKey in Object.keys(connectorNewKey)"
+          :key="connectorKey"
+          :points="connectorNewKey[connectorKey].points"
+          :lineStyle="connectorNewKey[connectorKey].lineStyle"
         />
 
         <table-base
           @highlight="highlightRelation"
-          v-for="tableKey in Object.keys(dataDiagram)"
+          v-for="tableKey in Object.keys(dataDiagramNew)"
           v-bind:key="tableKey"
           @editDataTable="editDataTable"
           @changedPotition="changeTablePotition"
-          :coloumns="dataDiagram[tableKey].coloumns"
-          :tableName="tableKey"
-          :potition="dataDiagram[tableKey].potition"
+          :tableKey="tableKey"
+          :coloumns="dataDiagramNew[tableKey].coloumns"
+          :tableName="dataDiagramNew[tableKey].table_name"
+          :potition="dataDiagramNew[tableKey].point"
         />
       </v-layer>
     </v-stage>
@@ -47,7 +48,7 @@ export default {
   methods: {
     ...mapMutations("diagram", {
       changeTablePotition: "changeTablePotition",
-      highlightRelation: "highlightRelation"
+      highlightRelation: "highlightRelation",
     }),
     editDataTable() {
       // this.editTableName = tableName;
@@ -66,6 +67,8 @@ export default {
     ...mapState("diagram", {
       dataDiagram: state => state.dataDiagram,
       connectorNew: state => state.connectorNew,
+      dataDiagramNew: state=>state.dataDiagramNew,
+      connectorNewKey: state=> state.connectorNewKey
     })
   },
   data() {
