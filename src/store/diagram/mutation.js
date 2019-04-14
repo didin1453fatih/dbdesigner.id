@@ -1,52 +1,4 @@
 export default {
-  /**
-   *
-   * @param {*} state
-   * @param { value : value of x  and y } raw
-   */
-  changeTablePotition8(state, raw) {
-    var val = raw.value;
-    var tableName = raw.tableName;
-    state.dataDiagram[tableName].potition.x = val.currentTarget.attrs.x;
-    state.dataDiagram[tableName].potition.y = val.currentTarget.attrs.y;
-    state.dataDiagram[tableName].association.forEach(async assoc => {
-      if (assoc.type === "belong") {
-        await state.connectorNew.forEach(async conn => {
-          if (
-            conn.tail.table === tableName &&
-            assoc.foreignKey === conn.tail.coloumn
-          ) {
-            var tmp = [
-              val.currentTarget.attrs.x + assoc.potition.x,
-              val.currentTarget.attrs.y + assoc.potition.y,
-              conn.points[0] - 30,
-              conn.points[1] - 30,
-              conn.points[4],
-              conn.points[5]
-            ];
-            conn.points = tmp;
-          }
-        });
-      } else if (assoc.type === "has") {
-        await state.connectorNew.forEach(async conn => {
-          if (
-            conn.head.table === tableName &&
-            assoc.sourceKey === conn.head.coloumn
-          ) {
-            var tmp = [
-              conn.points[0],
-              conn.points[1],
-              conn.points[0] - 30,
-              conn.points[1] - 30,
-              val.currentTarget.attrs.x + assoc.potition.x,
-              val.currentTarget.attrs.y + assoc.potition.y
-            ];
-            conn.points = tmp;
-          }
-        });
-      }
-    });
-  },
     /**
    *
    * @param {*} state
@@ -86,96 +38,6 @@ export default {
       conn.points=tmp
     })
   },
-  /**
-   *
-   * @param {*} state
-   * @param {status: boolean, tableName: string} raw
-   */
-  highlightRelation8(state, raw) {
-    var status = raw.status;
-    var tableName = raw.tableName;
-    state.dataDiagram[tableName].association.forEach(async assoc => {
-      if (assoc.type === "belong") {
-        if (status === true) {
-          state.dataDiagram[tableName].coloumns[
-            assoc.foreignKey
-          ].style.shadowBlur = 5;
-          state.dataDiagram[tableName].coloumns[
-            assoc.foreignKey
-          ].style.shadowColor = "green";
-          state.dataDiagram[assoc.table].coloumns[
-            assoc.targetKey
-          ].style.shadowBlur = 5;
-          state.dataDiagram[assoc.table].coloumns[
-            assoc.targetKey
-          ].style.shadowColor = "green";
-          await state.connectorNew.forEach(async conn => {
-            if (
-              conn.tail.table === tableName &&
-              assoc.foreignKey === conn.tail.coloumn
-            ) {
-              conn.lineStyle.shadowBlur = 5;
-              conn.lineStyle.shadowColor = "green";
-            }
-          });
-        } else {
-          state.dataDiagram[tableName].coloumns[
-            assoc.foreignKey
-          ].style.shadowBlur = 0;
-          state.dataDiagram[assoc.table].coloumns[
-            assoc.targetKey
-          ].style.shadowBlur = 0;
-          await state.connectorNew.forEach(async conn => {
-            if (
-              conn.tail.table === tableName &&
-              assoc.foreignKey === conn.tail.coloumn
-            ) {
-              conn.lineStyle.shadowBlur = 0;
-            }
-          });
-        }
-      } else if (assoc.type === "has") {
-        if (status === true) {
-          state.dataDiagram[tableName].coloumns[
-            assoc.sourceKey
-          ].style.shadowBlur = 5;
-          state.dataDiagram[tableName].coloumns[
-            assoc.sourceKey
-          ].style.shadowColor = "#00D2FF";
-          state.dataDiagram[assoc.table].coloumns[
-            assoc.foreignKey
-          ].style.shadowBlur = 5;
-          state.dataDiagram[assoc.table].coloumns[
-            assoc.foreignKey
-          ].style.shadowColor = "#00D2FF";
-          await state.connectorNew.forEach(async conn => {
-            if (
-              conn.head.table === tableName &&
-              assoc.sourceKey === conn.head.coloumn
-            ) {
-              conn.lineStyle.shadowBlur = 5;
-              conn.lineStyle.shadowColor = "#00D2FF";
-            }
-          });
-        } else {
-          state.dataDiagram[tableName].coloumns[
-            assoc.sourceKey
-          ].style.shadowBlur = 0;
-          state.dataDiagram[assoc.table].coloumns[
-            assoc.foreignKey
-          ].style.shadowBlur = 0;
-          await state.connectorNew.forEach(async conn => {
-            if (
-              conn.head.table === tableName &&
-              assoc.sourceKey === conn.head.coloumn
-            ) {
-              conn.lineStyle.shadowBlur = 0;
-            }
-          });
-        }
-      }
-    });
-  },
     /**
    *
    * @param {*} state
@@ -212,17 +74,17 @@ export default {
         let targetTableId= state.dataDiagramNew[tableKey].association[key].table_id
         let connectorId=state.dataDiagramNew[tableKey].association[key].connector_id
         if(status===true){
-          state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style.shadowBlur = 5;
-          state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style.shadowColor = "#00D2FF";
+          state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowBlur = 5;
+          state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowColor = "#00D2FF";
 
-          state.dataDiagramNew[targetTableId].coloumns[sourceKeyId].style.shadowBlur = 5;
-          state.dataDiagramNew[targetTableId].coloumns[sourceKeyId].style.shadowColor = "#00D2FF";
+          state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style.shadowBlur = 5;
+          state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style.shadowColor = "#00D2FF";
 
           state.connectorNewKey[connectorId].lineStyle.shadowBlur = 5;
           state.connectorNewKey[connectorId].lineStyle.shadowColor = "#00D2FF";
         }else if(status===false){
-          state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style.shadowBlur = 0;
-          state.dataDiagramNew[targetTableId].coloumns[sourceKeyId].style.shadowBlur = 0;
+          state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowBlur = 0;
+          state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style.shadowBlur = 0;
           state.connectorNewKey[connectorId].lineStyle.shadowBlur = 0;
         }
       }
@@ -365,6 +227,12 @@ export default {
       var association_id= raw.association_id
       var selectedNewTable_id= raw.selectedNewTable
       var table_id= raw.table_id
+      var oldTableTarget_id=state.dataDiagramNew[table_id].association[association_id].table_id
+      // remove old asscotation table target
+      state.dataDiagramNew[oldTableTarget_id].association[association_id]
+
+
+      // change this table property
       state.dataDiagramNew[table_id].association[association_id].table_id=selectedNewTable_id
       // state.connectorNewKey[state.dataDiagramNew[table_id].association[association_id].connector_id].head.table_id=state.dataDiagramNew[table_id].association[association_id].table_id
       // this.updateAssociation
