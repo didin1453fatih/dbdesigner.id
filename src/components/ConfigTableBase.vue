@@ -210,9 +210,13 @@
                       <span style="padding-right:5px">Ref. Table</span>
                     </a-col>
                     <a-col :span="18">
+                      <!-- :value="dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id" -->
                       <a-select
-                        size="small"
-                        :value="dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id"
+                        size="small"                        
+                        :value="getSelectedTable({
+                          tableKeyConfig:tableKeyConfig,
+                          keyColoumn:keyColoumn
+                        })"
                         style="width: 170px"
                         @change="updateAssociationBelongTableName({
                           selectedNewTable:$event,
@@ -237,8 +241,12 @@
                   >
                     <a-col :span="5">Ref. Column</a-col>
                     <a-col :span="18">
+                      <!-- :value="dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].targetKey_id" -->
                       <a-select
-                        :value="dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].targetKey_id"
+                        :value="getSelectedColoumn({
+                          tableKeyConfig:tableKeyConfig,
+                          keyColoumn:keyColoumn
+                        })"
                         @change="updateAssociationBelongColoumnName({
                           selectedNewColoumn_id:$event,
                           table_id:tableKeyConfig,
@@ -247,16 +255,20 @@
                         size="small"
                         style="width: 170px"
                       >
+                      <!-- Object.keys(dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns) -->
                         <a-select-option
-                          size="small"
-                          v-for="keyColoumnRef in Object.keys(dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns)"
+                          size="small"                          
+                          v-for="keyColoumnRef in getColoumnOption({
+                            tableKeyConfig:tableKeyConfig,
+                            keyColoumn:keyColoumn
+                          })"
                           :value="keyColoumnRef"
                           :key="keyColoumnRef"
                         >{{dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns[keyColoumnRef].coloumn_name}}
                         </a-select-option>
                       </a-select>
                     </a-col>
-                  </a-row>
+                  </a-row> 
                 </div>
               </td>
             </tr>
@@ -278,7 +290,7 @@ export default {
       visible: state => state.visibleConfigTable,
       dataDiagramNew: state => state.dataDiagramNew,
       tableKeyConfig: state => state.tableKeyConfig
-    })
+    }),
   },
   methods: {
     saveChange(coloumn) {
@@ -287,6 +299,32 @@ export default {
         tableName: this.tableName,
         oldColoumn: coloumn
       });
+    },
+    // eslint-disable-next-line
+    getSelectedColoumn(raw){                
+        // window.alert(JSON.stringify(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]))
+        if(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]===undefined){
+          return null
+        }else{
+          return this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id].targetKey_id
+        }
+    },
+    // eslint-disable-next-line
+    getSelectedTable(raw){                
+        if(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]===undefined){
+          return null
+        }else{
+          return this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id].table_id
+        }
+    },
+    getColoumnOption(raw){
+      // window.alert(JSON.stringify(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]))
+      if(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]===undefined){
+        return []
+      }else{
+        return Object.keys(this.dataDiagramNew[this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id].table_id].coloumns)
+      }
+        
     },
     // updateAssociationBelongTableName(selectedNewTable, association_id) {
     //   // this.updateAssociation
