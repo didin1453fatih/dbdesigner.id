@@ -239,6 +239,11 @@
                     <a-col :span="18">
                       <a-select
                         :value="dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].targetKey_id"
+                        @change="updateAssociationBelongColoumnName({
+                          selectedNewColoumn_id:$event,
+                          table_id:tableKeyConfig,
+                          association_id:dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id
+                        })"
                         size="small"
                         style="width: 170px"
                       >
@@ -250,26 +255,8 @@
                         >{{dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns[keyColoumnRef].coloumn_name}}
                         </a-select-option>
                       </a-select>
-                      <!-- <a-input style="width:170px" size="small" placeholder="small size"/> -->
                     </a-col>
                   </a-row>
-
-                  <!-- <a-row style="margin-top:15px" align="bottom" type="flex">
-                    <a-col :span="4">
-                      <a-button
-                        @click="cancelEdit(index,keyColoumn)"
-                        type="dashed"
-                        size="small"
-                      >Cancel</a-button>
-                    </a-col>
-                    <a-col :span="3">
-                      <a-button
-                        @click="saveChange(keyColoumn)"
-                        size="small"
-                        style="color: rgba(0, 0, 0, 0.65);"
-                      >Save</a-button>
-                    </a-col>
-                  </a-row>-->
                 </div>
               </td>
             </tr>
@@ -320,7 +307,8 @@ export default {
       updateUnsigned: "updateUnsigned",
       updateAutoIncrement: "updateAutoIncrement",
       updateAssociation: "updateAssociation",
-      updateAssociationBelongTableName: "updateAssociationBelongTableName"
+      updateAssociationBelongTableName: "updateAssociationBelongTableName",
+      updateAssociationBelongColoumnName : "updateAssociationBelongColoumnName"
     }),
     showDetail(val, keyColoumn) {
       this.newColoumnName = this.dataDiagramNew[this.tableKeyConfig].coloumns[

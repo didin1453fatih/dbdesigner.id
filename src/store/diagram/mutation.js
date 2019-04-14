@@ -223,6 +223,22 @@ export default {
     var autoIncrement= raw.autoIncrement
     state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].autoIncrement=autoIncrement
   },
+  async updateAssociationBelongColoumnName(state,raw){
+    var association_id= raw.association_id
+    var selectedNewColoumn_id= raw.selectedNewColoumn_id
+    var table_id= raw.table_id
+
+    //change in this asscotiation table below always
+    var assocObject=state.dataDiagramNew[table_id].association[association_id]
+    assocObject.targetKey_id=selectedNewColoumn_id
+    //change in connector
+    var connObject= state.connectorNewKey[assocObject.connector_id]
+    state.connectorNewKey[assocObject.connector_id].head.coloumn_id=selectedNewColoumn_id
+
+    //change in target key has owner ship
+    state.dataDiagramNew[connObject.head.table_id].association[connObject.head.association_id].sourceKey_id=selectedNewColoumn_id
+
+  },
   async updateAssociationBelongTableName(state,raw) {
       var association_id= raw.association_id
       var selectedNewTable_id= raw.selectedNewTable

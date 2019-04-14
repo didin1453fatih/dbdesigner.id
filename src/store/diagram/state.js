@@ -65,7 +65,24 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           }
-        }        
+        },
+        coloumn_car_number_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
+          coloumn_name: "number",
+          comment: "",
+          dataType: "integer(31)",
+          default: "",
+          primaryKey: false,
+          notNull: true,
+          unique: false,
+          foreignKey:false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          }
+        }              
       },
       association: {
         assoc_Car_has_driver_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
