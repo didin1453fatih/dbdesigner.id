@@ -243,20 +243,47 @@ export default {
       var association_id= raw.association_id
       var selectedNewTable_id= raw.selectedNewTable
       var table_id= raw.table_id
-      var oldTableTarget_id=state.dataDiagramNew[table_id].association[association_id].table_id
-      // remove old asscotation table target
-      state.dataDiagramNew[oldTableTarget_id].association[association_id]
+
+      var assocOBJ=state.dataDiagramNew[table_id].association[association_id]
+      // delete source table assoc
+      var targetOldAssoc=state.connectorNewKey[assocOBJ.connector_id].head.association_id
+      var targetOldTable=state.connectorNewKey[assocOBJ.connector_id].head.table_id
+      delete state.dataDiagramNew[targetOldTable].association[targetOldAssoc]
+
+      // change association data target table_id      
+      assocOBJ.table_id=selectedNewTable_id
+
+      //change coloumn target to index 0
+      var selectedColoumnDefault_id=Object.keys(state.dataDiagramNew[selectedNewTable_id].coloumns)[0]
+      assocOBJ.targetKey_id=selectedColoumnDefault_id      
+
+      // change coloumn connector
+      state.connectorNewKey[assocOBJ.connector_id].head.coloumn_id=selectedColoumnDefault_id
+      // change table connector
+      state.connectorNewKey[assocOBJ.connector_id].head.table_id=selectedNewTable_id
+      // renew asscotiation id  
+      var newAssoctioation_id=new Date().toString()
+      state.connectorNewKey[assocOBJ.connector_id].head.association_id=newAssoctioation_id
+      // chreate new
+      state.dataDiagramNew[selectedNewTable_id].association[newAssoctioation_id]= {
+        connector_id: assocOBJ.connector_id,
+        type: "has",
+        table: "Driver",
+        table_id: table_id,
+        foreignKey: "Car_id",
+        foreignKey_id: assocOBJ.foreignKey_id,
+        sourceKey: "id",
+        sourceKey_id: assocOBJ.targetKey_id,
+        point: {
+          x: 100,
+          y: 50
+        }
+      }
 
 
-      // change this table property
-      state.dataDiagramNew[table_id].association[association_id].table_id=selectedNewTable_id
-      // state.connectorNewKey[state.dataDiagramNew[table_id].association[association_id].connector_id].head.table_id=state.dataDiagramNew[table_id].association[association_id].table_id
-      // this.updateAssociation
-      // eslint-disable-next-line
-      console.log(" | " + JSON.stringify(raw));
-      // state.connectorNewKey.conn_2e1b6299_89bd_4b64_94b8_61d19a26fc34.head.table_id='table_885ddad7_c509_4d5e_ab2e_dc5cc06d0e38'
-      // state.connectorNewKey.conn_2e1b6299_89bd_4b64_94b8_61d19a26fc34.head.coloumn_id='coloumn_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34'
-      // state.dataDiagramNew[tableKey].point.x
+
+
+
       
       let conn=state.connectorNewKey [
         state.dataDiagramNew[table_id].association[association_id].connector_id
@@ -267,8 +294,8 @@ export default {
         conn.points[1],
         conn.points[0] - 30,
         conn.points[1] - 30,
-        state.dataDiagramNew[selectedNewTable_id].point.x+state.dataDiagramNew[selectedNewTable_id].association[association_id].point.x,
-        state.dataDiagramNew[selectedNewTable_id].point.y+state.dataDiagramNew[selectedNewTable_id].association[association_id].point.y,
+        state.dataDiagramNew[selectedNewTable_id].point.x,
+        state.dataDiagramNew[selectedNewTable_id].point.y,
       ];
 
       // state.dataDiagramNew[selectedNewTable_id].association[association_id].table_id=selectedNewTable_id
