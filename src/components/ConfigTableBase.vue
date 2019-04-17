@@ -219,6 +219,7 @@
                         })"
                         style="width: 170px"
                         @change="updateAssociationBelongTableName({
+                          thisForeignKey_id:keyColoumn,
                           selectedNewTable:$event,
                           table_id:tableKeyConfig,
                           association_id:dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id

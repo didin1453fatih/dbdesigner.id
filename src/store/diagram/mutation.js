@@ -43,12 +43,12 @@ export default {
    * @param {*} state
    * @param {status: boolean, tableName: string} raw
    */
-  highlightRelation(state, raw) {
+  async highlightRelation(state, raw) {
     var status = raw.status;
     var tableKey = raw.tableKey;
     // eslint-disable-next-line
     console.log('status true '+tableKey)    
-    Object.keys(state.dataDiagramNew[tableKey].association).forEach(key=>{
+    await Object.keys(state.dataDiagramNew[tableKey].association).forEach(key=>{
       if(state.dataDiagramNew[tableKey].association[key].type==="belong"){
         let foreignKeyId = state.dataDiagramNew[tableKey].association[key].foreignKey_id
         let targetKeyId = state.dataDiagramNew[tableKey].association[key].targetKey_id
@@ -74,6 +74,8 @@ export default {
         let targetTableId= state.dataDiagramNew[tableKey].association[key].table_id
         let connectorId=state.dataDiagramNew[tableKey].association[key].connector_id
         if(status===true){
+          // eslint-disable-next-line
+          console.log('hidupkan biru '+connectorId)          
           state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowBlur = 5;
           state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowColor = "#00D2FF";
 
@@ -83,6 +85,8 @@ export default {
           state.connectorNewKey[connectorId].lineStyle.shadowBlur = 5;
           state.connectorNewKey[connectorId].lineStyle.shadowColor = "#00D2FF";
         }else if(status===false){
+          // eslint-disable-next-line
+          console.log('matikan biru')
           state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowBlur = 0;
           state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style.shadowBlur = 0;
           state.connectorNewKey[connectorId].lineStyle.shadowBlur = 0;
@@ -243,6 +247,74 @@ export default {
       var association_id= raw.association_id
       var selectedNewTable_id= raw.selectedNewTable
       var table_id= raw.table_id
+      var thisForeignKey_id=raw.thisForeignKey_id
+      // window.alert(JSON.stringify(raw))
+      if(association_id===undefined){
+        let selectedColoumnDefault_id=Object.keys(state.dataDiagramNew[selectedNewTable_id].coloumns)[0]
+        association_id='_'+new Date().getMilliseconds()
+        var association_id_target='assoc_'+new Date().getMilliseconds()
+        var connector_id='conn_car_number_driver_id'+new Date().getMilliseconds()
+        // create association in this table
+        state.dataDiagramNew[table_id].association[association_id]= {
+          connector_id: connector_id,
+          type: "belong",
+          table: selectedNewTable_id,
+          table_id: selectedNewTable_id,
+          foreignKey: thisForeignKey_id,
+          foreignKey_id: thisForeignKey_id,
+          targetKey: selectedColoumnDefault_id,
+          targetKey_id: selectedColoumnDefault_id,
+          point: {
+            x: 100,
+            y: 200
+          }
+        }
+        // create belong assoc in this table
+        state.dataDiagramNew[table_id].coloumns[thisForeignKey_id].association_belong_id=association_id
+        // create association in target table
+        state.dataDiagramNew[selectedNewTable_id].association[association_id_target]={
+          connector_id: connector_id,
+          type: "has",
+          table: table_id,
+          table_id: table_id,
+          foreignKey: thisForeignKey_id,
+          foreignKey_id: thisForeignKey_id,
+          sourceKey: "id",
+          sourceKey_id: selectedColoumnDefault_id,
+          point: {
+            x: 100,
+            y: 100
+          }
+        },
+        // state.dataDiagramNew[selectedNewTable_id].association[association_id]=association_id_target
+        state.connectorNewKey[connector_id]= {
+          // head is has
+          head: {
+            table: selectedNewTable_id,
+            table_id: selectedNewTable_id,
+            coloumn: "id",
+            coloumn_id: selectedColoumnDefault_id,
+            association_id:association_id_target
+          },
+          // tail is belong
+          tail: {
+            table: "Driver",
+            table_id: table_id,
+            coloumn: "car_id",
+            coloumn_id: thisForeignKey_id,
+            association_id: association_id
+          },
+          points: [250, 100, 100, 100, 30, 110],
+          lineStyle: {
+            shadowBlur: 5,
+            shadowColor: "green"
+          }
+        }
+        // eslint-disable-next-line
+        console.log(JSON.stringify(state.connectorNewKey))
+      
+      }else{
+        
 
       var assocOBJ=state.dataDiagramNew[table_id].association[association_id]
       // delete source table assoc
@@ -301,6 +373,7 @@ export default {
       // state.dataDiagramNew[selectedNewTable_id].association[association_id].table_id=selectedNewTable_id
       conn.points=tmp
       conn.tail.table_id=table_id
+    }
     },
 };
 
