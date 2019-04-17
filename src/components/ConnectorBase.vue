@@ -1,4 +1,5 @@
 <template>
+
   <v-line :config="{
         x: 0,
         y: 0,
@@ -15,17 +16,17 @@
 <script>
 export default {
   props: ["points","lineStyle"],
-  watch:{
-    points(val){
-      this.lineConfig.points=val
-      return val
-    },
-    lineStyle(val){
-      this.lineConfig.shadowBlur=val.shadowBlur
-      this.lineConfig.shadowColor=val.shadowColor
-      return val
-    }
-  },
+  // watch:{
+  //   points(val){
+  //     this.lineConfig.points=val
+  //     return val
+  //   },
+  //   lineStyle(val){
+  //     this.lineConfig.shadowBlur=val.shadowBlur
+  //     this.lineConfig.shadowColor=val.shadowColor
+  //     return val
+  //   }
+  // },
   methods: {
     clickEvent: () => {
       window.alert("makan line");

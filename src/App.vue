@@ -2,12 +2,34 @@
   <div>
     <v-stage :config="configKonva">
       <v-layer>
+        <!-- <template
+        v-for="connectorKey in Object.keys(connectorNewKey)"
+        >
+        <div v-bind:key="connectorKey">
         <connector-base
-          v-for="connectorKey in Object.keys(connectorNewKey)"
-          :key="connectorKey"
           :points="connectorNewKey[connectorKey].points"
           :lineStyle="connectorNewKey[connectorKey].lineStyle"
         />
+        </div>
+        </template>-->
+
+        <template v-for="connectorKey in Object.keys(connectorNewKey)">
+          <div v-bind:key="connectorKey">
+            <v-line
+              :config="{
+                x: 0,
+                y: 0,
+                points: connectorNewKey[connectorKey].points,
+                strokeWidth: 1,
+                tension: 1,
+                closed: false,
+                stroke: 'black',
+                shadowBlur: connectorNewKey[connectorKey].lineStyle.shadowBlur,
+                shadowColor:connectorNewKey[connectorKey].lineStyle.shadowColor,
+              }"
+            />
+          </div>
+        </template>
 
         <table-base
           @highlight="highlightRelation"
@@ -35,20 +57,21 @@
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 // import { mapActions } from "vuex";
-import ConnectorBase from "./components/ConnectorBase";
+// import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
 import ConfigTable from "./components/ConfigTableBase.vue";
 
 export default {
   components: {
     TableBase,
-    ConnectorBase,
+    // ConnectorBase,
     ConfigTable
   },
   methods: {
     ...mapMutations("diagram", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
+      setLineStyleConnector: "setLineStyleConnector"
     }),
     editDataTable() {
       // this.editTableName = tableName;
@@ -60,82 +83,115 @@ export default {
     },
     onClose() {
       this.visible = false;
-    },
+    }
   },
-  mounted() {},
-    computed: {
+  mounted() {
+    // var flip = false;
+    // var cnn=this.connectorNewKey
+    // var hhh= this.setLineStyleConnector
+    // setInterval(function() {
+    //   if (flip === false) {
+    //     flip = true;
+    //     let styleL = {
+    //       shadowBlur: 5,
+    //       shadowColor: "#00D2FF"
+    //     };
+    //     Object.keys(cnn).forEach( key => {
+    //       // cnn[key].lineStyle = tmpLineStye;
+    //       hhh({
+    //         key:key,
+    //         style:styleL
+    //       })
+    //     });
+    //   } else {
+    //     flip = false;
+    //     let styleL = {
+    //       shadowBlur: 5,
+    //       shadowColor: "#00D2FF"
+    //     };
+    //     Object.keys(cnn).forEach( key => {
+    //       // cnn[key].lineStyle = tmpLineStye;
+    //       hhh({
+    //         key:key,
+    //         style:styleL
+    //       })
+    //     });
+    //   }
+    // }, 1000);
+  },
+  computed: {
     ...mapState("diagram", {
       dataDiagram: state => state.dataDiagram,
       connectorNew: state => state.connectorNew,
-      dataDiagramNew: state=>state.dataDiagramNew,
-      connectorNewKey: state=> state.connectorNewKey
+      dataDiagramNew: state => state.dataDiagramNew,
+      connectorNewKey: state => state.connectorNewKey
     })
   },
   data() {
     return {
       editTableProperties: {
-              potition: {
-            x: 30,
-            y: 110
-          },
-          coloumns: {
-            id: {
-              comment: "",
-              dataType: "varchar(31)",
-              default: "",
-              primaryKey: true,
-              allowNull: false,
-              unique: false,
-              unsigned: false,
-              zeroFill: false,
-              autoIncrement: false,
-              foreignKey: false,
-              style: {
-                shadowBlur: 0,
-                shadowColor: "green"
-              }
-            },
-            jumlah_roda: {
-              comment: "",
-              dataType: "int(32)",
-              default: "",
-              primaryKey: false,
-              allowNull: false,
-              unique: false,
-              unsigned: false,
-              zeroFill: false,
-              autoIncrement: false,
-              foreignKey: false,
-              style: {
-                shadowBlur: 0,
-                shadowColor: "green"
-              }
+        potition: {
+          x: 30,
+          y: 110
+        },
+        coloumns: {
+          id: {
+            comment: "",
+            dataType: "varchar(31)",
+            default: "",
+            primaryKey: true,
+            allowNull: false,
+            unique: false,
+            unsigned: false,
+            zeroFill: false,
+            autoIncrement: false,
+            foreignKey: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
             }
           },
-          association: [
-            {
-              type: "has",
-              table: "sopir",
-              foreignKey: "mobil_id",
-              sourceKey: "id",
-              potition: {
-                x: 100,
-                y: 50
-              }
-            },
-            {
-              type: "has",
-              table: "kernet",
-              foreignKey: "mobil_id",
-              sourceKey: "id",
-              potition: {
-                x: 100,
-                y: 50
-              }
+          jumlah_roda: {
+            comment: "",
+            dataType: "int(32)",
+            default: "",
+            primaryKey: false,
+            allowNull: false,
+            unique: false,
+            unsigned: false,
+            zeroFill: false,
+            autoIncrement: false,
+            foreignKey: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
             }
-          ]
+          }
+        },
+        association: [
+          {
+            type: "has",
+            table: "sopir",
+            foreignKey: "mobil_id",
+            sourceKey: "id",
+            potition: {
+              x: 100,
+              y: 50
+            }
+          },
+          {
+            type: "has",
+            table: "kernet",
+            foreignKey: "mobil_id",
+            sourceKey: "id",
+            potition: {
+              x: 100,
+              y: 50
+            }
+          }
+        ]
       },
-      editTableName: 'mobil',
+      editTableName: "mobil",
       visible: false,
       configKonva: {
         width: 1400,
