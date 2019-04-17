@@ -60,22 +60,35 @@ export default {
         let targetTableId= state.dataDiagramNew[tableKey].association[key].table_id
         let connectorId=state.dataDiagramNew[tableKey].association[key].connector_id
         if(status===true){
-          state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style.shadowBlur = 5;
-          state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style.shadowColor = "green";
+          state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style={
+            shadowBlur: 5,
+            shadowColor: "green"
+          };
 
-          state.dataDiagramNew[targetTableId].coloumns[targetKeyId].style.shadowBlur = 5;
-          state.dataDiagramNew[targetTableId].coloumns[targetKeyId].style.shadowColor = "green";          
-
-          state.connectorNewKey[connectorId].lineStyle.shadowBlur = 5;
-          state.connectorNewKey[connectorId].lineStyle.shadowColor = "green"; 
-          state.connectorNewKey[connectorId].points[0]++
+          state.dataDiagramNew[targetTableId].coloumns[targetKeyId].style={
+            shadowBlur: 5,
+            shadowColor: "green"
+          };
+          state.connectorNewKey[connectorId].lineStyle={
+            shadowBlur: 5,
+            shadowColor: "green"
+          };
           // eslint-disable-next-line    
           console.log('state.connectorNewKey[connectorId] '+JSON.stringify(state.connectorNewKey[connectorId]))
         }else if(status===false){
-          state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style.shadowBlur = 0;
-          state.dataDiagramNew[targetTableId].coloumns[targetKeyId].style.shadowBlur = 0;
-          state.connectorNewKey[connectorId].lineStyle.shadowBlur = 0;
-          state.connectorNewKey[connectorId].points[0]++
+          state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style={
+            shadowBlur: 0,
+            shadowColor: "green"
+          };
+          state.dataDiagramNew[targetTableId].coloumns[targetKeyId].style={
+            shadowBlur: 0,
+            shadowColor: "green"
+          };
+          state.connectorNewKey[connectorId].lineStyle={
+            shadowBlur: 0,
+            shadowColor: "green"
+          };
+
         }
       }else if(state.dataDiagramNew[tableKey].association[key].type==="has"){
         let foreignKeyId = state.dataDiagramNew[tableKey].association[key].foreignKey_id
@@ -85,29 +98,35 @@ export default {
         if(status===true){
           // eslint-disable-next-line
           console.log('hidupkan biru '+connectorId)          
-          state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowBlur = 5;
-          state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowColor = "#00D2FF";
+          state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style={
+            shadowBlur: 5,
+            shadowColor: "#00D2FF"
+          };
 
-          state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style.shadowBlur = 5;
-          state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style.shadowColor = "#00D2FF";
+          state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style={
+            shadowBlur: 5,
+            shadowColor: "#00D2FF"
+          };
 
-          let tmpLineStye={
+          state.connectorNewKey[connectorId].lineStyle={
             shadowBlur: 5,
             shadowColor: "#00D2FF"
           }
-          state.connectorNewKey[connectorId].lineStyle=tmpLineStye
-          // state.connectorNewKey[connectorId].lineStyle.shadowColor = "#00D2FF";
-          // state.connectorNewKey[connectorId].points[0]++
         }else if(status===false){
           // eslint-disable-next-line
           console.log('matikan biru')
-          var tmpLineStye={
+          state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style={
             shadowBlur: 0,
             shadowColor: "#00D2FF"
-          }
-          state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style.shadowBlur = 0;
-          state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style.shadowBlur = 0;
-          state.connectorNewKey[connectorId].lineStyle=tmpLineStye;
+          };
+          state.dataDiagramNew[targetTableId].coloumns[foreignKeyId].style={
+            shadowBlur: 0,
+            shadowColor: "#00D2FF"
+          };
+          state.connectorNewKey[connectorId].lineStyle={
+            shadowBlur: 0,
+            shadowColor: "#00D2FF"
+          };
         }
       }
     })
@@ -124,85 +143,6 @@ export default {
   setVisibleConfigTable(state, val) {
     state.visibleConfigTable = val;
   },
-  /**
-   *
-   * @param {*} state
-   * @param {*} raw
-   * {
-   *  oldColoumn: string
-   *  tableName:string
-   *  newColoumn : string
-   * }
-   */
-  async updateColoumnTable(state, raw) {
-    // async function loop(items, callback) {
-    //   for (var a = 0; a < items.length; a++) {
-    //     // eslint-disable-next-line
-    //     await callback(items[a]);
-    //   }
-    // }
-
-    var oldColoumn = raw.oldColoumn;
-    var newColoumn = raw.newColoumn;
-    var tableName = raw.tableName;
-
-    for (var a = 0; a < state.dataDiagram[tableName].association.length; a++) {
-      // eslint-disable-next-line
-      if(state.dataDiagram[tableName].association[a].type==='belong'){
-        if(state.dataDiagram[tableName].association[a].foreignKey===oldColoumn){
-          state.dataDiagram[tableName].association[a].foreignKey=newColoumn
-          // in this must change in asscociation table source
-            for (var b=0; b<state.dataDiagram[state.dataDiagram[tableName].association[a].table].association.length;b++){
-            if(state.dataDiagram[state.dataDiagram[tableName].association[a].table].association[b].type==='has'){
-              if(state.dataDiagram[state.dataDiagram[tableName].association[a].table].association[b].table===tableName&&state.dataDiagram[state.dataDiagram[tableName].association[a].table].association[b].foreignKey===oldColoumn){
-                state.dataDiagram[state.dataDiagram[tableName].association[a].table].association[b].foreignKey=newColoumn
-
-                // for(var c=0;c<state.connectorNew.length;c++){
-                //   if(
-                //     state.connectorNew[c].tail.table===tableName&&
-                //     state.connectorNew[c].tail.coloumn===oldColoumn &&
-
-                //     state.connectorNew[c].head.table===state.dataDiagram[tableName].association[a].table&&
-                //     state.connectorNew[c].head.coloumn===oldColoumn &&
-                //     ){
-
-                //     }
-                // }
-              }
-            }
-        }
-      }
-      
-    }
-  }
-    // await loop(state.dataDiagram[tableName].association, async assoc=>{
-    // // .forEach(
-    //     if(assoc.type==='belong'){
-    //       if(assoc.foreignKey===oldColoumn){
-    //         assoc.foreignKey=newColoumn
-    //         // in this must change in asscociation table source
-    //         // await .forEach(
-    //           await loop(state.dataDiagram[assoc.table].association, async assocSource=>{
-    //           if(assocSource.type==='has'){
-    //             if(assocSource.table===tableName&&assocSource.foreignKey===oldColoumn){
-    //               assocSource.foreignKey=newColoumn
-    //             }
-    //           }
-
-    //         })
-    //       }
-    //     }
-    // })
-    // eslint-disable-next-line
-    console.log('before coloumn' + JSON.stringify(state.dataDiagram[tableName]))
-    var tmpColoumn =JSON.parse(JSON.stringify(state.dataDiagram[tableName].coloumns[oldColoumn]))
-    delete state.dataDiagram[tableName].coloumns[oldColoumn];
-    state.dataDiagram[tableName].coloumns[newColoumn] = tmpColoumn;
-    state.dataDiagram[tableName].potition.x++
-    // eslint-disable-next-line
-    // console.log('new coloumn' + JSON.stringify(state.dataDiagram[tableName]))
-  },
-
   async updateColoumnName(state, raw){
     var tableKey_id=raw.tableKey_id
     var coloumn_id=raw.coloumn_id
@@ -266,14 +206,14 @@ export default {
       var table_id_source= raw.selectedNewTable
       var table_id_foreignKey= raw.table_id
       var coloumn_id_foreignKey=raw.thisForeignKey_id
-      window.alert(JSON.stringify(raw))
+
       if(association_id_foreignKey===undefined){
         let coloumn_id_default_sourceKey=Object.keys(state.dataDiagramNew[table_id_source].coloumns)[0]
         let association_id_foreignKeyNew='assoc_'+new Date().getMilliseconds()
         let association_id_source='assoc_'+new Date().getMilliseconds()
         let connector_id='conn_car_number_driver_id'+new Date().getMilliseconds()
         // create association in this table
-        state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKeyNew]= {
+        let tmpAssociation_id_foreignKeyNew= {
           connector_id: connector_id,
           type: "belong",
           table: table_id_source,
@@ -287,10 +227,13 @@ export default {
             y: 300
           }
         }
+        Vue.set(state.dataDiagramNew[table_id_foreignKey].association,association_id_foreignKeyNew,tmpAssociation_id_foreignKeyNew)
+
         // create belong assoc in this table
         state.dataDiagramNew[table_id_foreignKey].coloumns[coloumn_id_foreignKey].association_belong_id=association_id_foreignKeyNew
+        
         // create association in target table
-        state.dataDiagramNew[table_id_source].association[association_id_source]={
+        let tmpAssociation_id_source={
           connector_id: connector_id,
           type: "has",
           table: table_id_foreignKey,
@@ -304,7 +247,9 @@ export default {
             y: 300
           }
         }
-        // state.dataDiagramNew[selectedNewTable_id].association[association_id]=association_id_target
+        Vue.set(state.dataDiagramNew[table_id_source].association, association_id_source, tmpAssociation_id_source)      
+
+        
         var tmpConnector= {
           // head is has
           head: {
@@ -322,7 +267,14 @@ export default {
             coloumn_id: coloumn_id_foreignKey,
             association_id: association_id_foreignKeyNew
           },
-          points: [0, 0, 300,300],
+          points: [
+            state.dataDiagramNew[table_id_foreignKey].point.x+ state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKeyNew].point.x,
+            state.dataDiagramNew[table_id_foreignKey].point.y+ state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKeyNew].point.y,
+            state.dataDiagramNew[table_id_foreignKey].point.x+ state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKeyNew].point.x - 30,
+            state.dataDiagramNew[table_id_foreignKey].point.y+ state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKeyNew].point.y - 30,
+            state.dataDiagramNew[table_id_source].point.x + state.dataDiagramNew[table_id_source].association[association_id_source].point.x,
+            state.dataDiagramNew[table_id_source].point.y+ state.dataDiagramNew[table_id_source].association[association_id_source].point.y,
+          ],
           lineStyle: {
             shadowBlur: 5,
             shadowColor: "green"
