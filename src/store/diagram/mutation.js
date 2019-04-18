@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import  uuidv4  from 'uuid/v4' 
 export default {
     /**
    *
@@ -12,6 +13,8 @@ export default {
     var tableKey = raw.tableKey;
     state.dataDiagramNew[tableKey].point.x = val.currentTarget.attrs.x;
     state.dataDiagramNew[tableKey].point.y = val.currentTarget.attrs.y;
+    // eslint-disable-next-line
+    console.log('state.dataDiagramNew[tableKey].association '+JSON.stringify(state.dataDiagramNew[tableKey].association))
     await Object.keys(state.dataDiagramNew[tableKey].association).forEach(key=>{
       let conn=state.connectorNewKey [
         state.dataDiagramNew[tableKey].association[key].connector_id
@@ -237,10 +240,14 @@ export default {
       var coloumn_id_foreignKey=raw.thisForeignKey_id
 
       if(association_id_foreignKey===undefined||association_id_foreignKey===null){
+        // eslint-disable-next-line
+        console.log('table_id_source '+table_id_source)
         let coloumn_id_default_sourceKey=Object.keys(state.dataDiagramNew[table_id_source].coloumns)[0]
-        let association_id_foreignKeyNew='assoc_'+new Date().getMilliseconds()
-        let association_id_source='assoc_'+new Date().getMilliseconds()
-        let connector_id='conn_car_number_driver_id'+new Date().getMilliseconds()
+         // eslint-disable-next-line
+        console.log('coloumn_id_default_sourceKey '+coloumn_id_default_sourceKey)
+        let association_id_foreignKeyNew='assoc_Foreign_'+uuidv4()
+        let association_id_source='assoc_Source_'+uuidv4()
+        let connector_id='conn_car_number_driver_id'+uuidv4()
         // create association in this table
         let tmpAssociation_id_foreignKeyNew= {
           connector_id: connector_id,
@@ -256,6 +263,10 @@ export default {
             y: 100
           }
         }
+        // eslint-disable-next-line
+        console.log('table_id_foreignKey '+table_id_foreignKey)
+        // eslint-disable-next-line
+        console.log('association_id_foreignKeyNew '+association_id_foreignKeyNew)
         Vue.set(state.dataDiagramNew[table_id_foreignKey].association,association_id_foreignKeyNew,tmpAssociation_id_foreignKeyNew)
 
         // create belong assoc in this table

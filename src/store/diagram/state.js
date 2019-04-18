@@ -71,6 +71,7 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           },
+          association_belong_id:null
         },
         coloumn_car_color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
           coloumn_name: "color",
@@ -87,7 +88,8 @@ export default {
           style: {
             shadowBlur: 0,
             shadowColor: "green"
-          }
+          },
+          association_belong_id:null
         },
         coloumn_car_number_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
           coloumn_name: "number",
@@ -104,7 +106,8 @@ export default {
           style: {
             shadowBlur: 0,
             shadowColor: "green"
-          }
+          },
+          association_belong_id:null
         }              
       },
       association: {
@@ -213,6 +216,55 @@ export default {
         }
       }
     },
+    table_Owner_885ddad7_c509_4d5e_ab2e_dc5cb06d0e38: {
+      table_name: "Owner",
+      point: {
+        x: 250,
+        y: 100
+      },
+      coloumns: {
+        coloumn_Owner_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
+          coloumn_name: "id",
+          comment: "",
+          dataType: "varchar(31)",
+          default: "",
+          primaryKey: false,
+          notNull: false,
+          unique: false,
+          foreignKey:false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          },
+          association_belong_id:null
+        },
+        coloumn_Owner_name_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
+          coloumn_name: "Name",
+          comment: "",
+          dataType: "integer(31)",
+          default: "",
+          primaryKey: false,
+          foreignKey:false,
+          notNull: false,
+          unique: false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          },
+          association_belong_id:null
+        }
+      },
+      association: {
+       
+      }
+    },
+    
   },
   tableKeyConfig:'',
   visibleConfigTable: false
