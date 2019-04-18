@@ -293,142 +293,144 @@
         </template>
         <!-- new coloumn -->
         <template v-if="isVisibleNewColoumn===true">
-        <tr>
-          <td>
-            <table border="0" width="100%">
-              <tr>
-                <td width="15%" align="left">
-                  <span style="margin-left:7px" v-if="newColoumn.primaryKey">
-                    <img
-                      src="../assets/primary-key.png"
-                      width="14px"
-                      style="vertical-align: baseline; margin-right:3px"
-                    >
-                  </span>
-                  <span style="margin-left:7px" v-else-if="newColoumn.notNull===true">
-                    <img
-                      src="../assets/icons8-diamonds-40.png"
-                      width="14px"
-                      style="vertical-align: baseline; margin-right:5px"
-                    >
-                  </span>
-                  <span style="margin-left:7px" v-else-if="newColoumn.notNull===false">
-                    <img
-                      src="../assets/icons8-diamonds-40-white.png"
-                      width="14px"
-                      style="vertical-align: baseline; margin-right:5px"
-                    >
-                  </span>
-                </td>
-                <td align="left">
-                  <a-input size="small" v-model="newColoumn.coloumnName"/>
-                </td>
-              </tr>
-            </table>
-          </td>
-          <td>
-            <a-input size="small" v-model="newColoumn.dataType"/>
-          </td>
-          <td align="center">
-            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
-          </td>
-          <td align="center">
-            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
-          </td>
-          <td align="center"></td>
-        </tr>
-       
-        <!-- <tr>
-              <td colspan="8">
-                <div style="margin-bottom:15px;margin-left:15px;margin-right:15px;margin-top:15px;">
-                  <a-row align="bottom" type="flex">
-                    <a-col :span="5">
-                      <span style="padding-right:5px">Default</span>
-                    </a-col>
-                    <a-col :span="18">
-                      <a-input style="width:170px" size="small" placeholder="small size"/>                      
-                    </a-col>
-                    <a-col :span="1">
-                      
-                    </a-col>
-                  </a-row>
-                  <a-row style="margin-top:5px" align="bottom" type="flex">
-                    <a-col :span="5">
-                      <span style="padding-right:5px">Foregn Key</span>
-                    </a-col>
-                    <a-col :span="18">
-                      <a-checkbox
-                        v-model="newColoumn.foreignKey"
-                        style="padding:0;margin:0"
-                      ></a-checkbox>
-                    </a-col>
-                  </a-row>
-                  <a-row style="margin-top:5px" align="top" type="flex">
-                    <a-col :span="5" align="top">
-                      <span style="padding-right:5px" align="top">Comments</span>
-                    </a-col>
-                    <a-col :span="18" align="top">
-                      <a-textarea
-                        style="width:170px"
-                        size="small"
-                        placeholder="Give note  of your table"
-                        autosize
-                      />
-                    </a-col>
-                  </a-row>
-                  <a-row
-                    style="margin-top:5px"
-                    align="bottom"
-                    type="flex"
-                  >
-                    <a-col :span="5">
-                      <span style="padding-right:5px">Ref. Table</span>
-                    </a-col>
-                    <a-col :span="18">
-                      <a-select
-                      style="width: 170px"
-                        size="small"                        
+          <tr>
+            <td>
+              <table border="0" width="100%">
+                <tr>
+                  <td width="15%" align="left">
+                    <span style="margin-left:7px" v-if="newColoumn.primaryKey">
+                      <img
+                        src="../assets/primary-key.png"
+                        width="14px"
+                        style="vertical-align: baseline; margin-right:3px"
                       >
-                        <a-select-option
+                    </span>
+                    <span style="margin-left:7px" v-else-if="newColoumn.notNull===true">
+                      <img
+                        src="../assets/icons8-diamonds-40.png"
+                        width="14px"
+                        style="vertical-align: baseline; margin-right:5px"
+                      >
+                    </span>
+                    <span style="margin-left:7px" v-else-if="newColoumn.notNull===false">
+                      <img
+                        src="../assets/icons8-diamonds-40-white.png"
+                        width="14px"
+                        style="vertical-align: baseline; margin-right:5px"
+                      >
+                    </span>
+                  </td>
+                  <td align="left">
+                    <a-input size="small" v-model="newColoumn.coloumnName"/>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <a-input size="small" v-model="newColoumn.dataType"/>
+            </td>
+            <td align="center">
+              <a-checkbox @change="newColoumn.primaryKey=$event.target.checked"></a-checkbox>
+            </td>
+            <td align="center">
+              <a-checkbox @change="newColoumn.notNull=$event.target.checked"></a-checkbox>
+            </td>
+            <td align="center">
+              <a-checkbox @change="newColoumn.unique=$event.target.checked"></a-checkbox>
+            </td>
+            <td align="center">
+              <a-checkbox @change="newColoumn.unsigned=$event.target.checked"></a-checkbox>
+            </td>
+            <td align="center">
+              <a-checkbox @change="newColoumn.autoIncrement=$event.target.checked"></a-checkbox>
+            </td>
+            <td align="center"></td>
+          </tr>
+          <tr>
+            <td colspan="8">
+              <div style="margin-bottom:15px;margin-left:15px;margin-right:15px;margin-top:15px;">
+                <a-row align="bottom" type="flex">
+                  <a-col :span="5">
+                    <span style="padding-right:5px">Default</span>
+                  </a-col>
+                  <a-col :span="18">
+                    <a-input style="width:170px" size="small" placeholder="default" v-model="newColoumn.default"/>
+                  </a-col>
+                  <a-col :span="1"></a-col>
+                </a-row>
+                <a-row style="margin-top:5px" align="bottom" type="flex">
+                  <a-col :span="5">
+                    <span style="padding-right:5px">Foregn Key</span>
+                  </a-col>
+                  <a-col :span="18">
+                    <a-checkbox v-model="newColoumn.foreignKey" style="padding:0;margin:0"></a-checkbox>
+                  </a-col>
+                </a-row>
+                <a-row style="margin-top:5px" align="top" type="flex">
+                  <a-col :span="5" align="top">
+                    <span style="padding-right:5px" align="top">Comments</span>
+                  </a-col>
+                  <a-col :span="18" align="top">
+                    <a-textarea
+                      v-model="newColoumn.comment"
+                      style="width:170px"
+                      size="small"
+                      placeholder="Give note  of your table"
+                      autosize
+                    />
+                  </a-col>
+                </a-row>
+                <a-row style="margin-top:5px" align="bottom" type="flex">
+                  <a-col :span="5">
+                    <span style="padding-right:5px">Ref. Table</span>
+                  </a-col>
+                  <a-col :span="18">
+                    <a-select style="width: 170px" v-model="newColoumn.refTable_id" size="small">
+                      <a-select-option
+                        size="small"
+                        v-for="keyTable in Object.keys(dataDiagramNew)"
+                        :key="keyTable"
+                        :value="keyTable"
+                      >{{dataDiagramNew[keyTable].table_name}}</a-select-option>
+                    </a-select>
+                  </a-col>
+                </a-row>
+                <a-row style="margin-top:5px" align="bottom" type="flex">
+                  <a-col :span="5">Ref. Coloumn</a-col>
+                  <a-col :span="18">
+                    <a-select size="small"  v-model="newColoumn.refColoumn_id" style="width: 170px">
+                      <template v-if="newColoumn.refTable_id!==null">                      
+                        <a-select-option 
                           size="small"
-                          v-for="keyTable in Object.keys(dataDiagramNew)"
-                          :key="keyTable"
-                          :value="keyTable"
-                        >{{dataDiagramNew[keyTable].table_name}}</a-select-option>
-                      </a-select>
-                    </a-col>
-                  </a-row>
-                  <a-row
-                    style="margin-top:5px"
-                    align="bottom"
-                    type="flex"
-                  >
-                    <a-col :span="5">Ref. Column</a-col>
-                    <a-col :span="18">
-                      <a-select
-                        size="small"
-                        style="width: 170px"
-                      >
-                        <a-select-option
-                          size="small"                          
-                        >{{}}
-                        </a-select-option>
-                      </a-select>
-                    </a-col>
-                  </a-row> 
-                </div>
-              </td>
-        </tr> -->
-         </template>
+                          v-for="keyColoumn_id in Object.keys(dataDiagramNew[newColoumn.refTable_id].coloumns)"
+                          :key="keyColoumn_id"
+                          :value="keyColoumn_id"
+                        >{{dataDiagramNew[newColoumn.refTable_id].coloumns[keyColoumn_id].coloumn_name}}</a-select-option>
+                      </template>
+                    </a-select>
+                  </a-col>
+                </a-row>
+
+                <a-row style="margin-top:15px" align="bottom" type="flex">
+                  <a-col :span="4">
+                    <a-button
+                      @click="cancelEdit(index,keyColoumn)"
+                      type="dashed"
+                      size="small"
+                    >Cancel</a-button>
+                  </a-col>
+                  <a-col :span="3">
+                    <a-button
+                      @click="saveChange(keyColoumn)"
+                      size="small"
+                      style="color: rgba(0, 0, 0, 0.65);width:55px"
+                    >Save</a-button>
+                  </a-col>
+                </a-row>
+              </div>
+            </td>
+          </tr>
+        </template>
         <!-- end new coloumnn -->
         <!-- </templete> -->
       </table>
@@ -598,7 +600,11 @@ export default {
         unique: false,
         unsigned: false,
         autoIncrement: false,
-        foreignKey: false
+        foreignKey: false,
+        comment:null,
+        default:null,
+        refTable_id:null,
+        refColoumn_id:null
       },
       selectedTable: null,
       newColoumnName: "",
