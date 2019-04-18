@@ -1,12 +1,24 @@
 <template>
-  <a-drawer
-    :title="dataDiagramNew[tableKeyConfig].table_name"
-    placement="right"
-    :width="520"
-    :closable="false"
-    @close="onClose"
-    :visible="visible"
-  >
+  <a-drawer placement="right" :width="520" :closable="false" @close="onClose" :visible="visible">
+    <!-- :title="dataDiagramNew[tableKeyConfig].table_name" -->
+    <div class="ant-drawer-header" style="margin:-25px; margin-bottom:25px;">
+      <div
+        v-if="isEditTableName===false"
+        class="ant-drawer-title"
+        @click="isEditTableName=true"
+      >{{dataDiagramNew[tableKeyConfig].table_name}}</div>
+      <a-input
+        @blur="isEditTableName = false"
+        @change="updateTableName({
+        table_id:tableKeyConfig,
+        tableNewName:$event.target.value
+      })"
+        style="background-color:#316896; font-size: 20px; line-height: 2;color:#fff;font-weight: 450;width: fit-content;"
+        v-if="isEditTableName"
+        size="default"
+        :value="dataDiagramNew[tableKeyConfig].table_name"
+      />
+    </div>
     <div>
       <table border="1" width="100%">
         <tr>
@@ -68,7 +80,6 @@
                       ref="searchLL"
                       v-if="showDetailcoloumn===index"
                       size="small"
-                      placeholder="small size"
                       @input="updateColoumnName({
                         tableKey_id:tableKeyConfig,
                         coloumn_id:keyColoumn,
@@ -162,7 +173,12 @@
           <template v-if="showDetailcoloumn===index">
             <tr v-bind:key="keyColoumn+index">
               <td colspan="8">
-                <div style="margin:15px;">
+                <a-icon
+                  @click="deleteColoumn(keyColoumn)"
+                  type="delete"
+                  style="color:red;position: absolute; right: 35px; margin-top: 5px;cursor:pointer"
+                />
+                <div style="margin-bottom:15px;margin-left:15px;margin-right:15px;margin-top:15px;">
                   <a-row align="bottom" type="flex">
                     <a-col :span="5">
                       <span style="padding-right:5px">Default</span>
@@ -170,6 +186,7 @@
                     <a-col :span="18">
                       <a-input style="width:170px" size="small" placeholder="small size"/>
                     </a-col>
+                    <a-col :span="1"></a-col>
                   </a-row>
                   <a-row style="margin-top:5px" align="bottom" type="flex">
                     <a-col :span="5">
@@ -212,7 +229,7 @@
                     <a-col :span="18">
                       <!-- :value="dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id" -->
                       <a-select
-                        size="small"                        
+                        size="small"
                         :value="getSelectedTable({
                           tableKeyConfig:tableKeyConfig,
                           keyColoumn:keyColoumn
@@ -256,26 +273,176 @@
                         size="small"
                         style="width: 170px"
                       >
-                      <!-- Object.keys(dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns) -->
+                        <!-- Object.keys(dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns) -->
                         <a-select-option
-                          size="small"                          
+                          size="small"
                           v-for="keyColoumnRef in getColoumnOption({
                             tableKeyConfig:tableKeyConfig,
                             keyColoumn:keyColoumn
                           })"
                           :value="keyColoumnRef"
                           :key="keyColoumnRef"
-                        >{{dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns[keyColoumnRef].coloumn_name}}
+                        >{{dataDiagramNew[dataDiagramNew[tableKeyConfig].association[dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].association_belong_id].table_id].coloumns[keyColoumnRef].coloumn_name}}</a-select-option>
+                      </a-select>
+                    </a-col>
+                  </a-row>
+                </div>
+              </td>
+            </tr>
+          </template>
+        </template>
+        <!-- new coloumn -->
+        <template v-if="isVisibleNewColoumn===true">
+        <tr>
+          <td>
+            <table border="0" width="100%">
+              <tr>
+                <td width="15%" align="left">
+                  <span style="margin-left:7px" v-if="newColoumn.primaryKey">
+                    <img
+                      src="../assets/primary-key.png"
+                      width="14px"
+                      style="vertical-align: baseline; margin-right:3px"
+                    >
+                  </span>
+                  <span style="margin-left:7px" v-else-if="newColoumn.notNull===true">
+                    <img
+                      src="../assets/icons8-diamonds-40.png"
+                      width="14px"
+                      style="vertical-align: baseline; margin-right:5px"
+                    >
+                  </span>
+                  <span style="margin-left:7px" v-else-if="newColoumn.notNull===false">
+                    <img
+                      src="../assets/icons8-diamonds-40-white.png"
+                      width="14px"
+                      style="vertical-align: baseline; margin-right:5px"
+                    >
+                  </span>
+                </td>
+                <td align="left">
+                  <a-input size="small" v-model="newColoumn.coloumnName"/>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <a-input size="small" v-model="newColoumn.dataType"/>
+          </td>
+          <td align="center">
+            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
+          </td>
+          <td align="center">
+            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
+          </td>
+          <td align="center">
+            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
+          </td>
+          <td align="center">
+            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
+          </td>
+          <td align="center">
+            <a-checkbox v-model="newColoumn.primaryKey"></a-checkbox>
+          </td>
+          <td align="center"></td>
+        </tr>
+       
+        <!-- <tr>
+              <td colspan="8">
+                <div style="margin-bottom:15px;margin-left:15px;margin-right:15px;margin-top:15px;">
+                  <a-row align="bottom" type="flex">
+                    <a-col :span="5">
+                      <span style="padding-right:5px">Default</span>
+                    </a-col>
+                    <a-col :span="18">
+                      <a-input style="width:170px" size="small" placeholder="small size"/>                      
+                    </a-col>
+                    <a-col :span="1">
+                      
+                    </a-col>
+                  </a-row>
+                  <a-row style="margin-top:5px" align="bottom" type="flex">
+                    <a-col :span="5">
+                      <span style="padding-right:5px">Foregn Key</span>
+                    </a-col>
+                    <a-col :span="18">
+                      <a-checkbox
+                        v-model="newColoumn.foreignKey"
+                        style="padding:0;margin:0"
+                      ></a-checkbox>
+                    </a-col>
+                  </a-row>
+                  <a-row style="margin-top:5px" align="top" type="flex">
+                    <a-col :span="5" align="top">
+                      <span style="padding-right:5px" align="top">Comments</span>
+                    </a-col>
+                    <a-col :span="18" align="top">
+                      <a-textarea
+                        style="width:170px"
+                        size="small"
+                        placeholder="Give note  of your table"
+                        autosize
+                      />
+                    </a-col>
+                  </a-row>
+                  <a-row
+                    style="margin-top:5px"
+                    align="bottom"
+                    type="flex"
+                  >
+                    <a-col :span="5">
+                      <span style="padding-right:5px">Ref. Table</span>
+                    </a-col>
+                    <a-col :span="18">
+                      <a-select
+                      style="width: 170px"
+                        size="small"                        
+                      >
+                        <a-select-option
+                          size="small"
+                          v-for="keyTable in Object.keys(dataDiagramNew)"
+                          :key="keyTable"
+                          :value="keyTable"
+                        >{{dataDiagramNew[keyTable].table_name}}</a-select-option>
+                      </a-select>
+                    </a-col>
+                  </a-row>
+                  <a-row
+                    style="margin-top:5px"
+                    align="bottom"
+                    type="flex"
+                  >
+                    <a-col :span="5">Ref. Column</a-col>
+                    <a-col :span="18">
+                      <a-select
+                        size="small"
+                        style="width: 170px"
+                      >
+                        <a-select-option
+                          size="small"                          
+                        >{{}}
                         </a-select-option>
                       </a-select>
                     </a-col>
                   </a-row> 
                 </div>
               </td>
-            </tr>
-          </template>
-        </template>
+        </tr> -->
+         </template>
+        <!-- end new coloumnn -->
+        <!-- </templete> -->
       </table>
+      <!-- <a-button size="small" style="margin-top: 10px;color: #316896; border-color:#316896">
+        New coloumn
+      </a-button>-->
+      <!-- #316896 -->
+      <!-- rgb(22, 148, 251) -->
+      <a-icon
+        v-show="isVisibleNewColoumn===false"
+        @click="visibleNewColoumn"
+        type="plus-circle"
+        style="color:#316896;position: absolute; left: 25px; margin-top: 5px;cursor:pointer; font-size: 20px"
+      />
     </div>
   </a-drawer>
 </template>
@@ -291,7 +458,7 @@ export default {
       visible: state => state.visibleConfigTable,
       dataDiagramNew: state => state.dataDiagramNew,
       tableKeyConfig: state => state.tableKeyConfig
-    }),
+    })
   },
   methods: {
     saveChange(coloumn) {
@@ -302,30 +469,60 @@ export default {
       });
     },
     // eslint-disable-next-line
-    getSelectedColoumn(raw){                
-        // window.alert(JSON.stringify(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]))
-        if(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]===undefined){
-          return null
-        }else{
-          return this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id].targetKey_id
-        }
+    getSelectedColoumn(raw) {
+      // window.alert(JSON.stringify(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]))
+      if (
+        this.dataDiagramNew[raw.tableKeyConfig].association[
+          this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn]
+            .association_belong_id
+        ] === undefined
+      ) {
+        return null;
+      } else {
+        return this.dataDiagramNew[raw.tableKeyConfig].association[
+          this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn]
+            .association_belong_id
+        ].targetKey_id;
+      }
     },
     // eslint-disable-next-line
-    getSelectedTable(raw){                
-        if(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]===undefined){
-          return null
-        }else{
-          return this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id].table_id
-        }
-    },
-    getColoumnOption(raw){
-      // window.alert(JSON.stringify(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]))
-      if(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]===undefined){
-        return []
-      }else{
-        return Object.keys(this.dataDiagramNew[this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id].table_id].coloumns)
+    getSelectedTable(raw) {
+      if (
+        this.dataDiagramNew[raw.tableKeyConfig].association[
+          this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn]
+            .association_belong_id
+        ] === undefined
+      ) {
+        return null;
+      } else {
+        return this.dataDiagramNew[raw.tableKeyConfig].association[
+          this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn]
+            .association_belong_id
+        ].table_id;
       }
-        
+    },
+    getColoumnOption(raw) {
+      // window.alert(JSON.stringify(this.dataDiagramNew[raw.tableKeyConfig].association[this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn].association_belong_id]))
+      if (
+        this.dataDiagramNew[raw.tableKeyConfig].association[
+          this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn]
+            .association_belong_id
+        ] === undefined
+      ) {
+        return [];
+      } else {
+        return Object.keys(
+          this.dataDiagramNew[
+            this.dataDiagramNew[raw.tableKeyConfig].association[
+              this.dataDiagramNew[raw.tableKeyConfig].coloumns[raw.keyColoumn]
+                .association_belong_id
+            ].table_id
+          ].coloumns
+        );
+      }
+    },
+    deleteColoumn(coloumn_id) {
+      window.alert("delete : " + coloumn_id);
     },
     // updateAssociationBelongTableName(selectedNewTable, association_id) {
     //   // this.updateAssociation
@@ -347,9 +544,12 @@ export default {
       updateAutoIncrement: "updateAutoIncrement",
       updateAssociation: "updateAssociation",
       updateAssociationBelongTableName: "updateAssociationBelongTableName",
-      updateAssociationBelongColoumnName : "updateAssociationBelongColoumnName"
+      updateAssociationBelongColoumnName: "updateAssociationBelongColoumnName",
+      updateTableName: "updateTableName"
     }),
     showDetail(val, keyColoumn) {
+      this.isVisibleNewColoumn = false;
+      this.isEditTableName = false;
       this.newColoumnName = this.dataDiagramNew[this.tableKeyConfig].coloumns[
         keyColoumn
       ].coloumn_name;
@@ -381,15 +581,31 @@ export default {
       } else {
         this.isEditColoumnType = true;
       }
+    },
+    visibleNewColoumn() {
+      this.showDetailcoloumn = -1;
+      this.isVisibleNewColoumn = true;
     }
   },
   data() {
     return {
+      isVisibleNewColoumn: false,
+      newColoumn: {
+        coloumnName: null,
+        dataType: null,
+        primaryKey: false,
+        notNull: false,
+        unique: false,
+        unsigned: false,
+        autoIncrement: false,
+        foreignKey: false
+      },
       selectedTable: null,
       newColoumnName: "",
       newComment: "",
       newDataType: "",
       newDefault: "",
+      isEditTableName: false,
       isEditColoumnName: false,
       isEditColoumnType: false,
       showDetailcoloumn: 3

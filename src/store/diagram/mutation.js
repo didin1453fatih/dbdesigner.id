@@ -135,6 +135,12 @@ export default {
     state.visibleConfigTable = true;
     state.tableKeyConfig=tableKeyConfig
   },
+  updateTableName(state, raw){
+    state.dataDiagramNew[raw.table_id].table_name=raw.tableNewName
+  },
+  // deleteColoumn(state, raw){
+
+  // },
   setConfigTable(state, tableName) {
     state.configTable.tableName = tableName;
     state.configTable.properties = state.dataDiagram[tableName];
@@ -165,7 +171,30 @@ export default {
     var tableKey_id=raw.tableKey_id
     var coloumn_id=raw.coloumn_id
     var foreignKey= raw.foreignKey
-    state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].foreignKey=foreignKey
+    if(foreignKey===true){
+      state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].foreignKey=foreignKey
+    }else{
+      state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].foreignKey=foreignKey
+      // association foreign key
+      var assocForeignKeyObj=state.dataDiagramNew[tableKey_id].association[
+        state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].association_belong_id
+      ]
+
+      // connector
+      var connObj=state.connectorNewKey[assocForeignKeyObj.connector_id]
+
+      // delete assoctiation source key
+      Vue.delete(state.dataDiagramNew[connObj.head.table_id].association,connObj.head.association_id)
+      // eslint-disable-next-line
+      console.log('delete assoc '+connObj.head.association_id)
+      
+      // delete connector
+      Vue.delete(state.connectorNewKey,assocForeignKeyObj.connector_id)
+      
+      // delete foreign key assoc
+      Vue.delete(state.dataDiagramNew[tableKey_id].association,state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].association_belong_id)
+      state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].association_belong_id=null
+    }
   },
   async updateUnique(state, raw){
     var tableKey_id=raw.tableKey_id
@@ -207,7 +236,7 @@ export default {
       var table_id_foreignKey= raw.table_id
       var coloumn_id_foreignKey=raw.thisForeignKey_id
 
-      if(association_id_foreignKey===undefined){
+      if(association_id_foreignKey===undefined||association_id_foreignKey===null){
         let coloumn_id_default_sourceKey=Object.keys(state.dataDiagramNew[table_id_source].coloumns)[0]
         let association_id_foreignKeyNew='assoc_'+new Date().getMilliseconds()
         let association_id_source='assoc_'+new Date().getMilliseconds()
@@ -224,7 +253,7 @@ export default {
           targetKey_id: coloumn_id_default_sourceKey,
           point: {
             x: 50,
-            y: 300
+            y: 100
           }
         }
         Vue.set(state.dataDiagramNew[table_id_foreignKey].association,association_id_foreignKeyNew,tmpAssociation_id_foreignKeyNew)
@@ -244,12 +273,12 @@ export default {
           sourceKey_id: coloumn_id_default_sourceKey,
           point: {
             x: 50,
-            y: 300
+            y: 100
           }
         }
         Vue.set(state.dataDiagramNew[table_id_source].association, association_id_source, tmpAssociation_id_source)      
 
-        
+
         var tmpConnector= {
           // head is has
           head: {
@@ -283,53 +312,50 @@ export default {
         Vue.set(state.connectorNewKey, connector_id, tmpConnector)      
       }else{
         
-
-      var assocOBJ=state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKey]
+      var assocOBJ_foreignKey=state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKey]
       // delete source table assoc
-      var targetOldAssoc=state.connectorNewKey[assocOBJ.connector_id].head.association_id
-      var targetOldTable=state.connectorNewKey[assocOBJ.connector_id].head.table_id
-      delete state.dataDiagramNew[targetOldTable].association[targetOldAssoc]
+      var assocObj_source_id=state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.association_id
+      var tableObj_source_id=state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.table_id
+      delete state.dataDiagramNew[tableObj_source_id].association[assocObj_source_id]
 
       // change association data target table_id      
-      assocOBJ.table_id=table_id_source
+      assocOBJ_foreignKey.table_id=table_id_source
 
       //change coloumn target to index 0
       var selectedColoumnDefault_id=Object.keys(state.dataDiagramNew[table_id_source].coloumns)[0]
-      assocOBJ.targetKey_id=selectedColoumnDefault_id      
+      assocOBJ_foreignKey.targetKey_id=selectedColoumnDefault_id      
 
       // change coloumn connector
-      state.connectorNewKey[assocOBJ.connector_id].head.coloumn_id=selectedColoumnDefault_id
+      state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.coloumn_id=selectedColoumnDefault_id
       // change table connector
-      state.connectorNewKey[assocOBJ.connector_id].head.table_id=table_id_source
+      state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.table_id=table_id_source
       // renew asscotiation id  
       var newAssoctioation_id=new Date().toString()
-      state.connectorNewKey[assocOBJ.connector_id].head.association_id=newAssoctioation_id
+      state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.association_id=newAssoctioation_id
       // chreate new
-      state.dataDiagramNew[table_id_source].association[newAssoctioation_id]= {
-        connector_id: assocOBJ.connector_id,
+      // state.dataDiagramNew[table_id_source].association[newAssoctioation_id]
+      Vue.set(state.dataDiagramNew[table_id_source].association, newAssoctioation_id,       
+      {
+        connector_id: assocOBJ_foreignKey.connector_id,
         type: "has",
         table: "Driver",
         table_id: table_id_foreignKey,
         foreignKey: "Car_id",
-        foreignKey_id: assocOBJ.foreignKey_id,
+        foreignKey_id: assocOBJ_foreignKey.foreignKey_id,
         sourceKey: "id",
-        sourceKey_id: assocOBJ.targetKey_id,
+        sourceKey_id: assocOBJ_foreignKey.targetKey_id,
         point: {
           x: 100,
           y: 50
         }
-      }
-
-
-
-
-
-      
+      })
+            
       let conn=state.connectorNewKey [
         state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKey].connector_id
       ]
 
-      var tmp = [
+      // state.dataDiagramNew[selectedNewTable_id].association[association_id].table_id=selectedNewTable_id
+      conn.points = [
         conn.points[0],
         conn.points[1],
         conn.points[0] - 30,
@@ -337,9 +363,6 @@ export default {
         state.dataDiagramNew[table_id_source].point.x,
         state.dataDiagramNew[table_id_source].point.y,
       ];
-
-      // state.dataDiagramNew[selectedNewTable_id].association[association_id].table_id=selectedNewTable_id
-      conn.points=tmp
       conn.tail.table_id=table_id_foreignKey
     }
     },

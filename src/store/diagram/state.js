@@ -30,7 +30,7 @@ export default {
         table_id: "table_car_885ddad7_c509_4d5e_ab2e_dc5cb06d0e33",
         coloumn: "Color",
         coloumn_id: "coloumn_car_color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34",
-        association_id:'assoc_Car_has_driver_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35'
+        association_id:'assoc_Car_Color_has_driver_Id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35'
       },
       // tail is belong
       tail: {
@@ -38,7 +38,7 @@ export default {
         table_id: "table_Driver_885ddad7_c509_4d5e_ab2e_dc5cb06d0e38",
         coloumn: "car_id",
         coloumn_id: "coloumn_Driver_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34",
-        association_id: "assoc_Driver_belong_Car_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39"
+        association_id: "assoc_Driver_belong_Color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39"
       },
       points: [250, 100, 100, 100, 30, 110],
       lineStyle: {
@@ -153,7 +153,7 @@ export default {
           primaryKey: true,
           notNull: false,
           unique: false,
-          foreignKey:false,
+          foreignKey:true,
           unsigned: false,
           zeroFill: false,
           autoIncrement: false,
