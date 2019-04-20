@@ -233,6 +233,45 @@ export default {
     state.dataDiagramNew[connObject.head.table_id].association[connObject.head.association_id].sourceKey_id=selectedNewColoumn_id
 
   },
+  addNewColoumn(state, raw){
+    
+    // var association_id_foreignKey= raw.association_id
+    // var table_id_source= raw.selectedNewTable
+    var table_id= raw.table_id
+    var coloumn_name= raw.coloumn_name
+    var data_type= raw.data_type
+    var primaryKey= raw.primaryKey
+    var notNull= raw.notNull
+    var unique= raw.unique
+    var autoIncrement= raw.autoIncrement
+    var defaultValue= raw.default
+    var foreignKey =raw.foreignKey
+    var comment= raw.comment
+    // var refTable= raw.refTable
+    // var refColoumn= raw.refColoumn
+    var unsigned = raw.unsigned
+
+    Vue.set(state.dataDiagramNew[table_id].coloumns,uuidv4(),{
+      coloumn_name: coloumn_name,
+      comment: comment,
+      dataType: data_type,
+      default: defaultValue,
+      primaryKey: primaryKey,
+      notNull: notNull,
+      unique: unique,
+      foreignKey:foreignKey,
+      unsigned: unsigned,
+      zeroFill: false,
+      autoIncrement: autoIncrement,
+      style: {
+        shadowBlur: 0,
+        shadowColor: "green"
+      },
+      association_belong_id:null
+    })
+
+    // var coloumn_id_foreignKey=raw.thisForeignKey_id
+  },
   async updateAssociationBelongTableName(state,raw) {
       var association_id_foreignKey= raw.association_id
       var table_id_source= raw.selectedNewTable

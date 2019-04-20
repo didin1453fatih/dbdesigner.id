@@ -421,7 +421,7 @@
                   </a-col>
                   <a-col :span="3">
                     <a-button
-                      @click="saveChange(keyColoumn)"
+                      @click="saveNewColoumn()"
                       size="small"
                       style="color: rgba(0, 0, 0, 0.65);width:55px"
                     >Save</a-button>
@@ -463,6 +463,34 @@ export default {
     })
   },
   methods: {
+    saveNewColoumn(){
+      // this.$message.error('This is a message of error');
+      this.addNewColoumn({
+        table_id:this.tableKeyConfig,
+        coloumn_name:this.newColoumn.coloumnName,
+        data_type :this.newColoumn.dataType,
+        primaryKey : this.newColoumn.primaryKey,
+        notNull : this.newColoumn.notNull,
+        unique : this.newColoumn.unique,
+        autoIncrement : this.newColoumn.autoIncrement,
+        default : this.newColoumn.default,
+        foreignKey : this.newColoumn.foreignKey,
+        comment : this.newColoumn.comment,
+        unsigned : this.newColoumn.unsigned
+      })
+
+        this.newColoumn.coloumnName=null
+        this.newColoumn.dataType=null
+        this.newColoumn.primaryKey=false
+        this.newColoumn.notNull=false
+        this.newColoumn.unique=false
+        this.newColoumn.autoIncrement=false
+        this.newColoumn.default=null
+        this.newColoumn.foreignKey=false
+        this.newColoumn.comment=null
+        this.newColoumn.unsigned=false
+        this.isVisibleNewColoumn = false;
+    },
     saveChange(coloumn) {
       this.updateColoumnTable({
         newColoumn: this.newColoumnName,
@@ -547,7 +575,8 @@ export default {
       updateAssociation: "updateAssociation",
       updateAssociationBelongTableName: "updateAssociationBelongTableName",
       updateAssociationBelongColoumnName: "updateAssociationBelongColoumnName",
-      updateTableName: "updateTableName"
+      updateTableName: "updateTableName",
+      addNewColoumn : "addNewColoumn"
     }),
     showDetail(val, keyColoumn) {
       this.isVisibleNewColoumn = false;

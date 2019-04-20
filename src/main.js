@@ -21,6 +21,9 @@ import { Input } from 'ant-design-vue';
 Vue.use(Input);
 import { Icon } from 'ant-design-vue';
 Vue.use(Icon);
+
+import { message } from 'ant-design-vue';
+Vue.prototype.$message = message;
 Vue.use(DatePicker);
 Vue.use(VueKonva)
 import { store } from "./store/index";
