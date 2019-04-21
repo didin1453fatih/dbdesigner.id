@@ -164,6 +164,13 @@ export default {
     } else if(coloumnObj.association_belong_id===null&&coloumnObj.association_has_id.length>0){
       coloumnObj.association_has_id.forEach(association_has_id=>{
         var assocObj=state.dataDiagramNew[table_id].association[association_has_id]
+        // reset association_belong_id to null  foreignkey=false
+        var coloumnForeignKeyObj=state.dataDiagramNew[state.connectorNewKey[assocObj.connector_id].tail.table_id].coloumns[
+          state.connectorNewKey[assocObj.connector_id].tail.coloumn_id
+        ]
+        coloumnForeignKeyObj.association_belong_id=null
+        coloumnForeignKeyObj.primaryKey=false
+
         // Delete association foreign key 
         Vue.delete(
         state.dataDiagramNew[state.connectorNewKey[assocObj.connector_id].tail.table_id].association ,
