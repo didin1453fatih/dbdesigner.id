@@ -169,7 +169,7 @@ export default {
           state.connectorNewKey[assocObj.connector_id].tail.coloumn_id
         ]
         coloumnForeignKeyObj.association_belong_id=null
-        coloumnForeignKeyObj.primaryKey=false
+        coloumnForeignKeyObj.foreignKey=false
 
         // Delete association foreign key 
         Vue.delete(
