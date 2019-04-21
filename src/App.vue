@@ -1,5 +1,50 @@
 <template>
   <div>
+    <a-menu
+      style="line-height: 33px;background:#1C2128;color:#fff"
+      size="small"
+      v-model="current"
+      mode="horizontal"
+    >
+      <a-menu-item key="mail">
+        <a-icon type="profile"/>
+        File
+        </a-menu-item>
+      <a-menu-item key="history">
+        <a-icon type="clock-circle" />
+        History
+      </a-menu-item>
+      <a-sub-menu>
+        <span slot="title" class="submenu-title-wrapper">
+          <a-icon type="gift"/>Export
+        </span>
+        <a-menu-item-group title="Item 1">
+          <a-menu-item key="setting:1">Option 1</a-menu-item>
+          <a-menu-item key="setting:2">Option 2</a-menu-item>
+        </a-menu-item-group>
+        <a-menu-item-group title="Item 2">
+          <a-menu-item key="setting:3">Option 3</a-menu-item>
+          <a-menu-item key="setting:4">Option 4</a-menu-item>
+        </a-menu-item-group>
+      </a-sub-menu>
+      <a-sub-menu>
+        <span slot="title" class="submenu-title-wrapper">
+          <a-icon type="rocket" />Share
+        </span>
+        <a-menu-item-group title="Item 1">
+          <a-menu-item key="setting:1">Option 1</a-menu-item>
+          <a-menu-item key="setting:2">Option 2</a-menu-item>
+        </a-menu-item-group>
+        <a-menu-item-group title="Item 2">
+          <a-menu-item key="setting:3">Option 3</a-menu-item>
+          <a-menu-item key="setting:4">Option 4</a-menu-item>
+        </a-menu-item-group>
+      </a-sub-menu>
+      <a-menu-item style="right:0; potition:absoute" key="export">
+        <a-icon type="smile"/>
+        Help
+      </a-menu-item>
+    </a-menu>
     <v-stage :config="configKonva">
       <v-layer>
         <!-- <template
@@ -225,4 +270,5 @@ export default {
 .ant-drawer-header {
   border-radius: 0px 0px 0 0 !important;
 }
+
 </style>

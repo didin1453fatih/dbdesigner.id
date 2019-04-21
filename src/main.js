@@ -22,6 +22,12 @@ Vue.use(Input);
 import { Icon } from 'ant-design-vue';
 Vue.use(Icon);
 
+import {   Tabs } from 'ant-design-vue';
+Vue.use(Tabs);
+
+import {   Menu } from 'ant-design-vue';
+Vue.use(Menu);
+
 import { message } from 'ant-design-vue';
 Vue.prototype.$message = message;
 Vue.use(DatePicker);
