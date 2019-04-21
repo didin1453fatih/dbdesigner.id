@@ -185,36 +185,41 @@ export default {
       Vue.delete(state.dataDiagramNew[table_id].coloumns,coloumn_id)
 
     } else if(coloumnObj.association_belong_id!==null&&coloumnObj.association_has_id.length>0){
+      // asscotiationSourceObj pointer
+      let assocBelongObj=state.dataDiagramNew[table_id].association[coloumnObj.association_belong_id]
+      let asscotiationSourceObj= state.dataDiagramNew[state.connectorNewKey[assocBelongObj.connector_id].head.table_id].association 
+      let asscotiationSourceKey_id= state.connectorNewKey[assocBelongObj.connector_id].head.association_id
+
       coloumnObj.association_has_id.forEach(association_has_id=>{
-        var assocObj=state.dataDiagramNew[table_id].association[association_has_id]
+        let assocHasObj=state.dataDiagramNew[table_id].association[association_has_id]
         // reset association_belong_id to null  foreignkey=false
-        var coloumnForeignKeyObj=state.dataDiagramNew[state.connectorNewKey[assocObj.connector_id].tail.table_id].coloumns[
-          state.connectorNewKey[assocObj.connector_id].tail.coloumn_id
+        var coloumnForeignKeyObj=state.dataDiagramNew[state.connectorNewKey[assocHasObj.connector_id].tail.table_id].coloumns[
+          state.connectorNewKey[assocHasObj.connector_id].tail.coloumn_id
         ]
         coloumnForeignKeyObj.association_belong_id=null
         coloumnForeignKeyObj.foreignKey=false
 
         // Delete association foreign key 
         Vue.delete(
-        state.dataDiagramNew[state.connectorNewKey[assocObj.connector_id].tail.table_id].association ,
-        state.connectorNewKey[assocObj.connector_id].tail.association_id
+        state.dataDiagramNew[state.connectorNewKey[assocHasObj.connector_id].tail.table_id].association ,
+        state.connectorNewKey[assocHasObj.connector_id].tail.association_id
         )
         // Delete association source key 
         Vue.delete(state.dataDiagramNew[table_id].association,association_has_id)
         // Delete connector
-        Vue.delete(state.connectorNewKey,assocObj.connector_id)      
+        Vue.delete(state.connectorNewKey,assocHasObj.connector_id)      
       })
 
-      let assocObj=state.dataDiagramNew[table_id].association[coloumnObj.association_belong_id]
+
       // Delete association source key 
       Vue.delete(
-      state.dataDiagramNew[state.connectorNewKey[assocObj.connector_id].head.table_id].association ,
-      state.connectorNewKey[assocObj.connector_id].head.association_id
+      asscotiationSourceObj,
+      asscotiationSourceKey_id
       )
       // Delete association foreign key 
       Vue.delete(state.dataDiagramNew[table_id].association,coloumnObj.association_belong_id)
       // Delete connector
-      Vue.delete(state.connectorNewKey,assocObj.connector_id)      
+      Vue.delete(state.connectorNewKey,assocBelongObj.connector_id)      
 
       // Delete coloumn
       Vue.delete(state.dataDiagramNew[table_id].coloumns,coloumn_id)
