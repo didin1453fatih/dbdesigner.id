@@ -71,7 +71,10 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           },
-          association_belong_id:null
+          association_belong_id:null,
+          association_has_id:[
+            'assoc_Car_has_driver_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35'
+          ]
         },
         coloumn_car_color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
           coloumn_name: "color",
@@ -89,7 +92,10 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           },
-          association_belong_id:null
+          association_belong_id:null,
+          association_has_id:[
+            'assoc_Car_Color_has_driver_Id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35'
+          ]
         },
         coloumn_car_number_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
           coloumn_name: "number",
@@ -107,7 +113,8 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           },
-          association_belong_id:null
+          association_belong_id:null,
+          association_has_id:[]
         }              
       },
       association: {
@@ -164,7 +171,8 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           },
-          association_belong_id:'assoc_Driver_belong_Color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39'
+          association_belong_id:'assoc_Driver_belong_Color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39',
+          association_has_id:[]
         },
         coloumn_Driver_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
           coloumn_name: "Car_id",
@@ -182,7 +190,8 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           },
-          association_belong_id:'assoc_Driver_belong_Car_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39'
+          association_belong_id:'assoc_Driver_belong_Car_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39',
+          association_has_id:[]
         }
       },
       association: {
@@ -239,7 +248,8 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           },
-          association_belong_id:null
+          association_belong_id:null,
+          association_has_id:[]
         },
         coloumn_Owner_name_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
           coloumn_name: "Name",
@@ -257,7 +267,8 @@ export default {
             shadowBlur: 0,
             shadowColor: "green"
           },
-          association_belong_id:null
+          association_belong_id:null,
+          association_has_id:[]
         }
       },
       association: {

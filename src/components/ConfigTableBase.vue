@@ -174,7 +174,10 @@
             <tr v-bind:key="keyColoumn+index">
               <td colspan="8">
                 <a-icon
-                  @click="deleteColoumn(keyColoumn)"
+                  @click="deleteColoumn({
+                    coloumn_id:keyColoumn,
+                    table_id:tableKeyConfig
+                  })"
                   type="delete"
                   style="color:red;position: absolute; right: 35px; margin-top: 5px;cursor:pointer"
                 />
@@ -380,7 +383,7 @@
                     />
                   </a-col>
                 </a-row>
-                <a-row style="margin-top:5px" align="bottom" type="flex">
+                <!-- <a-row style="margin-top:5px" align="bottom" type="flex">
                   <a-col :span="5">
                     <span style="padding-right:5px">Ref. Table</span>
                   </a-col>
@@ -409,12 +412,12 @@
                       </template>
                     </a-select>
                   </a-col>
-                </a-row>
+                </a-row> -->
 
                 <a-row style="margin-top:15px" align="bottom" type="flex">
                   <a-col :span="4">
                     <a-button
-                      @click="cancelEdit(index,keyColoumn)"
+                      @click="cancelNewColoumn(index,keyColoumn)"
                       type="dashed"
                       size="small"
                     >Cancel</a-button>
@@ -463,8 +466,35 @@ export default {
     })
   },
   methods: {
+    cancelNewColoumn(){
+        this.newColoumn.coloumnName=null
+        this.newColoumn.dataType=null
+        this.newColoumn.primaryKey=false
+        this.newColoumn.notNull=false
+        this.newColoumn.unique=false
+        this.newColoumn.autoIncrement=false
+        this.newColoumn.default=null
+        this.newColoumn.foreignKey=false
+        this.newColoumn.comment=null
+        this.newColoumn.unsigned=false
+        this.isVisibleNewColoumn = false;
+    },
     saveNewColoumn(){
-      // this.$message.error('This is a message of error');
+      var isSuccess=true
+      if(this.newColoumn.coloumnName===null){
+      isSuccess=false
+      this.$message.error('Coloumn name is required');
+      }
+
+      if(this.newColoumn.dataType===null){
+      this.$message.error('Data type is required');
+      isSuccess=false
+      }
+
+      if(isSuccess===false){
+        return
+      }
+
       this.addNewColoumn({
         table_id:this.tableKeyConfig,
         coloumn_name:this.newColoumn.coloumnName,
@@ -551,9 +581,9 @@ export default {
         );
       }
     },
-    deleteColoumn(coloumn_id) {
-      window.alert("delete : " + coloumn_id);
-    },
+    // deleteColoumn(coloumn_id) {
+    //   window.alert("delete : " + coloumn_id);
+    // },
     // updateAssociationBelongTableName(selectedNewTable, association_id) {
     //   // this.updateAssociation
     //   // eslint-disable-next-line
@@ -563,6 +593,7 @@ export default {
       this.showDetailcoloumn = -1;
     },
     ...mapMutations("diagram", {
+      deleteColoumn : "deleteColoumn",
       setVisibleConfigTable: "setVisibleConfigTable",
       updateColoumnTable: "updateColoumnTable",
       updateColoumnName: "updateColoumnName",
@@ -620,6 +651,7 @@ export default {
   },
   data() {
     return {
+      visibleMessageColoumn:true,
       isVisibleNewColoumn: false,
       newColoumn: {
         coloumnName: null,

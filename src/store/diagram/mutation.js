@@ -141,9 +141,44 @@ export default {
   updateTableName(state, raw){
     state.dataDiagramNew[raw.table_id].table_name=raw.tableNewName
   },
-  // deleteColoumn(state, raw){
+  deleteColoumn(state, raw){
+    var coloumn_id= raw.coloumn_id
+    var table_id=raw.table_id
+    var coloumnObj=state.dataDiagramNew[table_id].coloumns[coloumn_id]
+    if(coloumnObj.association_belong_id===null&&coloumnObj.association_has_id.length===0){
+      Vue.delete(state.dataDiagramNew[table_id].coloumns,coloumn_id)
+    }
+    else if(coloumnObj.association_belong_id!==null&&coloumnObj.association_has_id.length===0){
+      var assocObj=state.dataDiagramNew[table_id].association[coloumnObj.association_belong_id]
+      // Delete association source key 
+      Vue.delete(
+      state.dataDiagramNew[state.connectorNewKey[assocObj.connector_id].head.table_id].association ,
+      state.connectorNewKey[assocObj.connector_id].head.association_id
+      )
+      // Delete association foreign key 
+      Vue.delete(state.dataDiagramNew[table_id].association,coloumnObj.association_belong_id)
+      // Delete connector
+      Vue.delete(state.connectorNewKey,assocObj.connector_id)      
+      // Delete coloumn
+      Vue.delete(state.dataDiagramNew[table_id].coloumns,coloumn_id)
+    } else if(coloumnObj.association_belong_id===null&&coloumnObj.association_has_id.length>0){
+      coloumnObj.association_has_id.forEach(association_has_id=>{
+        var assocObj=state.dataDiagramNew[table_id].association[association_has_id]
+        // Delete association foreign key 
+        Vue.delete(
+        state.dataDiagramNew[state.connectorNewKey[assocObj.connector_id].tail.table_id].association ,
+        state.connectorNewKey[assocObj.connector_id].tail.association_id
+        )
+        // Delete association source key 
+        Vue.delete(state.dataDiagramNew[table_id].association,association_has_id)
+        // Delete connector
+        Vue.delete(state.connectorNewKey,assocObj.connector_id)      
+        // Delete coloumn
+        Vue.delete(state.dataDiagramNew[table_id].coloumns,coloumn_id)
+      })
 
-  // },
+    }
+  },
   setConfigTable(state, tableName) {
     state.configTable.tableName = tableName;
     state.configTable.properties = state.dataDiagram[tableName];
