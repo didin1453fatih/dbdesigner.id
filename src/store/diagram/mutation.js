@@ -622,6 +622,23 @@ export default {
       })
       
       Vue.delete(state.dataDiagramNew,table_id)
+    },
+    addNewTable(state){
+      // state.dataDiagramNew[uuidv4()]={}
+      let table_id=uuidv4()
+      Vue.set(state.dataDiagramNew,table_id,{
+        table_name: " ",
+        point: {
+          x: 30,
+          y: 110
+        },
+        coloumns: {            
+        },
+        association: {
+        }
+      })
+      state.tableKeyConfig=table_id
+      state.visibleConfigTable=true
     }
 };
 

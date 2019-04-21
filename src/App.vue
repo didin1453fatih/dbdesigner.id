@@ -6,13 +6,24 @@
       v-model="current"
       mode="horizontal"
     >
-      <a-menu-item key="mail">
-        <a-icon type="profile"/>
-        File
-        </a-menu-item>
+      <!-- <a-menu-item key="mail"> -->
+      <!-- <a-icon type="profile"/>
+      File-->
+      <!-- </a-menu-item> -->
+      <a-sub-menu>
+        <span slot="title" class="submenu-title-wrapper">
+          <a-icon type="profile"/>File
+        </span>
+          <a-menu-item-group title="Project">
+            <a-menu-item key="setting:3">Open Project</a-menu-item>
+            <a-menu-item key="setting:2">New Project</a-menu-item>
+          </a-menu-item-group>
+          <a-menu-item-group title="Table">
+            <a-menu-item key="setting:1" @click="addNewTable">New Table</a-menu-item>
+          </a-menu-item-group>          
+      </a-sub-menu>
       <a-menu-item key="history">
-        <a-icon type="clock-circle" />
-        History
+        <a-icon type="clock-circle"/>History
       </a-menu-item>
       <a-sub-menu>
         <span slot="title" class="submenu-title-wrapper">
@@ -29,7 +40,7 @@
       </a-sub-menu>
       <a-sub-menu>
         <span slot="title" class="submenu-title-wrapper">
-          <a-icon type="rocket" />Share
+          <a-icon type="rocket"/>Share
         </span>
         <a-menu-item-group title="Item 1">
           <a-menu-item key="setting:1">Option 1</a-menu-item>
@@ -41,8 +52,7 @@
         </a-menu-item-group>
       </a-sub-menu>
       <a-menu-item style="right:0; potition:absoute" key="export">
-        <a-icon type="smile"/>
-        Help
+        <a-icon type="smile"/>Help
       </a-menu-item>
     </a-menu>
     <v-stage :config="configKonva">
@@ -116,7 +126,8 @@ export default {
     ...mapMutations("diagram", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
-      setLineStyleConnector: "setLineStyleConnector"
+      setLineStyleConnector: "setLineStyleConnector",
+      addNewTable :"addNewTable"
     }),
     editDataTable() {
       // this.editTableName = tableName;
@@ -270,5 +281,8 @@ export default {
 .ant-drawer-header {
   border-radius: 0px 0px 0 0 !important;
 }
-
+.ant-menu-vertical .ant-menu-item, .ant-menu-vertical-left .ant-menu-item, .ant-menu-vertical-right .ant-menu-item, .ant-menu-inline .ant-menu-item, .ant-menu-vertical .ant-menu-submenu-title, .ant-menu-vertical-left .ant-menu-submenu-title, .ant-menu-vertical-right .ant-menu-submenu-title, .ant-menu-inline .ant-menu-submenu-title {
+    line-height: 25px !important;
+    height: 25px !important;
+}
 </style>
