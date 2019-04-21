@@ -1,12 +1,13 @@
 <template>
-  <a-drawer placement="right" :width="520" :closable="false" @close="onClose" :visible="visible">
+  <a-drawer v-if="dataDiagramNew[tableKeyConfig]!==undefined" placement="right" :width="520" :closable="false" @close="onClose" :visible="visible">
     <!-- :title="dataDiagramNew[tableKeyConfig].table_name" -->
     <div class="ant-drawer-header" style="margin:-25px; margin-bottom:25px;">
       <div
         v-if="isEditTableName===false"
         class="ant-drawer-title"
         @click="isEditTableName=true"
-      >{{dataDiagramNew[tableKeyConfig].table_name}}</div>
+      >{{dataDiagramNew[tableKeyConfig].table_name}}
+      </div>
       <a-input
         @blur="isEditTableName = false"
         @change="updateTableName({
@@ -17,6 +18,13 @@
         v-if="isEditTableName"
         size="default"
         :value="dataDiagramNew[tableKeyConfig].table_name"
+      />
+      <a-icon
+        @click="deleteTable({
+          table_id:tableKeyConfig
+        })"
+        type="delete"        
+        style="color:#fff;position: absolute; right: 22px; margin-top: -17px;cursor:pointer; font-size:25px"
       />
     </div>
     <div>
@@ -607,7 +615,8 @@ export default {
       updateAssociationBelongTableName: "updateAssociationBelongTableName",
       updateAssociationBelongColoumnName: "updateAssociationBelongColoumnName",
       updateTableName: "updateTableName",
-      addNewColoumn : "addNewColoumn"
+      addNewColoumn : "addNewColoumn",
+      deleteTable : "deleteTable"
     }),
     showDetail(val, keyColoumn) {
       this.isVisibleNewColoumn = false;
