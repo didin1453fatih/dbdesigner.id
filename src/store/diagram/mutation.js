@@ -257,8 +257,21 @@ export default {
     var selectedNewColoumn_id= raw.selectedNewColoumn_id
     var table_id= raw.table_id
 
-    //change in this asscotiation table below always
     var assocObject=state.dataDiagramNew[table_id].association[association_id]
+
+    // remove association_has_id who point to assoc has type because connection is change from old coloumn
+    var association_has_idArray= state.dataDiagramNew[state.connectorNewKey[assocObject.connector_id].head.table_id].coloumns[state.connectorNewKey[assocObject.connector_id].head.coloumn_id].association_has_id
+    for(var i=0;i<association_has_idArray.length;i++){
+      if(association_has_idArray[i]===state.connectorNewKey[assocObject.connector_id].head.association_id){
+        association_has_idArray.splice(i,1)
+        break
+      }
+    }
+
+    // add association_has_id in new coloumn connection
+    state.dataDiagramNew[state.connectorNewKey[assocObject.connector_id].head.table_id].coloumns[selectedNewColoumn_id].association_has_id.push(state.connectorNewKey[assocObject.connector_id].head.association_id)
+
+    //change in this asscotiation table below always  
     assocObject.targetKey_id=selectedNewColoumn_id
     //change in connector
     var connObject= state.connectorNewKey[assocObject.connector_id]
@@ -266,6 +279,8 @@ export default {
 
     //change in target key has owner ship
     state.dataDiagramNew[connObject.head.table_id].association[connObject.head.association_id].sourceKey_id=selectedNewColoumn_id
+    // eslint-disable-next-line
+    console.log(JSON.stringify(state.dataDiagramNew[connObject.head.table_id]))
 
   },
   addNewColoumn(state, raw){
@@ -302,7 +317,8 @@ export default {
         shadowBlur: 0,
         shadowColor: "green"
       },
-      association_belong_id:null
+      association_belong_id:null,
+      association_has_id:[]
     })
 
     // var coloumn_id_foreignKey=raw.thisForeignKey_id
@@ -362,6 +378,8 @@ export default {
           }
         }
         Vue.set(state.dataDiagramNew[table_id_source].association, association_id_source, tmpAssociation_id_source)      
+        // add association_has_id
+        state.dataDiagramNew[table_id_source].coloumns[coloumn_id_default_sourceKey].association_has_id.push(association_id_source)
 
 
         var tmpConnector= {
@@ -394,13 +412,31 @@ export default {
             shadowColor: "green"
           }
         }
-        Vue.set(state.connectorNewKey, connector_id, tmpConnector)      
+        Vue.set(state.connectorNewKey, connector_id, tmpConnector)   
+        // eslint-disable-next-line   
+        console.log(JSON.stringify(state.dataDiagramNew[table_id_source]))
       }else{
         
       var assocOBJ_foreignKey=state.dataDiagramNew[table_id_foreignKey].association[association_id_foreignKey]
-      // delete source table assoc
+
+      let coloumn_id_default_sourceKey=Object.keys(state.dataDiagramNew[table_id_source].coloumns)[0]
+      var newAssoctioation_id='assoc_Source_'+uuidv4()
       var assocObj_source_id=state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.association_id
       var tableObj_source_id=state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.table_id
+      var coloumnObj_source_id=state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.coloumn_id
+
+      // remove association_has_id coloumn in source coloumn
+      var association_has_idArray=state.dataDiagramNew[tableObj_source_id].coloumns[coloumnObj_source_id].association_has_id
+      for(var i=0;i<association_has_idArray.length;i++){
+        if(association_has_idArray[i]===assocObj_source_id){
+          association_has_idArray.splice(i,1)
+          break
+        }
+      }
+      // add new association_has_id 
+      state.dataDiagramNew[table_id_source].coloumns[coloumn_id_default_sourceKey].association_has_id.push(newAssoctioation_id)
+
+      // delete source table assoc
       delete state.dataDiagramNew[tableObj_source_id].association[assocObj_source_id]
 
       // change association data target table_id      
@@ -414,8 +450,8 @@ export default {
       state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.coloumn_id=selectedColoumnDefault_id
       // change table connector
       state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.table_id=table_id_source
+
       // renew asscotiation id  
-      var newAssoctioation_id=new Date().toString()
       state.connectorNewKey[assocOBJ_foreignKey.connector_id].head.association_id=newAssoctioation_id
       // chreate new
       // state.dataDiagramNew[table_id_source].association[newAssoctioation_id]
