@@ -114,7 +114,8 @@ export default {
   methods: {
     ...mapMutations("diagram", {
       setConfigTable: "setConfigTable",
-      setTableKeyConfig:"setTableKeyConfig"
+      setTableKeyConfig:"setTableKeyConfig",
+      setShowDetailTable : "setShowDetailTable"
     }),
     selectRelation() {
       this.$emit("highlight",{
@@ -135,9 +136,10 @@ export default {
       });
     },
     clickEvent() {
-      this.$emit("editDataTable");
+      // this.$emit("editDataTable");
       // this.setConfigTable(this.tableName)
-      this.setTableKeyConfig(this.tableKey)
+      // this.setTableKeyConfig(this.tableKey)
+      this.setShowDetailTable(this.tableKey)
     },
     addPointAssotiation() {},
     reaCalculatePointAsscotiation() {}

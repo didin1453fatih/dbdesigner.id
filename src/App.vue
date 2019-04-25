@@ -77,6 +77,12 @@
         />
       </v-layer>
     </v-stage>
+    <table-detail
+      :visible="visible"
+      :tableName="editTableName"
+      :tableProperties="editTableProperties"
+      @close="onClose"
+    />
     <config-table
       :visible="visible"
       :tableName="editTableName"
@@ -93,11 +99,13 @@ import { mapMutations } from "vuex";
 // import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
 import ConfigTable from "./components/ConfigTableBase.vue";
+import TableDetail from "./components/TableDetail.vue";
 
 export default {
   components: {
     TableBase,
     // ConnectorBase,
+    TableDetail,
     ConfigTable
   },
   methods: {

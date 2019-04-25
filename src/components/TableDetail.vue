@@ -1,21 +1,30 @@
 <template>
-  <a-drawer v-if="dataDiagramNew[tableKeyConfig]!==undefined" placement="right" :width="520" :closable="false" @close="onClose" :visible="visible">
-    <!-- :title="dataDiagramNew[tableKeyConfig].table_name" -->
+  <a-drawer
+    v-if="dataDiagramNew[tableKeyConfig]!==undefined"
+    placement="right"
+    :width="520"
+    :closable="false"
+    @close="onClose"
+    :visible="visible"
+  >
     <div class="ant-drawer-header" style="margin:-25px; margin-bottom:25px;">
       <div
         v-if="isEditTableName===false"
         class="ant-drawer-title"
-        @click="isEditTableName=true"
-      >{{dataDiagramNew[tableKeyConfig].table_name}}
+        @click="setIsEditTableName(true)"
+      >
+        {{dataDiagramNew[tableKeyConfig].table_name}}
+        &nbsp;
       </div>
       <a-input
-        @blur="isEditTableName = false"
+        placeholder="Table Name"
+        @blur="setIsEditTableName(false)"
         @change="updateTableName({
         table_id:tableKeyConfig,
         tableNewName:$event.target.value
       })"
         style="background-color:#316896; font-size: 20px; line-height: 2;color:#fff;font-weight: 450;width: fit-content;"
-        v-if="isEditTableName"
+        v-if="isEditTableName==true"
         size="default"
         :value="dataDiagramNew[tableKeyConfig].table_name"
       />
@@ -24,7 +33,7 @@
         @click="deleteTable({
           table_id:tableKeyConfig
         })"
-        type="delete"        
+        type="delete"
         style="color:#fff;position: absolute; right: 22px; margin-top: -17px;cursor:pointer; font-size:25px"
       />
     </div>
@@ -86,7 +95,7 @@
                   <td align="left">
                     <a-input
                       @blur="isEditColoumnName = false"
-                      ref="searchLL"
+                      placeholder="Coloumn name"
                       v-if="showDetailcoloumn===index"
                       size="small"
                       @input="updateColoumnName({
@@ -100,7 +109,7 @@
                       @click="showDetail(index,keyColoumn)"
                       v-else
                       style="width:100%"
-                    >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name}}</div>
+                    >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name}}&nbsp;</div>
                   </td>
                 </tr>
               </table>
@@ -108,17 +117,21 @@
             <td>
               <a-input
                 @blur="isEditColoumnType = false"
-                ref="searchLL"
                 v-if="showDetailcoloumn===index"
                 size="small"
-                placeholder="small size"
-                v-model="newDataType"
+                placeholder="Data type"
+                @input="updateDataType({
+                  tableKey_id:tableKeyConfig,
+                  coloumn_id:keyColoumn,
+                  newDataType:$event.target.value
+                })"
+                :value="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].dataType"
               />
               <div
                 @click="showDetail(index,keyColoumn)"
                 v-else
                 style="margin-left:12px; width:100%"
-              >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].dataType}}</div>
+              >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].dataType}}&nbsp;</div>
             </td>
             <td align="center">
               <a-checkbox
@@ -173,7 +186,7 @@
             <td align="center">
               <a-icon
                 v-if="showDetailcoloumn===index"
-                @click="showDetailcoloumn=-1"
+                @click="setShowDetailcoloumn(-1)"
                 type="caret-up"
               />
               <a-icon v-else @click="showDetail(index,keyColoumn)" type="caret-down"/>
@@ -303,148 +316,6 @@
             </tr>
           </template>
         </template>
-        <!-- new coloumn -->
-        <template v-if="isVisibleNewColoumn===true">
-          <tr>
-            <td>
-              <table border="0" width="100%">
-                <tr>
-                  <td width="15%" align="left">
-                    <span style="margin-left:7px" v-if="newColoumn.primaryKey">
-                      <img
-                        src="../assets/primary-key.png"
-                        width="14px"
-                        style="vertical-align: baseline; margin-right:3px"
-                      >
-                    </span>
-                    <span style="margin-left:7px" v-else-if="newColoumn.notNull===true">
-                      <img
-                        src="../assets/icons8-diamonds-40.png"
-                        width="14px"
-                        style="vertical-align: baseline; margin-right:5px"
-                      >
-                    </span>
-                    <span style="margin-left:7px" v-else-if="newColoumn.notNull===false">
-                      <img
-                        src="../assets/icons8-diamonds-40-white.png"
-                        width="14px"
-                        style="vertical-align: baseline; margin-right:5px"
-                      >
-                    </span>
-                  </td>
-                  <td align="left">
-                    <a-input size="small" v-model="newColoumn.coloumnName"/>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td>
-              <a-input size="small" v-model="newColoumn.dataType"/>
-            </td>
-            <td align="center">
-              <a-checkbox @change="newColoumn.primaryKey=$event.target.checked"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="newColoumn.notNull=$event.target.checked"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="newColoumn.unique=$event.target.checked"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="newColoumn.unsigned=$event.target.checked"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="newColoumn.autoIncrement=$event.target.checked"></a-checkbox>
-            </td>
-            <td align="center"></td>
-          </tr>
-          <tr>
-            <td colspan="8">
-              <div style="margin-bottom:15px;margin-left:15px;margin-right:15px;margin-top:15px;">
-                <a-row align="bottom" type="flex">
-                  <a-col :span="5">
-                    <span style="padding-right:5px">Default</span>
-                  </a-col>
-                  <a-col :span="18">
-                    <a-input style="width:170px" size="small" placeholder="default" v-model="newColoumn.default"/>
-                  </a-col>
-                  <a-col :span="1"></a-col>
-                </a-row>
-                <a-row style="margin-top:5px" align="bottom" type="flex">
-                  <a-col :span="5">
-                    <span style="padding-right:5px">Foregn Key</span>
-                  </a-col>
-                  <a-col :span="18">
-                    <a-checkbox v-model="newColoumn.foreignKey" style="padding:0;margin:0"></a-checkbox>
-                  </a-col>
-                </a-row>
-                <a-row style="margin-top:5px" align="top" type="flex">
-                  <a-col :span="5" align="top">
-                    <span style="padding-right:5px" align="top">Comments</span>
-                  </a-col>
-                  <a-col :span="18" align="top">
-                    <a-textarea
-                      v-model="newColoumn.comment"
-                      style="width:170px"
-                      size="small"
-                      placeholder="Give note  of your table"
-                      autosize
-                    />
-                  </a-col>
-                </a-row>
-                <!-- <a-row style="margin-top:5px" align="bottom" type="flex">
-                  <a-col :span="5">
-                    <span style="padding-right:5px">Ref. Table</span>
-                  </a-col>
-                  <a-col :span="18">
-                    <a-select style="width: 170px" v-model="newColoumn.refTable_id" size="small">
-                      <a-select-option
-                        size="small"
-                        v-for="keyTable in Object.keys(dataDiagramNew)"
-                        :key="keyTable"
-                        :value="keyTable"
-                      >{{dataDiagramNew[keyTable].table_name}}</a-select-option>
-                    </a-select>
-                  </a-col>
-                </a-row>
-                <a-row style="margin-top:5px" align="bottom" type="flex">
-                  <a-col :span="5">Ref. Coloumn</a-col>
-                  <a-col :span="18">
-                    <a-select size="small"  v-model="newColoumn.refColoumn_id" style="width: 170px">
-                      <template v-if="newColoumn.refTable_id!==null">                      
-                        <a-select-option 
-                          size="small"
-                          v-for="keyColoumn_id in Object.keys(dataDiagramNew[newColoumn.refTable_id].coloumns)"
-                          :key="keyColoumn_id"
-                          :value="keyColoumn_id"
-                        >{{dataDiagramNew[newColoumn.refTable_id].coloumns[keyColoumn_id].coloumn_name}}</a-select-option>
-                      </template>
-                    </a-select>
-                  </a-col>
-                </a-row> -->
-
-                <a-row style="margin-top:15px" align="bottom" type="flex">
-                  <a-col :span="4">
-                    <a-button
-                      @click="cancelNewColoumn(index,keyColoumn)"
-                      type="dashed"
-                      size="small"
-                    >Cancel</a-button>
-                  </a-col>
-                  <a-col :span="3">
-                    <a-button
-                      @click="saveNewColoumn()"
-                      size="small"
-                      style="color: rgba(0, 0, 0, 0.65);width:55px"
-                    >Save</a-button>
-                  </a-col>
-                </a-row>
-              </div>
-            </td>
-          </tr>
-        </template>
-        <!-- end new coloumnn -->
-        <!-- </templete> -->
       </table>
       <!-- <a-button size="small" style="margin-top: 10px;color: #316896; border-color:#316896">
         New coloumn
@@ -469,66 +340,72 @@ export default {
     ...mapState("diagram", {
       tableProperties: state => state.configTable.properties,
       tableName: state => state.configTable.tableName,
-      visible: state => state.visibleConfigTable,
+
       dataDiagramNew: state => state.dataDiagramNew,
-      tableKeyConfig: state => state.tableKeyConfig
+
+      isEditTableName: state => state.tableDetail.isEditTableName,
+      tableKeyConfig: state => state.tableDetail.table_id,
+      table_id: state => state.tableDetail.table_id,
+      visible: state => state.tableDetail.visible,
+      isNewTable: state => state.tableDetail.isNewTable,
+      showDetailcoloumn: state => state.tableDetail.showDetailcoloumn
     })
   },
   methods: {
-    cancelNewColoumn(){
-        this.newColoumn.coloumnName=null
-        this.newColoumn.dataType=null
-        this.newColoumn.primaryKey=false
-        this.newColoumn.notNull=false
-        this.newColoumn.unique=false
-        this.newColoumn.autoIncrement=false
-        this.newColoumn.default=null
-        this.newColoumn.foreignKey=false
-        this.newColoumn.comment=null
-        this.newColoumn.unsigned=false
-        this.isVisibleNewColoumn = false;
+    cancelNewColoumn() {
+      this.newColoumn.coloumnName = null;
+      this.newColoumn.dataType = null;
+      this.newColoumn.primaryKey = false;
+      this.newColoumn.notNull = false;
+      this.newColoumn.unique = false;
+      this.newColoumn.autoIncrement = false;
+      this.newColoumn.default = null;
+      this.newColoumn.foreignKey = false;
+      this.newColoumn.comment = null;
+      this.newColoumn.unsigned = false;
+      this.isVisibleNewColoumn = false;
     },
-    saveNewColoumn(){
-      var isSuccess=true
-      if(this.newColoumn.coloumnName===null){
-      isSuccess=false
-      this.$message.error('Coloumn name is required');
+    saveNewColoumn() {
+      var isSuccess = true;
+      if (this.newColoumn.coloumnName === null) {
+        isSuccess = false;
+        this.$message.error("Coloumn name is required");
       }
 
-      if(this.newColoumn.dataType===null){
-      this.$message.error('Data type is required');
-      isSuccess=false
+      if (this.newColoumn.dataType === null) {
+        this.$message.error("Data type is required");
+        isSuccess = false;
       }
 
-      if(isSuccess===false){
-        return
+      if (isSuccess === false) {
+        return;
       }
 
       this.addNewColoumn({
-        table_id:this.tableKeyConfig,
-        coloumn_name:this.newColoumn.coloumnName,
-        data_type :this.newColoumn.dataType,
-        primaryKey : this.newColoumn.primaryKey,
-        notNull : this.newColoumn.notNull,
-        unique : this.newColoumn.unique,
-        autoIncrement : this.newColoumn.autoIncrement,
-        default : this.newColoumn.default,
-        foreignKey : this.newColoumn.foreignKey,
-        comment : this.newColoumn.comment,
-        unsigned : this.newColoumn.unsigned
-      })
+        table_id: this.tableKeyConfig,
+        coloumn_name: this.newColoumn.coloumnName,
+        data_type: this.newColoumn.dataType,
+        primaryKey: this.newColoumn.primaryKey,
+        notNull: this.newColoumn.notNull,
+        unique: this.newColoumn.unique,
+        autoIncrement: this.newColoumn.autoIncrement,
+        default: this.newColoumn.default,
+        foreignKey: this.newColoumn.foreignKey,
+        comment: this.newColoumn.comment,
+        unsigned: this.newColoumn.unsigned
+      });
 
-        this.newColoumn.coloumnName=null
-        this.newColoumn.dataType=null
-        this.newColoumn.primaryKey=false
-        this.newColoumn.notNull=false
-        this.newColoumn.unique=false
-        this.newColoumn.autoIncrement=false
-        this.newColoumn.default=null
-        this.newColoumn.foreignKey=false
-        this.newColoumn.comment=null
-        this.newColoumn.unsigned=false
-        this.isVisibleNewColoumn = false;
+      this.newColoumn.coloumnName = null;
+      this.newColoumn.dataType = null;
+      this.newColoumn.primaryKey = false;
+      this.newColoumn.notNull = false;
+      this.newColoumn.unique = false;
+      this.newColoumn.autoIncrement = false;
+      this.newColoumn.default = null;
+      this.newColoumn.foreignKey = false;
+      this.newColoumn.comment = null;
+      this.newColoumn.unsigned = false;
+      this.isVisibleNewColoumn = false;
     },
     saveChange(coloumn) {
       this.updateColoumnTable({
@@ -599,10 +476,10 @@ export default {
     //   console.log(JSON.stringify(value) + " | " + JSON.stringify(option));
     // },
     cancelEdit() {
-      this.showDetailcoloumn = -1;
+      this.setShowDetailcoloumn(-1);
     },
     ...mapMutations("diagram", {
-      deleteColoumn : "deleteColoumn",
+      deleteColoumn: "deleteColoumn",
       setVisibleConfigTable: "setVisibleConfigTable",
       updateColoumnTable: "updateColoumnTable",
       updateColoumnName: "updateColoumnName",
@@ -616,12 +493,18 @@ export default {
       updateAssociationBelongTableName: "updateAssociationBelongTableName",
       updateAssociationBelongColoumnName: "updateAssociationBelongColoumnName",
       updateTableName: "updateTableName",
-      addNewColoumn : "addNewColoumn",
-      deleteTable : "deleteTable"
+      addNewColoumn: "addNewColoumn",
+      deleteTable: "deleteTable",
+      setIsEditTableName: "setIsEditTableName",
+      setShowDetailcoloumn: "setShowDetailcoloumn",
+      addNewEmptyColoumn: "addNewEmptyColoumn",
+      setVisibleDetailTable : "setVisibleDetailTable",
+      updateDataType : "updateDataType"
     }),
     showDetail(val, keyColoumn) {
       this.isVisibleNewColoumn = false;
-      this.isEditTableName = false;
+      // this.isEditTableName = false;
+      this.setIsEditTableName(false);
       this.newColoumnName = this.dataDiagramNew[this.tableKeyConfig].coloumns[
         keyColoumn
       ].coloumn_name;
@@ -629,17 +512,14 @@ export default {
         keyColoumn
       ].dataType;
       if (val === this.showDetailcoloumn) {
-        this.showDetailcoloumn = -1;
+        this.setShowDetailcoloumn(-1);
       } else {
-        this.showDetailcoloumn = val;
+        this.setShowDetailcoloumn(val);
       }
     },
     onClose() {
-      this.setVisibleConfigTable(false);
+      this.setVisibleDetailTable(false);
     },
-    // updatePrimaryKey(t) {
-    //   window.alert(JSON.stringify(t));
-    // },
     changeEditableColoumnName() {
       if (this.isEditColoumnName === true) {
         this.isEditColoumnName = false;
@@ -655,13 +535,17 @@ export default {
       }
     },
     visibleNewColoumn() {
-      this.showDetailcoloumn = -1;
-      this.isVisibleNewColoumn = true;
+      this.addNewEmptyColoumn({
+        table_id: this.table_id
+      });
+      this.setShowDetailcoloumn(
+        Object.keys(this.dataDiagramNew[this.table_id].coloumns).length - 1
+      );
     }
   },
   data() {
     return {
-      visibleMessageColoumn:true,
+      visibleMessageColoumn: true,
       isVisibleNewColoumn: false,
       newColoumn: {
         coloumnName: null,
@@ -672,20 +556,20 @@ export default {
         unsigned: false,
         autoIncrement: false,
         foreignKey: false,
-        comment:null,
-        default:null,
-        refTable_id:null,
-        refColoumn_id:null
+        comment: null,
+        default: null,
+        refTable_id: null,
+        refColoumn_id: null
       },
       selectedTable: null,
       newColoumnName: "",
       newComment: "",
       newDataType: "",
       newDefault: "",
-      isEditTableName: false,
+      // isEditTableName: false,
       isEditColoumnName: false,
-      isEditColoumnType: false,
-      showDetailcoloumn: 3
+      isEditColoumnType: false
+      // showDetailcoloumn: 3
     };
   }
 };

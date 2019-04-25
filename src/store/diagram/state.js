@@ -278,5 +278,12 @@ export default {
     
   },
   tableKeyConfig:'',
-  visibleConfigTable: false
+  visibleConfigTable: false,
+  tableDetail:{
+    visible:false,
+    isNewTable:false,
+    table_id:null,
+    isEditTableName:false,
+    showDetailcoloumn:-1
+  }
 };

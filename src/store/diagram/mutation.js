@@ -239,6 +239,12 @@ export default {
     var newName= raw.newName
     state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].coloumn_name=newName
   },
+  async updateDataType(state, raw){
+    var tableKey_id=raw.tableKey_id
+    var coloumn_id=raw.coloumn_id
+    var newDataType= raw.newDataType
+    state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].dataType=newDataType
+  },
   async updatePrimaryKey(state,raw){
     var tableKey_id=raw.tableKey_id
     var coloumn_id=raw.coloumn_id
@@ -627,18 +633,100 @@ export default {
       // state.dataDiagramNew[uuidv4()]={}
       let table_id=uuidv4()
       Vue.set(state.dataDiagramNew,table_id,{
-        table_name: " ",
+        table_name: "",
         point: {
           x: 30,
           y: 110
         },
-        coloumns: {            
+        coloumns: {     
+          coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
+            coloumn_name: "id",
+            comment: "",
+            dataType: "integer(31)",
+            default: "",
+            primaryKey: true,
+            notNull: false,
+            unique: false,
+            foreignKey:false,
+            unsigned: false,
+            zeroFill: false,
+            autoIncrement: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
+            },
+            association_belong_id:null,
+            association_has_id:[
+            ]
+          },
+          coloumn_car_id_85ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
+            coloumn_name: "id",
+            comment: "",
+            dataType: "integer(31)",
+            default: "",
+            primaryKey: true,
+            notNull: false,
+            unique: false,
+            foreignKey:false,
+            unsigned: false,
+            zeroFill: false,
+            autoIncrement: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
+            },
+            association_belong_id:null,
+            association_has_id:[
+            ]
+          }              
         },
         association: {
         }
       })
-      state.tableKeyConfig=table_id
-      state.visibleConfigTable=true
+      state.tableDetail.table_id=table_id
+      state.tableDetail.visible=true
+      state.tableDetail.isNewTable=true
+      state.tableDetail.isEditTableName=true
+      state.tableDetail.showDetailcoloumn=0
+    },
+    setIsEditTableName(state, value){
+      state.tableDetail.isEditTableName=value
+    },
+    setShowDetailTable(state, table_id){
+      state.tableDetail.table_id=table_id
+      state.tableDetail.showDetailcoloumn=-1
+      state.tableDetail.visible=true
+    },
+    setShowDetailcoloumn(state, value){
+      state.tableDetail.showDetailcoloumn=value
+    },
+    setVisibleDetailTable(state, visible){
+      state.tableDetail.visible=visible
+    },
+    addNewEmptyColoumn(state, raw){
+      var table_id= raw.table_id
+       var coloumn_id=uuidv4()
+      Vue.set(state.dataDiagramNew[table_id].coloumns,coloumn_id,
+        {
+            coloumn_name: "",
+            comment: "",
+            dataType: "",
+            default: "",
+            primaryKey: true,
+            notNull: false,
+            unique: false,
+            foreignKey:false,
+            unsigned: false,
+            zeroFill: false,
+            autoIncrement: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
+            },
+            association_belong_id:null,
+            association_has_id:[
+            ]
+      })
     }
 };
 
