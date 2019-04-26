@@ -17,7 +17,13 @@ export default {
         coloumn_id: "coloumn_Driver_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35",
         association_id: "assoc_Driver_belong_Car_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39"
       },
-      points: [250, 100, 100, 100, 30, 110],
+      // points: [30, 110, 100, 100, 450, 100],
+      points: [       
+        450, 100+40, 
+        Math.abs(30+150-450)/2+30+150,110+40,
+        Math.abs(30+150-450)/2+30+150,100+40,
+        30+150,110+40,
+      ],
       lineStyle: {
         shadowBlur: 0,
         shadowColor: "green"
@@ -40,7 +46,7 @@ export default {
         coloumn_id: "coloumn_Driver_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34",
         association_id: "assoc_Driver_belong_Color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39"
       },
-      points: [250, 100, 100, 100, 30, 110],
+      points: [0, 0, 100, 100, 0, 0],
       lineStyle: {
         shadowBlur: 0,
         shadowColor: "green"
@@ -128,8 +134,8 @@ export default {
           sourceKey: "id",
           sourceKey_id: "coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35",
           point: {
-            x: 100,
-            y: 50
+            x: 150,
+            y: 40
           }
         },
         assoc_Car_Color_has_driver_Id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
@@ -142,8 +148,8 @@ export default {
           sourceKey: "id",
           sourceKey_id: "coloumn_car_color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34",
           point: {
-            x: 100,
-            y: 100
+            x: 150,
+            y: 60
           }
         },
       }
@@ -151,7 +157,7 @@ export default {
     table_Driver_885ddad7_c509_4d5e_ab2e_dc5cb06d0e38: {
       table_name: "Driver",
       point: {
-        x: 250,
+        x: 450,
         y: 100
       },
       coloumns: {
@@ -205,8 +211,8 @@ export default {
           targetKey: "id",
           targetKey_id: "coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35",
           point: {
-            x: 100,
-            y: 50
+            x: 0,
+            y: 40
           }
         },
         assoc_Driver_belong_Color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e39: {
@@ -219,8 +225,8 @@ export default {
           targetKey: "Color",
           targetKey_id: "coloumn_car_color_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34",
           point: {
-            x: 100,
-            y: 100
+            x: 0,
+            y: 60
           }
         }
       }
@@ -228,8 +234,8 @@ export default {
     table_Owner_885ddad7_c509_4d5e_ab2e_dc5cb06d0e38: {
       table_name: "Owner",
       point: {
-        x: 250,
-        y: 100
+        x: 350,
+        y: 300
       },
       coloumns: {
         coloumn_Owner_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {

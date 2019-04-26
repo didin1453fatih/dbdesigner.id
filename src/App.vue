@@ -3,33 +3,32 @@
     <a-menu
       style="line-height: 33px;background:#E6E6E6;color:#1C2128"
       size="small"
-      v-model="current"
       mode="horizontal"
     >
       <a-sub-menu>
         <span slot="title" class="submenu-title-wrapper">
           <a-icon type="profile"/>File
         </span>
-          <a-menu-item-group title="Project">
-            <a-menu-item key="setting:3">Open Project</a-menu-item>
-            <a-menu-item key="setting:2">New Project</a-menu-item>
-          </a-menu-item-group>
-          <a-menu-item-group title="Table">
-            <a-menu-item key="setting:1" @click="addNewTable">New Table</a-menu-item>
-          </a-menu-item-group>          
+        <a-menu-item-group title="Project">
+          <a-menu-item key="setting:3">Open Project</a-menu-item>
+          <a-menu-item key="setting:2">New Project</a-menu-item>
+        </a-menu-item-group>
+        <a-menu-item-group title="Table">
+          <a-menu-item key="setting:1" @click="addNewTable">New Table</a-menu-item>
+        </a-menu-item-group>
       </a-sub-menu>
       <a-menu-item key="history">
         <a-icon type="clock-circle"/>History
       </a-menu-item>
-      
+
       <a-menu-item key="export">
         <a-icon type="gift"/>Export
       </a-menu-item>
-    
+
       <a-menu-item key="share">
-          <a-icon type="rocket"/>Share
-       </a-menu-item >
-      <a-menu-item  key="smile">
+        <a-icon type="rocket"/>Share
+      </a-menu-item>
+      <a-menu-item key="smile">
         <a-icon type="smile"/>Help
       </a-menu-item>
     </a-menu>
@@ -48,17 +47,40 @@
 
         <template v-for="connectorKey in Object.keys(connectorNewKey)">
           <div v-bind:key="connectorKey">
-            <v-line
+            <v-arrow
               :config="{
                 x: 0,
                 y: 0,
                 points: connectorNewKey[connectorKey].points,
-                strokeWidth: 1,
-                tension: 1,
+                strokeWidth: 0.9,
+                tension: 0,
                 closed: false,
-                stroke: 'black',
+                stroke: '#444444',
+                fill: '#444444',
+                pointerLength: 7,
+                pointerWidth: 7,
+                shadowOpacity: 1,
                 shadowBlur: connectorNewKey[connectorKey].lineStyle.shadowBlur,
                 shadowColor:connectorNewKey[connectorKey].lineStyle.shadowColor,
+              }"
+            />
+            <v-line
+              @mouseover="setHighLightRelation({
+                status: true,
+                connector_id:connectorKey
+              })"
+              @mouseout="setHighLightRelation({
+                status: false,
+                connector_id:connectorKey
+              })"
+              :config="{
+                x: 0,
+                y: 0,
+                points: connectorNewKey[connectorKey].points,
+                strokeWidth: 5,
+                tension: 0,
+                closed: false,
+                stroke: '#ff000000 '
               }"
             />
           </div>
@@ -113,8 +135,12 @@ export default {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
       setLineStyleConnector: "setLineStyleConnector",
-      addNewTable :"addNewTable"
+      addNewTable: "addNewTable",
+      setHighLightRelation : "setHighLightRelation"
     }),
+    // setHighLightRelation() {
+    //   window.alert(JSON.stringify("saasd"));
+    // },
     editDataTable() {
       // this.editTableName = tableName;
       // this.editTableProperties = this.dataDiagram[tableName];
@@ -267,8 +293,15 @@ export default {
 .ant-drawer-header {
   border-radius: 0px 0px 0 0 !important;
 }
-.ant-menu-vertical .ant-menu-item, .ant-menu-vertical-left .ant-menu-item, .ant-menu-vertical-right .ant-menu-item, .ant-menu-inline .ant-menu-item, .ant-menu-vertical .ant-menu-submenu-title, .ant-menu-vertical-left .ant-menu-submenu-title, .ant-menu-vertical-right .ant-menu-submenu-title, .ant-menu-inline .ant-menu-submenu-title {
-    line-height: 25px !important;
-    height: 25px !important;
+.ant-menu-vertical .ant-menu-item,
+.ant-menu-vertical-left .ant-menu-item,
+.ant-menu-vertical-right .ant-menu-item,
+.ant-menu-inline .ant-menu-item,
+.ant-menu-vertical .ant-menu-submenu-title,
+.ant-menu-vertical-left .ant-menu-submenu-title,
+.ant-menu-vertical-right .ant-menu-submenu-title,
+.ant-menu-inline .ant-menu-submenu-title {
+  line-height: 25px !important;
+  height: 25px !important;
 }
 </style>
