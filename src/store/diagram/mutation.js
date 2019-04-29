@@ -11,27 +11,43 @@ export default {
     console.log("table key " + JSON.stringify(raw));
     var val = raw.value;
     var tableKey = raw.tableKey;
-    state.dataDiagramNew[tableKey].point.x = val.currentTarget.attrs.x;
-    state.dataDiagramNew[tableKey].point.y = val.currentTarget.attrs.y;
+    var draggedTable=state.dataDiagramNew[tableKey]
+    
+    draggedTable.point.x = val.currentTarget.attrs.x;
+    draggedTable.point.y = val.currentTarget.attrs.y;
     // eslint-disable-next-line
     console.log(
-      "state.dataDiagramNew[tableKey].association " +
-        JSON.stringify(state.dataDiagramNew[tableKey].association)
+      "draggedTable.association " +
+        JSON.stringify(draggedTable.association)
     );
-    await Object.keys(state.dataDiagramNew[tableKey].association).forEach(
+    await Object.keys(draggedTable.association).forEach(
       key => {
         let conn =
           state.connectorNewKey[
-            state.dataDiagramNew[tableKey].association[key].connector_id
+            draggedTable.association[key].connector_id
           ];
+          var targetTable=state.dataDiagramNew[
+            draggedTable.association[key].table_id
+          ]
         var tmp = [];
-        if (state.dataDiagramNew[tableKey].association[key].type === "belong") {
+        // Tail is has a arrow pointer
+        if (draggedTable.association[key].type === "belong") {
           var headX =
-            state.dataDiagramNew[tableKey].point.x +
-            state.dataDiagramNew[tableKey].association[key].point.x;
+            draggedTable.point.x +
+            draggedTable.association[key].point.x;
           var headY =
-            state.dataDiagramNew[tableKey].point.y +
-            state.dataDiagramNew[tableKey].association[key].point.y;
+            draggedTable.point.y +
+            draggedTable.association[key].point.y;
+            // if(state.dataDiagramNew[tableKey].point.x -)
+            // headX=headX-150
+
+            // Check left or right
+            // Check if left
+            if(draggedTable.point.x){
+
+            }
+            // Check if right
+
           tmp = [
             headX,
             headY,
@@ -43,17 +59,20 @@ export default {
             conn.points[7]
           ];
         } else if (
-          state.dataDiagramNew[tableKey].association[key].type === "has"
+          draggedTable.association[key].type === "has"
         ) {
 
           var tailX =
-            state.dataDiagramNew[tableKey].point.x +
-            state.dataDiagramNew[tableKey].association[key].point.x;
+            draggedTable.point.x +
+            draggedTable.association[key].point.x;
           var tailY =
-            state.dataDiagramNew[tableKey].point.y +
-            state.dataDiagramNew[tableKey].association[key].point.y;
+            draggedTable.point.y +
+            draggedTable.association[key].point.y;
           let headX = conn.points[0];
           let headY = conn.points[1];
+          
+          // tailX=tailX-150
+
           tmp = [
             conn.points[0],
             conn.points[1],
@@ -64,6 +83,7 @@ export default {
             tailX,
             tailY
           ];
+
         }
         conn.points = tmp;
       }
