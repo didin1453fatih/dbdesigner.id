@@ -68,7 +68,7 @@
                       <img
                         src="../assets/primary-key.png"
                         width="14px"
-                        style="vertical-align: baseline; margin-right:3px"
+                        style="vertical-align: baseline; "
                       >
                     </span>
                     <span
@@ -78,7 +78,7 @@
                       <img
                         src="../assets/icons8-diamonds-40.png"
                         width="14px"
-                        style="vertical-align: baseline; margin-right:5px"
+                        style="vertical-align: baseline; "
                       >
                     </span>
                     <span
@@ -88,11 +88,12 @@
                       <img
                         src="../assets/icons8-diamonds-40-white.png"
                         width="14px"
-                        style="vertical-align: baseline; margin-right:5px"
+                        style="vertical-align: baseline; "
                       >
                     </span>
                   </td>
                   <td align="left">
+                    <div style="margin-left:5px">
                     <a-input
                       @blur="isEditColoumnName = false"
                       placeholder="Coloumn name"
@@ -108,8 +109,9 @@
                     <div
                       @click="showDetail(index,keyColoumn)"
                       v-else
-                      style="width:100%"
+                      style="width:100%;"
                     >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name}}&nbsp;</div>
+                    </div>
                   </td>
                 </tr>
               </table>
@@ -498,8 +500,8 @@ export default {
       setIsEditTableName: "setIsEditTableName",
       setShowDetailcoloumn: "setShowDetailcoloumn",
       addNewEmptyColoumn: "addNewEmptyColoumn",
-      setVisibleDetailTable : "setVisibleDetailTable",
-      updateDataType : "updateDataType"
+      setVisibleDetailTable: "setVisibleDetailTable",
+      updateDataType: "updateDataType"
     }),
     showDetail(val, keyColoumn) {
       this.isVisibleNewColoumn = false;
@@ -574,6 +576,31 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+.ant-drawer-header {
+  background: #316896 !important;
+  color: #fff !important;
+}
+.ant-drawer-title {
+  margin: 0 !important;
+  font-size: 20px !important;
+  line-height: 10px !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+}
+.ant-drawer-header {
+  border-radius: 0px 0px 0 0 !important;
+}
+.ant-menu-vertical .ant-menu-item,
+.ant-menu-vertical-left .ant-menu-item,
+.ant-menu-vertical-right .ant-menu-item,
+.ant-menu-inline .ant-menu-item,
+.ant-menu-vertical .ant-menu-submenu-title,
+.ant-menu-vertical-left .ant-menu-submenu-title,
+.ant-menu-vertical-right .ant-menu-submenu-title,
+.ant-menu-inline .ant-menu-submenu-title {
+  line-height: 25px !important;
+  height: 25px !important;
+}
 </style>
 

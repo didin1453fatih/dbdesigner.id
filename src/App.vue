@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-menu
+    <!-- <a-menu
       style="line-height: 33px;background:#E6E6E6;color:#1C2128"
       size="small"
       mode="horizontal"
@@ -31,7 +31,12 @@
       <a-menu-item key="smile">
         <a-icon type="smile"/>Help
       </a-menu-item>
-    </a-menu>
+    </a-menu> -->
+
+
+    <menu-fluent/>
+
+
     <v-stage :config="configKonva">
       <v-layer>
         <!-- <template
@@ -122,10 +127,12 @@ import { mapMutations } from "vuex";
 import TableBase from "./components/TableBase";
 import ConfigTable from "./components/ConfigTableBase.vue";
 import TableDetail from "./components/TableDetail.vue";
+import MenuFluent  from "./components/Menu.vue";
 
 export default {
   components: {
     TableBase,
+    MenuFluent,
     // ConnectorBase,
     TableDetail,
     ConfigTable
@@ -279,29 +286,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.ant-drawer-header {
-  background: #316896 !important;
-  color: #fff !important;
-}
-.ant-drawer-title {
-  margin: 0 !important;
-  font-size: 20px !important;
-  line-height: 10px !important;
-  font-weight: 500 !important;
-  color: #fff !important;
-}
-.ant-drawer-header {
-  border-radius: 0px 0px 0 0 !important;
-}
-.ant-menu-vertical .ant-menu-item,
-.ant-menu-vertical-left .ant-menu-item,
-.ant-menu-vertical-right .ant-menu-item,
-.ant-menu-inline .ant-menu-item,
-.ant-menu-vertical .ant-menu-submenu-title,
-.ant-menu-vertical-left .ant-menu-submenu-title,
-.ant-menu-vertical-right .ant-menu-submenu-title,
-.ant-menu-inline .ant-menu-submenu-title {
-  line-height: 25px !important;
-  height: 25px !important;
-}
+
 </style>

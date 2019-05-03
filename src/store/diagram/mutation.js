@@ -26,9 +26,9 @@ export default {
           state.connectorNewKey[
             draggedTable.association[key].connector_id
           ];
-          var targetTable=state.dataDiagramNew[
-            draggedTable.association[key].table_id
-          ]
+          // var targetTable=state.dataDiagramNew[
+          //   draggedTable.association[key].table_id
+          // ]
         var tmp = [];
         // Tail is has a arrow pointer
         if (draggedTable.association[key].type === "belong") {
@@ -38,22 +38,39 @@ export default {
           var headY =
             draggedTable.point.y +
             draggedTable.association[key].point.y;
-            // if(state.dataDiagramNew[tableKey].point.x -)
-            // headX=headX-150
 
-            // Check left or right
-            // Check if left
-            if(draggedTable.point.x){
+            var centralX=headX - Math.abs(headX - conn.points[6]) / 2
 
-            }
-            // Check if right
+            
+            // if(centralX<conn.points[6]){
+            //   if(draggedTable.association[key].point.x===0){
+            //     draggedTable.association[key].point.x=150
+            //   }else{
+            //     draggedTable.association[key].point.x=0
+            //   }
+            //   headX =
+            //   draggedTable.point.x +
+            //   draggedTable.association[key].point.x;
+            //   centralX=headX + Math.abs(headX - conn.points[6]) / 2
+            // }
+
+
+            // // if(state.dataDiagramNew[tableKey].point.x -)
+            // // headX=headX-150
+
+            // // Check left or right
+            // // Check if left
+            // // if(draggedTable.point.x){
+
+            // // }
+            // // Check if right
 
           tmp = [
             headX,
             headY,
-            headX - Math.abs(headX - conn.points[6]) / 2,
+            centralX,
             headY,
-            headX - Math.abs(headX - conn.points[6]) / 2,
+            centralX,
             conn.points[7],
             conn.points[6],
             conn.points[7]
@@ -925,9 +942,9 @@ export default {
       },
       coloumns: {
         coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
-          coloumn_name: "id",
+          coloumn_name: "",
           comment: "",
-          dataType: "integer(31)",
+          dataType: "",
           default: "",
           primaryKey: true,
           notNull: false,
@@ -943,25 +960,25 @@ export default {
           association_belong_id: null,
           association_has_id: []
         },
-        coloumn_car_id_85ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
-          coloumn_name: "id",
-          comment: "",
-          dataType: "integer(31)",
-          default: "",
-          primaryKey: true,
-          notNull: false,
-          unique: false,
-          foreignKey: false,
-          unsigned: false,
-          zeroFill: false,
-          autoIncrement: false,
-          style: {
-            shadowBlur: 0,
-            shadowColor: "green"
-          },
-          association_belong_id: null,
-          association_has_id: []
-        }
+        // coloumn_car_id_85ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
+        //   coloumn_name: "id",
+        //   comment: "",
+        //   dataType: "integer(31)",
+        //   default: "",
+        //   primaryKey: true,
+        //   notNull: false,
+        //   unique: false,
+        //   foreignKey: false,
+        //   unsigned: false,
+        //   zeroFill: false,
+        //   autoIncrement: false,
+        //   style: {
+        //     shadowBlur: 0,
+        //     shadowColor: "green"
+        //   },
+        //   association_belong_id: null,
+        //   association_has_id: []
+        // }
       },
       association: {}
     });
