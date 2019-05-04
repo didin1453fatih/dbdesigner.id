@@ -11,102 +11,72 @@ export default {
     console.log("table key " + JSON.stringify(raw));
     var val = raw.value;
     var tableKey = raw.tableKey;
-    var draggedTable=state.dataDiagramNew[tableKey]
-    
+    var draggedTable = state.dataDiagramNew[tableKey];
+
     draggedTable.point.x = val.currentTarget.attrs.x;
     draggedTable.point.y = val.currentTarget.attrs.y;
     // eslint-disable-next-line
     console.log(
-      "draggedTable.association " +
-        JSON.stringify(draggedTable.association)
+      "draggedTable.association " + JSON.stringify(draggedTable.association)
     );
-    await Object.keys(draggedTable.association).forEach(
-      key => {
-        let conn =
-          state.connectorNewKey[
-            draggedTable.association[key].connector_id
-          ];
-          // var targetTable=state.dataDiagramNew[
-          //   draggedTable.association[key].table_id
-          // ]
-        var tmp = [];
-        // Tail is has a arrow pointer
-        if (draggedTable.association[key].type === "belong") {
-          var headX =
-            draggedTable.point.x +
-            draggedTable.association[key].point.x;
-          var headY =
-            draggedTable.point.y +
-            draggedTable.association[key].point.y;
+    await Object.keys(draggedTable.association).forEach(key => {
+      let conn =
+        state.connectorNewKey[draggedTable.association[key].connector_id];
+      // var targetTable=state.dataDiagramNew[
+      //   draggedTable.association[key].table_id
+      // ]
+      var tmp = [];
+      // Tail is has a arrow pointer
+      if (draggedTable.association[key].type === "belong") {
+        var headX =
+          draggedTable.point.x + draggedTable.association[key].point.x;
+        var headY =
+          draggedTable.point.y + draggedTable.association[key].point.y;
 
-            var centralX=headX - Math.abs(headX - conn.points[6]) / 2
-            // var centralY=headY - Math.abs(headY - conn.points[7]) / 2
+        let tailX = conn.points[6];
+        let tailY = conn.points[7];
+        var centralX = headX - Math.abs(headX - tailX) / 2;
 
-            
-            // if(centralX<conn.points[6]){
-            //   if(draggedTable.association[key].point.x===0){
-            //     draggedTable.association[key].point.x=150
-            //   }else{
-            //     draggedTable.association[key].point.x=0
-            //   }
-            //   headX =
-            //   draggedTable.point.x +
-            //   draggedTable.association[key].point.x;
-            //   centralX=headX + Math.abs(headX - conn.points[6]) / 2
-            // }
+        // var centralY=headY - Math.abs(headY - conn.points[7]) / 2
 
+        // if(centralX<conn.points[6]){
+        //   if(draggedTable.association[key].point.x===0){
+        //     draggedTable.association[key].point.x=150
+        //   }else{
+        //     draggedTable.association[key].point.x=0
+        //   }
+        //   headX =
+        //   draggedTable.point.x +
+        //   draggedTable.association[key].point.x;
+        //   centralX=headX + Math.abs(headX - conn.points[6]) / 2
+        // }
 
-            // // if(state.dataDiagramNew[tableKey].point.x -)
-            // // headX=headX-150
+        // // if(state.dataDiagramNew[tableKey].point.x -)
+        // // headX=headX-150
 
-            // // Check left or right
-            // // Check if left
-            // // if(draggedTable.point.x){
+        // // Check left or right
+        // // Check if left
+        // // if(draggedTable.point.x){
 
-            // // }
-            // // Check if right
+        // // }
+        // // Check if right
 
-          tmp = [
-            headX,
-            headY,
-            centralX,
-            headY,
-            centralX,
-            conn.points[7],
-            conn.points[6],
-            conn.points[7]
-          ];
-        } else if (
-          draggedTable.association[key].type === "has"
-        ) {
+        tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+      } else if (draggedTable.association[key].type === "has") {
+        var tailX =
+          draggedTable.point.x + draggedTable.association[key].point.x;
+        var tailY =
+          draggedTable.point.y + draggedTable.association[key].point.y;
+        let headX = conn.points[0];
+        let headY = conn.points[1];
 
-          var tailX =
-            draggedTable.point.x +
-            draggedTable.association[key].point.x;
-          var tailY =
-            draggedTable.point.y +
-            draggedTable.association[key].point.y;
-          let headX = conn.points[0];
-          let headY = conn.points[1];
-          
-          let centralX=headX - Math.abs(headX - tailX) / 2
-          // tailX=tailX-150
+        let centralX = headX - Math.abs(headX - tailX) / 2;
+        // tailX=tailX-150
 
-          tmp = [
-            conn.points[0],
-            conn.points[1],
-            centralX,
-            headY,
-            centralX,
-            tailY,
-            tailX,
-            tailY
-          ];
-
-        }
-        conn.points = tmp;
+        tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
       }
-    );
+      conn.points = tmp;
+    });
   },
   /**
    *
@@ -222,12 +192,16 @@ export default {
         shadowBlur: 5,
         shadowColor: "#e68a00"
       };
-      let conn=state.connectorNewKey[connector_id]
-      state.dataDiagramNew[conn.head.table_id].coloumns[conn.head.coloumn_id].style = {
+      let conn = state.connectorNewKey[connector_id];
+      state.dataDiagramNew[conn.head.table_id].coloumns[
+        conn.head.coloumn_id
+      ].style = {
         shadowBlur: 5,
         shadowColor: "#e68a00"
       };
-      state.dataDiagramNew[conn.tail.table_id].coloumns[conn.tail.coloumn_id].style = {
+      state.dataDiagramNew[conn.tail.table_id].coloumns[
+        conn.tail.coloumn_id
+      ].style = {
         shadowBlur: 5,
         shadowColor: "#e68a00"
       };
@@ -236,12 +210,16 @@ export default {
         shadowBlur: 2,
         shadowColor: "#555555"
       };
-      let conn=state.connectorNewKey[connector_id]
-      state.dataDiagramNew[conn.head.table_id].coloumns[conn.head.coloumn_id].style = {
+      let conn = state.connectorNewKey[connector_id];
+      state.dataDiagramNew[conn.head.table_id].coloumns[
+        conn.head.coloumn_id
+      ].style = {
         shadowBlur: 0,
         shadowColor: "#e68a00"
       };
-      state.dataDiagramNew[conn.tail.table_id].coloumns[conn.tail.coloumn_id].style = {
+      state.dataDiagramNew[conn.tail.table_id].coloumns[
+        conn.tail.coloumn_id
+      ].style = {
         shadowBlur: 0,
         shadowColor: "#e68a00"
       };
@@ -961,7 +939,7 @@ export default {
           },
           association_belong_id: null,
           association_has_id: []
-        },
+        }
         // coloumn_car_id_85ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
         //   coloumn_name: "id",
         //   comment: "",
