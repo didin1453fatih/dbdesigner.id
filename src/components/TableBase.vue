@@ -105,7 +105,7 @@ import primaryKeyImage from "../assets/primary-key.png";
 import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
-  props: ["potition", "coloumns", "tableName", 'tableKey'],
+  props: ["potition", "coloumns", "tableName", "tableKey"],
   // watch:{
   //   coloumns(val){
   //     window.alert('val '+val)
@@ -114,18 +114,18 @@ export default {
   methods: {
     ...mapMutations("diagram", {
       setConfigTable: "setConfigTable",
-      setTableKeyConfig:"setTableKeyConfig",
-      setShowDetailTable : "setShowDetailTable"
+      setTableKeyConfig: "setTableKeyConfig",
+      setShowDetailTable: "setShowDetailTable"
     }),
     selectRelation() {
-      this.$emit("highlight",{
-         status: true, 
-         tableKey: this.tableKey
+      this.$emit("highlight", {
+        status: true,
+        tableKey: this.tableKey
       });
     },
     deselectRelation() {
       this.$emit("highlight", {
-        status:false,
+        status: false,
         tableKey: this.tableKey
       });
     },
@@ -139,7 +139,7 @@ export default {
       // this.$emit("editDataTable");
       // this.setConfigTable(this.tableName)
       // this.setTableKeyConfig(this.tableKey)
-      this.setShowDetailTable(this.tableKey)
+      this.setShowDetailTable(this.tableKey);
     },
     addPointAssotiation() {},
     reaCalculatePointAsscotiation() {}

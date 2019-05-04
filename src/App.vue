@@ -36,7 +36,7 @@
 
     <menu-fluent/>
 
-
+<div style=" overflow: scroll;width:100%;height:470px">
     <v-stage :config="configKonva">
       <v-layer>
         <!-- <template
@@ -104,6 +104,7 @@
         />
       </v-layer>
     </v-stage>
+</div>
     <table-detail
       :visible="visible"
       :tableName="editTableName"
