@@ -40,6 +40,7 @@ export default {
             draggedTable.association[key].point.y;
 
             var centralX=headX - Math.abs(headX - conn.points[6]) / 2
+            // var centralY=headY - Math.abs(headY - conn.points[7]) / 2
 
             
             // if(centralX<conn.points[6]){
@@ -88,14 +89,15 @@ export default {
           let headX = conn.points[0];
           let headY = conn.points[1];
           
+          let centralX=headX - Math.abs(headX - tailX) / 2
           // tailX=tailX-150
 
           tmp = [
             conn.points[0],
             conn.points[1],
-            headX - Math.abs(headX - tailX) / 2,
+            centralX,
             headY,
-            headX - Math.abs(headX - tailX) / 2,
+            centralX,
             tailY,
             tailX,
             tailY
