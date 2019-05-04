@@ -110,6 +110,7 @@
       :tableProperties="editTableProperties"
       @close="onClose"
     />
+    <left-panel/>
     <config-table
       :visible="visible"
       :tableName="editTableName"
@@ -128,11 +129,13 @@ import TableBase from "./components/TableBase";
 import ConfigTable from "./components/ConfigTableBase.vue";
 import TableDetail from "./components/TableDetail.vue";
 import MenuFluent  from "./components/Menu.vue";
+import LeftPanel from "./components/LeftPanel.vue"
 
 export default {
   components: {
     TableBase,
     MenuFluent,
+    LeftPanel,
     // ConnectorBase,
     TableDetail,
     ConfigTable

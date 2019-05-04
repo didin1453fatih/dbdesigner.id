@@ -1,13 +1,13 @@
 <template>
-  <div class="fluent-menu" data-role="fluentmenu" data-on-special-click="specialClick">
+  <div class="fluent-menu" data-role="fluentmenu" >
     <!-- <div style="    position: absolute;widt">
       <div style="right:0">
         Makan
       </div>
-    </div>           -->
+    </div>-->
     <ul class="tabs-holder">
-      <li class="special">
-        <a href="#">File</a>
+      <li class="special" @click="openLeftPanel(true)">
+        <a>File</a>
       </li>
       <li class="active">
         <a href="#tab_home">Home</a>
@@ -16,14 +16,14 @@
         <a href="#tab_mailings">Edit</a>
       </li>
       <li>
-        <a href="#tab_folder">Accoung</a>
+        <a href="#tab_folder">Account</a>
       </li>
-      <div style="width:100%;text-align: right;"> 
-        <span style="font-size: 1.0rem;padding-top:5px; margin-right:15px">
-          ~ Pemeriksaan Labolatorium
-        </span>
+      <div style="width:100%;text-align: right;">
+        <span
+          style="font-size: 1.0rem;padding-top:5px; margin-right:15px"
+        >~ Pemeriksaan Labolatorium</span>
         <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>
-      </div>      
+      </div>
     </ul>
     <div class="tabs-content">
       <div class="tab-panel" id="tab_home" style="display: block;">
@@ -212,6 +212,9 @@ export default {
       setLineStyleConnector: "setLineStyleConnector",
       addNewTable: "addNewTable",
       setHighLightRelation: "setHighLightRelation"
+    }),
+    ...mapMutations("LeftPanel", {
+      openLeftPanel: "setVisible"
     })
   }
 };
