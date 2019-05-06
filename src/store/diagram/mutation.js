@@ -598,8 +598,8 @@ export default {
         targetKey: coloumn_id_default_sourceKey,
         targetKey_id: coloumn_id_default_sourceKey,
         point: {
-          x: 50,
-          y: 100
+          x: 0,
+          y: 0
         }
       };
       // eslint-disable-next-line
@@ -630,8 +630,8 @@ export default {
         sourceKey: "id",
         sourceKey_id: coloumn_id_default_sourceKey,
         point: {
-          x: 50,
-          y: 100
+          x: 0,
+          y: 0
         }
       };
       Vue.set(
@@ -772,8 +772,8 @@ export default {
           sourceKey: "id",
           sourceKey_id: assocOBJ_foreignKey.targetKey_id,
           point: {
-            x: 100,
-            y: 50
+            x: 0,
+            y: 0
           }
         }
       );

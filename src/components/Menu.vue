@@ -1,5 +1,5 @@
 <template>
-  <div class="fluent-menu" data-role="fluentmenu" >
+  <div class="fluent-menu" data-role="fluentmenu">
     <!-- <div style="    position: absolute;widt">
       <div style="right:0">
         Makan
@@ -72,7 +72,7 @@
         </div>
         <div class="tab-panel-group">
           <div class="tab-content-segment">
-            <button class="fluent-big-button">
+            <button class="fluent-big-button"  @click="openExport(true)">
               <span class="icon mif-paper-plane" style="width:50px"></span>
               <span class="label" style="margin-top:5px">Export</span>
             </button>
@@ -206,6 +206,9 @@
 import { mapMutations } from "vuex";
 export default {
   methods: {
+    ...mapMutations("ExportDesign", {
+      openExport: "setVisible"
+    }),
     ...mapMutations("diagram", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
