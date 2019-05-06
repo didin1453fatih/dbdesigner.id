@@ -22,9 +22,12 @@ export default {
     await Object.keys(draggedTable.association).forEach(key => {
       let conn =
         state.connectorNewKey[draggedTable.association[key].connector_id];
-      // var targetTable=state.dataDiagramNew[
-      //   draggedTable.association[key].table_id
-      // ]
+      var targetTable=state.dataDiagramNew[
+        draggedTable.association[key].table_id
+      ]
+      let draggedAssoc=draggedTable.association[key]
+      let connHead=state.connectorNewKey[draggedAssoc.connector_id].head
+      let targetAssoc=state.dataDiagramNew[connHead.table_id].association[connHead.association_id]
       var tmp = [];
       // Tail is has a arrow pointer
       if (draggedTable.association[key].type === "belong") {
@@ -35,31 +38,26 @@ export default {
 
         let tailX = conn.points[6];
         let tailY = conn.points[7];
-        var centralX = headX - Math.abs(headX - tailX) / 2;
+        var centralX ;
 
-        // var centralY=headY - Math.abs(headY - conn.points[7]) / 2
-
-        // if(centralX<conn.points[6]){
-        //   if(draggedTable.association[key].point.x===0){
-        //     draggedTable.association[key].point.x=150
-        //   }else{
-        //     draggedTable.association[key].point.x=0
-        //   }
-        //   headX =
-        //   draggedTable.point.x +
-        //   draggedTable.association[key].point.x;
-        //   centralX=headX + Math.abs(headX - conn.points[6]) / 2
-        // }
-
-        // // if(state.dataDiagramNew[tableKey].point.x -)
-        // // headX=headX-150
-
-        // // Check left or right
-        // // Check if left
-        // // if(draggedTable.point.x){
-
-        // // }
-        // // Check if right
+        // System router draggable
+        if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
+          tailX=targetTable.point.x
+          centralX = tailX - Math.abs(headX - tailX) / 2;
+        }else if(draggedTable.point.x <targetTable.point.x){
+          if(draggedTable.point.x+150 <targetTable.point.x){
+            headX=draggedTable.point.x+150
+            centralX = headX + Math.abs(headX - tailX) / 2;
+          }else{
+            tailX=targetTable.point.x
+            centralX = headX - Math.abs(headX - tailX) / 2;
+          }
+        }else{          
+          tailX=targetTable.point.x+targetAssoc.point.x
+          centralX = headX - Math.abs(headX - tailX) / 2;
+        }
+        // End System router draggable
+        
 
         tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
       } else if (draggedTable.association[key].type === "has") {
@@ -71,7 +69,28 @@ export default {
         let headY = conn.points[1];
 
         let centralX = headX - Math.abs(headX - tailX) / 2;
-        // tailX=tailX-150
+        // System router draggable
+        if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
+          headX=targetTable.point.x
+          tailX=draggedTable.point.x
+          centralX = headX - Math.abs(headX - tailX) / 2;
+        }
+        else if(draggedTable.point.x <targetTable.point.x){
+          if(draggedTable.point.x+150 <targetTable.point.x){
+            tailX=draggedTable.point.x +150
+            centralX = tailX + Math.abs(headX - tailX) / 2;
+          }else{
+            tailX=draggedTable.point.x
+            headX=targetTable.point.x
+            centralX = tailX - Math.abs(headX - tailX) / 2;
+          }
+        }
+        else{          
+          headX=targetTable.point.x+150
+          tailX=draggedTable.point.x
+          centralX = tailX - Math.abs(headX - tailX) / 2;
+        }
+        // End System router draggable
 
         tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
       }
