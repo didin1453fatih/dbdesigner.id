@@ -25,9 +25,9 @@ export default {
       var targetTable=state.dataDiagramNew[
         draggedTable.association[key].table_id
       ]
-      let draggedAssoc=draggedTable.association[key]
-      let connHead=state.connectorNewKey[draggedAssoc.connector_id].head
-      let targetAssoc=state.dataDiagramNew[connHead.table_id].association[connHead.association_id]
+      // let draggedAssoc=draggedTable.association[key]
+      // let connHead=state.connectorNewKey[draggedAssoc.connector_id].head
+      // let targetAssoc=state.dataDiagramNew[connHead.table_id].association[connHead.association_id]
       var tmp = [];
       // Tail is has a arrow pointer
       if (draggedTable.association[key].type === "belong") {
@@ -53,7 +53,7 @@ export default {
             centralX = headX - Math.abs(headX - tailX) / 2;
           }
         }else{          
-          tailX=targetTable.point.x+targetAssoc.point.x
+          tailX=targetTable.point.x+150
           centralX = headX - Math.abs(headX - tailX) / 2;
         }
         // End System router draggable
@@ -571,6 +571,17 @@ export default {
     var table_id_foreignKey = raw.table_id;
     var coloumn_id_foreignKey = raw.thisForeignKey_id;
 
+    var YpointForeignKey=40
+    var YpointSourceKey=40
+    // var YpointForeignKey=state.dataDiagramNew[table_id_foreignKey]
+    var count=0
+    Object.keys(state.dataDiagramNew[table_id_foreignKey].coloumns).forEach(keyColoumnId=>{      
+      if(keyColoumnId===coloumn_id_foreignKey){
+        YpointForeignKey+=count*20
+      }
+      count++
+    })
+
     if (
       association_id_foreignKey === undefined ||
       association_id_foreignKey === null
@@ -599,7 +610,7 @@ export default {
         targetKey_id: coloumn_id_default_sourceKey,
         point: {
           x: 0,
-          y: 0
+          y: YpointForeignKey
         }
       };
       // eslint-disable-next-line
@@ -631,7 +642,7 @@ export default {
         sourceKey_id: coloumn_id_default_sourceKey,
         point: {
           x: 0,
-          y: 0
+          y: YpointSourceKey
         }
       };
       Vue.set(
@@ -773,7 +784,7 @@ export default {
           sourceKey_id: assocOBJ_foreignKey.targetKey_id,
           point: {
             x: 0,
-            y: 0
+            y: YpointSourceKey
           }
         }
       );
