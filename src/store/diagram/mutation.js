@@ -1,6 +1,8 @@
 /**
+ * Just do least than 60 minutes after wake up and 60 minutes before sleep
+ * Achive one simple target
  * next 7  may menambahkan algoritma agar bisa melakukan reactive auto route untuk connector
- * 
+ * next 8 may stucturing alorithm and clean code
  */
 import Vue from "vue";
 import uuidv4 from "uuid/v4";
@@ -710,6 +712,50 @@ export default {
         coloumn_id_default_sourceKey
       ].association_has_id.push(association_id_source);
 
+    /**
+     * change  route connector for reactive
+     */
+    var draggedTable=state.dataDiagramNew[table_id_source]
+    var targetTable=state.dataDiagramNew[table_id_foreignKey]
+    var tailX = draggedTable.point.x + draggedTable.association[association_id_source].point.x;
+    var tailY = draggedTable.point.y + draggedTable.association[association_id_source].point.y;
+    let headX = state.dataDiagramNew[table_id_foreignKey].point.x +
+    state.dataDiagramNew[table_id_foreignKey].association[
+      association_id_foreignKeyNew
+    ].point.x;
+    let headY = state.dataDiagramNew[table_id_foreignKey].point.y +
+    state.dataDiagramNew[table_id_foreignKey].association[
+      association_id_foreignKeyNew
+    ].point.y;
+
+    let centralX = headX - Math.abs(headX - tailX) / 2;
+    // System router draggable
+    if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
+      headX=targetTable.point.x
+      tailX=draggedTable.point.x
+      centralX = headX - Math.abs(headX - tailX) / 2;
+    }
+    else if(draggedTable.point.x <targetTable.point.x){
+      if(draggedTable.point.x+150 <targetTable.point.x){
+        tailX=draggedTable.point.x +150
+        centralX = tailX + Math.abs(headX - tailX) / 2;
+      }else{
+        tailX=draggedTable.point.x
+        headX=targetTable.point.x
+        centralX = tailX - Math.abs(headX - tailX) / 2;
+      }
+    }
+    else{          
+      headX=targetTable.point.x+150
+      tailX=draggedTable.point.x
+      centralX = tailX - Math.abs(headX - tailX) / 2;
+    }
+    // End System router draggable
+    var points= [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+    /**
+     * End change route connector for reactive
+     */
+
       var tmpConnector = {
         // head is has
         head: {
@@ -727,34 +773,7 @@ export default {
           coloumn_id: coloumn_id_foreignKey,
           association_id: association_id_foreignKeyNew
         },
-        points: [
-          state.dataDiagramNew[table_id_foreignKey].point.x +
-            state.dataDiagramNew[table_id_foreignKey].association[
-              association_id_foreignKeyNew
-            ].point.x,
-          state.dataDiagramNew[table_id_foreignKey].point.y +
-            state.dataDiagramNew[table_id_foreignKey].association[
-              association_id_foreignKeyNew
-            ].point.y,
-          state.dataDiagramNew[table_id_foreignKey].point.x +
-            state.dataDiagramNew[table_id_foreignKey].association[
-              association_id_foreignKeyNew
-            ].point.x -
-            30,
-          state.dataDiagramNew[table_id_foreignKey].point.y +
-            state.dataDiagramNew[table_id_foreignKey].association[
-              association_id_foreignKeyNew
-            ].point.y -
-            30,
-          state.dataDiagramNew[table_id_source].point.x +
-            state.dataDiagramNew[table_id_source].association[
-              association_id_source
-            ].point.x,
-          state.dataDiagramNew[table_id_source].point.y +
-            state.dataDiagramNew[table_id_source].association[
-              association_id_source
-            ].point.y
-        ],
+        points: points,
         lineStyle: {
           shadowBlur: 5,
           shadowColor: "green"
