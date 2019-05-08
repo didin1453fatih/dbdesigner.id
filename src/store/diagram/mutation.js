@@ -870,16 +870,54 @@ export default {
           ].connector_id
         ];
 
-      // state.dataDiagramNew[selectedNewTable_id].association[association_id].table_id=selectedNewTable_id
-      conn.points = [
-        conn.points[0],
-        conn.points[1],
-        conn.points[0] - 30,
-        conn.points[1] - 30,
-        state.dataDiagramNew[table_id_source].point.x,
-        state.dataDiagramNew[table_id_source].point.y
-      ];
+
       conn.tail.table_id = table_id_foreignKey;
+
+      
+    /**
+     * change  route connector for reactive
+     */
+    let draggedTable=state.dataDiagramNew[table_id_source]
+    let targetTable=state.dataDiagramNew[table_id_foreignKey]
+    let tailX = draggedTable.point.x + draggedTable.association[newAssoctioation_id].point.x;
+    let tailY = draggedTable.point.y + draggedTable.association[newAssoctioation_id].point.y;
+    let headX = state.dataDiagramNew[table_id_foreignKey].point.x +
+    state.dataDiagramNew[table_id_foreignKey].association[
+      association_id_foreignKey
+    ].point.x;
+    let headY = state.dataDiagramNew[table_id_foreignKey].point.y +
+    state.dataDiagramNew[table_id_foreignKey].association[
+      association_id_foreignKey
+    ].point.y;
+
+    let centralX = headX - Math.abs(headX - tailX) / 2;
+    // System router draggable
+    if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
+      headX=targetTable.point.x
+      tailX=draggedTable.point.x
+      centralX = headX - Math.abs(headX - tailX) / 2;
+    }
+    else if(draggedTable.point.x <targetTable.point.x){
+      if(draggedTable.point.x+150 <targetTable.point.x){
+        tailX=draggedTable.point.x +150
+        centralX = tailX + Math.abs(headX - tailX) / 2;
+      }else{
+        tailX=draggedTable.point.x
+        headX=targetTable.point.x
+        centralX = tailX - Math.abs(headX - tailX) / 2;
+      }
+    }
+    else{          
+      headX=targetTable.point.x+150
+      tailX=draggedTable.point.x
+      centralX = tailX - Math.abs(headX - tailX) / 2;
+    }
+    // End System router draggable
+    conn.points = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+    /**
+     * End change route connector for reactive
+     */
+
     }
   },
   setLineStyleConnector(state, raw) {
