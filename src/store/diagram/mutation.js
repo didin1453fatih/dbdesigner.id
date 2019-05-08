@@ -1,3 +1,7 @@
+/**
+ * next 7  may menambahkan algoritma agar bisa melakukan reactive auto route untuk connector
+ * 
+ */
 import Vue from "vue";
 import uuidv4 from "uuid/v4";
 export default {
@@ -523,8 +527,59 @@ export default {
     state.dataDiagramNew[connObject.head.table_id].association[
       connObject.head.association_id
     ].sourceKey_id = selectedNewColoumn_id;
-    // eslint-disable-next-line
-    console.log(JSON.stringify(state.dataDiagramNew[connObject.head.table_id]));
+
+    // change coordinate
+    var YpointSourceKey=40
+    var count=0
+    Object.keys(state.dataDiagramNew[connObject.head.table_id].coloumns).forEach(keyColoumnId=>{      
+      if(keyColoumnId===selectedNewColoumn_id){
+        YpointSourceKey+=count*20
+      }
+      count++
+    })
+    state.dataDiagramNew[connObject.head.table_id].association[
+      connObject.head.association_id
+    ].point.y=YpointSourceKey
+    
+
+    /**
+     * change  route connector for reactive
+     */
+    var draggedTable=state.dataDiagramNew[connObject.head.table_id]
+    var targetTable=state.dataDiagramNew[table_id]
+    var tailX = draggedTable.point.x + draggedTable.association[connObject.head.association_id].point.x;
+    var tailY = draggedTable.point.y + draggedTable.association[connObject.head.association_id].point.y;
+    let headX = connObject.points[0];
+    let headY = connObject.points[1];
+
+    let centralX = headX - Math.abs(headX - tailX) / 2;
+    // System router draggable
+    if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
+      headX=targetTable.point.x
+      tailX=draggedTable.point.x
+      centralX = headX - Math.abs(headX - tailX) / 2;
+    }
+    else if(draggedTable.point.x <targetTable.point.x){
+      if(draggedTable.point.x+150 <targetTable.point.x){
+        tailX=draggedTable.point.x +150
+        centralX = tailX + Math.abs(headX - tailX) / 2;
+      }else{
+        tailX=draggedTable.point.x
+        headX=targetTable.point.x
+        centralX = tailX - Math.abs(headX - tailX) / 2;
+      }
+    }
+    else{          
+      headX=targetTable.point.x+150
+      tailX=draggedTable.point.x
+      centralX = tailX - Math.abs(headX - tailX) / 2;
+    }
+    // End System router draggable
+    connObject.points= [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+    /**
+     * End change route connector for reactive
+     */
+
   },
   addNewColoumn(state, raw) {
     // var association_id_foreignKey= raw.association_id
