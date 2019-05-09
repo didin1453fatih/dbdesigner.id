@@ -112,7 +112,7 @@
       @close="onClose"
     />
     <left-panel/>
-    <export-design/>
+    <export-and-share/>
     <config-table
       :visible="visible"
       :tableName="editTableName"
@@ -132,14 +132,15 @@ import ConfigTable from "./components/ConfigTableBase.vue";
 import TableDetail from "./components/TableDetail.vue";
 import MenuFluent  from "./components/Menu.vue";
 import LeftPanel from "./components/LeftPanel.vue"
-import ExportDesign from "./components/ExportDesign.vue"
+// import ExportDesign from "./components/ExportDesign.vue"
+import ExportAndShare from "./components/ExportAndShare.vue"
 
 export default {
   components: {
     TableBase,
     MenuFluent,
     LeftPanel,
-    ExportDesign,
+    ExportAndShare,
     // ConnectorBase,
     TableDetail,
     ConfigTable

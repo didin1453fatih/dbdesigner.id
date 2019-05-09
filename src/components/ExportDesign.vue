@@ -59,7 +59,7 @@
               </div>
 
               <div style="margin-top:20px">
-                <label>Scripty</label>
+                <label>Script</label>
                 <br>
                 <a-radio-group @change="onChange" defaultValue="a" style="margin-top:5px">
                   <a-radio-button value="b" disabled>Drop</a-radio-button>
@@ -67,7 +67,7 @@
                 </a-radio-group>
               </div>
               <div style="margin-top:30px;     text-align: right;">
-                <a-button style="right:40px">Create</a-button>
+                <a-button style="right:40px">Next</a-button>
               </div>
             </div>
             <!-- <div
