@@ -281,6 +281,22 @@ export default {
         ].association,
         state.connectorNewKey[assocObj.connector_id].head.association_id
       );
+      // Delete association_has_id linking
+      var count=0
+      var association_has_idArray= state.dataDiagramNew[
+        state.connectorNewKey[assocObj.connector_id].head.table_id
+      ].coloumns[
+        state.connectorNewKey[assocObj.connector_id].head.coloumn_id
+      ].association_has_id
+      
+      for(var o=0;o<association_has_idArray.length;o++){
+        if(association_has_idArray[o]===state.connectorNewKey[assocObj.connector_id].head.association_id){
+          association_has_idArray.splice(count,1)
+          break
+        }
+        count++
+      }
+
       // Delete association foreign key
       Vue.delete(
         state.dataDiagramNew[table_id].association,
@@ -371,6 +387,24 @@ export default {
 
       // Delete association source key
       Vue.delete(asscotiationSourceObj, asscotiationSourceKey_id);
+
+
+      // Delete association_has_id linking
+      let count=0
+      let association_has_idArray= state.dataDiagramNew[
+        state.connectorNewKey[assocBelongObj.connector_id].head.table_id
+      ].coloumns[
+        state.connectorNewKey[assocBelongObj.connector_id].head.coloumn_id
+      ].association_has_id
+      
+      for(let o=0;o<association_has_idArray.length;o++){
+        if(association_has_idArray[o]===state.connectorNewKey[assocBelongObj.connector_id].head.association_id){
+          association_has_idArray.splice(count,1)
+          break
+        }
+        count++
+      }
+
       // Delete association foreign key
       Vue.delete(
         state.dataDiagramNew[table_id].association,
@@ -947,6 +981,22 @@ export default {
           ].association,
           state.connectorNewKey[assocObj.connector_id].head.association_id
         );
+        // Delete assoctiation source connector
+        var count=0
+        var association_has_idArray= state.dataDiagramNew[
+          state.connectorNewKey[assocObj.connector_id].head.table_id
+        ].coloumns[
+          state.connectorNewKey[assocObj.connector_id].head.coloumn_id
+        ].association_has_id
+        
+        for(var o=0;o<association_has_idArray.length;o++){
+          if(association_has_idArray[o]===state.connectorNewKey[assocObj.connector_id].head.association_id){
+            association_has_idArray.splice(count,1)
+            break
+          }
+          count++
+        }
+
         // Delete association foreign key
         Vue.delete(
           state.dataDiagramNew[table_id].association,
@@ -1038,6 +1088,23 @@ export default {
 
         // Delete association source key
         Vue.delete(asscotiationSourceObj, asscotiationSourceKey_id);
+
+        // Delete assoctiation source connector
+        let count=0
+        let association_has_idArray= state.dataDiagramNew[
+          state.connectorNewKey[assocBelongObj.connector_id].head.table_id
+        ].coloumns[
+          state.connectorNewKey[assocBelongObj.connector_id].head.coloumn_id
+        ].association_has_id
+        
+        for(let o=0;o<association_has_idArray.length;o++){
+          if(association_has_idArray[o]===state.connectorNewKey[assocBelongObj.connector_id].head.association_id){
+            association_has_idArray.splice(count,1)
+            break
+          }
+          count++
+        }
+
         // Delete association foreign key
         Vue.delete(
           state.dataDiagramNew[table_id].association,
