@@ -28,9 +28,8 @@ export default {
     await Object.keys(draggedTable.association).forEach(key => {
       let conn =
         state.connectorNewKey[draggedTable.association[key].connector_id];
-      var targetTable=state.dataDiagramNew[
-        draggedTable.association[key].table_id
-      ]
+      var targetTable =
+        state.dataDiagramNew[draggedTable.association[key].table_id];
       // let draggedAssoc=draggedTable.association[key]
       // let connHead=state.connectorNewKey[draggedAssoc.connector_id].head
       // let targetAssoc=state.dataDiagramNew[connHead.table_id].association[connHead.association_id]
@@ -44,26 +43,28 @@ export default {
 
         let tailX = conn.points[6];
         let tailY = conn.points[7];
-        var centralX ;
+        var centralX;
 
         // System router draggable
-        if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
-          tailX=targetTable.point.x
+        if (
+          draggedTable.point.x > targetTable.point.x &&
+          draggedTable.point.x < targetTable.point.x + 150
+        ) {
+          tailX = targetTable.point.x;
           centralX = tailX - Math.abs(headX - tailX) / 2;
-        }else if(draggedTable.point.x <targetTable.point.x){
-          if(draggedTable.point.x+150 <targetTable.point.x){
-            headX=draggedTable.point.x+150
+        } else if (draggedTable.point.x < targetTable.point.x) {
+          if (draggedTable.point.x + 150 < targetTable.point.x) {
+            headX = draggedTable.point.x + 150;
             centralX = headX + Math.abs(headX - tailX) / 2;
-          }else{
-            tailX=targetTable.point.x
+          } else {
+            tailX = targetTable.point.x;
             centralX = headX - Math.abs(headX - tailX) / 2;
           }
-        }else{          
-          tailX=targetTable.point.x+150
+        } else {
+          tailX = targetTable.point.x + 150;
           centralX = headX - Math.abs(headX - tailX) / 2;
         }
         // End System router draggable
-        
 
         tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
       } else if (draggedTable.association[key].type === "has") {
@@ -76,24 +77,25 @@ export default {
 
         let centralX = headX - Math.abs(headX - tailX) / 2;
         // System router draggable
-        if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
-          headX=targetTable.point.x
-          tailX=draggedTable.point.x
+        if (
+          draggedTable.point.x > targetTable.point.x &&
+          draggedTable.point.x < targetTable.point.x + 150
+        ) {
+          headX = targetTable.point.x;
+          tailX = draggedTable.point.x;
           centralX = headX - Math.abs(headX - tailX) / 2;
-        }
-        else if(draggedTable.point.x <targetTable.point.x){
-          if(draggedTable.point.x+150 <targetTable.point.x){
-            tailX=draggedTable.point.x +150
+        } else if (draggedTable.point.x < targetTable.point.x) {
+          if (draggedTable.point.x + 150 < targetTable.point.x) {
+            tailX = draggedTable.point.x + 150;
             centralX = tailX + Math.abs(headX - tailX) / 2;
-          }else{
-            tailX=draggedTable.point.x
-            headX=targetTable.point.x
+          } else {
+            tailX = draggedTable.point.x;
+            headX = targetTable.point.x;
             centralX = tailX - Math.abs(headX - tailX) / 2;
           }
-        }
-        else{          
-          headX=targetTable.point.x+150
-          tailX=draggedTable.point.x
+        } else {
+          headX = targetTable.point.x + 150;
+          tailX = draggedTable.point.x;
           centralX = tailX - Math.abs(headX - tailX) / 2;
         }
         // End System router draggable
@@ -282,19 +284,22 @@ export default {
         state.connectorNewKey[assocObj.connector_id].head.association_id
       );
       // Delete association_has_id linking
-      var count=0
-      var association_has_idArray= state.dataDiagramNew[
-        state.connectorNewKey[assocObj.connector_id].head.table_id
-      ].coloumns[
-        state.connectorNewKey[assocObj.connector_id].head.coloumn_id
-      ].association_has_id
-      
-      for(var o=0;o<association_has_idArray.length;o++){
-        if(association_has_idArray[o]===state.connectorNewKey[assocObj.connector_id].head.association_id){
-          association_has_idArray.splice(count,1)
-          break
+      var count = 0;
+      var association_has_idArray =
+        state.dataDiagramNew[
+          state.connectorNewKey[assocObj.connector_id].head.table_id
+        ].coloumns[state.connectorNewKey[assocObj.connector_id].head.coloumn_id]
+          .association_has_id;
+
+      for (var o = 0; o < association_has_idArray.length; o++) {
+        if (
+          association_has_idArray[o] ===
+          state.connectorNewKey[assocObj.connector_id].head.association_id
+        ) {
+          association_has_idArray.splice(count, 1);
+          break;
         }
-        count++
+        count++;
       }
 
       // Delete association foreign key
@@ -388,21 +393,24 @@ export default {
       // Delete association source key
       Vue.delete(asscotiationSourceObj, asscotiationSourceKey_id);
 
-
       // Delete association_has_id linking
-      let count=0
-      let association_has_idArray= state.dataDiagramNew[
-        state.connectorNewKey[assocBelongObj.connector_id].head.table_id
-      ].coloumns[
-        state.connectorNewKey[assocBelongObj.connector_id].head.coloumn_id
-      ].association_has_id
-      
-      for(let o=0;o<association_has_idArray.length;o++){
-        if(association_has_idArray[o]===state.connectorNewKey[assocBelongObj.connector_id].head.association_id){
-          association_has_idArray.splice(count,1)
-          break
+      let count = 0;
+      let association_has_idArray =
+        state.dataDiagramNew[
+          state.connectorNewKey[assocBelongObj.connector_id].head.table_id
+        ].coloumns[
+          state.connectorNewKey[assocBelongObj.connector_id].head.coloumn_id
+        ].association_has_id;
+
+      for (let o = 0; o < association_has_idArray.length; o++) {
+        if (
+          association_has_idArray[o] ===
+          state.connectorNewKey[assocBelongObj.connector_id].head.association_id
+        ) {
+          association_has_idArray.splice(count, 1);
+          break;
         }
-        count++
+        count++;
       }
 
       // Delete association foreign key
@@ -565,57 +573,71 @@ export default {
     ].sourceKey_id = selectedNewColoumn_id;
 
     // change coordinate
-    var YpointSourceKey=40
-    var count=0
-    Object.keys(state.dataDiagramNew[connObject.head.table_id].coloumns).forEach(keyColoumnId=>{      
-      if(keyColoumnId===selectedNewColoumn_id){
-        YpointSourceKey+=count*20
+    var YpointSourceKey = 40;
+    var count = 0;
+    Object.keys(
+      state.dataDiagramNew[connObject.head.table_id].coloumns
+    ).forEach(keyColoumnId => {
+      if (keyColoumnId === selectedNewColoumn_id) {
+        YpointSourceKey += count * 20;
       }
-      count++
-    })
+      count++;
+    });
     state.dataDiagramNew[connObject.head.table_id].association[
       connObject.head.association_id
-    ].point.y=YpointSourceKey
-    
+    ].point.y = YpointSourceKey;
 
     /**
      * change  route connector for reactive
      */
-    var draggedTable=state.dataDiagramNew[connObject.head.table_id]
-    var targetTable=state.dataDiagramNew[table_id]
-    var tailX = draggedTable.point.x + draggedTable.association[connObject.head.association_id].point.x;
-    var tailY = draggedTable.point.y + draggedTable.association[connObject.head.association_id].point.y;
+    var draggedTable = state.dataDiagramNew[connObject.head.table_id];
+    var targetTable = state.dataDiagramNew[table_id];
+    var tailX =
+      draggedTable.point.x +
+      draggedTable.association[connObject.head.association_id].point.x;
+    var tailY =
+      draggedTable.point.y +
+      draggedTable.association[connObject.head.association_id].point.y;
     let headX = connObject.points[0];
     let headY = connObject.points[1];
 
     let centralX = headX - Math.abs(headX - tailX) / 2;
     // System router draggable
-    if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
-      headX=targetTable.point.x
-      tailX=draggedTable.point.x
+    if (
+      draggedTable.point.x > targetTable.point.x &&
+      draggedTable.point.x < targetTable.point.x + 150
+    ) {
+      headX = targetTable.point.x;
+      tailX = draggedTable.point.x;
       centralX = headX - Math.abs(headX - tailX) / 2;
-    }
-    else if(draggedTable.point.x <targetTable.point.x){
-      if(draggedTable.point.x+150 <targetTable.point.x){
-        tailX=draggedTable.point.x +150
+    } else if (draggedTable.point.x < targetTable.point.x) {
+      if (draggedTable.point.x + 150 < targetTable.point.x) {
+        tailX = draggedTable.point.x + 150;
         centralX = tailX + Math.abs(headX - tailX) / 2;
-      }else{
-        tailX=draggedTable.point.x
-        headX=targetTable.point.x
+      } else {
+        tailX = draggedTable.point.x;
+        headX = targetTable.point.x;
         centralX = tailX - Math.abs(headX - tailX) / 2;
       }
-    }
-    else{          
-      headX=targetTable.point.x+150
-      tailX=draggedTable.point.x
+    } else {
+      headX = targetTable.point.x + 150;
+      tailX = draggedTable.point.x;
       centralX = tailX - Math.abs(headX - tailX) / 2;
     }
     // End System router draggable
-    connObject.points= [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+    connObject.points = [
+      headX,
+      headY,
+      centralX,
+      headY,
+      centralX,
+      tailY,
+      tailX,
+      tailY
+    ];
     /**
      * End change route connector for reactive
      */
-
   },
   addNewColoumn(state, raw) {
     // var association_id_foreignKey= raw.association_id
@@ -662,16 +684,18 @@ export default {
     var table_id_foreignKey = raw.table_id;
     var coloumn_id_foreignKey = raw.thisForeignKey_id;
 
-    var YpointForeignKey=40
-    var YpointSourceKey=40
+    var YpointForeignKey = 40;
+    var YpointSourceKey = 40;
     // var YpointForeignKey=state.dataDiagramNew[table_id_foreignKey]
-    var count=0
-    Object.keys(state.dataDiagramNew[table_id_foreignKey].coloumns).forEach(keyColoumnId=>{      
-      if(keyColoumnId===coloumn_id_foreignKey){
-        YpointForeignKey+=count*20
+    var count = 0;
+    Object.keys(state.dataDiagramNew[table_id_foreignKey].coloumns).forEach(
+      keyColoumnId => {
+        if (keyColoumnId === coloumn_id_foreignKey) {
+          YpointForeignKey += count * 20;
+        }
+        count++;
       }
-      count++
-    })
+    );
 
     if (
       association_id_foreignKey === undefined ||
@@ -746,49 +770,65 @@ export default {
         coloumn_id_default_sourceKey
       ].association_has_id.push(association_id_source);
 
-    /**
-     * change  route connector for reactive
-     */
-    var draggedTable=state.dataDiagramNew[table_id_source]
-    var targetTable=state.dataDiagramNew[table_id_foreignKey]
-    var tailX = draggedTable.point.x + draggedTable.association[association_id_source].point.x;
-    var tailY = draggedTable.point.y + draggedTable.association[association_id_source].point.y;
-    let headX = state.dataDiagramNew[table_id_foreignKey].point.x +
-    state.dataDiagramNew[table_id_foreignKey].association[
-      association_id_foreignKeyNew
-    ].point.x;
-    let headY = state.dataDiagramNew[table_id_foreignKey].point.y +
-    state.dataDiagramNew[table_id_foreignKey].association[
-      association_id_foreignKeyNew
-    ].point.y;
+      /**
+       * change  route connector for reactive
+       */
+      var draggedTable = state.dataDiagramNew[table_id_source];
+      var targetTable = state.dataDiagramNew[table_id_foreignKey];
+      var tailX =
+        draggedTable.point.x +
+        draggedTable.association[association_id_source].point.x;
+      var tailY =
+        draggedTable.point.y +
+        draggedTable.association[association_id_source].point.y;
+      let headX =
+        state.dataDiagramNew[table_id_foreignKey].point.x +
+        state.dataDiagramNew[table_id_foreignKey].association[
+          association_id_foreignKeyNew
+        ].point.x;
+      let headY =
+        state.dataDiagramNew[table_id_foreignKey].point.y +
+        state.dataDiagramNew[table_id_foreignKey].association[
+          association_id_foreignKeyNew
+        ].point.y;
 
-    let centralX = headX - Math.abs(headX - tailX) / 2;
-    // System router draggable
-    if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
-      headX=targetTable.point.x
-      tailX=draggedTable.point.x
-      centralX = headX - Math.abs(headX - tailX) / 2;
-    }
-    else if(draggedTable.point.x <targetTable.point.x){
-      if(draggedTable.point.x+150 <targetTable.point.x){
-        tailX=draggedTable.point.x +150
-        centralX = tailX + Math.abs(headX - tailX) / 2;
-      }else{
-        tailX=draggedTable.point.x
-        headX=targetTable.point.x
+      let centralX = headX - Math.abs(headX - tailX) / 2;
+      // System router draggable
+      if (
+        draggedTable.point.x > targetTable.point.x &&
+        draggedTable.point.x < targetTable.point.x + 150
+      ) {
+        headX = targetTable.point.x;
+        tailX = draggedTable.point.x;
+        centralX = headX - Math.abs(headX - tailX) / 2;
+      } else if (draggedTable.point.x < targetTable.point.x) {
+        if (draggedTable.point.x + 150 < targetTable.point.x) {
+          tailX = draggedTable.point.x + 150;
+          centralX = tailX + Math.abs(headX - tailX) / 2;
+        } else {
+          tailX = draggedTable.point.x;
+          headX = targetTable.point.x;
+          centralX = tailX - Math.abs(headX - tailX) / 2;
+        }
+      } else {
+        headX = targetTable.point.x + 150;
+        tailX = draggedTable.point.x;
         centralX = tailX - Math.abs(headX - tailX) / 2;
       }
-    }
-    else{          
-      headX=targetTable.point.x+150
-      tailX=draggedTable.point.x
-      centralX = tailX - Math.abs(headX - tailX) / 2;
-    }
-    // End System router draggable
-    var points= [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
-    /**
-     * End change route connector for reactive
-     */
+      // End System router draggable
+      var points = [
+        headX,
+        headY,
+        centralX,
+        headY,
+        centralX,
+        tailY,
+        tailX,
+        tailY
+      ];
+      /**
+       * End change route connector for reactive
+       */
 
       var tmpConnector = {
         // head is has
@@ -904,54 +944,67 @@ export default {
           ].connector_id
         ];
 
-
       conn.tail.table_id = table_id_foreignKey;
 
-      
-    /**
-     * change  route connector for reactive
-     */
-    let draggedTable=state.dataDiagramNew[table_id_source]
-    let targetTable=state.dataDiagramNew[table_id_foreignKey]
-    let tailX = draggedTable.point.x + draggedTable.association[newAssoctioation_id].point.x;
-    let tailY = draggedTable.point.y + draggedTable.association[newAssoctioation_id].point.y;
-    let headX = state.dataDiagramNew[table_id_foreignKey].point.x +
-    state.dataDiagramNew[table_id_foreignKey].association[
-      association_id_foreignKey
-    ].point.x;
-    let headY = state.dataDiagramNew[table_id_foreignKey].point.y +
-    state.dataDiagramNew[table_id_foreignKey].association[
-      association_id_foreignKey
-    ].point.y;
+      /**
+       * change  route connector for reactive
+       */
+      let draggedTable = state.dataDiagramNew[table_id_source];
+      let targetTable = state.dataDiagramNew[table_id_foreignKey];
+      let tailX =
+        draggedTable.point.x +
+        draggedTable.association[newAssoctioation_id].point.x;
+      let tailY =
+        draggedTable.point.y +
+        draggedTable.association[newAssoctioation_id].point.y;
+      let headX =
+        state.dataDiagramNew[table_id_foreignKey].point.x +
+        state.dataDiagramNew[table_id_foreignKey].association[
+          association_id_foreignKey
+        ].point.x;
+      let headY =
+        state.dataDiagramNew[table_id_foreignKey].point.y +
+        state.dataDiagramNew[table_id_foreignKey].association[
+          association_id_foreignKey
+        ].point.y;
 
-    let centralX = headX - Math.abs(headX - tailX) / 2;
-    // System router draggable
-    if(draggedTable.point.x >targetTable.point.x&&draggedTable.point.x <targetTable.point.x+150){
-      headX=targetTable.point.x
-      tailX=draggedTable.point.x
-      centralX = headX - Math.abs(headX - tailX) / 2;
-    }
-    else if(draggedTable.point.x <targetTable.point.x){
-      if(draggedTable.point.x+150 <targetTable.point.x){
-        tailX=draggedTable.point.x +150
-        centralX = tailX + Math.abs(headX - tailX) / 2;
-      }else{
-        tailX=draggedTable.point.x
-        headX=targetTable.point.x
+      let centralX = headX - Math.abs(headX - tailX) / 2;
+      // System router draggable
+      if (
+        draggedTable.point.x > targetTable.point.x &&
+        draggedTable.point.x < targetTable.point.x + 150
+      ) {
+        headX = targetTable.point.x;
+        tailX = draggedTable.point.x;
+        centralX = headX - Math.abs(headX - tailX) / 2;
+      } else if (draggedTable.point.x < targetTable.point.x) {
+        if (draggedTable.point.x + 150 < targetTable.point.x) {
+          tailX = draggedTable.point.x + 150;
+          centralX = tailX + Math.abs(headX - tailX) / 2;
+        } else {
+          tailX = draggedTable.point.x;
+          headX = targetTable.point.x;
+          centralX = tailX - Math.abs(headX - tailX) / 2;
+        }
+      } else {
+        headX = targetTable.point.x + 150;
+        tailX = draggedTable.point.x;
         centralX = tailX - Math.abs(headX - tailX) / 2;
       }
-    }
-    else{          
-      headX=targetTable.point.x+150
-      tailX=draggedTable.point.x
-      centralX = tailX - Math.abs(headX - tailX) / 2;
-    }
-    // End System router draggable
-    conn.points = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
-    /**
-     * End change route connector for reactive
-     */
-
+      // End System router draggable
+      conn.points = [
+        headX,
+        headY,
+        centralX,
+        headY,
+        centralX,
+        tailY,
+        tailX,
+        tailY
+      ];
+      /**
+       * End change route connector for reactive
+       */
     }
   },
   setLineStyleConnector(state, raw) {
@@ -982,19 +1035,23 @@ export default {
           state.connectorNewKey[assocObj.connector_id].head.association_id
         );
         // Delete assoctiation source connector
-        var count=0
-        var association_has_idArray= state.dataDiagramNew[
-          state.connectorNewKey[assocObj.connector_id].head.table_id
-        ].coloumns[
-          state.connectorNewKey[assocObj.connector_id].head.coloumn_id
-        ].association_has_id
-        
-        for(var o=0;o<association_has_idArray.length;o++){
-          if(association_has_idArray[o]===state.connectorNewKey[assocObj.connector_id].head.association_id){
-            association_has_idArray.splice(count,1)
-            break
+        var count = 0;
+        var association_has_idArray =
+          state.dataDiagramNew[
+            state.connectorNewKey[assocObj.connector_id].head.table_id
+          ].coloumns[
+            state.connectorNewKey[assocObj.connector_id].head.coloumn_id
+          ].association_has_id;
+
+        for (var o = 0; o < association_has_idArray.length; o++) {
+          if (
+            association_has_idArray[o] ===
+            state.connectorNewKey[assocObj.connector_id].head.association_id
+          ) {
+            association_has_idArray.splice(count, 1);
+            break;
           }
-          count++
+          count++;
         }
 
         // Delete association foreign key
@@ -1090,19 +1147,24 @@ export default {
         Vue.delete(asscotiationSourceObj, asscotiationSourceKey_id);
 
         // Delete assoctiation source connector
-        let count=0
-        let association_has_idArray= state.dataDiagramNew[
-          state.connectorNewKey[assocBelongObj.connector_id].head.table_id
-        ].coloumns[
-          state.connectorNewKey[assocBelongObj.connector_id].head.coloumn_id
-        ].association_has_id
-        
-        for(let o=0;o<association_has_idArray.length;o++){
-          if(association_has_idArray[o]===state.connectorNewKey[assocBelongObj.connector_id].head.association_id){
-            association_has_idArray.splice(count,1)
-            break
+        let count = 0;
+        let association_has_idArray =
+          state.dataDiagramNew[
+            state.connectorNewKey[assocBelongObj.connector_id].head.table_id
+          ].coloumns[
+            state.connectorNewKey[assocBelongObj.connector_id].head.coloumn_id
+          ].association_has_id;
+
+        for (let o = 0; o < association_has_idArray.length; o++) {
+          if (
+            association_has_idArray[o] ===
+            state.connectorNewKey[assocBelongObj.connector_id].head
+              .association_id
+          ) {
+            association_has_idArray.splice(count, 1);
+            break;
           }
-          count++
+          count++;
         }
 
         // Delete association foreign key
@@ -1213,5 +1275,24 @@ export default {
       association_belong_id: null,
       association_has_id: []
     });
+  },
+  setConnector(state, data) {
+    state.connectorNewKey = data;
+  },
+  setDiagram(state, data) {
+    state.dataDiagramNew = data;
+  },
+  setProjectDescription(state, data) {
+    state.projectDescription.id = data.id;
+    state.projectDescription.uuid = data.uuid;
+    state.projectDescription.title = data.title;
+    state.projectDescription.description = data.description;
+    state.projectDescription.likes = data.likes;
+    state.projectDescription.viewers = data.viewers;
+    state.projectDescription.status_share = data.status_share;
+    state.projectDescription.password = data.password;
+    state.projectDescription.user_id = data.user_id;
+    state.projectDescription.created = data.created;
+    state.projectDescription.updated = data.updated;
   }
 };

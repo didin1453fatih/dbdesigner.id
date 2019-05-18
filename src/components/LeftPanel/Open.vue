@@ -3,7 +3,7 @@
     <h3>Open</h3>
     <a-input-search placeholder="input search text" @search="onSearch" enterButton/>
     <a-list itemLayout="horizontal" :dataSource="data" style="margin-top:20px">
-      <a-list-item slot="renderItem" slot-scope="item">
+      <a-list-item @dblclick="openProjectEvent(item.id)" slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="item.created">
           <span slot="title" href="https://vue.ant.design/">{{item.title}}</span>
           <a-avatar shape="square" size="large" slot="avatar" :src="databaseIcon"/>
@@ -26,8 +26,17 @@ export default {
   },
   methods: {
     ...mapActions("ListProject", {
-      getData: "getData"
+      getData: "getData",
     }),
+    ...mapActions("diagram", {
+      loadProject: "loadProject"
+    }),
+    openProjectEvent(id) {
+      // window.alert("me click");
+      this.loadProject({
+        id: id
+      });
+    },
     onSearch(value) {
       this.getData({
         keyword: value

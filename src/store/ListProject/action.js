@@ -8,6 +8,5 @@ export default {
       title: context.state.keyword
     });
     context.commit("setData", respond.payload);
-    // context.commit("setData", respond.payload);
   })
 };

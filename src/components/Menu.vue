@@ -33,7 +33,7 @@
               <span class="icon mif-table"></span>
               <span class="label" style="margin-top:5px">New Table</span>
             </button>
-            <button class="fluent-big-button">
+            <button class="fluent-big-button" @click="saveProjectEvent">
               <span class="icon mif-sd-card" style="width:50px"></span>
               <span class="label" style="margin-top:5px">Save</span>
             </button>
@@ -72,7 +72,7 @@
         </div>
         <div class="tab-panel-group">
           <div class="tab-content-segment">
-            <button class="fluent-big-button"  @click="openExport(true)">
+            <button class="fluent-big-button" @click="openExport(true)">
               <span class="icon mif-paper-plane" style="width:50px"></span>
               <span class="label" style="margin-top:5px">Export</span>
             </button>
@@ -204,8 +204,12 @@
 
 <script>
 import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
 export default {
   methods: {
+    ...mapActions("diagram", {
+      saveProjectEvent: "saveProject"
+    }),
     ...mapMutations("ExportDesign", {
       openExport: "setVisible"
     }),
