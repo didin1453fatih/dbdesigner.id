@@ -4,6 +4,8 @@
     <div style="margin-top:20px">
       <label>Project Name</label>
       <a-input style="margin-top:3px" placeholder/>
+      <label>Description</label>
+      <a-textarea style="margin-top:3px" placeholder/>
     </div>
     <div style="margin-top:15px;     text-align: right;">
       <a-button style="right:0">Update</a-button>

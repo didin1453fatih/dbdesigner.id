@@ -3,6 +3,8 @@ import Vuex from "vuex";
 import diagram from "./diagram/module"
 import LeftPanel from "./LeftPanel/module"
 import ExportDesign from "./ExportDesign/module"
+import ListProject from "./ListProject/module"
+import NewProject from "./NewProject/module"
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -10,6 +12,8 @@ export const store = new Vuex.Store({
   modules: {
     diagram,
     LeftPanel,
-    ExportDesign
+    ExportDesign,
+    ListProject,
+    NewProject
   }
 });
