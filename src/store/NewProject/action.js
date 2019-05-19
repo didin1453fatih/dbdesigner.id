@@ -12,12 +12,12 @@ export default {
       message.success("Created", 2);
       context.commit("setTitle", "");
       context.commit("setDescription", "");
-      context.commit("setLoding", false);
       context.rootDispatch("diagram/loadProject", {
         id: respond.payload.id
       });
     } catch (error) {
       message.error("Your network problem", 2); 
     }
+    context.commit("setLoding", false);
   })
 };

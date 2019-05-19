@@ -1,3 +1,5 @@
 export default {
- visible:false
+  visible: false,
+  sqlScript: "",
+  diagramScript: ""
 };
