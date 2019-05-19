@@ -19,9 +19,7 @@
         <a href="#tab_folder">Account</a>
       </li>
       <div style="width:100%;text-align: right;">
-        <span
-          style="font-size: 1.0rem;padding-top:5px; margin-right:15px"
-        >~ {{title}}</span>
+        <span style="font-size: 1.0rem;padding-top:5px; margin-right:15px">~ {{title}}</span>
         <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>
       </div>
     </ul>
@@ -110,6 +108,25 @@
           </div>
 
           <div class="tab-group-caption">Export</div>
+        </div>
+
+        <div class="tab-panel-group">
+          <div class="tab-content-segment">
+            <button class="fluent-big-button" @click="openExport(true)" style="width:60px">
+              <img :src="topicIcon" >
+              <!-- <span class="icon mif-paper-plane" style="width:50px"></span> -->
+              <span class="label" style="margin-top:5px">Comment</span>
+            </button>
+          </div>
+          <div class="tab-content-segment">
+            <button class="fluent-big-button" style="width:60px">
+              <img :src="helpSupport">
+              <!-- <span class="icon mif-share" style="width:50px"></span> -->
+              <span class="label" style="margin-top:5px">Help</span>
+            </button>
+          </div>
+
+          <div class="tab-group-caption">Interaction</div>
         </div>
 
         <!-- <div class="tab-panel-group">
@@ -206,6 +223,8 @@
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
+import topicIcon from "../assets/icons8-topic-96.png";
+import helpSupport from "../assets/icons8-online-support-filled-100.png"
 export default {
   computed: {
     ...mapState("diagram", {
@@ -230,6 +249,12 @@ export default {
     ...mapMutations("LeftPanel", {
       openLeftPanel: "setVisible"
     })
+  },
+  data() {
+    return {
+      topicIcon: topicIcon,
+      helpSupport: helpSupport
+    };
   }
 };
 </script>
