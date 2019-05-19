@@ -3,7 +3,8 @@ export default {
   action: async (inputs, output) => {
     await axios
       .get(
-        "/back-office/api/v1/project/read?page=1&page_size=10&title="
+        "/back-office/api/v1/project/read?page=1&page_size=10&title=" +
+          inputs.title
       )
       .then(function(response) {
         if (response.data.success) {

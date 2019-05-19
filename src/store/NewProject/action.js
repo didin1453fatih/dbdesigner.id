@@ -7,7 +7,9 @@ export default {
       title: context.inputs.title,
       description: context.inputs.description
     });
-    context.commit("setData", respond.payload);
     context.commit("setLoding", false);
+    context.rootDispatch('diagram/loadProject',{
+      id:respond.payload.id
+    })
   })
 };

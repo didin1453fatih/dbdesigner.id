@@ -21,7 +21,7 @@
       <div style="width:100%;text-align: right;">
         <span
           style="font-size: 1.0rem;padding-top:5px; margin-right:15px"
-        >~ Pemeriksaan Labolatorium</span>
+        >~ {{title}}</span>
         <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>
       </div>
     </ul>
@@ -205,7 +205,14 @@
 <script>
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState("diagram", {
+      title: state => state.projectDescription.title,
+      description: state => state.projectDescription.description
+    })
+  },
   methods: {
     ...mapActions("diagram", {
       saveProjectEvent: "saveProject"

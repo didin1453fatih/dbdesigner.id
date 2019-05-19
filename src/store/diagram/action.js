@@ -1,8 +1,10 @@
+import { message } from "ant-design-vue";
 import LoadProject from "../../request/readOneProject.request";
 import SaveProject from "../../request/saveProject.request";
 import { request2, requestHelper } from "../../helper/RequestConnector";
 export default {
   loadProject: request2(async context => {
+    context.rootCommit("GlobalLoading/setVisible", true);
     var respond = await requestHelper(LoadProject, {
       id: context.inputs.id
     });
@@ -22,20 +24,30 @@ export default {
       context.commit("setConnector", {});
       context.commit("setDiagram", {});
     }
-
-    // // eslint-disable-next-line
-    // console.log(JSON.stringify(dataJSON.diagram));
     context.commit("setProjectDescription", respond.payload);
+    context.rootCommit("LeftPanel/setVisible", false);
+    context.rootCommit("GlobalLoading/setVisible", false);
   }),
   saveProject: request2(async context => {
-    var respond = await requestHelper(SaveProject, {
-      id: context.state.projectDescription.id,
-      data_design: JSON.stringify({
-        connector: context.state.connectorNewKey,
-        diagram: context.state.dataDiagramNew
-      })
-    });
-    context.commit("setData", respond.payload);
-    // context.commit("setData", respond.payload);
+    const hide = message.loading("Saving in progress..", 0);
+
+    try {
+      await requestHelper(SaveProject, {
+        id: context.state.projectDescription.id,
+        data_design: JSON.stringify({
+          connector: context.state.connectorNewKey,
+          diagram: context.state.dataDiagramNew
+        })
+      });
+      setTimeout(hide, 0);
+      setTimeout(() => {
+        message.success("Saved Success", 1);
+      }, 500);
+    } catch (error) {
+      setTimeout(hide, 0);
+      setTimeout(() => {
+        message.error("Saved Failure", 1);
+      }, 500);
+    }
   })
 };

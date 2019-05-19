@@ -119,12 +119,14 @@
       :tableProperties="editTableProperties"
       @close="onClose"
     />
+    <loading-global/>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
+import LoadingGlobal from './components/LoadingGlobal'
 // import { mapActions } from "vuex";
 // import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
@@ -141,6 +143,7 @@ export default {
     MenuFluent,
     LeftPanel,
     ExportAndShare,
+    LoadingGlobal,
     // ConnectorBase,
     TableDetail,
     ConfigTable
