@@ -41,7 +41,7 @@
               </div>
               <div
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
-                @click="panelName='open'"
+                @click="panelName='properties'"
               >
                 <label style="color:white">Properties</label>
               </div>
@@ -69,6 +69,13 @@
             >
               <update-panel/>
             </div>
+            <div
+              v-else-if="panelName==='properties'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <properties/>
+            </div>
           </td>
         </tr>
       </table>
@@ -82,6 +89,7 @@ import { mapMutations } from "vuex";
 import NewPanel from "./LeftPanel/New";
 import OpenPanel from "./LeftPanel/Open";
 import UpdatePanel from "./LeftPanel/Update";
+import Properties from "./LeftPanel/Properties";
 export default {
   methods: {
     ...mapMutations("LeftPanel", {
@@ -92,7 +100,8 @@ export default {
   components: {
     NewPanel,
     OpenPanel,
-    UpdatePanel
+    UpdatePanel,
+    Properties
   },
   computed: {
     ...mapState("LeftPanel", {
