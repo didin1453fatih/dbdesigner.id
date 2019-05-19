@@ -5,12 +5,22 @@
         <h3>New Project</h3>
         <div style="margin-top:20px">
           <label>Title</label>
-          <a-input v-model="title" style="margin-top:3px" placeholder/>
+          <a-input
+            :value="title"
+            @change="setTitle($event.target.value)"
+            style="margin-top:3px"
+            placeholder
+          />
           <label>Description</label>
-          <a-textarea v-model="description" style="margin-top:3px" placeholder/>
+          <a-textarea
+            :value="description"
+            @change="setDescription($event.target.value)"
+            style="margin-top:3px"
+            placeholder
+          />
         </div>
         <div style="margin-top:15px;     text-align: right;">
-          <a-button style="right:0" @click="onCreateEvent">Create</a-button>
+          <a-button style="right:0" @click="createProject">Create</a-button>
         </div>
       </div>
     </a-spin>
@@ -21,30 +31,27 @@
 <script>
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
-
+import { mapMutations } from "vuex";
 export default {
   computed: {
     ...mapState("NewProject", {
-      data: state => state.data,
-      loading : state => state.loading
+      title: state => state.title,
+      description: state => state.description,
+      loading: state => state.loading
     })
   },
   methods: {
     ...mapActions("NewProject", {
       createProject: "createProject"
     }),
-    onCreateEvent() {
-      this.createProject({
-        title: this.title,
-        description: this.description
-      });
-    }
+    ...mapMutations("NewProject", {
+      setTitle: "setTitle",
+      setDescription: "setDescription"
+    })
   },
   data() {
     return {
-      indicator: <a-icon type="loading" spin />,
-      title: "",
-      description: ""
+      indicator: <a-icon type="loading" spin />
     };
   }
 };
