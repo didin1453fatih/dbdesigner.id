@@ -8,7 +8,6 @@ export default {
   }
 };
 
-//  eslint-disable-next-line
 function exportEngin(diagram) {
   var script = "";
   Object.keys(diagram).forEach(diagramKey => {
@@ -19,19 +18,43 @@ function exportEngin(diagram) {
   });
   return script;
 }
-//  eslint-disable-next-line
+
 function createTableTemplete(tableName, coloumns) {
   var coloumnScript = "";
+  var i = 0;
   Object.keys(coloumns).forEach(collKey => {
-    coloumnScript += createColoumnTemplete(coloumns[collKey]);
+    if (i++ === 0) {
+      coloumnScript += "   " + createColoumnTemplete(coloumns[collKey]);
+    } else {
+      coloumnScript += ",\r\n   " + createColoumnTemplete(coloumns[collKey]);
+    }
   });
 
-  var primaryKeyScript="";
+  var primaryKeyScript = "";
   Object.keys(coloumns).forEach(collKey => {
-    primaryKeyScript += createPrimaryKeyTemplete(coloumns[collKey]);
+    var pkScript = createPrimaryKeyTemplete(coloumns[collKey]);
+    if (pkScript !== null) {
+      primaryKeyScript += ",\r\n   " + pkScript;
+    }
   });
 
-  return "CREATE TABLE IF NOT EXISTS " + tableName + "(\r\n" + coloumnScript + primaryKeyScript+");\r\n\r\n";
+  var uniqueKeyScript = "";
+  Object.keys(coloumns).forEach(collKey => {
+    var uqScriptTMP = createUniqueKeyTemplete(coloumns[collKey]);
+    if (uqScriptTMP !== null) {
+      uniqueKeyScript += ",\r\n   " + uqScriptTMP;
+    }
+  });
+
+  return (
+    "CREATE TABLE IF NOT EXISTS " +
+    tableName +
+    "(\r\n" +
+    coloumnScript +
+    primaryKeyScript +
+    uniqueKeyScript +
+    "\r\n);\r\n\r\n"
+  );
 }
 
 function createColoumnTemplete(coloumn) {
@@ -44,20 +67,32 @@ function createColoumnTemplete(coloumn) {
     autoIncrementValue = "";
   }
   return (
-    "   "+coloumn.coloumn_name +
+    coloumn.coloumn_name +
     " " +
     coloumn.dataType +
     notNullValue +
-    autoIncrementValue +
-    ",\r\n"
+    autoIncrementValue
   );
 }
 
-function createPrimaryKeyTemplete(coloumn){
-  if(coloumn.primaryKey===true){
-    return '   PRIMARY KEY ('+coloumn.coloumn_name+'),\r\n'
-  }else{
-    return ''
+function createPrimaryKeyTemplete(coloumn) {
+  if (coloumn.primaryKey === true) {
+    return "PRIMARY KEY (" + coloumn.coloumn_name + ")";
+  } else {
+    return null;
   }
-  
+}
+
+function createUniqueKeyTemplete(coloumn) {
+  if (coloumn.unique === true) {
+    return (
+      "UNIQUE KEY unique_" +
+      coloumn.coloumn_name +
+      " (" +
+      coloumn.coloumn_name +
+      ")"
+    );
+  } else {
+    return null;
+  }
 }
