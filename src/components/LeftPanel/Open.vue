@@ -6,8 +6,13 @@
       <div s style="overflow-y: auto; height:480px; border: 1px solid #e8e8e8;padding: 4px 12px;margin-top:20px">
         <a-list itemLayout="horizontal" :dataSource="data" >
           <a-list-item @dblclick="openProjectEvent(item.id)" slot="renderItem" slot-scope="item" class="disable-select">
-            <a-list-item-meta :description="item.created">
-              <span slot="title" href="https://vue.ant.design/">{{item.title}}</span>
+            <a-list-item-meta :description="fomatDate(item.created)">
+              <div slot="title" style="width:100%">
+                <span>
+                  {{item.title}}
+                </span>
+                <!-- <a-icon type="delete"  style="right:0px;position: absolute;color:red;"/> -->
+              </div>              
               <a-avatar shape="square" size="large" slot="avatar" :src="databaseIcon"/>
             </a-list-item-meta>
           </a-list-item>
@@ -16,8 +21,8 @@
     </div>
   </a-spin>
 </template>
-
 <script>
+import moment from "moment"
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 
@@ -51,6 +56,9 @@ export default {
       this.getData({
         keyword: value
       });
+    },
+    fomatDate(val){
+        return moment(val).format('YYYY-MM-DD hh:mm:ss')
     }
   },
   data() {

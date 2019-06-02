@@ -5,29 +5,34 @@
       <div style="margin-top:20px">
         <label>To</label>
         <br>
-        <a-radio-group @change="onChangeTo" defaultValue="a" style="margin-top:5px">
-          <a-radio-button value="a">SQL</a-radio-button>
-          <a-radio-button value="b" disabled>Image</a-radio-button>
-          <a-radio-button value="c" disabled>PDF</a-radio-button>
+        <a-radio-group @change="onChangeTo" defaultChecked="sql" defaultValue="sql" style="margin-top:5px">
+          <a-radio-button value="sql">SQL</a-radio-button>
+          <a-radio-button value="image" disabled>Image</a-radio-button>
+          <a-radio-button value="pdf" disabled>PDF</a-radio-button>
         </a-radio-group>
       </div>
       <div style="margin-top:20px">
         <label>Database</label>
         <br>
-        <a-radio-group @change="onChangeDatabase" defaultValue="a" style="margin-top:5px">
-          <a-radio-button value="b" disabled>Postgree</a-radio-button>
-          <a-radio-button value="bb" disabled>MS SQL</a-radio-button>
-          <a-radio-button value="a">MySQL</a-radio-button>
-          <a-radio-button value="c" disabled>Oracle</a-radio-button>
+        <a-radio-group @change="onChangeDatabase" defaultChecked="mysql" defaultValue="mysql" style="margin-top:5px">
+          <a-radio-button value="postgree" disabled>Postgree</a-radio-button>
+          <a-radio-button value="mssgl" disabled>MS SQL</a-radio-button>
+          <a-radio-button value="mysql">MySQL</a-radio-button>
+          <a-radio-button value="oracle" disabled>Oracle</a-radio-button>
         </a-radio-group>
       </div>
 
       <div style="margin-top:20px">
         <label>Script</label>
         <br>
-        <a-radio-group @change="onChangeScript" defaultValue="a" style="margin-top:5px">
-          <a-radio-button value="b" disabled>Drop</a-radio-button>
-          <a-radio-button value="a">Create</a-radio-button>
+        <a-radio-group
+          v-model="scriptType"
+          defaultChecked="create"
+          defaultValue="create"
+          style="margin-top:5px"
+        >
+          <a-radio-button value="drop">Drop</a-radio-button>
+          <a-radio-button value="create">Create</a-radio-button>
         </a-radio-group>
       </div>
       <div style="margin-top:30px;     text-align: right;">
@@ -35,7 +40,12 @@
       </div>
     </div>
     <div v-else-if="step===1" style="padding-right:30px">
-      <a-textarea :value="sqlScript" placeholder="Generated Script" :rows="14" style="height: 400px;"/>
+      <a-textarea
+        :value="sqlScript"
+        placeholder="Generated Script"
+        :rows="14"
+        style="height: 400px;white-space: nowrap; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;"
+      />
       <div style="margin-top:30px;     text-align: right;">
         <a-button style="right:0px" @click="step=0">Back</a-button>
       </div>
@@ -57,11 +67,16 @@ export default {
   methods: {
     onChangeTo() {},
     onChangeDatabase() {},
-    onChangeScript() {},
+    onChangeScript(val) {
+      this.scriptType = val;
+      window.alert(JSON.stringify(val));
+    },
     closeFilePanel() {},
     exportNextEvent() {
       this.step = 1;
-      this.goExport();
+      this.goExport({
+        scriptType: this.scriptType
+      });
     },
     ...mapActions("ExportDesign", {
       goExport: "goExport"
@@ -72,7 +87,8 @@ export default {
   },
   data() {
     return {
-      step: 0
+      step: 0,
+      scriptType: "create"
     };
   }
 };

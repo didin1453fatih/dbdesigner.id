@@ -6,6 +6,11 @@ export default {
     //   connector: context.rootState.diagram.connectorNewKey,
     //   diagram: 
     // };
-    context.commit("setDiagramScript", context.rootState.diagram.dataDiagramNew);
+    if(context.inputs.scriptType==='create'){
+      context.commit("setDiagramScript", context.rootState.diagram.dataDiagramNew);
+    }else if(context.inputs.scriptType==='drop'){
+      context.commit("getScriptDrop", context.rootState.diagram.dataDiagramNew);
+    }
+    
   })
 };

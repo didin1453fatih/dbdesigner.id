@@ -5,8 +5,19 @@ export default {
   setDiagramScript(state, val) {
     // state.diagramScript = val.diagram;
     state.diagramScript = exportEngin(val);
+  },
+  getScriptDrop(state, val){
+    state.diagramScript = createDropScript(val);
   }
 };
+
+function createDropScript(diagram){
+  var script = "";
+  Object.keys(diagram).forEach(diagramKey => {
+    script += 'DROP TABLE `'+diagram[diagramKey].table_name+'`; \r\n'
+  });
+  return script  
+}
 
 function exportEngin(diagram) {
   var script = "";
@@ -16,7 +27,21 @@ function exportEngin(diagram) {
       diagram[diagramKey].coloumns
     );
   });
-  return script;
+  var foreignKeyScript = ""
+  Object.keys(diagram).forEach(diagramKey => {
+    Object.keys(diagram[diagramKey].coloumns).forEach(collKey => {
+      var fkScriptTMP = createForeignKeyTemplete(
+        diagram[diagramKey].table_name,
+        diagram[diagramKey].coloumns[collKey],
+        diagram[diagramKey],
+        diagram
+      );
+      if (fkScriptTMP !== null) {
+        foreignKeyScript += fkScriptTMP + " ;\r\n";
+      }
+    });
+  });
+  return script+foreignKeyScript;
 }
 
 function createTableTemplete(tableName, coloumns) {
@@ -31,12 +56,10 @@ function createTableTemplete(tableName, coloumns) {
   });
 
   var primaryKeyScript = "";
-  Object.keys(coloumns).forEach(collKey => {
-    var pkScript = createPrimaryKeyTemplete(coloumns[collKey]);
-    if (pkScript !== null) {
-      primaryKeyScript += ",\r\n   " + pkScript;
-    }
-  });
+  var pkScript = createPrimaryKeyTemplete(coloumns);
+  if (pkScript !== null) {
+    primaryKeyScript += ",\r\n   " + pkScript;
+  }
 
   var uniqueKeyScript = "";
   Object.keys(coloumns).forEach(collKey => {
@@ -48,8 +71,8 @@ function createTableTemplete(tableName, coloumns) {
 
   return (
     "CREATE TABLE IF NOT EXISTS " +
-    tableName +
-    "(\r\n" +
+    "`"+tableName +"`"+
+    " (\r\n" +
     coloumnScript +
     primaryKeyScript +
     uniqueKeyScript +
@@ -67,7 +90,7 @@ function createColoumnTemplete(coloumn) {
     autoIncrementValue = "";
   }
   return (
-    coloumn.coloumn_name +
+    "`"+coloumn.coloumn_name+"`" +
     " " +
     coloumn.dataType +
     notNullValue +
@@ -75,11 +98,23 @@ function createColoumnTemplete(coloumn) {
   );
 }
 
-function createPrimaryKeyTemplete(coloumn) {
-  if (coloumn.primaryKey === true) {
-    return "PRIMARY KEY (" + coloumn.coloumn_name + ")";
-  } else {
+function createPrimaryKeyTemplete(coloumns) {
+  var pkScript = "PRIMARY KEY (";
+  var count = 0;
+  Object.keys(coloumns).forEach(collKey => {
+    if (coloumns[collKey].primaryKey === true) {
+      if (count++ === 0) {
+        pkScript += "`"+coloumns[collKey].coloumn_name+"`";
+      } else {
+        pkScript += ", " + "`"+coloumns[collKey].coloumn_name+"`";
+      }
+    }
+  });
+  pkScript += ")";
+  if (count === 0) {
     return null;
+  } else {
+    return pkScript;
   }
 }
 
@@ -96,3 +131,26 @@ function createUniqueKeyTemplete(coloumn) {
     return null;
   }
 }
+
+function createForeignKeyTemplete(tableName,coloumn,diagramObj,diagramAllObj
+  ) {
+  var count=0
+  if (coloumn.foreignKey === true) {
+    var assocObj=diagramObj.association[coloumn.association_belong_id]
+    var targetTableObj=diagramAllObj[assocObj.table_id]
+    var coloumnTargetObj=targetTableObj.coloumns[assocObj.targetKey_id]
+
+    var targetTable=diagramAllObj[diagramObj.association[coloumn.association_belong_id].table_id].table_name
+    var targetColoumnName=coloumnTargetObj.coloumn_name
+    return (
+      "ALTER TABLE `"+tableName+"` ADD CONSTRAINT `"+tableName+"_fk_"+count+++'_'+coloumn.coloumn_name+"` FOREIGN KEY (" +
+      coloumn.coloumn_name +
+      ") REFERENCES `"+targetTable+"`(`"+targetColoumnName+"`)"
+    );
+  } else {
+    return null;
+  }
+}
+
+
+// ALTER TABLE `PROJECT` ADD CONSTRAINT `PROJECT_fk0` FOREIGN KEY (`USER_id`) REFERENCES `USER`(`id`);
