@@ -1294,5 +1294,20 @@ export default {
     state.projectDescription.user_id = data.user_id;
     state.projectDescription.created = data.created;
     state.projectDescription.updated = data.updated;
+  },
+  deletedData(state){
+    state.projectDescription.id = null;
+    state.projectDescription.uuid = null;
+    state.projectDescription.title = null;
+    state.projectDescription.description = null;
+    state.projectDescription.likes = null;
+    state.projectDescription.viewers = null;
+    state.projectDescription.status_share = null;
+    state.projectDescription.password = null;
+    state.projectDescription.user_id = null;
+    state.projectDescription.created = null;
+    state.projectDescription.updated = null;
+    state.dataDiagramNew = {};
+    state.connectorNewKey = {};
   }
 };

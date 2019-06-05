@@ -81,7 +81,9 @@ export default {
     ...mapMutations("ExportDesign", {
       setVisible: "setVisible"
     }),
-    closeFilePanel() {}
+    closeFilePanel() {
+      this.setVisible(false)
+    }
   },
   components: {
     Export,

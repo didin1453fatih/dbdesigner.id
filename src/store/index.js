@@ -7,11 +7,13 @@ import ListProject from "./ListProject/module";
 import NewProject from "./NewProject/module";
 import GlobalLoading from "./GlobalLoading/module";
 import UpdateProject from "./UpdateProject/module";
+import Account from "./Account/module";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   strict: true,
   modules: {
+    Account,
     diagram,
     LeftPanel,
     ExportDesign,

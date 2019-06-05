@@ -113,7 +113,7 @@
         <div class="tab-panel-group">
           <div class="tab-content-segment">
             <button class="fluent-big-button" @click="openExport(true)" style="width:60px">
-              <img :src="topicIcon" >
+              <img :src="topicIcon">
               <!-- <span class="icon mif-paper-plane" style="width:50px"></span> -->
               <span class="label" style="margin-top:5px">Comment</span>
             </button>
@@ -215,6 +215,25 @@
         <!-- <div class="tab-group-caption">Export</div>
         </div>-->
       </div>
+      <div class="tab-panel" id="tab_folder" style="display: block;">
+        <div class="tab-panel-group">
+          <div class="tab-group-content">
+            <div class="tab-content-segment">
+              <button class="fluent-big-button" @click="logoutAccount">
+                <span class="mif-cancel" style="width:50px"></span>
+                <span class="label" style="margin-top:5px" >Logout</span>
+              </button>
+            </div>
+            <div class="tab-content-segment">
+              <button class="fluent-big-button">
+                <span class="mif-user" style="width:50px"></span>
+                <span class="label" style="margin-top:5px">Account</span>
+              </button>
+            </div>
+          </div>
+          <div class="tab-group-caption">Account</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -224,7 +243,7 @@ import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import topicIcon from "../assets/icons8-topic-96.png";
-import helpSupport from "../assets/icons8-online-support-filled-100.png"
+import helpSupport from "../assets/icons8-online-support-filled-100.png";
 export default {
   computed: {
     ...mapState("diagram", {
@@ -235,6 +254,9 @@ export default {
   methods: {
     ...mapActions("diagram", {
       saveProjectEvent: "saveProject"
+    }),
+    ...mapActions("Account", {
+      logoutAccount: "logoutAccount"
     }),
     ...mapMutations("ExportDesign", {
       openExport: "setVisible"

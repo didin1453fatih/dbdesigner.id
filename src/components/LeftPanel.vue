@@ -27,12 +27,12 @@
               >
                 <label style="color:white">New</label>
               </div>
-              <div
+              <!-- <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="panelName='update'"
               >
                 <label style="color:white">Update</label>
-              </div>
+              </div> -->
               <div
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="panelName='open'"
@@ -95,7 +95,9 @@ export default {
     ...mapMutations("LeftPanel", {
       setVisible: "setVisible"
     }),
-    closeFilePanel() {}
+    closeFilePanel() {
+      this.setVisible(false)
+    }
   },
   components: {
     NewPanel,

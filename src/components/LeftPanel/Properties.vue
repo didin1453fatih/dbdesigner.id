@@ -2,7 +2,7 @@
   <div>
       <div>
         <h3>Properties
-          <a-icon type="delete"  style="right:20px;position: absolute;color:red;"/>
+          <a-icon type="delete"  style="right:20px;position: absolute;color:red;cursor: pointer" @click="deleteProject"/>
           <!-- <a-icon type="delete"  style="margin-top:3px;margin-bottom:10px; cursor:auto;color:red;font-size:20px"/> -->
         </h3>
         <div style="margin-top:20px">
@@ -10,8 +10,7 @@
           <a-input
             :value="title"
             style="margin-top:3px;margin-bottom:10px; cursor:auto;color:black"
-            disabled
-
+            @change="setTitle($event.target.value)"
           />
           <!-- <label>Likes</label>
           <a-input
@@ -35,8 +34,8 @@
           <label>Description</label>
           <a-textarea
             :value="description"
+            @change="setDescription($event.target.value)"
             style="margin-top:3px;margin-bottom:10px; cursor:auto;color:black"
-            disabled
           />     
           <div style="margin-top:15px;     text-align: right;">
             <a-button style="right:0" @click="updateProject">Update</a-button>
@@ -70,10 +69,20 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 export default {
+  mounted() {
+    this.setTitle(this.oldTitle)
+    this.setDescription(this.oldDescription)
+  },  
   computed: {
+    ...mapState("UpdateProject", {
+      data: state => state.data,
+      loading: state => state.loading,
+      title: state => state.title,
+      description: state => state.description
+    }),    
     ...mapState("diagram", {
-      title: state => state.projectDescription.title,
-      description: state => state.projectDescription.description,
+      oldTitle: state => state.projectDescription.title,
+      oldDescription: state => state.projectDescription.description,
       likes: state => state.projectDescription.likes,
       viewers: state => state.projectDescription.viewers,
       status_share: state => state.projectDescription.status_share,
@@ -85,12 +94,19 @@ export default {
     ...mapActions("NewProject", {
       createProject: "createProject"
     }),
-    ...mapMutations("NewProject", {
+    ...mapActions("UpdateProject", {
+      updateProject: "updateProject",
+      deleteProject:"deleteProject"
+    }),    
+    ...mapMutations("UpdateProject", {
       setTitle: "setTitle",
       setDescription: "setDescription"
     }),
     fomatDate(val){
-        return moment(val).format('YYYY-MM-DD hh:mm:ss')
+      if(val===null){
+        return ''
+      }
+      return moment(val).format('YYYY-MM-DD hh:mm:ss')
     }
   },
   data() {
