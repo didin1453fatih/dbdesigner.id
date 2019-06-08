@@ -16,7 +16,7 @@ export default {
         message.error(respond.message, 2);
       }
     } catch (error) {
-      message.error(error, 2);
+      message.error(error.message, 2);
     }
     context.commit("setLoading", false);
   })

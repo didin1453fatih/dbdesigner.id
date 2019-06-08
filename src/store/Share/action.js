@@ -21,7 +21,13 @@ export default {
       }
       message.success("Updated", 2);
     } catch (error) {
-      message.error("Your network problem", 2);
+      if (error.code === 10) {
+        message.error("Login first to save share status", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
     }
     context.commit("setLoading", false);
   }),
@@ -40,7 +46,13 @@ export default {
         message.error(shareStatusRespond.message, 2);
       }
     } catch (error) {
-      message.error("Your network problem", 2);
+      if (error.code === 10) {
+        message.error("Login first to read share status", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
     }
     context.commit("setLoading", false);
   })

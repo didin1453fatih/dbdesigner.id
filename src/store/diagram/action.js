@@ -30,47 +30,59 @@ export default {
           context.commit("setDiagram", {});
         }
         context.commit("setProjectDescription", respond.payload);
-        context.rootCommit('LeftPanel/setVisible',false)
-        context.rootCommit('LeftPanel/setPanelName','properties')
-        message.success('Opened', 2);
-      } 
+        context.rootCommit("LeftPanel/setVisible", false);
+        context.rootCommit("LeftPanel/setPanelName", "properties");
+        message.success("Opened", 2);
+      }
     } catch (error) {
-      if(error.code===23){
-        message.info(error.description.title+' Required password', 3);
-        context.rootCommit('OpenSharedWithPassword/setUUID',context.inputs.uuid)
-        
-        context.rootCommit('LeftPanel/setVisible',true)
-        context.rootCommit('LeftPanel/setPanelName','OpenSharedWithPassword')
-      }else{
+      if (error.code === 23) {
+        message.info(error.description.title + " Required password", 3);
+        context.rootCommit(
+          "OpenSharedWithPassword/setUUID",
+          context.inputs.uuid
+        );
+
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "OpenSharedWithPassword");
+      } else {
         message.error(error.message, 2);
       }
-
     }
     context.rootCommit("GlobalLoading/setVisible", false);
   }),
   loadProject: request2(async context => {
     context.rootCommit("GlobalLoading/setVisible", true);
-    var respond = await requestHelper(LoadProject, {
-      id: context.inputs.id
-    });
-    var dataJSON = JSON.parse(respond.payload.data_design);
-    if (dataJSON !== null) {
-      if (dataJSON.connector !== undefined && dataJSON.connector !== null) {
-        context.commit("setConnector", dataJSON.connector);
+    try {
+      var respond = await requestHelper(LoadProject, {
+        id: context.inputs.id
+      });
+      var dataJSON = JSON.parse(respond.payload.data_design);
+      if (dataJSON !== null) {
+        if (dataJSON.connector !== undefined && dataJSON.connector !== null) {
+          context.commit("setConnector", dataJSON.connector);
+        } else {
+          context.commit("setConnector", {});
+        }
+        if (dataJSON.diagram !== undefined && dataJSON.diagram !== null) {
+          context.commit("setDiagram", dataJSON.diagram);
+        } else {
+          context.commit("setDiagram", {});
+        }
       } else {
         context.commit("setConnector", {});
-      }
-      if (dataJSON.diagram !== undefined && dataJSON.diagram !== null) {
-        context.commit("setDiagram", dataJSON.diagram);
-      } else {
         context.commit("setDiagram", {});
       }
-    } else {
-      context.commit("setConnector", {});
-      context.commit("setDiagram", {});
+      context.commit("setProjectDescription", respond.payload);
+      context.rootCommit("LeftPanel/setVisible", false);
+    } catch (error) {
+      if (error.code === 10) {
+        message.error("Login first to open project", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
     }
-    context.commit("setProjectDescription", respond.payload);
-    context.rootCommit("LeftPanel/setVisible", false);
     context.rootCommit("GlobalLoading/setVisible", false);
   }),
   saveProject: request2(async context => {
@@ -89,10 +101,17 @@ export default {
         message.success("Saved Success", 1);
       }, 500);
     } catch (error) {
-      setTimeout(hide, 0);
-      setTimeout(() => {
-        message.error("Saved Failure", 1);
-      }, 500);
+      if (error.code === 10) {
+        setTimeout(hide, 0);
+        message.error("Login first to update account", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        setTimeout(hide, 0);
+        setTimeout(() => {
+          message.error("Saved Failure", 1);
+        }, 500);
+      }
     }
   })
 };

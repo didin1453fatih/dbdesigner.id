@@ -21,7 +21,13 @@ export default {
       context.commit("setEmail", respondAccount.email);
       context.commit("setId", respondAccount.id);
     } catch (error) {
-      message.error("Your network problem", 2);
+      if (error.code === 10) {
+        message.error("Login first to update account", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
     }
     context.commit("setLoding", false);
   }),
@@ -36,7 +42,13 @@ export default {
       context.commit("setEmail", respondAccount.email);
       context.commit("setId", respondAccount.id);
     } catch (error) {
-      message.error("Your network problem", 2);
+      if (error.code === 10) {
+        message.error("Login first to read account", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
     }
     context.commit("setLoding", false);
   }),
@@ -51,7 +63,13 @@ export default {
       message.success("Updated", 2);
       context.commit("setVisibleChangePassword", false);
     } catch (error) {
-      message.error(error, 2);
+      if (error.code === 10) {
+        message.error("Login first to change password", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
     }
     context.commit("setLoadingChangePassword", false);
   }),
@@ -66,9 +84,14 @@ export default {
         window.location.href = "/";
       }, 500);
     } catch (error) {
-      message.error(error, 2);
+      if (error.code === 10) {
+        message.error("Login first to logout", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
       context.rootCommit("GlobalLoading/setVisible", false);
     }
-    // context.commit("setLoadingChangePassword", false);
   })
 };

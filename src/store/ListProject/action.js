@@ -12,7 +12,13 @@ export default {
       });
       context.commit("setData", respond.payload);
     } catch (error) {
-      message.error("Your network problem", 2);
+      if (error.code === 10) {
+        message.error("Login first to list project", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
     }
     context.commit("setLoading", false);
   })

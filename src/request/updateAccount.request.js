@@ -11,7 +11,7 @@ export default {
         if (response.data.success) {
           return output.success(response.data);
         } else {
-          return output.error(response.data.message);
+          return output.error(response.data);
         }
       })
       .catch(function(error) {
