@@ -21,9 +21,15 @@
               >
                 <img src="../assets/icons8-go-back-50.png" width="35px">
               </div>
+              <!-- <div
+                style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
+                @click="panelName='login'"
+              >
+                <label style="color:white">Login</label>
+              </div>-->
               <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
-                @click="panelName='new'"
+                @click="setPanelName('new')"
               >
                 <label style="color:white">New</label>
               </div>
@@ -32,18 +38,36 @@
                 @click="panelName='update'"
               >
                 <label style="color:white">Update</label>
-              </div> -->
+              </div>-->
               <div
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
-                @click="panelName='open'"
+                @click="setPanelName('open')"
               >
                 <label style="color:white">Open</label>
               </div>
               <div
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
-                @click="panelName='properties'"
+                @click="setPanelName('properties')"
               >
                 <label style="color:white">Properties</label>
+              </div>
+              <div
+                style="width:100%; font-weight: 300;padding-left:13px;margin-top:13px; margin-bottom:13px ;"
+              >
+                <!-- <div style="color:white;background:white;height:0.5px; width:75%">
+                </div>-->
+              </div>
+              <div
+                style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
+                @click="setPanelName('login')"
+              >
+                <label style="color:white">Login</label>
+              </div>
+              <div
+                style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
+                @click="setPanelName('account')"
+              >
+                <label style="color:white">Account</label>
               </div>
             </div>
           </td>
@@ -76,6 +100,20 @@
             >
               <properties/>
             </div>
+            <div
+              v-else-if="panelName==='login'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <login/>
+            </div>
+            <div
+              v-else-if="panelName==='account'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <account/>
+            </div>
           </td>
         </tr>
       </table>
@@ -90,29 +128,35 @@ import NewPanel from "./LeftPanel/New";
 import OpenPanel from "./LeftPanel/Open";
 import UpdatePanel from "./LeftPanel/Update";
 import Properties from "./LeftPanel/Properties";
+import Login from "./LeftPanel/Login";
+import Account from "./LeftPanel/Account";
 export default {
   methods: {
     ...mapMutations("LeftPanel", {
-      setVisible: "setVisible"
+      setVisible: "setVisible",
+      setPanelName: "setPanelName"
     }),
     closeFilePanel() {
-      this.setVisible(false)
+      this.setVisible(false);
     }
   },
   components: {
     NewPanel,
     OpenPanel,
     UpdatePanel,
-    Properties
+    Properties,
+    Login,
+    Account
   },
   computed: {
     ...mapState("LeftPanel", {
-      visible: state => state.visible
+      visible: state => state.visible,
+      panelName: state => state.panelName
     })
   },
   data() {
     return {
-      panelName: "open"
+      // panelName: "open"
     };
   }
 };

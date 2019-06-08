@@ -1,6 +1,6 @@
 /*!
- * Metro UI CSS v3.0.18 (http://metroui.org.ua)
- * Copyright 2012-2018 Sergey Pimenov
+ * Metro UI CSS v3.0.17 (http://metroui.org.ua)
+ * Copyright 2012-2017 Sergey Pimenov
  * Licensed under  ()
  */
 
@@ -15,7 +15,7 @@
 
 var $ = jQuery;
 
-window.METRO_VERSION = '3.0.18';
+window.METRO_VERSION = '3.0.17';
 
 // Source: js/requirements.js
 if (typeof jQuery === 'undefined') {
@@ -126,15 +126,15 @@ window.METRO_LOCALES = {
     },
     'fr': {
         months: [
-            "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre",
-            "Jan", "Fév", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"
+            "Janvier", "FГ©vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "AoГ»t", "Septembre", "Octobre", "Novembre", "DГ©cembre",
+            "Jan", "FГ©v", "Mars", "Avr", "Mai", "Juin", "Juil", "AoГ»t", "Sept", "Oct", "Nov", "DГ©c"
         ],
         days: [
             "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi",
             "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"
         ],
         buttons: [
-            "Aujourd'hui", "Effacer", "Annuler", "Aide", "Précedent", "Suivant", "Fin"
+            "Aujourd'hui", "Effacer", "Annuler", "Aide", "PrГ©cedent", "Suivant", "Fin"
         ]
     },
     'nl': {
@@ -152,42 +152,42 @@ window.METRO_LOCALES = {
     },
     'ua': {
         months: [
-            "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень",
-            "Січ", "Лют", "Бер", "Кві", "Тра", "Чер", "Лип", "Сер", "Вер", "Жов", "Лис", "Гру"
+            "РЎС–С‡РµРЅСЊ", "Р›СЋС‚РёР№", "Р‘РµСЂРµР·РµРЅСЊ", "РљРІС–С‚РµРЅСЊ", "РўСЂР°РІРµРЅСЊ", "Р§РµСЂРІРµРЅСЊ", "Р›РёРїРµРЅСЊ", "РЎРµСЂРїРµРЅСЊ", "Р’РµСЂРµСЃРµРЅСЊ", "Р–РѕРІС‚РµРЅСЊ", "Р›РёСЃС‚РѕРїР°Рґ", "Р“СЂСѓРґРµРЅСЊ",
+            "РЎС–С‡", "Р›СЋС‚", "Р‘РµСЂ", "РљРІС–", "РўСЂР°", "Р§РµСЂ", "Р›РёРї", "РЎРµСЂ", "Р’РµСЂ", "Р–РѕРІ", "Р›РёСЃ", "Р“СЂСѓ"
         ],
         days: [
-            "Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П’ятниця", "Субота",
-            "Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"
+            "РќРµРґС–Р»СЏ", "РџРѕРЅРµРґС–Р»РѕРє", "Р’С–РІС‚РѕСЂРѕРє", "РЎРµСЂРµРґР°", "Р§РµС‚РІРµСЂ", "РџвЂ™СЏС‚РЅРёС†СЏ", "РЎСѓР±РѕС‚Р°",
+            "РќРґ", "РџРЅ", "Р’С‚", "РЎСЂ", "Р§С‚", "РџС‚", "РЎР±"
         ],
         buttons: [
-            "Сьогодні", "Очистити", "Скасувати", "Допомога", "Назад", "Вперед", "Готово"
+            "РЎСЊРѕРіРѕРґРЅС–", "РћС‡РёСЃС‚РёС‚Рё", "РЎРєР°СЃСѓРІР°С‚Рё", "Р”РѕРїРѕРјРѕРіР°", "РќР°Р·Р°Рґ", "Р’РїРµСЂРµРґ", "Р“РѕС‚РѕРІРѕ"
         ]
     },
     'ru': {
         months: [
-            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
-            "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"
+            "РЇРЅРІР°СЂСЊ", "Р¤РµРІСЂР°Р»СЊ", "РњР°СЂС‚", "РђРїСЂРµР»СЊ", "РњР°Р№", "РСЋРЅСЊ", "РСЋР»СЊ", "РђРІРіСѓСЃС‚", "РЎРµРЅС‚СЏР±СЂСЊ", "РћРєС‚СЏР±СЂСЊ", "РќРѕСЏР±СЂСЊ", "Р”РµРєР°Р±СЂСЊ",
+            "РЇРЅРІ", "Р¤РµРІ", "РњР°СЂ", "РђРїСЂ", "РњР°Р№", "РСЋРЅ", "РСЋР»", "РђРІРі", "РЎРµРЅ", "РћРєС‚", "РќРѕСЏ", "Р”РµРє"
         ],
         days: [
-            "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота",
-            "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"
+            "Р’РѕСЃРєСЂРµСЃРµРЅСЊРµ", "РџРѕРЅРµРґРµР»СЊРЅРёРє", "Р’С‚РѕСЂРЅРёРє", "РЎСЂРµРґР°", "Р§РµС‚РІРµСЂРі", "РџСЏС‚РЅРёС†Р°", "РЎСѓР±Р±РѕС‚Р°",
+            "Р’СЃ", "РџРЅ", "Р’С‚", "РЎСЂ", "Р§С‚", "РџС‚", "РЎР±"
         ],
         buttons: [
-            "Сегодня", "Очистить", "Отменить", "Помощь", "Назад", "Вперед", "Готово"
+            "РЎРµРіРѕРґРЅСЏ", "РћС‡РёСЃС‚РёС‚СЊ", "РћС‚РјРµРЅРёС‚СЊ", "РџРѕРјРѕС‰СЊ", "РќР°Р·Р°Рґ", "Р’РїРµСЂРµРґ", "Р“РѕС‚РѕРІРѕ"
         ]
     },
     /** By NoGrief (nogrief@gmail.com) */
     'zhCN': {
         months: [
-            "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月",
-            "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"
+            "дёЂжњ€", "дєЊжњ€", "дё‰жњ€", "е››жњ€", "дє”жњ€", "е…­жњ€", "дёѓжњ€", "е…«жњ€", "д№ќжњ€", "еЌЃжњ€", "еЌЃдёЂжњ€", "еЌЃдєЊжњ€",
+            "дёЂжњ€", "дєЊжњ€", "дё‰жњ€", "е››жњ€", "дє”жњ€", "е…­жњ€", "дёѓжњ€", "е…«жњ€", "д№ќжњ€", "еЌЃжњ€", "еЌЃдёЂжњ€", "еЌЃдєЊжњ€"
         ],
         days: [
-            "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六",
-            "日", "一", "二", "三", "四", "五", "六"
+            "жџжњџж—Ґ", "жџжњџдёЂ", "жџжњџдєЊ", "жџжњџдё‰", "жџжњџе››", "жџжњџдє”", "жџжњџе…­",
+            "ж—Ґ", "дёЂ", "дєЊ", "дё‰", "е››", "дє”", "е…­"
         ],
         buttons: [
-            "今日", "清除", "Cancel", "Help", "Prior", "Next", "Finish"
+            "д»Љж—Ґ", "жё…й™¤", "Cancel", "Help", "Prior", "Next", "Finish"
         ]
     },
     'it': {
@@ -196,7 +196,7 @@ window.METRO_LOCALES = {
             'Gen', ' Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'
         ],
         days: [
-            'Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 
+            'Domenica', 'LunedГ¬', 'MartedГ¬', 'MercoledГ¬', 'GiovedГ¬', 'VenerdГ¬', 'Sabato', 
             'Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'
         ],
         buttons: [
@@ -205,7 +205,7 @@ window.METRO_LOCALES = {
     },
     'de': {
         months: [
-            "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember",
+            "Januar", "Februar", "MГ¤rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember",
             "Jan", "Feb", "Mrz", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"
         ],
         days: [
@@ -213,18 +213,18 @@ window.METRO_LOCALES = {
             "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"
         ],
         buttons: [
-            "Heute", "Zurücksetzen", "Abbrechen", "Hilfe", "Früher", "Später", "Fertig"
+            "Heute", "ZurГјcksetzen", "Abbrechen", "Hilfe", "FrГјher", "SpГ¤ter", "Fertig"
         ]
     },
-    /** By Javier Rodríguez (javier.rodriguez at fjrodriguez.com) */
+    /** By Javier RodrГ­guez (javier.rodriguez at fjrodriguez.com) */
     'es': {
         months: [
             "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
             "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sept", "Oct", "Nov", "Dic"
         ],
         days: [
-            "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado",
-            "Do", "Lu", "Mar", "Mié", "Jue", "Vi", "Sáb"
+            "Domingo", "Lunes", "Martes", "MiГ©rcoles", "Jueves", "Viernes", "SГЎbado",
+            "Do", "Lu", "Mar", "MiГ©", "Jue", "Vi", "SГЎb"
         ],
         buttons: [
             "Hoy", "Limpiar", "Cancel", "Help", "Prior", "Next", "Finish"
@@ -232,11 +232,11 @@ window.METRO_LOCALES = {
     },
     'pt': {
         months: [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
+            'Janeiro', 'Fevereiro', 'MarГ§o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
             'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
         ],
         days: [
-            'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado',
+            'Domingo', 'Segunda-feira', 'TerГ§a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado',
             'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'
         ],
         buttons: [
@@ -245,42 +245,42 @@ window.METRO_LOCALES = {
     },
     'pl': {
         months: [
-            "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień",
-            "Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"
+            "StyczeЕ„", "Luty", "Marzec", "KwiecieЕ„", "Maj", "Czerwiec", "Lipiec", "SierpieЕ„", "WrzesieЕ„", "PaЕєdziernik", "Listopad", "GrudzieЕ„",
+            "Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "PaЕє", "Lis", "Gru"
         ],
         days: [
-            "Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota",
-            "Nd", "Pon", "Wt", "Śr", "Czw", "Pt", "Sob"
+            "Niedziela", "PoniedziaЕ‚ek", "Wtorek", "Ељroda", "Czwartek", "PiД…tek", "Sobota",
+            "Nd", "Pon", "Wt", "Ељr", "Czw", "Pt", "Sob"
         ],
         buttons: [
-            "Dzisiaj", "Wyczyść", "Anuluj", "Pomoc", "Poprzedni", "Następny", "Koniec"
+            "Dzisiaj", "WyczyЕ›Д‡", "Anuluj", "Pomoc", "Poprzedni", "NastД™pny", "Koniec"
         ]
     },
     'cs': {
         months: [
-            "Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec",
-            "Led", "Ún", "Bř", "Dub", "Kvě", "Če", "Čer", "Srp", "Zá", "Ří", "Li", "Pro"
+            "Leden", "Гљnor", "BЕ™ezen", "Duben", "KvД›ten", "ДЊerven", "ДЊervenec", "Srpen", "ZГЎЕ™Г­", "ЕГ­jen", "Listopad", "Prosinec",
+            "Led", "Гљn", "BЕ™", "Dub", "KvД›", "ДЊe", "ДЊer", "Srp", "ZГЎ", "ЕГ­", "Li", "Pro"
         ],
         days: [
-            "Neděle", "Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota",
-            "Ne", "Po", "Út", "St", "Čt", "Pá", "So"
+            "NedД›le", "PondД›lГ­", "ГљterГЅ", "StЕ™eda", "ДЊtvrtek", "PГЎtek", "Sobota",
+            "Ne", "Po", "Гљt", "St", "ДЊt", "PГЎ", "So"
         ],
         buttons: [
-            "Dnes", "Vyčistit", "Zrušit", "Pomoc", "Předešlý", "Další", "Dokončit"
+            "Dnes", "VyДЌistit", "ZruЕЎit", "Pomoc", "PЕ™edeЕЎlГЅ", "DalЕЎГ­", "DokonДЌit"
         ]
     },
     /* By Satit Rianpit <rianpit@gmail.com> */
     'th': {
         months: [
-            "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม",
-            "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."
+            "аёЎаёЃаёЈаёІаё„аёЎ", "аёЃаёёаёЎаё аёІаёћаё±аё™аёа№Њ", "аёЎаёµаё™аёІаё„аёЎ", "а№ЂаёЎаё©аёІаёўаё™", "аёћаё¤аё©аё аёІаё„аёЎ", "аёЎаёґаё–аёёаё™аёІаёўаё™", "аёЃаёЈаёЃаёЋаёІаё„аёЎ", "аёЄаёґаё‡аё«аёІаё„аёЎ", "аёЃаё±аё™аёўаёІаёўаё™", "аё•аёёаёҐаёІаё„аёЎ", "аёћаё¤аёЁаё€аёґаёЃаёІаёўаё™", "аёаё±аё™аё§аёІаё„аёЎ",
+            "аёЎ.аё„.", "аёЃ.аёћ.", "аёЎаёµ.аё„.", "а№ЂаёЎ.аёў.", "аёћ.аё„.", "аёЎаёґ.аёў.", "аёЃ.аё„.", "аёЄ.аё„.", "аёЃ.аёў.", "аё•.аё„.", "аёћ.аёў.", "аё.аё„."
         ],
         days: [
-            "อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์",
-            "อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."
+            "аё­аёІаё—аёґаё•аёўа№Њ", "аё€аё±аё™аё—аёЈа№Њ", "аё­аё±аё‡аё„аёІаёЈ", "аёћаёёаё", "аёћаё¤аё«аё±аёЄаёљаё”аёµ", "аёЁаёёаёЃаёЈа№Њ", "а№ЂаёЄаёІаёЈа№Њ",
+            "аё­аёІ.", "аё€.", "аё­.", "аёћ.", "аёћаё¤.", "аёЁ.", "аёЄ."
         ],
         buttons: [
-            "วันนี้", "ล้าง", "ยกเลิก", "ช่วยเหลือ", "กลับ", "ต่อไป", "เสร็จ"
+            "аё§аё±аё™аё™аёµа№‰", "аёҐа№‰аёІаё‡", "аёўаёЃа№ЂаёҐаёґаёЃ", "аёЉа№€аё§аёўа№Ђаё«аёҐаё·аё­", "аёЃаёҐаё±аёљ", "аё•а№€аё­а№„аё›", "а№ЂаёЄаёЈа№‡аё€"
         ]
     },
     'id': {
@@ -294,19 +294,6 @@ window.METRO_LOCALES = {
         ],
         buttons: [
             "Hari Ini", "Mengulang", "Batalkan", "Bantuan", "Sebelumnya", "Berikutnya", "Selesai"
-        ]
-    },
-    'hu': {
-        months: [
-            'Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December',
-            'Jan', 'Febr', 'Márc', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szept', 'Okt', 'Nov', 'Dec'
-        ],
-        days: [
-            'Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat',
-            'V', 'H', 'K', 'Sz', 'Cs', 'P', 'Sz'
-        ],
-        buttons: [
-            'Ma', 'Törlés', 'Mégse', 'Segítség', 'Előző', 'Következő', 'Vége'
         ]
     }
 };
@@ -2258,18 +2245,16 @@ $.widget("metro.accordion", {
                     //===  EVENTS =================================================
 
                     //activate the click event for the pull button
-                    $(that.pullButton).on("click", function (e) {
+                    $(that.pullButton).on("click", function () {
 
                         //who am i?
                         that = $(this).closest("[data-role=appbar]").data("appbar");
 
                         //we show /hide the pullmenu
-                        if ($(that.pullMenu).length !== 0 && $(that.pullMenu).is(":hidden")) {
+                        if ($(that.pullMenu).is(":hidden")) {
                             $(that.pullMenu).show();
                             $(that.pullMenu).find(".app-bar-pullmenubar")
                                     .hide().not(".hidden").slideDown("fast");
-                            e.preventDefault();
-                            e.stopPropagation();
                         } else {
                             $(that.pullMenu).find(".app-bar-pullmenubar")
                                     .not(".hidden").show().slideUp("fast", function () {
@@ -5258,10 +5243,6 @@ $.widget( "metro.dialog" , {
         this._setContent();
     },
 
-    isOpened: function(){
-        return this.element.data('opened') === true;
-    },
-
     toggle: function(){
         var element = this.element;
         if (element.data('opened')) {
@@ -5353,7 +5334,7 @@ $.widget( "metro.dialog" , {
 
 
 var dialog = {
-    isDialog: function(el){
+    open: function(el, place, content, contentType){
         var dialog = $(el), dialog_obj;
         if (dialog.length == 0) {
             console.log('Dialog ' + el + ' not found!');
@@ -5364,16 +5345,6 @@ var dialog = {
 
         if (dialog_obj == undefined) {
             console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
-            return false;
-        }
-
-        return true;
-    },
-
-    open: function(el, place, content, contentType){
-        var dialog = $(el), dialog_obj = dialog.data('dialog');
-
-        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -5393,9 +5364,16 @@ var dialog = {
     },
 
     close: function(el){
-        var dialog = $(el), dialog_obj = dialog.data('dialog');
+        var dialog = $(el), dialog_obj;
+        if (dialog.length == 0) {
+            console.log('Dialog ' + el + ' not found!');
+            return false;
+        }
 
-        if (!this.isDialog(el)) {
+        dialog_obj = dialog.data('dialog');
+
+        if (dialog_obj == undefined) {
+            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
             return false;
         }
 
@@ -5403,9 +5381,16 @@ var dialog = {
     },
 
     toggle: function(el, place, content, contentType){
-        var dialog = $(el), dialog_obj = dialog.data('dialog');
+        var dialog = $(el), dialog_obj;
+        if (dialog.length == 0) {
+            console.log('Dialog ' + el + ' not found!');
+            return false;
+        }
 
-        if (!this.isDialog(el)) {
+        dialog_obj = dialog.data('dialog');
+
+        if (dialog_obj == undefined) {
+            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
             return false;
         }
 
@@ -5584,7 +5569,7 @@ $.widget( "metro.donut" , {
         }
 
         if (o.animate > 0) {
-            var i = -1;
+            var i = 0;
             var interval;
 
             interval = setInterval(function(){
@@ -5933,16 +5918,6 @@ $(document).on('click', function(e){
             that._close(el);
         }
     });
-
-    var that = $("[data-role=appbar]").data("appbar");
-
-    //we show /hide the pullmenu
-    if ($(that.pullMenu).length !== 0 && $(that.pullMenu).not(":hidden")) {
-        $(that.pullMenu).find(".app-bar-pullmenubar")
-            .not(".hidden").show().slideUp("fast", function () {
-            $(that.pullMenu).hide();
-        });
-    }
 });
 
 // Source: js/widgets/fit-image.js
@@ -10104,7 +10079,7 @@ $.widget( "metro.video" , {
         poster: false,
         src: false,
         loop: false,
-        preload: true,
+        preload: false,
         autoplay: false,
         muted: false,
         volume:.5,
@@ -10135,7 +10110,7 @@ $.widget( "metro.video" , {
         } else if (o.videoSize == 'SD' && o.videoSize == 'sd') {
             player_height = 3 * player_width / 4;
         } else {
-            player_height = 9 * player_width / 16;
+
         }
 
         element.addClass('video-player');
@@ -10204,14 +10179,11 @@ $.widget( "metro.video" , {
         var video = element.find("video"), video_obj = video[0];
 
         video.on('loadedmetadata', function(){
-            //console.log("loadedmetadata");
             element.data('duration', video_obj.duration.toFixed(0));
             info_box.html("00:00" + " / " + metroUtils.secondsToFormattedString(element.data('duration')) );
         });
 
-        // Not fired in Chrome
         video.on("canplay", function(){
-            //console.log("canplay");
             controls.fadeIn();
             preloader.hide();
             var buffered = video_obj.buffered.length ? Math.round(Math.floor(video_obj.buffered.end(0)) / Math.floor(video_obj.duration) * 100) : 0;

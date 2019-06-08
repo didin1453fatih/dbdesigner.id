@@ -33,12 +33,12 @@
               >
                 <label style="color:white">Share</label>
               </div>
-              <div
+              <!-- <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="panelName='account'"
               >
                 <label style="color:white">Account</label>
-              </div>
+              </div> -->
             </div>
           </td>
           <td style="background-color:#F1F1F1;vertical-align:top">

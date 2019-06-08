@@ -178,7 +178,6 @@ export default {
     // "ds".split
     if(window.location.toString().indexOf('uuid=')>1){
       var valueUUID=window.location.toString().split('uuid=')[1]
-      window.alert()
       this.loadProjectUUID({
         uuid:valueUUID
       })

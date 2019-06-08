@@ -19,7 +19,7 @@
         <a href="#tab_folder">Account</a>
       </li>
       <div style="width:100%;text-align: right;">
-        <span style="font-size: 1.0rem;padding-top:5px; margin-right:15px">~ {{title}}</span>
+        <span style="font-size: 1.0rem;padding-top:5px; margin-right:5px">{{title}} ~ <b>{{username}}</b></span>
         <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>
       </div>
     </ul>
@@ -249,6 +249,9 @@ export default {
     ...mapState("diagram", {
       title: state => state.projectDescription.title,
       description: state => state.projectDescription.description
+    }),
+    ...mapState("Account", {
+      username: state => state.username
     })
   },
   methods: {
