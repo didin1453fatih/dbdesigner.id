@@ -114,6 +114,13 @@
             >
               <account/>
             </div>
+            <div
+              v-else-if="panelName==='OpenSharedWithPassword'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <open-shared-with-password/>
+            </div>            
           </td>
         </tr>
       </table>
@@ -130,6 +137,7 @@ import UpdatePanel from "./LeftPanel/Update";
 import Properties from "./LeftPanel/Properties";
 import Login from "./LeftPanel/Login";
 import Account from "./LeftPanel/Account";
+import OpenSharedWithPassword from './LeftPanel/OpenSharedWithPassword'
 export default {
   methods: {
     ...mapMutations("LeftPanel", {
@@ -146,7 +154,8 @@ export default {
     UpdatePanel,
     Properties,
     Login,
-    Account
+    Account,
+    OpenSharedWithPassword
   },
   computed: {
     ...mapState("LeftPanel", {

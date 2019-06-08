@@ -16,7 +16,14 @@ export default {
         id: context.rootState.diagram.projectDescription.id
       });
     } catch (error) {
-      message.error("Your network problem", 2);
+      if(error.code===10){
+        message.error('Login first to update this project', 2);
+        context.rootCommit('LeftPanel/setVisible',true)
+        context.rootCommit('LeftPanel/setPanelName','login')
+      }else{
+        message.error(error.message, 2);
+      }
+
     }
     context.commit("setLoding", false);
   }),

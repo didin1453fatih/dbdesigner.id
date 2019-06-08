@@ -10,7 +10,7 @@ export default {
     try {
       var respond = await requestHelper(LoadProjectUUID, {
         uuid: context.inputs.uuid,
-        password: null
+        password: context.inputs.password
       });
       if (respond.success === true) {
         var dataJSON = JSON.parse(respond.payload.data_design);
@@ -30,11 +30,21 @@ export default {
           context.commit("setDiagram", {});
         }
         context.commit("setProjectDescription", respond.payload);
-      } else {
-        window.alert(respond.message);
-      }
+        context.rootCommit('LeftPanel/setVisible',false)
+        context.rootCommit('LeftPanel/setPanelName','properties')
+        message.success('Opened', 2);
+      } 
     } catch (error) {
-      window.alert(error);
+      if(error.code===23){
+        message.info(error.description.title+' Required password', 3);
+        context.rootCommit('OpenSharedWithPassword/setUUID',context.inputs.uuid)
+        
+        context.rootCommit('LeftPanel/setVisible',true)
+        context.rootCommit('LeftPanel/setPanelName','OpenSharedWithPassword')
+      }else{
+        message.error(error.message, 2);
+      }
+
     }
     context.rootCommit("GlobalLoading/setVisible", false);
   }),

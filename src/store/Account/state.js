@@ -1,7 +1,7 @@
 export default {
   fullName: "",
   gender: "",
-  username: "",
+  username: "Not Logged In",
   email: "",
   loading: false,
   id: null,

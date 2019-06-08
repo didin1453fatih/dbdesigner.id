@@ -172,14 +172,15 @@ export default {
     },
     ...mapActions("diagram", {
       loadProjectUUID: "loadProjectUUID"
-    }),    
+    }),
   },
   mounted() {
     // "ds".split
     if(window.location.toString().indexOf('uuid=')>1){
       var valueUUID=window.location.toString().split('uuid=')[1]
       this.loadProjectUUID({
-        uuid:valueUUID
+        uuid:valueUUID,
+        password:null
       })
     }
     
