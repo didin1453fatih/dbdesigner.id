@@ -8,11 +8,13 @@ import NewProject from "./NewProject/module";
 import GlobalLoading from "./GlobalLoading/module";
 import UpdateProject from "./UpdateProject/module";
 import Account from "./Account/module";
+import Share from "./Share/module";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   strict: true,
   modules: {
+    Share,
     Account,
     diagram,
     LeftPanel,

@@ -127,7 +127,7 @@
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import LoadingGlobal from './components/LoadingGlobal'
-// import { mapActions } from "vuex";
+import { mapActions } from "vuex";
 // import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
 import ConfigTable from "./components/ConfigTableBase.vue";
@@ -169,9 +169,21 @@ export default {
     },
     onClose() {
       this.visible = false;
-    }
+    },
+    ...mapActions("diagram", {
+      loadProjectUUID: "loadProjectUUID"
+    }),    
   },
   mounted() {
+    // "ds".split
+    if(window.location.toString().indexOf('uuid=')>1){
+      var valueUUID=window.location.toString().split('uuid=')[1]
+      window.alert()
+      this.loadProjectUUID({
+        uuid:valueUUID
+      })
+    }
+    
     // var flip = false;
     // var cnn=this.connectorNewKey
     // var hhh= this.setLineStyleConnector

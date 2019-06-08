@@ -52,18 +52,18 @@ export function request2(callback) {
   };
 }
 
-export function rootCommit(location, value) {
-  return function(context, inputs) {
-    return new Promise((resolve, reject) => {
-      var output = {
-        success: function(value) {
-          resolve(value);
-        },
-        error: function(value) {
-          reject(value);
-        }
-      };
-      return callback(context);
-    });
-  };
-}
+// export function rootCommit(location, value) {
+//   return function(context, inputs) {
+//     return new Promise((resolve, reject) => {
+//       var output = {
+//         success: function(value) {
+//           resolve(value);
+//         },
+//         error: function(value) {
+//           reject(value);
+//         }
+//       };
+//       return callback(context);
+//     });
+//   };
+// }
