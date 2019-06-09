@@ -70,7 +70,7 @@
         </div>
         <div class="tab-panel-group">
           <div class="tab-content-segment">
-            <button class="fluent-big-button" @click="openExport(true)">
+            <button class="fluent-big-button" @click="openExportPanel">
               <span class="icon mif-paper-plane" style="width:50px"></span>
               <span class="label" style="margin-top:5px">Export</span>
             </button>
@@ -87,7 +87,7 @@
             </ul>
           </div>
           <div class="tab-content-segment">
-            <button class="fluent-big-button">
+            <button class="fluent-big-button" @click="openSharePanel">
               <span class="icon mif-share" style="width:50px"></span>
               <span class="label" style="margin-top:5px">Share</span>
             </button>
@@ -239,6 +239,7 @@
 </template>
 
 <script>
+import { message } from "ant-design-vue";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
@@ -273,7 +274,27 @@ export default {
     }),
     ...mapMutations("LeftPanel", {
       openLeftPanel: "setVisible"
-    })
+    }),
+    ...mapMutations("ExportAndShare", {
+      setVisibleExportAndShare: "setVisible",
+      setPanelNameExportAndShare:"setPanelName"
+    }),
+    openExportPanel(){
+      if(this.title!==null){
+        this.setVisibleExportAndShare(true);
+        this.setPanelNameExportAndShare('export')
+      }else{
+        message.error('The project is empty')
+      }
+    },
+    openSharePanel(){
+      if(this.title!==null){
+        this.setVisibleExportAndShare(true);
+        this.setPanelNameExportAndShare('share')
+      }else{
+        message.error('The project is empty')
+      }
+    }
   },
   data() {
     return {

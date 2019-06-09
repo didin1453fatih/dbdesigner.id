@@ -23,13 +23,13 @@
               </div>
               <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
-                @click="panelName='export'"
+                @click="setPanelName('export')"
               >
                 <label style="color:white">Export</label>
               </div>
               <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ;"
-                @click="panelName='share'"
+                @click="setPanelName('share')"
               >
                 <label style="color:white">Share</label>
               </div>
@@ -78,9 +78,13 @@ import Share from "./Share";
 import UserAccount from "./UserAccount";
 export default {
   methods: {
-    ...mapMutations("ExportDesign", {
-      setVisible: "setVisible"
-    }),
+    // ...mapMutations("ExportDesign", {
+    //   setVisible: "setVisible"
+    // }),
+    ...mapMutations("ExportAndShare", {
+      setVisible: "setVisible",
+      setPanelName:"setPanelName"
+    }),    
     closeFilePanel() {
       this.setVisible(false)
     }
@@ -91,13 +95,17 @@ export default {
     UserAccount
   },
   computed: {
-    ...mapState("ExportDesign", {
-      visible: state => state.visible
-    })
+    // ...mapState("ExportDesign", {
+    //   visible: state => state.visible
+    // }),
+    ...mapState("ExportAndShare", {
+      visible: state => state.visible,
+      panelName:state => state.panelName
+    })    
   },
   data() {
     return {
-      panelName: "share"
+      // panelName: "share"
     };
   }
 };
