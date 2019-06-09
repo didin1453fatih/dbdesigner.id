@@ -20,8 +20,8 @@
           <div style="margin-top:20px; width:90%">
             <label>Link</label>
             <br>
-            <a-input :value="shareLink" style="margin-top:5px">
-              <a-icon slot="addonAfter" type="copy"/>
+            <a-input :value="shareLink" style="margin-top:5px" @click="doCopy">
+              <a-icon slot="addonAfter" type="copy" @click="doCopy"/>
             </a-input>
           </div>
           <a-checkbox
@@ -69,6 +69,18 @@ export default {
     })
   },
   methods: {
+    doCopy() {
+      this.$copyText(this.shareLink).then(
+        // eslint-disable-next-line
+        function(e) {
+          message.success("Link Coppied", 2);
+        },
+        // eslint-disable-next-line
+        function(e) {
+          message.error("Coppied error", 2);
+        }
+      );
+    },
     handleChangePassword(value) {
       if (value === false) {
         this.setSharePassword(null);

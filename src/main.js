@@ -1,4 +1,7 @@
 import Vue from "vue";
+import VueClipboard from "vue-clipboard2";
+
+Vue.use(VueClipboard);
 import App from "./App.vue";
 import VueKonva from "vue-konva";
 import "ant-design-vue/dist/antd.css";
@@ -32,7 +35,7 @@ import { List } from "ant-design-vue";
 Vue.use(List);
 import { Avatar } from "ant-design-vue";
 Vue.use(Avatar);
-import { message, Radio, Spin, Modal,Divider } from "ant-design-vue";
+import { message, Radio, Spin, Modal, Divider } from "ant-design-vue";
 Vue.use(Divider);
 Vue.use(Modal);
 Vue.use(Spin);
