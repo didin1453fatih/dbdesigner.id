@@ -52,6 +52,31 @@ export default {
     }
     context.commit("setLoding", false);
   }),
+  globalReadAccount: request2(async context => {
+    context.rootCommit("GlobalLoading/setVisible", true);
+    try {
+      var respondAccount = await requestHelper(ReadAccount);
+      respondAccount = respondAccount.payload;
+      context.commit("setFullName", respondAccount.complete_name);
+      context.commit("setGender", respondAccount.gender);
+      context.commit("setUsername", respondAccount.user_name);
+      context.commit("setEmail", respondAccount.email);
+      context.commit("setId", respondAccount.id);
+    } catch (error) {
+      if (error.code === 10) {
+        if (context.inputs.uuid === null) {
+          message.error("Login first to start design", 3);
+          context.rootCommit("LeftPanel/setVisible", true);
+          context.rootCommit("LeftPanel/setPanelName", "login");
+        } else {
+          message.error("You are guest", 2);
+        }
+      } else {
+        message.error(error.message, 2);
+      }
+    }
+    context.rootCommit("GlobalLoading/setVisible", false);
+  }),
   changePassword: request2(async context => {
     context.commit("setLoadingChangePassword", true);
     try {

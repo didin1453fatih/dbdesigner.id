@@ -13,7 +13,7 @@
                 </span>
                 <!-- <a-icon type="delete"  style="right:0px;position: absolute;color:red;"/> -->
               </div>              
-              <a-avatar shape="square" size="large" slot="avatar" :src="databaseIcon"/>
+              <a-avatar shape="square" size="large" slot="avatar" :src="'/static/app'+databaseIcon"/>
             </a-list-item-meta>
           </a-list-item>
         </a-list>

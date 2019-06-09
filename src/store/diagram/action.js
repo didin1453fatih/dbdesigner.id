@@ -4,6 +4,14 @@ import LoadProject from "../../request/readOneProject.request";
 import SaveProject from "../../request/saveProject.request";
 import { request2, requestHelper } from "../../helper/RequestConnector";
 export default {
+  setEmptyDiagram: request2(async context => {
+    context.commit("setConnector", {});
+    context.commit("setDiagram", {});
+
+    context.commit("deletedData");
+    // context.rootCommit("LeftPanel/setVisible", true);
+    context.rootCommit("LeftPanel/setPanelName", "open");
+  }),
   loadProjectUUID: request2(async context => {
     context.rootCommit("GlobalLoading/setVisible", true);
 
@@ -103,13 +111,13 @@ export default {
     } catch (error) {
       if (error.code === 10) {
         setTimeout(hide, 0);
-        message.error("Login first to update account", 2);
+        message.error("Login first to save account", 2);
         context.rootCommit("LeftPanel/setVisible", true);
         context.rootCommit("LeftPanel/setPanelName", "login");
       } else {
         setTimeout(hide, 0);
         setTimeout(() => {
-          message.error("Saved Failure", 1);
+          message.error("Saved Failure " + error.message, 2);
         }, 500);
       }
     }

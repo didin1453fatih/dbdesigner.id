@@ -171,17 +171,29 @@ export default {
       this.visible = false;
     },
     ...mapActions("diagram", {
-      loadProjectUUID: "loadProjectUUID"
+      loadProjectUUID: "loadProjectUUID",
+      setEmptyDiagram:"setEmptyDiagram"
     }),
+    ...mapActions("Account", {
+      globalReadAccount: "globalReadAccount"
+    }),    
   },
   mounted() {
     // "ds".split
     if(window.location.toString().indexOf('uuid=')>1){
       var valueUUID=window.location.toString().split('uuid=')[1]
+      this.globalReadAccount({
+        uuid:valueUUID
+      })
       this.loadProjectUUID({
         uuid:valueUUID,
         password:null
       })
+    }else{
+      this.globalReadAccount({
+        uuid:null
+      })
+      this.setEmptyDiagram()
     }
     
     // var flip = false;
