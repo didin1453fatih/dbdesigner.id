@@ -41,6 +41,11 @@
           style="margin-top:5px;color: rgba(0, 0, 0, 0.65);"
         ></a-input>
       </div>
+      <div style="margin-top:20px" v-if="verified===false">
+        <label>Resend Email Verification</label>
+        <br>
+        <a-button style="right:0px;margin-top:5px" @click="resendEmailConfirmation()">Resend</a-button>
+      </div>      
       <div style="margin-top:20px">
         <label>Password</label>
         <br>
@@ -207,7 +212,8 @@ export default {
     ...mapActions("Account", {
       updateAccount: "updateAccount",
       readAccount: "readAccount",
-      changePassword: "changePassword"
+      changePassword: "changePassword",
+      resendEmailConfirmation: "resendEmailConfirmation"
     }),
     ...mapMutations("Account", {
       setFullName: "setFullName",
@@ -221,6 +227,7 @@ export default {
   },
   computed: {
     ...mapState("Account", {
+      verified: state => state.verified,
       fullName: state => state.fullName,
       gender: state => state.gender,
       username: state => state.username,

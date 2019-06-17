@@ -27,7 +27,7 @@
       <div class="tab-panel" id="tab_home" style="display: block;">
         <div class="tab-panel-group">
           <div class="tab-group-content">
-            <button class="fluent-big-button" @click="addNewTable">
+            <button class="fluent-big-button" @click="addNewTableEvent">
               <span class="icon mif-table"></span>
               <span class="label" style="margin-top:5px">New Table</span>
             </button>
@@ -225,7 +225,7 @@
               </button>
             </div>
             <div class="tab-content-segment">
-              <button class="fluent-big-button">
+              <button class="fluent-big-button" @click="accountEvent">
                 <span class="mif-user" style="width:50px"></span>
                 <span class="label" style="margin-top:5px">Account</span>
               </button>
@@ -252,12 +252,13 @@ export default {
       description: state => state.projectDescription.description
     }),
     ...mapState("Account", {
-      username: state => state.username
+      username: state => state.username,
+      accountId: state => state.id
     })
   },
   methods: {
     ...mapActions("diagram", {
-      saveProjectEvent: "saveProject"
+      saveProject: "saveProject"
     }),
     ...mapActions("Account", {
       logoutAccount: "logoutAccount"
@@ -273,14 +274,45 @@ export default {
       setHighLightRelation: "setHighLightRelation"
     }),
     ...mapMutations("LeftPanel", {
-      openLeftPanel: "setVisible"
+      openLeftPanel: "setVisible",
+      setLeftPanelName:"setPanelName"
     }),
     ...mapMutations("ExportAndShare", {
       setVisibleExportAndShare: "setVisible",
       setPanelNameExportAndShare:"setPanelName"
     }),
+    accountEvent(){
+      this.openLeftPanel(true)
+      this.setLeftPanelName('account')
+    },
+    saveProjectEvent(){
+      if(this.accountId===null){
+        message.error('You are the guest, Login first')
+        this.openLeftPanel(true)
+        this.setLeftPanelName('login')        
+      }else if(this.title!==null){
+        this.saveProject();
+      }else{
+        message.error('The project is empty')
+      }
+    },
+    addNewTableEvent(){
+      if(this.accountId===null){
+        message.error('You are the guest, Login first')
+        this.openLeftPanel(true)
+        this.setLeftPanelName('login')        
+      }else if(this.title!==null){
+        this.addNewTable();
+      }else{
+        message.error('The project is empty')
+      }
+    },    
     openExportPanel(){
-      if(this.title!==null){
+      if(this.accountId===null){
+        message.error('You are the guest, Login first')
+        this.openLeftPanel(true)
+        this.setLeftPanelName('login')        
+      }else if(this.title!==null){
         this.setVisibleExportAndShare(true);
         this.setPanelNameExportAndShare('export')
       }else{
@@ -288,7 +320,11 @@ export default {
       }
     },
     openSharePanel(){
-      if(this.title!==null){
+      if(this.accountId===null){
+        message.error('You are the guest, Login first')
+        this.openLeftPanel(true)
+        this.setLeftPanelName('login')        
+      }else if(this.title!==null){
         this.setVisibleExportAndShare(true);
         this.setPanelNameExportAndShare('share')
       }else{

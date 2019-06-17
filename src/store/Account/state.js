@@ -7,7 +7,10 @@ export default {
   id: null,
   oldPassword: null,
   newPassword: null,
+  verified :null,
   confirmNewPassword: null,
   loadingChangePassword: false,
-  visibleChangePassword: false
+  visibleChangePassword: false,
+  visibleAccountInformation: false,
+  messageAccountInformation: null
 };

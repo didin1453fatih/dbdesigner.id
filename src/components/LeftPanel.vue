@@ -59,16 +59,24 @@
               </div>
               <div
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
+                @click="setPanelName('account')"
+              >
+                <label style="color:white">Account</label>
+              </div>                         
+              <div
+                v-show="id===null"
+                style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="setPanelName('login')"
               >
                 <label style="color:white">Login</label>
               </div>
               <div
+                v-show="id!==null"
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
-                @click="setPanelName('account')"
+                @click="logoutAccount()"
               >
-                <label style="color:white">Account</label>
-              </div>
+                <label style="color:white">Logout</label>
+              </div>                 
             </div>
           </td>
           <td style="background-color:#F1F1F1;vertical-align:top">
@@ -129,6 +137,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import NewPanel from "./LeftPanel/New";
@@ -146,7 +155,10 @@ export default {
     }),
     closeFilePanel() {
       this.setVisible(false);
-    }
+    },
+    ...mapActions("Account", {
+      logoutAccount: "logoutAccount"
+    })
   },
   components: {
     NewPanel,
@@ -161,6 +173,9 @@ export default {
     ...mapState("LeftPanel", {
       visible: state => state.visible,
       panelName: state => state.panelName
+    }),
+    ...mapState("Account", {
+      id: state => state.id
     })
   },
   data() {

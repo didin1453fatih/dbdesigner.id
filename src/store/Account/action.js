@@ -2,9 +2,26 @@ import { message } from "ant-design-vue";
 import ReadAccount from "../../request/readAccount.request";
 import UpdateAccount from "../../request/updateAccount.request";
 import ChangePassword from "../../request/changePassword.request";
+import ResendEmailConfirmation from "../../request/resendEmailConfirmation.request";
 import Logout from "../../request/logoutAccount.request";
 import { request2, requestHelper } from "../../helper/RequestConnector";
 export default {
+  resendEmailConfirmation: request2(async context => {
+    context.commit("setLoding", true);
+    try {
+      var respondConfirmation = await requestHelper(ResendEmailConfirmation);
+      message.success(respondConfirmation.message, 5);
+    } catch (error) {
+      if (error.code === 10) {
+        message.error("Login first to update account", 2);
+        context.rootCommit("LeftPanel/setVisible", true);
+        context.rootCommit("LeftPanel/setPanelName", "login");
+      } else {
+        message.error(error.message, 2);
+      }
+    }
+    context.commit("setLoding", false);
+  }),
   updateAccount: request2(async context => {
     context.commit("setLoding", true);
     try {
@@ -20,6 +37,7 @@ export default {
       context.commit("setUsername", respondAccount.user_name);
       context.commit("setEmail", respondAccount.email);
       context.commit("setId", respondAccount.id);
+      context.commit("setVerified", respondAccount.verified);
     } catch (error) {
       if (error.code === 10) {
         message.error("Login first to update account", 2);
@@ -41,6 +59,16 @@ export default {
       context.commit("setUsername", respondAccount.user_name);
       context.commit("setEmail", respondAccount.email);
       context.commit("setId", respondAccount.id);
+      context.commit("setVerified", respondAccount.verified);
+      if (respondAccount.verified === false) {
+        context.commit("setVisibleAccountInformation", true);
+        context.commit(
+          "setMessageAccountInformation",
+          "Your email need verify"
+        );
+      } else {
+        context.commit("setVisibleAccountInformation", false);
+      }
     } catch (error) {
       if (error.code === 10) {
         message.error("Login first to read account", 2);
@@ -62,6 +90,16 @@ export default {
       context.commit("setUsername", respondAccount.user_name);
       context.commit("setEmail", respondAccount.email);
       context.commit("setId", respondAccount.id);
+      context.commit("setVerified", respondAccount.verified);
+      if (respondAccount.verified === false) {
+        context.commit("setVisibleAccountInformation", true);
+        context.commit(
+          "setMessageAccountInformation",
+          "Your email need verify"
+        );
+      } else {
+        context.commit("setVisibleAccountInformation", false);
+      }
     } catch (error) {
       if (error.code === 10) {
         if (context.inputs.uuid === null) {
@@ -74,6 +112,8 @@ export default {
       } else {
         message.error(error.message, 2);
       }
+      context.commit("setVisibleAccountInformation", true);
+      context.commit("setMessageAccountInformation", "You are guest");
     }
     context.rootCommit("GlobalLoading/setVisible", false);
   }),
