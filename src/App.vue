@@ -1,274 +1,168 @@
 <template>
   <div>
-    <a-row>
-      <a-col :span="17">
-        <v-stage :config="configKonva">
-          <v-layer>
-            <table-base
-              @editDataTable="editDataTable"
-              @changedPotition="table1Change"
-              :potition="{
-          x:20,
-          y:50      
-        }"
-            />
-            <table-base
-              @editDataTable="editDataTable"
-              @changedPotition="table2Change"
-              :potition="{  
-           x:250,
-           y:50
-        }"
-            />
-            <connector-base :points="[20, 50, 250, 50]"/>
-            <v-line :config="lineConfig"/>
-          </v-layer>
-        </v-stage>
-      </a-col>
-      <a-col :span="6">
-        <a-button>Default</a-button>
-        <a-button type="primary" @click="showDrawer">Open</a-button>
-      </a-col>
-    </a-row>
-    <config-table :visible="visible" @close="onClose"/>
-    <!-- <a-drawer
-      title="Rujak"
-      placement="right"
-      :width="520"
-      :closable="false"
-      @close="onClose"
-      :visible="visible"
+    <!-- <a-menu
+      style="line-height: 33px;background:#E6E6E6;color:#1C2128"
+      size="small"
+      mode="horizontal"
     >
-    <div>-->
-    <!-- <a-table :columns="columns" :dataSource="data" bordered>
-          <template slot="name" slot-scope="text">
-            <span v-if="'John Brown'===text">hhhh</span>
-          </template>
-    </a-table>-->
-    <!-- <table border="1" width="100%">
-          <tr>
-            <td>
-              <span style="margin-left:10px">Column Name</span>
-            </td>
-            <td width="25%">
-              <span style="margin-left:10px">Data Type</span>
-            </td>
-            <td width="9%" align="center">PK</td>
-            <td width="9%" align="center">NN</td>
-            <td width="9%" align="center">UQ</td>
-            <td width="9%" align="center">UN</td>
-            <td width="9%" align="center">AI</td>
-            <td width="7%" align="center"></td>
-          </tr>
-          <tr>
-            <td>
-              <span style="margin-left:10px">
-                <img
-                  src="./assets/primary-key.png"
-                  width="14px"
-                  style="vertical-align: baseline; margin-right:5px"
-                >
-                <span>id</span>
-              </span>
-            </td>
-            <td>
-    <a-input placeholder="Data Type"/>-->
-    <!-- <a-select
-                showSearch
-                placeholder="Select a person"
-                optionFilterProp="children"
-                style="width: 100px; border:0;"
-                @focus="handleFocus"
-                @blur="handleBlur"
-                @change="handleChange"
-                :filterOption="filterOption"
-              >
-                <a-select-option value="jack">Varchar</a-select-option>
-                <a-select-option value="lucy">Big Int</a-select-option>
-                <a-select-option value="tom">Tom</a-select-option>
-    </a-select>-->
-    <!-- </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-icon type="edit" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span style="margin-left:10px">
-                <img
-                  src="./assets/icons8-diamonds-40.png"
-                  width="14px"
-                  style="vertical-align: baseline; margin-right:5px"
-                >
-                <span>id</span>
-              </span>
-            </td>
-            <td>
-    <a-input placeholder="Data Type"/>-->
-    <!-- <a-select
-                showSearch
-                placeholder="Select a person"
-                optionFilterProp="children"
-                style="width: 100px; border:0;"
-                @focus="handleFocus"
-                @blur="handleBlur"
-                @change="handleChange"
-                :filterOption="filterOption"
-              >
-                <a-select-option value="jack">Varchar</a-select-option>
-                <a-select-option value="lucy">Big Int</a-select-option>
-                <a-select-option value="tom">Tom</a-select-option>
-    </a-select>-->
-    <!-- </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-checkbox @change="onChange" style="padding:0px;margin:0px" :size="suze"></a-checkbox>
-            </td>
-            <td align="center">
-              <a-icon type="edit" />
-            </td>
-          </tr>
-    </table>-->
-    <!-- <a-row>
-          <a-col :span="1">
-            <img
-              src="./assets/primary-key.png"
-              width="14px"
-              style="vertical-align: baseline; margin-right:5px"
-            >
-          </a-col>
-          <a-col :span="3">
-            <span>id</span>
-          </a-col>
-          <a-col :span="5">
-            <span>varchar(15)</span>
-          </a-col>
-          <a-col :span="3">
-            <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
-            <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
-    </a-col>-->
-    <!-- <a-col :span="3">
-            <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
-          </a-col>
-          <a-col :span="3">
-            <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
-          </a-col>
-          <a-col :span="3">
-            <a-checkbox @change="onChange" style="padding:0px;margin:0px"  :size="suze"></a-checkbox>
-    </a-col>-->
-    <!-- </a-row> -->
+      <a-sub-menu>
+        <span slot="title" class="submenu-title-wrapper">
+          <a-icon type="profile"/>File
+        </span>
+        <a-menu-item-group title="Project">
+          <a-menu-item key="setting:3">Open Project</a-menu-item>
+          <a-menu-item key="setting:2">New Project</a-menu-item>
+        </a-menu-item-group>
+        <a-menu-item-group title="Table">
+          <a-menu-item key="setting:1" @click="addNewTable">New Table</a-menu-item>
+        </a-menu-item-group>
+      </a-sub-menu>
+      <a-menu-item key="history">
+        <a-icon type="clock-circle"/>History
+      </a-menu-item>
 
-    <!--  -->
-    <!-- <a-select
-          mode="multiple"
-          placeholder="Inserted are removed"
-          :value="selectedItems"
-          @change="handleChange"
-          style="width: 100%"
+      <a-menu-item key="export">
+        <a-icon type="gift"/>Export
+      </a-menu-item>
+
+      <a-menu-item key="share">
+        <a-icon type="rocket"/>Share
+      </a-menu-item>
+      <a-menu-item key="smile">
+        <a-icon type="smile"/>Help
+      </a-menu-item>
+    </a-menu> -->
+
+
+    <menu-fluent/>
+
+<div style=" overflow: scroll;width:100%;height:470px">
+    <v-stage :config="configKonva">
+      <v-layer>
+        <!-- <template
+        v-for="connectorKey in Object.keys(connectorNewKey)"
         >
-          <a-select-option v-for="item in filteredOptions" :key="item" :value="item">{{item}}</a-select-option>
-    </a-select>-->
-    <!-- </div>
-    </a-drawer>-->
+        <div v-bind:key="connectorKey">
+        <connector-base
+          :points="connectorNewKey[connectorKey].points"
+          :lineStyle="connectorNewKey[connectorKey].lineStyle"
+        />
+        </div>
+        </template>-->
+
+        <template v-for="connectorKey in Object.keys(connectorNewKey)">
+          <div v-bind:key="connectorKey">
+            <v-arrow
+              :config="{
+                x: 0,
+                y: 0,
+                points: connectorNewKey[connectorKey].points,
+                strokeWidth: 0.9,
+                tension: 0,
+                closed: false,
+                stroke: '#444444',
+                fill: '#444444',
+                pointerLength: 7,
+                pointerWidth: 7,
+                shadowOpacity: 1,
+                shadowBlur: connectorNewKey[connectorKey].lineStyle.shadowBlur,
+                shadowColor:connectorNewKey[connectorKey].lineStyle.shadowColor,
+              }"
+            />
+            <v-line
+              @mouseover="setHighLightRelation({
+                status: true,
+                connector_id:connectorKey
+              })"
+              @mouseout="setHighLightRelation({
+                status: false,
+                connector_id:connectorKey
+              })"
+              :config="{
+                x: 0,
+                y: 0,
+                points: connectorNewKey[connectorKey].points,
+                strokeWidth: 5,
+                tension: 0,
+                closed: false,
+                stroke: '#ff000000 '
+              }"
+            />
+          </div>
+        </template>
+
+        <table-base
+          @highlight="highlightRelation"
+          v-for="tableKey in Object.keys(dataDiagramNew)"
+          v-bind:key="tableKey"
+          @editDataTable="editDataTable"
+          @changedPotition="changeTablePotition"
+          :tableKey="tableKey"
+          :coloumns="dataDiagramNew[tableKey].coloumns"
+          :tableName="dataDiagramNew[tableKey].table_name"
+          :potition="dataDiagramNew[tableKey].point"
+        />
+      </v-layer>
+    </v-stage>
+</div>
+    <table-detail
+      :visible="visible"
+      :tableName="editTableName"
+      :tableProperties="editTableProperties"
+      @close="onClose"
+    />
+    <left-panel/>
+    <export-and-share/>
+    <config-table
+      :visible="visible"
+      :tableName="editTableName"
+      :tableProperties="editTableProperties"
+      @close="onClose"
+    />
+    <loading-global/>
   </div>
 </template>
 
 <script>
-import ConnectorBase from "./components/ConnectorBase";
+import { mapState } from "vuex";
+import { mapMutations } from "vuex";
+import LoadingGlobal from './components/LoadingGlobal'
+import { mapActions } from "vuex";
+// import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
 import ConfigTable from "./components/ConfigTableBase.vue";
-import lion from "./assets/perimary-key-yellow-dark.png";
-const OPTIONS = ["PK", "NN", "UQ", "UN", "AI"];
-const columns = [
-  {
-    title: "Column Name",
-    dataIndex: "name",
-    scopedSlots: { customRender: "name" }
-  },
-  {
-    title: "Data Type",
-    className: "column-money",
-    dataIndex: "money"
-  },
-  {
-    title: "PK",
-    dataIndex: "addressl"
-  },
-  {
-    title: "NN",
-    dataIndex: "addresss"
-  }
-];
+import TableDetail from "./components/TableDetail.vue";
+import MenuFluent  from "./components/Menu.vue";
+import LeftPanel from "./components/LeftPanel.vue"
+// import ExportDesign from "./components/ExportDesign.vue"
+import ExportAndShare from "./components/ExportAndShare.vue"
 
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    money: "￥300,000.00",
-    address: "New York No. 1 Lake Park"
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    money: "￥1,256,000.00",
-    address: "London No. 1 Lake Park"
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    money: "￥120,000.00",
-    address: "Sidney No. 1 Lake Park"
-  }
-];
-// import primaryKeyImage from "../assets/primary-key.png";
-// import notNull from "../assets/icons8-diamonds-40.png";
-// import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
   components: {
     TableBase,
-    ConnectorBase,
+    MenuFluent,
+    LeftPanel,
+    ExportAndShare,
+    LoadingGlobal,
+    // ConnectorBase,
+    TableDetail,
     ConfigTable
   },
   methods: {
+    ...mapMutations("diagram", {
+      changeTablePotition: "changeTablePotition",
+      highlightRelation: "highlightRelation",
+      setLineStyleConnector: "setLineStyleConnector",
+      addNewTable: "addNewTable",
+      setHighLightRelation : "setHighLightRelation"
+    }),
+    // setHighLightRelation() {
+    //   window.alert(JSON.stringify("saasd"));
+    // },
     editDataTable() {
-      // window.alert("---" + val);
-      this.visible=true
-    },
-    filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text
-          .toLowerCase()
-          .indexOf(input.toLowerCase()) >= 0
-      );
-    },
-    handleChange(selectedItems) {
-      this.selectedItems = selectedItems;
+      // this.editTableName = tableName;
+      // this.editTableProperties = this.dataDiagram[tableName];
+      this.visible = true;
     },
     showDrawer() {
       this.visible = true;
@@ -276,62 +170,84 @@ export default {
     onClose() {
       this.visible = false;
     },
-    table1Change(val) {
-      // getConnectorPoint(tableName)
-      // eslint-disable-next-line
-      // console.log("yeyeyyyy " + JSON.parse(JSON.stringify(val.target)));
-      // eslint-disable-next-line
-      // console.log('this.linePoin '+this.linePoin +'  '+JSON.stringify(val.target.attrs))
-      // console.log(JSON.stringify(val.target.attrs));
-      this.lineConfig.points[0] = val.currentTarget.attrs.x;
-      this.lineConfig.points[1] = val.currentTarget.attrs.y;
-    },
-    table2Change(val) {
-      this.lineConfig.points[2] = val.currentTarget.attrs.x;
-      this.lineConfig.points[3] = val.currentTarget.attrs.y;
-      // eslint-disable-next-line
-      console.log("yeyeyyyy " + JSON.stringify(val));
-      // alert(JSON.stringify(val));
-    },
-    halo() {
-      // eslint-disable-next-line
-      console.log("makan");
-    }
+    ...mapActions("diagram", {
+      loadProjectUUID: "loadProjectUUID",
+      setEmptyDiagram:"setEmptyDiagram"
+    }),
+    ...mapActions("Account", {
+      globalReadAccount: "globalReadAccount"
+    }),    
   },
   mounted() {
-    const image = new window.Image();
-    image.src = lion;
-    image.onload = () => {
-      // set image only when it is loaded
-      this.image = image;
-    };
+    // "ds".split
+    if(window.location.toString().indexOf('uuid=')>1){
+      var valueUUID=window.location.toString().split('uuid=')[1]
+      this.globalReadAccount({
+        uuid:valueUUID
+      })
+      this.loadProjectUUID({
+        uuid:valueUUID,
+        password:null
+      })
+    }else{
+      this.globalReadAccount({
+        uuid:null
+      })
+      this.setEmptyDiagram()
+    }
+    
+    // var flip = false;
+    // var cnn=this.connectorNewKey
+    // var hhh= this.setLineStyleConnector
+    // setInterval(function() {
+    //   if (flip === false) {
+    //     flip = true;
+    //     let styleL = {
+    //       shadowBlur: 5,
+    //       shadowColor: "#00D2FF"
+    //     };
+    //     Object.keys(cnn).forEach( key => {
+    //       // cnn[key].lineStyle = tmpLineStye;
+    //       hhh({
+    //         key:key,
+    //         style:styleL
+    //       })
+    //     });
+    //   } else {
+    //     flip = false;
+    //     let styleL = {
+    //       shadowBlur: 5,
+    //       shadowColor: "#00D2FF"
+    //     };
+    //     Object.keys(cnn).forEach( key => {
+    //       // cnn[key].lineStyle = tmpLineStye;
+    //       hhh({
+    //         key:key,
+    //         style:styleL
+    //       })
+    //     });
+    //   }
+    // }, 1000);
   },
   computed: {
-    filteredOptions() {
-      return OPTIONS.filter(o => !this.selectedItems.includes(o));
-    },
-    configImg: function() {
-      return {
-        x: 20,
-        y: 20,
-        image: this.testImg,
-        width: 200,
-        height: 200
-      };
-    }
+    ...mapState("diagram", {
+      dataDiagram: state => state.dataDiagram,
+      connectorNew: state => state.connectorNew,
+      dataDiagramNew: state => state.dataDiagramNew,
+      connectorNewKey: state => state.connectorNewKey
+    })
   },
   data() {
     return {
-      data,
-      columns,
-      suze: "small",
-      selectedItems: [],
-      visible: false,
-      dataDiagram: {
-        tableName: {
-          coloumnName: {
+      editTableProperties: {
+        potition: {
+          x: 30,
+          y: 110
+        },
+        coloumns: {
+          id: {
             comment: "",
-            dataType: "",
+            dataType: "varchar(31)",
             default: "",
             primaryKey: true,
             allowNull: false,
@@ -339,36 +255,57 @@ export default {
             unsigned: false,
             zeroFill: false,
             autoIncrement: false,
-            foreignKey: {
-              tableName: "tableName",
-              coloumnName: "key"
+            foreignKey: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
+            }
+          },
+          jumlah_roda: {
+            comment: "",
+            dataType: "int(32)",
+            default: "",
+            primaryKey: false,
+            allowNull: false,
+            unique: false,
+            unsigned: false,
+            zeroFill: false,
+            autoIncrement: false,
+            foreignKey: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
             }
           }
-        }
+        },
+        association: [
+          {
+            type: "has",
+            table: "sopir",
+            foreignKey: "mobil_id",
+            sourceKey: "id",
+            potition: {
+              x: 100,
+              y: 50
+            }
+          },
+          {
+            type: "has",
+            table: "kernet",
+            foreignKey: "mobil_id",
+            sourceKey: "id",
+            potition: {
+              x: 100,
+              y: 50
+            }
+          }
+        ]
       },
-      lineConfig: {
-        x: 0,
-        y: 0,
-        points: [20, 50, 250, 50],
-        strokeWidth: 1,
-        tension: 2,
-        closed: false,
-        stroke: "black"
-      },
-      linePoint: [20, 50, 250, 50],
-      image: null,
-      testImg: new Image(100, 100),
+      editTableName: "mobil",
+      visible: false,
       configKonva: {
-        width: 700,
+        width: 1400,
         height: 700
-      },
-      configCircle: {
-        x: 100,
-        y: 100,
-        radius: 70,
-        fill: "red",
-        stroke: "black",
-        strokeWidth: 4
       }
     };
   }
@@ -384,18 +321,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.ant-drawer-header {
-  background: #316896 !important;
-  color: #fff !important;
-}
-.ant-drawer-title {
-  margin: 0 !important;
-  font-size: 20px !important;
-  line-height: 10px !important;
-  font-weight: 500 !important;
-  color: #fff !important;
-}
-.ant-drawer-header {
-  border-radius: 0px 0px 0 0 !important;
-}
+
 </style>

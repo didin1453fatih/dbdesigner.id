@@ -5,10 +5,12 @@
       y: potition.y,
     }"
     @dragmove="dragmove"
-    @click="clickEvent"
+    @dblclick="clickEvent"
     :draggable="true"
   >
     <v-rect
+      @mouseover="selectRelation"
+      @mouseout="deselectRelation"
       :config="{
           x: 0,
           y: 0,
@@ -53,7 +55,7 @@
         />
         <!-- end primary key image -->
         <v-image
-          v-else-if="coloumns[coloumnKey].allowNull===false"
+          v-else-if="coloumns[coloumnKey].notNull===true"
           :config="{
             image: imageNotNull,
             width: 13,
@@ -63,7 +65,7 @@
           }"
         />
         <v-image
-          v-else-if="coloumns[coloumnKey].allowNull===true"
+          v-else-if="coloumns[coloumnKey].notNull===false"
           :config="{
             image: imageNull,
             width: 13,
@@ -74,9 +76,11 @@
         />
         <v-text
           :config="{
-            text: coloumnKey,
+            text: coloumns[coloumnKey].coloumn_name,
             x: 23,
             y: (5+30)+(index*20),
+            shadowBlur: coloumns[coloumnKey].style.shadowBlur,
+            shadowColor:coloumns[coloumnKey].style.shadowColor,
           }"
         />
         <v-text
@@ -85,98 +89,57 @@
             x: 0,            
             y: (5+30)+(index*20),
             width: 145,
+            shadowBlur: coloumns[coloumnKey].style.shadowBlur,
+            shadowColor:coloumns[coloumnKey].style.shadowColor,
             align: 'right'
           }"
         />
       </div>
     </template>
-    <!-- <v-text
-      :config="{
-            text: 'Kolom',
-            x: 23,
-            y: 5+30,
-          }"
-    />
-    <v-image
-      :config="{
-            image: imageNotNull,
-            width: 13,
-            height: 13,
-            x: 5,
-            y: 5+30-2+20,
-          }"
-    />
-    <v-text
-      :config="{
-            text: 'Kolom 2',
-            x: 23,
-            y: 5+30+20,
-          }"
-    />
-    <v-image
-      :config="{
-            image: imageNull,
-            width: 13,
-            height: 13,
-            x: 5,
-            y: 5+30-2+20+20,
-          }"
-    />
-    <v-text
-      :config="{
-            text: 'Kolom 3',
-            x: 23,
-            y: 5+30+20+20,
-          }"
-    />
-    <v-rect
-      :config="{
-          x: 0,
-          y: 5+30+20+20+20,
-          width: 150,
-          height: 20,
-          fill: '#b8b8b8',
-          strokeWidth: 0,
-          shadowBlur: 0
-        }"
-    />
-    <v-text
-      :config="{
-            text: 'Indexes',
-            x: 15,
-            y: 5+30+20+25+20,
-            fill:'white'
-          }"
-    />
-    <v-text
-      :config="{
-            text: 'id_UNIQUE',
-            x: 7,
-            y: 5+30+20+20+25+20,
-          }"
-    />-->
   </v-group>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import primaryKeyImage from "../assets/primary-key.png";
 import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
-  props: ["potition"],
+  props: ["potition", "coloumns", "tableName", "tableKey"],
+  // watch:{
+  //   coloumns(val){
+  //     window.alert('val '+val)
+  //   }
+  // },
   methods: {
+    ...mapMutations("diagram", {
+      setConfigTable: "setConfigTable",
+      setTableKeyConfig: "setTableKeyConfig",
+      setShowDetailTable: "setShowDetailTable"
+    }),
+    selectRelation() {
+      this.$emit("highlight", {
+        status: true,
+        tableKey: this.tableKey
+      });
+    },
+    deselectRelation() {
+      this.$emit("highlight", {
+        status: false,
+        tableKey: this.tableKey
+      });
+    },
     dragmove(val) {
-      this.$emit("changedPotition", val, this.tableName);
-      // eslint-disable-next-line
-      // console.log(JSON.stringify(val));
+      this.$emit("changedPotition", {
+        value: val,
+        tableKey: this.tableKey
+      });
     },
     clickEvent() {
-      // window.alert("makan");
-      this.$emit("editDataTable", "this.coloumns");
-    },
-    halo: () => {
-      // eslint-disable-next-line
-      console.log("makan");
+      // this.$emit("editDataTable");
+      // this.setConfigTable(this.tableName)
+      // this.setTableKeyConfig(this.tableKey)
+      this.setShowDetailTable(this.tableKey);
     },
     addPointAssotiation() {},
     reaCalculatePointAsscotiation() {}
@@ -204,57 +167,10 @@ export default {
   },
   data() {
     return {
+      isSelectRelation: false,
       primaryKey: null,
       imageNotNull: null,
-      imageNull: null,
-      tableName: "rujak",
-      coloumns: {
-        id: {
-          comment: "",
-          dataType: "int(32)",
-          default: "",
-          primaryKey: true,
-          allowNull: false,
-          unique: false,
-          unsigned: false,
-          zeroFill: false,
-          autoIncrement: false,
-          foreignKey: {
-            tableName: "tableName",
-            coloumnName: "key"
-          }
-        },
-        nama: {
-          comment: "",
-          dataType: "varcahar(20)",
-          default: "",
-          primaryKey: false,
-          allowNull: false,
-          unique: false,
-          unsigned: false,
-          zeroFill: false,
-          autoIncrement: false,
-          foreignKey: {
-            tableName: "tableName",
-            coloumnName: "key"
-          }
-        },
-        umur: {
-          comment: "",
-          dataType: "varcahar(20)",
-          default: "",
-          primaryKey: false,
-          allowNull: true,
-          unique: false,
-          unsigned: false,
-          zeroFill: false,
-          autoIncrement: false,
-          foreignKey: {
-            tableName: "tableName",
-            coloumnName: "key"
-          }
-        }
-      }
+      imageNull: null
     };
   }
 };
