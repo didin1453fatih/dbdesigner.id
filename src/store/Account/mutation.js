@@ -31,5 +31,15 @@ export default {
   },
   setVisibleChangePassword(state, value) {
     state.visibleChangePassword = value;
-  }
+  },
+  setMessageAccountInformation(state, value) {
+    state.messageAccountInformation = value;
+  },
+  setVisibleAccountInformation(state, value) {
+    state.visibleAccountInformation = value;
+  },
+  setVerified(state, value) {
+    state.verified = value;
+  },
+    
 };

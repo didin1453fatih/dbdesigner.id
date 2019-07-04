@@ -48,20 +48,20 @@ export default {
         // System router draggable
         if (
           draggedTable.point.x > targetTable.point.x &&
-          draggedTable.point.x < targetTable.point.x + 150
+          draggedTable.point.x < targetTable.point.x + targetTable.widthTable
         ) {
           tailX = targetTable.point.x;
           centralX = tailX - Math.abs(headX - tailX) / 2;
         } else if (draggedTable.point.x < targetTable.point.x) {
-          if (draggedTable.point.x + 150 < targetTable.point.x) {
-            headX = draggedTable.point.x + 150;
+          if (draggedTable.point.x + draggedTable.widthTable < targetTable.point.x) {
+            headX = draggedTable.point.x + draggedTable.widthTable;
             centralX = headX + Math.abs(headX - tailX) / 2;
           } else {
             tailX = targetTable.point.x;
             centralX = headX - Math.abs(headX - tailX) / 2;
           }
         } else {
-          tailX = targetTable.point.x + 150;
+          tailX = targetTable.point.x + targetTable.widthTable;
           centralX = headX - Math.abs(headX - tailX) / 2;
         }
         // End System router draggable
@@ -79,14 +79,14 @@ export default {
         // System router draggable
         if (
           draggedTable.point.x > targetTable.point.x &&
-          draggedTable.point.x < targetTable.point.x + 150
+          draggedTable.point.x < targetTable.point.x + targetTable.widthTable
         ) {
           headX = targetTable.point.x;
           tailX = draggedTable.point.x;
           centralX = headX - Math.abs(headX - tailX) / 2;
         } else if (draggedTable.point.x < targetTable.point.x) {
-          if (draggedTable.point.x + 150 < targetTable.point.x) {
-            tailX = draggedTable.point.x + 150;
+          if (draggedTable.point.x + draggedTable.widthTable < targetTable.point.x) {
+            tailX = draggedTable.point.x + draggedTable.widthTable;
             centralX = tailX + Math.abs(headX - tailX) / 2;
           } else {
             tailX = draggedTable.point.x;
@@ -94,7 +94,7 @@ export default {
             centralX = tailX - Math.abs(headX - tailX) / 2;
           }
         } else {
-          headX = targetTable.point.x + 150;
+          headX = targetTable.point.x + targetTable.widthTable;
           tailX = draggedTable.point.x;
           centralX = tailX - Math.abs(headX - tailX) / 2;
         }
@@ -440,6 +440,115 @@ export default {
     state.dataDiagramNew[tableKey_id].coloumns[
       coloumn_id
     ].coloumn_name = newName;
+
+    //-------- get max character ----------------
+    var coloumns=state.dataDiagramNew[tableKey_id].coloumns
+    var maxCharacter=0
+    Object.keys(coloumns).forEach(coloumnKey=>{
+      if(maxCharacter<coloumns[coloumnKey].coloumn_name.length){
+        maxCharacter=coloumns[coloumnKey].coloumn_name.length
+      }      
+    })
+
+    var newWidth=150
+    var countCharacter=maxCharacter;
+    // // eslint-disable-next-line    
+    // console.log('width table '+countCharacter)
+    if(countCharacter>8){
+      newWidth=150+(countCharacter-8)*7      
+    }
+
+
+
+    state.dataDiagramNew[tableKey_id].widthTable=newWidth
+/**
+ * ###################################################
+ * ---------------------------------------------------
+ * Change arrow connector
+ * ---------------------------------------------------
+ * ###################################################
+ */      
+      var tableKey = tableKey_id
+      var draggedTable = state.dataDiagramNew[tableKey];
+  
+
+      await Object.keys(draggedTable.association).forEach(key => {
+        let conn =
+          state.connectorNewKey[draggedTable.association[key].connector_id];
+        var targetTable =
+          state.dataDiagramNew[draggedTable.association[key].table_id];
+
+        var tmp = [];
+        // Tail is has a arrow pointer
+        if (draggedTable.association[key].type === "belong") {
+          var headX =
+            draggedTable.point.x + draggedTable.association[key].point.x;
+          var headY =
+            draggedTable.point.y + draggedTable.association[key].point.y;
+  
+          let tailX = conn.points[6];
+          let tailY = conn.points[7];
+          var centralX;
+  
+          // System router draggable
+          if (
+            draggedTable.point.x > targetTable.point.x &&
+            draggedTable.point.x < targetTable.point.x + targetTable.widthTable
+          ) {
+            tailX = targetTable.point.x;
+            centralX = tailX - Math.abs(headX - tailX) / 2;
+          } else if (draggedTable.point.x < targetTable.point.x) {
+            if (draggedTable.point.x + draggedTable.widthTable < targetTable.point.x) {
+              headX = draggedTable.point.x + draggedTable.widthTable;
+              centralX = headX + Math.abs(headX - tailX) / 2;
+            } else {
+              tailX = targetTable.point.x;
+              centralX = headX - Math.abs(headX - tailX) / 2;
+            }
+          } else {
+            tailX = targetTable.point.x + targetTable.widthTable;
+            centralX = headX - Math.abs(headX - tailX) / 2;
+          }
+          // End System router draggable
+  
+          tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+        } else if (draggedTable.association[key].type === "has") {
+          var tailX =
+            draggedTable.point.x + draggedTable.association[key].point.x;
+          var tailY =
+            draggedTable.point.y + draggedTable.association[key].point.y;
+          let headX = conn.points[0];
+          let headY = conn.points[1];
+  
+          let centralX = headX - Math.abs(headX - tailX) / 2;
+          // System router draggable
+          if (
+            draggedTable.point.x > targetTable.point.x &&
+            draggedTable.point.x < targetTable.point.x + targetTable.widthTable
+          ) {
+            headX = targetTable.point.x;
+            tailX = draggedTable.point.x;
+            centralX = headX - Math.abs(headX - tailX) / 2;
+          } else if (draggedTable.point.x < targetTable.point.x) {
+            if (draggedTable.point.x + draggedTable.widthTable < targetTable.point.x) {
+              tailX = draggedTable.point.x + draggedTable.widthTable;
+              centralX = tailX + Math.abs(headX - tailX) / 2;
+            } else {
+              tailX = draggedTable.point.x;
+              headX = targetTable.point.x;
+              centralX = tailX - Math.abs(headX - tailX) / 2;
+            }
+          } else {
+            headX = targetTable.point.x + targetTable.widthTable;
+            tailX = draggedTable.point.x;
+            centralX = tailX - Math.abs(headX - tailX) / 2;
+          }
+          // End System router draggable
+  
+          tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+        }
+        conn.points = tmp;
+      });
   },
   async updateDataType(state, raw) {
     var tableKey_id = raw.tableKey_id;
@@ -1187,15 +1296,17 @@ export default {
     let table_id = uuidv4();
     Vue.set(state.dataDiagramNew, table_id, {
       table_name: "",
+      widthTable: 150,
+      heightTable:0,      
       point: {
         x: 30,
         y: 110
       },
       coloumns: {
         coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
-          coloumn_name: "",
+          coloumn_name: "id",
           comment: "",
-          dataType: "",
+          dataType: "integer",
           default: "",
           primaryKey: true,
           notNull: false,
@@ -1203,7 +1314,7 @@ export default {
           foreignKey: false,
           unsigned: false,
           zeroFill: false,
-          autoIncrement: false,
+          autoIncrement: true,
           style: {
             shadowBlur: 0,
             shadowColor: "green"
@@ -1261,7 +1372,7 @@ export default {
       comment: "",
       dataType: "",
       default: "",
-      primaryKey: true,
+      primaryKey: false,
       notNull: false,
       unique: false,
       foreignKey: false,

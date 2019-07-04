@@ -14,8 +14,8 @@
       :config="{
           x: 0,
           y: 0,
-          width: 150,
-          height: 135,
+          width: widthTable,
+          height:35+ 20*Object.keys(coloumns).length,
           fill: '#316896',
           strokeWidth: 0,
           shadowBlur: 2
@@ -25,8 +25,8 @@
       :config="{
           x: 0,
           y: 25,
-          width: 150,
-          height: 110,
+          width: widthTable,
+          height:10+ 20*Object.keys(coloumns).length,
           strokeWidth: 0,
           fill: 'white',
           shadowBlur: 0
@@ -88,7 +88,7 @@
             text: coloumns[coloumnKey].dataType,
             x: 0,            
             y: (5+30)+(index*20),
-            width: 145,
+            width: widthTable-5,
             shadowBlur: coloumns[coloumnKey].style.shadowBlur,
             shadowColor:coloumns[coloumnKey].style.shadowColor,
             align: 'right'
@@ -105,7 +105,7 @@ import primaryKeyImage from "../assets/primary-key.png";
 import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
-  props: ["potition", "coloumns", "tableName", "tableKey"],
+  props: ["potition", "coloumns", "tableName", "tableKey","widthTable"],
   // watch:{
   //   coloumns(val){
   //     window.alert('val '+val)

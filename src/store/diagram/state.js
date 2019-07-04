@@ -56,6 +56,8 @@ export default {
   dataDiagramNew: {
     table_car_885ddad7_c509_4d5e_ab2e_dc5cb06d0e33: {
       table_name: "Car",
+      widthTable: 150,
+      heightTable:0,
       point: {
         x: 30,
         y: 110
@@ -121,6 +123,82 @@ export default {
           },
           association_belong_id:null,
           association_has_id:[]
+        },
+        coloumn_car_birthdate_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
+          coloumn_name: "birthdate",
+          comment: "",
+          dataType: "date",
+          default: "",
+          primaryKey: false,
+          notNull: true,
+          unique: false,
+          foreignKey:false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          },
+          association_belong_id:null,
+          association_has_id:[]
+        },
+        coloumn_car_address_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
+          coloumn_name: "address",
+          comment: "",
+          dataType: "varchar(31)",
+          default: "",
+          primaryKey: false,
+          notNull: true,
+          unique: false,
+          foreignKey:false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          },
+          association_belong_id:null,
+          association_has_id:[]
+        },
+        coloumn_car_created_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
+          coloumn_name: "created",
+          comment: "",
+          dataType: "datetime",
+          default: "",
+          primaryKey: false,
+          notNull: true,
+          unique: false,
+          foreignKey:false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          },
+          association_belong_id:null,
+          association_has_id:[]
+        },
+        coloumn_car_updated_885ddad7_c509_4d5e_ab2e_dc5cb06d0e34: {
+          coloumn_name: "updated",
+          comment: "",
+          dataType: "datetime",
+          default: "",
+          primaryKey: false,
+          notNull: true,
+          unique: false,
+          foreignKey:false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: false,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          },
+          association_belong_id:null,
+          association_has_id:[]
         }              
       },
       association: {
@@ -156,6 +234,8 @@ export default {
     },
     table_Driver_885ddad7_c509_4d5e_ab2e_dc5cb06d0e38: {
       table_name: "Driver",
+      widthTable: 150,
+      heightTable:0,      
       point: {
         x: 450,
         y: 100
@@ -233,6 +313,8 @@ export default {
     },
     table_Owner_885ddad7_c509_4d5e_ab2e_dc5cb06d0e38: {
       table_name: "Owner",
+      widthTable: 150,
+      heightTable:0,      
       point: {
         x: 350,
         y: 300
