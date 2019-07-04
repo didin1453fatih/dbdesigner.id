@@ -115,6 +115,7 @@
           :coloumns="dataDiagramNew[tableKey].coloumns"
           :tableName="dataDiagramNew[tableKey].table_name"
           :potition="dataDiagramNew[tableKey].point"
+          :widthTable="dataDiagramNew[tableKey].widthTable"
         />
       </v-layer>
     </v-stage>
