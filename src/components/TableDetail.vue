@@ -217,7 +217,7 @@
                   </a-row>
                   <a-row style="margin-top:5px" align="bottom" type="flex">
                     <a-col :span="5">
-                      <span style="padding-right:5px">Foregn Key</span>
+                      <span style="padding-right:5px">Foreign Key</span>
                     </a-col>
                     <a-col :span="18">
                       <a-checkbox

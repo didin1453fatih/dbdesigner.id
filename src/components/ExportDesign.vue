@@ -51,7 +51,7 @@
                 <label>Database</label>
                 <br>
                 <a-radio-group @change="onChange" defaultValue="a" style="margin-top:5px">
-                  <a-radio-button value="b" disabled>Postgree</a-radio-button>
+                  <a-radio-button value="b" disabled>Postgres</a-radio-button>
                   <a-radio-button value="bb" disabled>MS SQL</a-radio-button>
                   <a-radio-button value="a">MySQL</a-radio-button>
                   <a-radio-button value="c" disabled>Oracle</a-radio-button>
