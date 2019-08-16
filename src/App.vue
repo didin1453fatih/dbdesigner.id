@@ -31,8 +31,8 @@
       <a-menu-item key="smile">
         <a-icon type="smile"/>Help
       </a-menu-item>
-    </a-menu> -->
-          <!-- :message="messageAccountInformation" -->
+    </a-menu>-->
+    <!-- :message="messageAccountInformation" -->
     <a-alert
       type="info"
       closeText="Close"
@@ -40,118 +40,69 @@
       @close="onCloseMessage"
       style="border-radius: 0px; "
     >
-
-      <div slot="message" style="text-align: center;" >
-        <b>
-        {{messageAccountInformation}}
-        </b>
+      <div slot="message" style="text-align: center;">
+        <b>{{messageAccountInformation}}</b>
       </div>
     </a-alert>
 
-    <menu-fluent/>
+    <menu-fluent />
 
-<div style=" overflow: scroll;width:100%;height:470px">
-    <v-stage :config="configKonva">
-      <v-layer>
-        <!-- <template
-        v-for="connectorKey in Object.keys(connectorNewKey)"
-        >
-        <div v-bind:key="connectorKey">
-        <connector-base
-          :points="connectorNewKey[connectorKey].points"
-          :lineStyle="connectorNewKey[connectorKey].lineStyle"
-        />
-        </div>
-        </template>-->
+    <div style=" overflow: scroll;width:100%;height:470px">
+      <v-stage :config="configKonva">
+        <v-layer>
+          <connector-base
+            v-for="connectorKey in Object.keys(connectorNewKey)"
+            v-bind:key="connectorKey"
+            :connectorObj="connectorNewKey[connectorKey]"
+          />
 
-        <template v-for="connectorKey in Object.keys(connectorNewKey)">
-          <div v-bind:key="connectorKey">
-            <v-arrow
-              :config="{
-                x: 0,
-                y: 0,
-                points: connectorNewKey[connectorKey].points,
-                strokeWidth: 0.9,
-                tension: 0,
-                closed: false,
-                stroke: '#444444',
-                fill: '#444444',
-                pointerLength: 7,
-                pointerWidth: 7,
-                shadowOpacity: 1,
-                shadowBlur: connectorNewKey[connectorKey].lineStyle.shadowBlur,
-                shadowColor:connectorNewKey[connectorKey].lineStyle.shadowColor,
-              }"
-            />
-            <v-line
-              @mouseover="setHighLightRelation({
-                status: true,
-                connector_id:connectorKey
-              })"
-              @mouseout="setHighLightRelation({
-                status: false,
-                connector_id:connectorKey
-              })"
-              :config="{
-                x: 0,
-                y: 0,
-                points: connectorNewKey[connectorKey].points,
-                strokeWidth: 5,
-                tension: 0,
-                closed: false,
-                stroke: '#ff000000 '
-              }"
-            />
-          </div>
-        </template>
-
-        <table-base
-          @highlight="highlightRelation"
-          v-for="tableKey in Object.keys(dataDiagramNew)"
-          v-bind:key="tableKey"
-          @editDataTable="editDataTable"
-          @changedPotition="changeTablePotition"
-          :tableKey="tableKey"
-          :coloumns="dataDiagramNew[tableKey].coloumns"
-          :tableName="dataDiagramNew[tableKey].table_name"
-          :potition="dataDiagramNew[tableKey].point"
-          :widthTable="dataDiagramNew[tableKey].widthTable"
-        />
-      </v-layer>
-    </v-stage>
-</div>
+          <table-base
+            @highlight="highlightRelation"
+            v-for="tableKey in Object.keys(dataDiagramNew)"
+            v-bind:key="tableKey"
+            @editDataTable="editDataTable"
+            @changedPotition="changeTablePotition"
+            :tableKey="tableKey"
+            :coloumns="dataDiagramNew[tableKey].coloumns"
+            :tableName="dataDiagramNew[tableKey].table_name"
+            :potition="dataDiagramNew[tableKey].point"
+            :widthTable="dataDiagramNew[tableKey].widthTable"
+          />
+        </v-layer>
+      </v-stage>
+    </div>
     <table-detail
       :visible="visible"
       :tableName="editTableName"
       :tableProperties="editTableProperties"
       @close="onClose"
     />
-    <left-panel/>
-    <export-and-share/>
+    <left-panel />
+    <export-and-share />
     <config-table
       :visible="visible"
       :tableName="editTableName"
       :tableProperties="editTableProperties"
       @close="onClose"
     />
-    <loading-global/>
+    <loading-global />
   </div>
 </template>
 
 <script>
-import  qs  from 'querystringify';
+import qs from "querystringify";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
-import LoadingGlobal from './components/LoadingGlobal'
+import LoadingGlobal from "./components/LoadingGlobal";
 import { mapActions } from "vuex";
-// import ConnectorBase from "./components/ConnectorBase";
+import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
 import ConfigTable from "./components/ConfigTableBase.vue";
 import TableDetail from "./components/TableDetail.vue";
-import MenuFluent  from "./components/Menu.vue";
-import LeftPanel from "./components/LeftPanel.vue"
+import MenuFluent from "./components/Menu.vue";
+import LeftPanel from "./components/LeftPanel.vue";
 // import ExportDesign from "./components/ExportDesign.vue"
-import ExportAndShare from "./components/ExportAndShare.vue"
+import ExportAndShare from "./components/ExportAndShare.vue";
 import { message } from "ant-design-vue";
 
 export default {
@@ -161,30 +112,30 @@ export default {
     LeftPanel,
     ExportAndShare,
     LoadingGlobal,
-    // ConnectorBase,
+    ConnectorBase,
     TableDetail,
     ConfigTable
   },
   methods: {
     onCloseMessage(e) {
       // eslint-disable-next-line
-      console.log(e, 'I was closed.');
-      this.setVisibleAccountInformation(false)
-    },    
+      console.log(e, "I was closed.");
+      this.setVisibleAccountInformation(false);
+    },
     ...mapMutations("LeftPanel", {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
-    }),    
+    }),
     ...mapMutations("Account", {
       setVisibleAccountInformation: "setVisibleAccountInformation",
       setMessageAccountInformation: "setMessageAccountInformation"
-    }),        
+    }),
     ...mapMutations("diagram", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
       setLineStyleConnector: "setLineStyleConnector",
       addNewTable: "addNewTable",
-      setHighLightRelation : "setHighLightRelation"
+      setHighLightRelation: "setHighLightRelation"
     }),
     // setHighLightRelation() {
     //   window.alert(JSON.stringify("saasd"));
@@ -202,58 +153,56 @@ export default {
     },
     ...mapActions("diagram", {
       loadProjectUUID: "loadProjectUUID",
-      setEmptyDiagram:"setEmptyDiagram"
+      setEmptyDiagram: "setEmptyDiagram"
     }),
     ...mapActions("Account", {
       globalReadAccount: "globalReadAccount"
-    }),    
+    })
   },
   async mounted() {
     // "ds".split
-    if(window.location.toString().indexOf('uuid=')>1){
-      var valueUUID=window.location.toString().split('uuid=')[1]
+    if (window.location.toString().indexOf("uuid=") > 1) {
+      var valueUUID = window.location.toString().split("uuid=")[1];
       this.globalReadAccount({
-        uuid:valueUUID
-      })
+        uuid: valueUUID
+      });
       this.loadProjectUUID({
-        uuid:valueUUID,
-        password:null
-      })
-    }else{
+        uuid: valueUUID,
+        password: null
+      });
+    } else {
       await this.globalReadAccount({
-        uuid:null
-      })
-      await this.setEmptyDiagram()      
-      var parsed=qs.parse(window.location.toString().split('#')[1])
-      if(parsed.src==='mail_confirmation'){
-        if(parsed.action==='re_login'){
-            this.leftPanelSetVisible(true)
-            this.leftPanelSetPanelName('login')
-            message.success(parsed.message, 7);
-        }else if(parsed.action==='open_project'){
-            this.leftPanelSetVisible(true)
-            this.leftPanelSetPanelName('open')
-            message.success(parsed.message, 7);          
-        }else if(parsed.action==='error_email_confirmation_expired'){
-            this.leftPanelSetVisible(true)
-            this.leftPanelSetPanelName('login')
-            message.error(parsed.message, 7);          
-        }else if(parsed.action==='token_not_valid'){
-            this.leftPanelSetVisible(true)
-            this.leftPanelSetPanelName('login')
-            message.error(parsed.message, 7);          
+        uuid: null
+      });
+      // await this.setEmptyDiagram()
+      var parsed = qs.parse(window.location.toString().split("#")[1]);
+      if (parsed.src === "mail_confirmation") {
+        if (parsed.action === "re_login") {
+          this.leftPanelSetVisible(true);
+          this.leftPanelSetPanelName("login");
+          message.success(parsed.message, 7);
+        } else if (parsed.action === "open_project") {
+          this.leftPanelSetVisible(true);
+          this.leftPanelSetPanelName("open");
+          message.success(parsed.message, 7);
+        } else if (parsed.action === "error_email_confirmation_expired") {
+          this.leftPanelSetVisible(true);
+          this.leftPanelSetPanelName("login");
+          message.error(parsed.message, 7);
+        } else if (parsed.action === "token_not_valid") {
+          this.leftPanelSetVisible(true);
+          this.leftPanelSetPanelName("login");
+          message.error(parsed.message, 7);
+        }
+      } else if (parsed.src === "registration") {
+        if (parsed.action === "new_project") {
+          this.leftPanelSetVisible(true);
+          this.leftPanelSetPanelName("new");
+          message.success(parsed.message, 7);
         }
       }
-      else if(parsed.src==='registration'){
-        if(parsed.action==='new_project'){
-            this.leftPanelSetVisible(true)
-            this.leftPanelSetPanelName('new')
-            message.success(parsed.message, 7);
-        }
-      }
-
     }
-    
+
     // var flip = false;
     // var cnn=this.connectorNewKey
     // var hhh= this.setLineStyleConnector
@@ -297,7 +246,7 @@ export default {
     ...mapState("Account", {
       visibleAccountInformation: state => state.visibleAccountInformation,
       messageAccountInformation: state => state.messageAccountInformation
-    })    
+    })
   },
   data() {
     return {
@@ -383,5 +332,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
 </style>

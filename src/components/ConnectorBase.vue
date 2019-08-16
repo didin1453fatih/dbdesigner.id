@@ -1,52 +1,56 @@
-<template>
-
-  <v-line :config="{
+<template >
+  <v-group >
+    <v-arrow
+      :config="{
         x: 0,
         y: 0,
-        points: this.points,
-        strokeWidth: 1,
-        tension: 1,
+        points: connectorObj.points,
+        strokeWidth: 0.9,
+        tension: 0,
         closed: false,
-        stroke: 'black',
-        shadowBlur: this.lineStyle.shadowBlur,
-        shadowColor:this.lineStyle.shadowColor,
-      }"/>
+        stroke: '#444444',
+        fill: '#444444',
+        pointerLength: 7,
+        pointerWidth: 7,
+        shadowOpacity: 1,
+        shadowBlur: connectorObj.lineStyle.shadowBlur,
+        shadowColor:connectorObj.lineStyle.shadowColor,
+      }"
+    />
+    <v-line
+      @mouseover="setHighLightRelation({
+        status: true,
+        connector_id:connectorKey
+      })"
+      @mouseout="setHighLightRelation({
+        status: false,
+        connector_id:connectorKey
+      })"
+      :config="{
+        x: 0,
+        y: 0,
+        points: connectorObj.points,
+        strokeWidth: 5,
+        tension: 0,
+        closed: false,
+        stroke: '#ff000000 '
+      }"
+    />
+  </v-group>
 </template>
-
+        
 <script>
+import { mapMutations } from "vuex";
 export default {
-  props: ["points","lineStyle"],
-  // watch:{
-  //   points(val){
-  //     this.lineConfig.points=val
-  //     return val
-  //   },
-  //   lineStyle(val){
-  //     this.lineConfig.shadowBlur=val.shadowBlur
-  //     this.lineConfig.shadowColor=val.shadowColor
-  //     return val
-  //   }
-  // },
+  props: ['connectorObj'],
   methods: {
-    clickEvent: () => {
-      window.alert("makan line");
-    }
+    ...mapMutations("diagram", {
+      setHighLightRelation: "setHighLightRelation"
+    })
   },
   mounted() {},
   data() {
-    return {
-      lineConfig: {
-        x: 0,
-        y: 0,
-        points: this.points,
-        strokeWidth: 1,
-        tension: 1,
-        closed: false,
-        stroke: "black",
-        shadowBlur: this.lineStyle.shadowBlur,
-        shadowColor:this.lineStyle.shadowColor,
-      }
-    };
+    return {};
   }
 };
 </script>
