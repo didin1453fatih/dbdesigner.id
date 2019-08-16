@@ -42,11 +42,15 @@
 <script>
 import { mapMutations } from "vuex";
 export default {
-  props: ['connectorObj'],
+  props: ['connectorObj','connectorKey'],
   methods: {
     ...mapMutations("diagram", {
+      changeTablePotition: "changeTablePotition",
+      highlightRelation: "highlightRelation",
+      setLineStyleConnector: "setLineStyleConnector",
+      addNewTable: "addNewTable",
       setHighLightRelation: "setHighLightRelation"
-    })
+    }),
   },
   mounted() {},
   data() {

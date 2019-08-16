@@ -54,6 +54,7 @@
             v-for="connectorKey in Object.keys(connectorNewKey)"
             v-bind:key="connectorKey"
             :connectorObj="connectorNewKey[connectorKey]"
+            :connectorKey="connectorKey"
           />
 
           <table-base
@@ -79,12 +80,6 @@
     />
     <left-panel />
     <export-and-share />
-    <config-table
-      :visible="visible"
-      :tableName="editTableName"
-      :tableProperties="editTableProperties"
-      @close="onClose"
-    />
     <loading-global />
   </div>
 </template>
@@ -97,7 +92,6 @@ import LoadingGlobal from "./components/LoadingGlobal";
 import { mapActions } from "vuex";
 import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
-import ConfigTable from "./components/ConfigTableBase.vue";
 import TableDetail from "./components/TableDetail.vue";
 import MenuFluent from "./components/Menu.vue";
 import LeftPanel from "./components/LeftPanel.vue";
@@ -114,7 +108,6 @@ export default {
     LoadingGlobal,
     ConnectorBase,
     TableDetail,
-    ConfigTable
   },
   methods: {
     onCloseMessage(e) {
