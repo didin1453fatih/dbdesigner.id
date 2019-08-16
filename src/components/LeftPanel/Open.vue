@@ -3,7 +3,7 @@
     <div>
       <h3>Open</h3>
       <a-input-search placeholder="input search text" @search="onSearch" enterButton/>
-      <div s style="overflow-y: auto; height:480px; border: 1px solid #e8e8e8;padding: 4px 12px;margin-top:20px">
+      <div  style="overflow-y: auto; height:480px; border: 1px solid #e8e8e8;padding: 4px 12px;margin-top:20px">
         <a-list itemLayout="horizontal" :dataSource="data" >
           <a-list-item @dblclick="openProjectEvent(item.id)" slot="renderItem" slot-scope="item" class="disable-select">
             <a-list-item-meta :description="fomatDate(item.created)">
@@ -47,7 +47,6 @@ export default {
       loadProject: "loadProject"
     }),
     openProjectEvent(id) {
-      // window.alert("me click");
       this.loadProject({
         id: id
       });

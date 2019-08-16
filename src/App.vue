@@ -96,7 +96,7 @@ import TableDetail from "./components/TableDetail.vue";
 import MenuFluent from "./components/Menu.vue";
 import LeftPanel from "./components/LeftPanel.vue";
 // import ExportDesign from "./components/ExportDesign.vue"
-import ExportAndShare from "./components/ExportAndShare.vue";
+import ExportAndShare from "./components/RighPanel/ExportAndShare.vue";
 import { message } from "ant-design-vue";
 
 export default {
