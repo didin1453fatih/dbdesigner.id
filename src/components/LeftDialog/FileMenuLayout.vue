@@ -140,13 +140,13 @@
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
-import NewPanel from "./FilePanel/New";
-import OpenPanel from "./FilePanel/Open";
-import UpdatePanel from "./FilePanel/Update";
-import Properties from "./FilePanel/Properties";
-import Login from "./FilePanel/Login";
-import Account from "./FilePanel/Account";
-import OpenSharedWithPassword from './FilePanel/OpenSharedWithPassword'
+import NewPanel from "./FileMenuComponent/New";
+import OpenPanel from "./FileMenuComponent/Open";
+import UpdatePanel from "./FileMenuComponent/Update";
+import Properties from "./FileMenuComponent/Properties";
+import Login from "./FileMenuComponent/Login";
+import Account from "./FileMenuComponent/Account";
+import OpenSharedWithPassword from './FileMenuComponent/OpenSharedWithPassword'
 export default {
   methods: {
     ...mapMutations("LeftPanel", {
