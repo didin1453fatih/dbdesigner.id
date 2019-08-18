@@ -92,11 +92,11 @@ import LoadingGlobal from "./components/LoadingGlobal";
 import { mapActions } from "vuex";
 import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
-import TableDetail from "./components/TableDetail.vue";
 import MenuFluent from "./components/Menu.vue";
 import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 // import ExportDesign from "./components/ExportDesign.vue"
 import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
+import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
 
 export default {

@@ -66,7 +66,7 @@
                       v-if="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].primaryKey"
                     >
                       <img
-                        src="../assets/primary-key.png"
+                        src="@/assets/primary-key.png"
                         width="14px"
                         style="vertical-align: baseline; "
                       >
@@ -76,7 +76,7 @@
                       v-else-if="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].notNull===true"
                     >
                       <img
-                        src="../assets/icons8-diamonds-40.png"
+                        src="@/assets/icons8-diamonds-40.png"
                         width="14px"
                         style="vertical-align: baseline; "
                       >
@@ -86,7 +86,7 @@
                       v-else-if="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].notNull===false"
                     >
                       <img
-                        src="../assets/icons8-diamonds-40-white.png"
+                        src="@/assets/icons8-diamonds-40-white.png"
                         width="14px"
                         style="vertical-align: baseline; "
                       >
