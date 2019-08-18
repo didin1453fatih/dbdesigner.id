@@ -101,9 +101,9 @@
 
 <script>
 import { mapMutations } from "vuex";
-import primaryKeyImage from "../assets/primary-key.png";
-import notNull from "../assets/icons8-diamonds-40.png";
-import imageNullImage from "../assets/icons8-diamonds-40-white.png";
+import primaryKeyImage from "@/assets/primary-key.png";
+import notNull from "@/assets/icons8-diamonds-40.png";
+import imageNullImage from "@/assets/icons8-diamonds-40-white.png";
 export default {
   props: ["potition", "coloumns", "tableName", "tableKey","widthTable"],
   methods: {
