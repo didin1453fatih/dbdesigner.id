@@ -19,7 +19,7 @@
                 style="width:100%; padding-left:13px;padding-top:3px; padding-bottom:3px; "
                 @click="closeFilePanel"
               >
-                <img src="../../assets/icons8-go-back-50.png" width="35px">
+                <img src="../../../assets/icons8-go-back-50.png" width="35px">
               </div>
               <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
@@ -60,8 +60,8 @@
 <script>
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
-import Export from "./Export";
-import Share from "./Share";
+import Export from "./Component/Export";
+import Share from "./Component/Share";
 export default {
   methods: {
     ...mapMutations("ExportAndShare", {
