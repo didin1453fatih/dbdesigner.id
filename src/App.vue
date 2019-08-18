@@ -88,13 +88,13 @@
 import qs from "querystringify";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
-import LoadingGlobal from "./components/LoadingGlobal";
+
 import { mapActions } from "vuex";
 import ConnectorBase from "./components/ConnectorBase";
+import LoadingGlobal from "./components/Utill/LoadingGlobal";
 import TableBase from "./components/TableBase";
-import MenuFluent from "./components/Menu.vue";
+import MenuFluent from "./components/TopMenu/MenuLayout.vue";
 import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
-// import ExportDesign from "./components/ExportDesign.vue"
 import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";

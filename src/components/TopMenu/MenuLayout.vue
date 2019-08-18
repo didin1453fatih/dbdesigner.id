@@ -243,8 +243,8 @@ import { message } from "ant-design-vue";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
-import topicIcon from "../assets/icons8-topic-96.png";
-import helpSupport from "../assets/icons8-online-support-filled-100.png";
+import topicIcon from "@/assets/icons8-topic-96.png";
+import helpSupport from "@/assets/icons8-online-support-filled-100.png";
 export default {
   computed: {
     ...mapState("diagram", {
