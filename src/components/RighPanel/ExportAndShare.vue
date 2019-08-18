@@ -33,12 +33,6 @@
               >
                 <label style="color:white">Share</label>
               </div>
-              <!-- <div
-                style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ;"
-                @click="panelName='account'"
-              >
-                <label style="color:white">Account</label>
-              </div> -->
             </div>
           </td>
           <td style="background-color:#F1F1F1;vertical-align:top">
@@ -56,13 +50,6 @@
             >
               <Share/>
             </div>
-            <div
-              v-else-if="panelName==='account'"
-              style="padding-top:30px; padding-left:25px; width:100%"
-              class="fg-black"
-            >
-              <User-Account/>
-            </div>            
           </td>
         </tr>
       </table>
@@ -75,12 +62,8 @@ import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import Export from "./Export";
 import Share from "./Share";
-import UserAccount from "./UserAccount";
 export default {
   methods: {
-    // ...mapMutations("ExportDesign", {
-    //   setVisible: "setVisible"
-    // }),
     ...mapMutations("ExportAndShare", {
       setVisible: "setVisible",
       setPanelName:"setPanelName"
@@ -91,13 +74,9 @@ export default {
   },
   components: {
     Export,
-    Share,
-    UserAccount
+    Share
   },
   computed: {
-    // ...mapState("ExportDesign", {
-    //   visible: state => state.visible
-    // }),
     ...mapState("ExportAndShare", {
       visible: state => state.visible,
       panelName:state => state.panelName
@@ -105,7 +84,6 @@ export default {
   },
   data() {
     return {
-      // panelName: "share"
     };
   }
 };

@@ -106,11 +106,6 @@ import notNull from "../assets/icons8-diamonds-40.png";
 import imageNullImage from "../assets/icons8-diamonds-40-white.png";
 export default {
   props: ["potition", "coloumns", "tableName", "tableKey","widthTable"],
-  // watch:{
-  //   coloumns(val){
-  //     window.alert('val '+val)
-  //   }
-  // },
   methods: {
     ...mapMutations("diagram", {
       setConfigTable: "setConfigTable",

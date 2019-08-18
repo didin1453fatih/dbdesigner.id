@@ -70,27 +70,6 @@
                 <a-button style="right:40px">Next</a-button>
               </div>
             </div>
-            <!-- <div
-              v-if="panelName==='new'"
-              style="padding-top:30px; padding-left:25px; width:300px"
-              class="fg-black"
-            >
-              <new-panel/>
-            </div>
-            <div
-              v-else-if="panelName==='open'"
-              style="padding-top:30px; padding-left:25px; width:300px"
-              class="fg-black"
-            >
-              <open-panel/>
-            </div>
-            <div
-              v-else-if="panelName==='update'"
-              style="padding-top:30px; padding-left:25px; width:300px"
-              class="fg-black"
-            >
-              <update-panel/>
-            </div>-->
           </td>
         </tr>
       </table>
