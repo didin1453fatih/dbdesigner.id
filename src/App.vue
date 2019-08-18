@@ -94,7 +94,7 @@ import ConnectorBase from "./components/ConnectorBase";
 import TableBase from "./components/TableBase";
 import TableDetail from "./components/TableDetail.vue";
 import MenuFluent from "./components/Menu.vue";
-import LeftPanel from "./components/LeftDialog/FileMenuLayout.vue";
+import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 // import ExportDesign from "./components/ExportDesign.vue"
 import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
 import { message } from "ant-design-vue";

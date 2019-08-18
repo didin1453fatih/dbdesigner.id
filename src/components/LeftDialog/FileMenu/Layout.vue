@@ -19,7 +19,7 @@
                 style="width:100%; padding-left:13px;padding-top:3px; padding-bottom:3px; "
                 @click="closeFilePanel"
               >
-                <img src="../../assets/icons8-go-back-50.png" width="35px">
+                <img src="@/assets/icons8-go-back-50.png" width="35px">
               </div>
               <!-- <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
@@ -140,13 +140,13 @@
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
-import NewPanel from "./FileMenuComponent/New";
-import OpenPanel from "./FileMenuComponent/Open";
-import UpdatePanel from "./FileMenuComponent/Update";
-import Properties from "./FileMenuComponent/Properties";
-import Login from "./FileMenuComponent/Login";
-import Account from "./FileMenuComponent/Account";
-import OpenSharedWithPassword from './FileMenuComponent/OpenSharedWithPassword'
+import NewPanel from "./Component/New";
+import OpenPanel from "./Component/Open";
+import UpdatePanel from "./Component/Update";
+import Properties from "./Component/Properties";
+import Login from "./Component/Login";
+import Account from "./Component/Account";
+import OpenSharedWithPassword from './Component/OpenSharedWithPassword'
 export default {
   methods: {
     ...mapMutations("LeftPanel", {
