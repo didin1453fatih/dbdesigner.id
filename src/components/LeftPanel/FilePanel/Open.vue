@@ -26,7 +26,7 @@ import moment from "moment"
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 
-import databaseIcon from "../../assets/icons8-database-40.png";
+import databaseIcon from "../../../assets/icons8-database-40.png";
 export default {
   mounted() {
     this.getData({
