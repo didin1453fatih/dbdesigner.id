@@ -34,13 +34,13 @@ export default {
     });
   },
   computed: {
-    ...mapState("ListProject", {
+    ...mapState("LeftDialog/FileMenu/Component/Open", {
       data: state => state.data,
       loading: state => state.loading
     })
   },
   methods: {
-    ...mapActions("ListProject", {
+    ...mapActions("LeftDialog/FileMenu/Component/Open", {
       getData: "getData"
     }),
     ...mapActions("diagram", {
