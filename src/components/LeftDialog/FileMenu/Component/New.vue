@@ -33,18 +33,18 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 export default {
-  computed: {
-    ...mapState("NewProject", {
+  computed: {    
+    ...mapState("LeftDialog/FileMenu/Component/NewProject", {
       title: state => state.title,
       description: state => state.description,
       loading: state => state.loading
     })
   },
   methods: {
-    ...mapActions("NewProject", {
+    ...mapActions("LeftDialog/FileMenu/Component/NewProject", {
       createProject: "createProject"
     }),
-    ...mapMutations("NewProject", {
+    ...mapMutations("LeftDialog/FileMenu/Component/NewProject", {
       setTitle: "setTitle",
       setDescription: "setDescription"
     })

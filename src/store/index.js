@@ -10,13 +10,17 @@ import GlobalLoading from "./GlobalLoading/module";
 import UpdateProject from "./UpdateProject/module";
 import Account from "./Account/module";
 import Share from "./Share/module";
-import OpenSharedWithPassword from './OpenSharedWithPassword/module';
-import ExportAndShare from './ExportAndShare/module';
+import OpenSharedWithPassword from "./OpenSharedWithPassword/module";
+import ExportAndShare from "./ExportAndShare/module";
+import Project from "./Project/module";
+import LeftDialog from "./LeftDialog/module";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   strict: true,
   modules: {
+    LeftDialog,
+    Project,
     ExportAndShare,
     OpenSharedWithPassword,
     Login,
