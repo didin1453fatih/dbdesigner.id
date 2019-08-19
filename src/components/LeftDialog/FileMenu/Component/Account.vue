@@ -209,15 +209,17 @@ export default {
     onChangeDatabase() {},
     onChangeScript() {},
     closeFilePanel() {},
-    ...mapActions("Account", {
+    ...mapActions("LeftDialog/FileMenu/Component/Account", {
       updateAccount: "updateAccount",
       readAccount: "readAccount",
       changePassword: "changePassword",
       resendEmailConfirmation: "resendEmailConfirmation"
     }),
-    ...mapMutations("Account", {
+    ...mapMutations("Data/Account", {
       setFullName: "setFullName",
-      setGender: "setGender",
+      setGender: "setGender"
+    }),
+    ...mapMutations("LeftDialog/FileMenu/Component/Account", {
       setConfirmNewPassword: "setConfirmNewPassword",
       setLoadingChangePassword: "setLoadingChangePassword",
       setNewPassword: "setNewPassword",
@@ -226,13 +228,15 @@ export default {
     })
   },
   computed: {
-    ...mapState("Account", {
+    ...mapState("Data/Account", {
       verified: state => state.verified,
       fullName: state => state.fullName,
       gender: state => state.gender,
       username: state => state.username,
       email: state => state.email,
-      loading: state => state.loading,
+      loading: state => state.loading
+    }),
+    ...mapState("LeftDialog/FileMenu/Component/Account", {
       loadingChangePassword: state => state.loadingChangePassword,
       visibleChangePassword: state => state.visibleChangePassword,
       oldPassword: state => state.oldPassword,

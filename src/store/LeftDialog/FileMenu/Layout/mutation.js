@@ -1,11 +1,8 @@
 export default {
-  setLoding(state, value) {
-    state.loading = value;
+  setVisible(state, value) {
+    state.visible = value;
   },
-  setTitle(state, value) {
-    state.title = value;
-  },
-  setDescription(state, value) {
-    state.description = value;
+  setPanelName(state, value) {
+    state.panelName = value;
   }
 };

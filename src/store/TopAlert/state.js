@@ -1,4 +1,5 @@
 export default {
+  loading: false,
   visible: false,
-  panelName:'open'
+  message: ""
 };
