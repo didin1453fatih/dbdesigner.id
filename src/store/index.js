@@ -2,15 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";
-import Login from "./Login/module";
+// import Login from "./Login/module";
 import ExportDesign from "./ExportDesign/module";
-import ListProject from "./ListProject/module";
-import NewProject from "./NewProject/module";
+// import ListProject from "./ListProject/module";
+// import NewProject from "./NewProject/module";
 import GlobalLoading from "./GlobalLoading/module";
-import UpdateProject from "./UpdateProject/module";
+// import UpdateProject from "./UpdateProject/module";
 // import Account from "./Account/module";
 import Share from "./Share/module";
-import OpenSharedWithPassword from "./OpenSharedWithPassword/module";
+// import OpenSharedWithPassword from "./OpenSharedWithPassword/module";
 import ExportAndShare from "./ExportAndShare/module";
 import Project from "./Project/module";
 import LeftDialog from "./LeftDialog/module";
@@ -26,16 +26,16 @@ export const store = new Vuex.Store({
     LeftDialog,
     Project,
     ExportAndShare,
-    OpenSharedWithPassword,
-    Login,
+    // OpenSharedWithPassword,
+    // Login,
     Share,
     // Account,
     diagram,
     // LeftPanel,
     ExportDesign,
-    ListProject,
-    NewProject,
+    // ListProject,
+    // NewProject,
     GlobalLoading,
-    UpdateProject
+    // UpdateProject
   }
 });

@@ -35,17 +35,17 @@ import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 export default {
   computed: {
-    ...mapState("Login", {
+    ...mapState("LeftDialog/FileMenu/Component/Login", {
       email: state => state.email,
       password: state => state.password,
       loading: state => state.loading
     })
   },
   methods: {
-    ...mapActions("Login", {
+    ...mapActions("LeftDialog/FileMenu/Component/Login", {
       doLogin: "doLogin"
     }),
-    ...mapMutations("Login", {
+    ...mapMutations("LeftDialog/FileMenu/Component/Login", {
       setEmail: "setEmail",
       setPassword: "setPassword"
     })

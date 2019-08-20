@@ -54,18 +54,18 @@ export default {
   readAccount: request2(async context => {
     context.commit("setLoding", true);
     try {
-      var respondAccount = await requestHelper(ReadAccount);
-      respondAccount = respondAccount.payload;
+      var respondAccount = await requestHelper(ReadAccount);      
+      var payload = respondAccount.payload;
       context.rootCommit(
         "Data/Account/setFullName",
-        respondAccount.complete_name
+        payload.complete_name
       );
-      context.rootCommit("Data/Account/setGender", respondAccount.gender);
-      context.rootCommit("Data/Account/setUsername", respondAccount.user_name);
-      context.rootCommit("Data/Account/setEmail", respondAccount.email);
-      context.rootCommit("Data/Account/setId", respondAccount.id);
-      context.rootCommit("Data/Account/setVerified", respondAccount.verified);
-      if (respondAccount.verified === false) {
+      context.rootCommit("Data/Account/setGender", payload.gender);
+      context.rootCommit("Data/Account/setUsername", payload.user_name);
+      context.rootCommit("Data/Account/setEmail", payload.email);
+      context.rootCommit("Data/Account/setId", payload.id);
+      context.rootCommit("Data/Account/setVerified", payload.verified);
+      if (payload.verified === false) {
         context.rootCommit("TopAlert/setVisible", true);
         context.rootCommit("TopAlert/setMessage", "Your email need verify");
       } else {
