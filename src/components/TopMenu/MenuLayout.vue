@@ -273,7 +273,7 @@ export default {
       addNewTable: "addNewTable",
       setHighLightRelation: "setHighLightRelation"
     }),
-    ...mapMutations("LeftPanel", {
+    ...mapMutations("LeftDialog/FileMenu/Layout", {
       openLeftPanel: "setVisible",
       setLeftPanelName:"setPanelName"
     }),
