@@ -33,7 +33,7 @@
       </a-menu-item>
     </a-menu>-->
     <!-- :message="messageAccountInformation" -->
-    <a-alert
+    <!-- <a-alert
       type="info"
       closeText="Close"
       v-if="visibleAccountInformation"
@@ -43,7 +43,8 @@
       <div slot="message" style="text-align: center;">
         <b>{{messageAccountInformation}}</b>
       </div>
-    </a-alert>
+    </a-alert> -->
+    <information-alert/>
 
     <menu-fluent />
 
@@ -98,9 +99,11 @@ import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
+import InformationAlert from "./components/TopAlert/InformationAlert"
 
 export default {
   components: {
+    InformationAlert,
     TableBase,
     MenuFluent,
     LeftPanel,
@@ -110,18 +113,9 @@ export default {
     TableDetail,
   },
   methods: {
-    onCloseMessage(e) {
-      // eslint-disable-next-line
-      console.log(e, "I was closed.");
-      this.setVisibleAccountInformation(false);
-    },
-    ...mapMutations("LeftPanel", {
+    ...mapMutations("LeftDialog/FileMenu/Layout", {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
-    }),
-    ...mapMutations("Account", {
-      setVisibleAccountInformation: "setVisibleAccountInformation",
-      setMessageAccountInformation: "setMessageAccountInformation"
     }),
     ...mapMutations("diagram", {
       changeTablePotition: "changeTablePotition",
@@ -130,15 +124,7 @@ export default {
       addNewTable: "addNewTable",
       setHighLightRelation: "setHighLightRelation"
     }),
-    // setHighLightRelation() {
-    //   window.alert(JSON.stringify("saasd"));
-    // },
     editDataTable() {
-      // this.editTableName = tableName;
-      // this.editTableProperties = this.dataDiagram[tableName];
-      this.visible = true;
-    },
-    showDrawer() {
       this.visible = true;
     },
     onClose() {
@@ -148,7 +134,7 @@ export default {
       loadProjectUUID: "loadProjectUUID",
       setEmptyDiagram: "setEmptyDiagram"
     }),
-    ...mapActions("Account", {
+    ...mapActions("Data/Account", {
       globalReadAccount: "globalReadAccount"
     })
   },
@@ -196,117 +182,17 @@ export default {
       }
     }
 
-    // var flip = false;
-    // var cnn=this.connectorNewKey
-    // var hhh= this.setLineStyleConnector
-    // setInterval(function() {
-    //   if (flip === false) {
-    //     flip = true;
-    //     let styleL = {
-    //       shadowBlur: 5,
-    //       shadowColor: "#00D2FF"
-    //     };
-    //     Object.keys(cnn).forEach( key => {
-    //       // cnn[key].lineStyle = tmpLineStye;
-    //       hhh({
-    //         key:key,
-    //         style:styleL
-    //       })
-    //     });
-    //   } else {
-    //     flip = false;
-    //     let styleL = {
-    //       shadowBlur: 5,
-    //       shadowColor: "#00D2FF"
-    //     };
-    //     Object.keys(cnn).forEach( key => {
-    //       // cnn[key].lineStyle = tmpLineStye;
-    //       hhh({
-    //         key:key,
-    //         style:styleL
-    //       })
-    //     });
-    //   }
-    // }, 1000);
   },
   computed: {
     ...mapState("diagram", {
-      dataDiagram: state => state.dataDiagram,
-      connectorNew: state => state.connectorNew,
+      // dataDiagram: state => state.dataDiagram,
+      // connectorNew: state => state.connectorNew,
       dataDiagramNew: state => state.dataDiagramNew,
       connectorNewKey: state => state.connectorNewKey
-    }),
-    ...mapState("Account", {
-      visibleAccountInformation: state => state.visibleAccountInformation,
-      messageAccountInformation: state => state.messageAccountInformation
     })
   },
   data() {
     return {
-      editTableProperties: {
-        potition: {
-          x: 30,
-          y: 110
-        },
-        coloumns: {
-          id: {
-            comment: "",
-            dataType: "varchar(31)",
-            default: "",
-            primaryKey: true,
-            allowNull: false,
-            unique: false,
-            unsigned: false,
-            zeroFill: false,
-            autoIncrement: false,
-            foreignKey: false,
-            style: {
-              shadowBlur: 0,
-              shadowColor: "green"
-            }
-          },
-          jumlah_roda: {
-            comment: "",
-            dataType: "int(32)",
-            default: "",
-            primaryKey: false,
-            allowNull: false,
-            unique: false,
-            unsigned: false,
-            zeroFill: false,
-            autoIncrement: false,
-            foreignKey: false,
-            style: {
-              shadowBlur: 0,
-              shadowColor: "green"
-            }
-          }
-        },
-        association: [
-          {
-            type: "has",
-            table: "sopir",
-            foreignKey: "mobil_id",
-            sourceKey: "id",
-            potition: {
-              x: 100,
-              y: 50
-            }
-          },
-          {
-            type: "has",
-            table: "kernet",
-            foreignKey: "mobil_id",
-            sourceKey: "id",
-            potition: {
-              x: 100,
-              y: 50
-            }
-          }
-        ]
-      },
-      editTableName: "mobil",
-      visible: false,
       configKonva: {
         width: 1400,
         height: 700
