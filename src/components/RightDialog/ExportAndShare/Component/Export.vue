@@ -60,7 +60,7 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState("ExportDesign", {
+    ...mapState("RightDialog/ExportAndShare/Component/Export", {
       sqlScript: state => state.diagramScript
     })
   },
@@ -78,10 +78,10 @@ export default {
         scriptType: this.scriptType
       });
     },
-    ...mapActions("ExportDesign", {
+    ...mapActions("RightDialog/ExportAndShare/Component/Export", {
       goExport: "goExport"
     }),
-    ...mapMutations("ExportDesign", {
+    ...mapMutations("RightDialog/ExportAndShare/Component/Export", {
       openExport: "setVisible"
     })
   },

@@ -3,15 +3,16 @@ import Vuex from "vuex";
 // import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";
 // import Login from "./Login/module";
-import ExportDesign from "./ExportDesign/module";
+// import ExportDesign from "./ExportDesign/module";
 // import ListProject from "./ListProject/module";
 // import NewProject from "./NewProject/module";
 import GlobalLoading from "./GlobalLoading/module";
 // import UpdateProject from "./UpdateProject/module";
 // import Account from "./Account/module";
-import Share from "./Share/module";
+// import Share from "./Share/module";
 // import OpenSharedWithPassword from "./OpenSharedWithPassword/module";
-import ExportAndShare from "./ExportAndShare/module";
+// import ExportAndShare from "./ExportAndShare/module";
+import RightDialog from "./RightDialog/module";
 import Project from "./Project/module";
 import LeftDialog from "./LeftDialog/module";
 import Data from "./Data/module";
@@ -25,14 +26,15 @@ export const store = new Vuex.Store({
     Data,
     LeftDialog,
     Project,
-    ExportAndShare,
+    RightDialog,
+    // ExportAndShare,
     // OpenSharedWithPassword,
     // Login,
-    Share,
+    // Share,
     // Account,
     // diagram,
     // LeftPanel,
-    ExportDesign,
+    // ExportDesign,
     // ListProject,
     // NewProject,
     GlobalLoading,

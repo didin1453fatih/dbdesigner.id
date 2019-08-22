@@ -251,7 +251,7 @@ export default {
       title: state => state.projectDescription.title,
       description: state => state.projectDescription.description
     }),
-    ...mapState("Account", {
+    ...mapState("Data/Account", {
       username: state => state.username,
       accountId: state => state.id
     })
@@ -260,7 +260,7 @@ export default {
     ...mapActions("Data/Project", {
       saveProject: "saveProject"
     }),
-    ...mapActions("Account", {
+    ...mapActions("Data/Account", {
       logoutAccount: "logoutAccount"
     }),
     ...mapMutations("ExportDesign", {
@@ -277,7 +277,7 @@ export default {
       openLeftPanel: "setVisible",
       setLeftPanelName:"setPanelName"
     }),
-    ...mapMutations("ExportAndShare", {
+    ...mapMutations("RightDialog/ExportAndShare/Layout", {
       setVisibleExportAndShare: "setVisible",
       setPanelNameExportAndShare:"setPanelName"
     }),

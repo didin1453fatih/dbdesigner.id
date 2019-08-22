@@ -64,7 +64,7 @@ import Export from "./Component/Export";
 import Share from "./Component/Share";
 export default {
   methods: {
-    ...mapMutations("ExportAndShare", {
+    ...mapMutations("RightDialog/ExportAndShare/Layout", {
       setVisible: "setVisible",
       setPanelName:"setPanelName"
     }),    
@@ -77,7 +77,7 @@ export default {
     Share
   },
   computed: {
-    ...mapState("ExportAndShare", {
+    ...mapState("RightDialog/ExportAndShare/Layout", {
       visible: state => state.visible,
       panelName:state => state.panelName
     })    

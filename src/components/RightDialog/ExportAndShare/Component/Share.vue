@@ -60,7 +60,7 @@ export default {
     this.readShareStatus();
   },
   computed: {
-    ...mapState("Share", {
+    ...mapState("RightDialog/ExportAndShare/Component/Share", {
       title: state => state.title,
       status: state => state.status,
       loading: state => state.loading,
@@ -88,11 +88,11 @@ export default {
       }
       this.checkPassword = value;
     },
-    ...mapActions("Share", {
+    ...mapActions("RightDialog/ExportAndShare/Component/Share", {
       saveChangeStatus: "saveChangeStatus",
       readShareStatus: "readShareStatus"
     }),
-    ...mapMutations("Share", {
+    ...mapMutations("RightDialog/ExportAndShare/Component/Share", {
       setStatus: "setStatus",
       setSharePassword: "setSharePassword"
     }),
