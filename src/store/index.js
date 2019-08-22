@@ -1,22 +1,22 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import GlobalLoading from "./GlobalLoading/module";
+import RightDialog from "./RightDialog/module";
+import LeftDialog from "./LeftDialog/module";
+import Data from "./Data/module";
+import TopAlert from "./TopAlert/module";
 // import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";
 // import Login from "./Login/module";
 // import ExportDesign from "./ExportDesign/module";
 // import ListProject from "./ListProject/module";
 // import NewProject from "./NewProject/module";
-import GlobalLoading from "./GlobalLoading/module";
 // import UpdateProject from "./UpdateProject/module";
 // import Account from "./Account/module";
 // import Share from "./Share/module";
 // import OpenSharedWithPassword from "./OpenSharedWithPassword/module";
 // import ExportAndShare from "./ExportAndShare/module";
-import RightDialog from "./RightDialog/module";
-import Project from "./Project/module";
-import LeftDialog from "./LeftDialog/module";
-import Data from "./Data/module";
-import TopAlert from "./TopAlert/module";
+// import Project from "./Project/module";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -25,8 +25,10 @@ export const store = new Vuex.Store({
     TopAlert,
     Data,
     LeftDialog,
-    Project,
     RightDialog,
+    GlobalLoading,
+    // Project,
+    // UpdateProject
     // ExportAndShare,
     // OpenSharedWithPassword,
     // Login,
@@ -36,8 +38,6 @@ export const store = new Vuex.Store({
     // LeftPanel,
     // ExportDesign,
     // ListProject,
-    // NewProject,
-    GlobalLoading,
-    // UpdateProject
+    // NewProject,    
   }
 });
