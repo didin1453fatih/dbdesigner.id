@@ -126,7 +126,7 @@ export default {
     //   setVisibleAccountInformation: "setVisibleAccountInformation",
     //   setMessageAccountInformation: "setMessageAccountInformation"
     // }),
-    ...mapMutations("diagram", {
+    ...mapMutations("Data/Project", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
       setLineStyleConnector: "setLineStyleConnector",
@@ -147,7 +147,7 @@ export default {
     onClose() {
       this.visible = false;
     },
-    ...mapActions("diagram", {
+    ...mapActions("Data/Project", {
       loadProjectUUID: "loadProjectUUID",
       setEmptyDiagram: "setEmptyDiagram"
     }),
@@ -233,15 +233,11 @@ export default {
     // }, 1000);
   },
   computed: {
-    ...mapState("diagram", {
+    ...mapState("Data/Project", {
       dataDiagram: state => state.dataDiagram,
       connectorNew: state => state.connectorNew,
       dataDiagramNew: state => state.dataDiagramNew,
       connectorNewKey: state => state.connectorNewKey
-    }),
-    ...mapState("Account", {
-      visibleAccountInformation: state => state.visibleAccountInformation,
-      messageAccountInformation: state => state.messageAccountInformation
     })
   },
   data() {

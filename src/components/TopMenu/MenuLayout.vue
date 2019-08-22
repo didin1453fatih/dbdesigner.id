@@ -247,7 +247,7 @@ import topicIcon from "@/assets/icons8-topic-96.png";
 import helpSupport from "@/assets/icons8-online-support-filled-100.png";
 export default {
   computed: {
-    ...mapState("diagram", {
+    ...mapState("Data/Project", {
       title: state => state.projectDescription.title,
       description: state => state.projectDescription.description
     }),
@@ -257,7 +257,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions("diagram", {
+    ...mapActions("Data/Project", {
       saveProject: "saveProject"
     }),
     ...mapActions("Account", {
@@ -266,7 +266,7 @@ export default {
     ...mapMutations("ExportDesign", {
       openExport: "setVisible"
     }),
-    ...mapMutations("diagram", {
+    ...mapMutations("Data/Project", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
       setLineStyleConnector: "setLineStyleConnector",

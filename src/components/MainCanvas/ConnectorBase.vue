@@ -44,7 +44,7 @@ import { mapMutations } from "vuex";
 export default {
   props: ['connectorObj','connectorKey'],
   methods: {
-    ...mapMutations("diagram", {
+    ...mapMutations("Data/Project", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
       setLineStyleConnector: "setLineStyleConnector",

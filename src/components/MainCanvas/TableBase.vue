@@ -107,7 +107,7 @@ import imageNullImage from "@/assets/icons8-diamonds-40-white.png";
 export default {
   props: ["potition", "coloumns", "tableName", "tableKey","widthTable"],
   methods: {
-    ...mapMutations("diagram", {
+    ...mapMutations("Data/Project", {
       setConfigTable: "setConfigTable",
       setTableKeyConfig: "setTableKeyConfig",
       setShowDetailTable: "setShowDetailTable"

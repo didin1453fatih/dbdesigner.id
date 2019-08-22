@@ -12,7 +12,7 @@ export default {
         description: context.state.description
       });
       message.success("Updated", 2);
-      context.rootDispatch("diagram/loadProject", {
+      context.rootDispatch("Data/Project/loadProject", {
         id: context.rootState.diagram.projectDescription.id
       });
     } catch (error) {
@@ -35,7 +35,7 @@ export default {
       message.success("Deleted", 2);
       context.commit("setTitle", null);
       context.commit("setDescription", null);
-      context.rootCommit("diagram/deletedData");
+      context.rootCommit("Data/Project/deletedData");
     } catch (error) {
       if (error.code === 10) {
         message.error("Login first to delete this project", 2);

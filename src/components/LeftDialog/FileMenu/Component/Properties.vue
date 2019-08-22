@@ -80,7 +80,7 @@ export default {
       title: state => state.title,
       description: state => state.description
     }),    
-    ...mapState("diagram", {
+    ...mapState("Data/Project", {
       oldTitle: state => state.projectDescription.title,
       oldDescription: state => state.projectDescription.description,
       likes: state => state.projectDescription.likes,

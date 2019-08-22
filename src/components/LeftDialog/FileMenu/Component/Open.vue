@@ -43,7 +43,7 @@ export default {
     ...mapActions("LeftDialog/FileMenu/Component/Open", {
       getData: "getData"
     }),
-    ...mapActions("diagram", {
+    ...mapActions("Data/Project", {
       loadProject: "loadProject"
     }),
     openProjectEvent(id) {

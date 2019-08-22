@@ -339,7 +339,7 @@ import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 export default {
   computed: {
-    ...mapState("diagram", {
+    ...mapState("Data/Project", {
       tableProperties: state => state.configTable.properties,
       tableName: state => state.configTable.tableName,
 
@@ -480,7 +480,7 @@ export default {
     cancelEdit() {
       this.setShowDetailcoloumn(-1);
     },
-    ...mapMutations("diagram", {
+    ...mapMutations("Data/Project", {
       deleteColoumn: "deleteColoumn",
       setVisibleConfigTable: "setVisibleConfigTable",
       updateColoumnTable: "updateColoumnTable",

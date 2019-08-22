@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import diagram from "./diagram/module";
+// import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";
 // import Login from "./Login/module";
 import ExportDesign from "./ExportDesign/module";
@@ -30,7 +30,7 @@ export const store = new Vuex.Store({
     // Login,
     Share,
     // Account,
-    diagram,
+    // diagram,
     // LeftPanel,
     ExportDesign,
     // ListProject,

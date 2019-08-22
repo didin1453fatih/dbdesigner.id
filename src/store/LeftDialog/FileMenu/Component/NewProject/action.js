@@ -12,7 +12,7 @@ export default {
       message.success("Created", 2);
       context.commit("setTitle", "");
       context.commit("setDescription", "");
-      context.rootDispatch("diagram/loadProject", {
+      context.rootDispatch("Data/Project/loadProject", {
         id: respond.payload.id
       });
     } catch (error) {
