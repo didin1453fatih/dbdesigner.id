@@ -149,14 +149,14 @@ import Account from "./Component/Account";
 import OpenSharedWithPassword from './Component/OpenSharedWithPassword'
 export default {
   methods: {
-    ...mapMutations("LeftPanel", {
+    ...mapMutations("LeftDialog/FileMenu/Layout", {
       setVisible: "setVisible",
       setPanelName: "setPanelName"
     }),
     closeFilePanel() {
       this.setVisible(false);
     },
-    ...mapActions("Account", {
+    ...mapActions("LeftDialog/FileMenu/Layout", {
       logoutAccount: "logoutAccount"
     })
   },
@@ -170,17 +170,16 @@ export default {
     OpenSharedWithPassword
   },
   computed: {
-    ...mapState("LeftPanel", {
+    ...mapState("LeftDialog/FileMenu/Layout", {
       visible: state => state.visible,
       panelName: state => state.panelName
     }),
-    ...mapState("Account", {
+    ...mapState("Data/Account", {
       id: state => state.id
     })
   },
   data() {
     return {
-      // panelName: "open"
     };
   }
 };

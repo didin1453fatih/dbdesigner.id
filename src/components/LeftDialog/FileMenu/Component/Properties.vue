@@ -74,13 +74,13 @@ export default {
     this.setDescription(this.oldDescription)
   },  
   computed: {
-    ...mapState("UpdateProject", {
+    ...mapState("LeftDialog/FileMenu/Component/Properties", {
       data: state => state.data,
       loading: state => state.loading,
       title: state => state.title,
       description: state => state.description
     }),    
-    ...mapState("diagram", {
+    ...mapState("Data/Project", {
       oldTitle: state => state.projectDescription.title,
       oldDescription: state => state.projectDescription.description,
       likes: state => state.projectDescription.likes,
@@ -94,11 +94,11 @@ export default {
     ...mapActions("NewProject", {
       createProject: "createProject"
     }),
-    ...mapActions("UpdateProject", {
+    ...mapActions("LeftDialog/FileMenu/Component/Properties", {
       updateProject: "updateProject",
       deleteProject:"deleteProject"
     }),    
-    ...mapMutations("UpdateProject", {
+    ...mapMutations("LeftDialog/FileMenu/Component/Properties", {
       setTitle: "setTitle",
       setDescription: "setDescription"
     }),

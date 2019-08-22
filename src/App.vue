@@ -33,7 +33,7 @@
       </a-menu-item>
     </a-menu>-->
     <!-- :message="messageAccountInformation" -->
-    <a-alert
+    <!-- <a-alert
       type="info"
       closeText="Close"
       v-if="visibleAccountInformation"
@@ -43,7 +43,8 @@
       <div slot="message" style="text-align: center;">
         <b>{{messageAccountInformation}}</b>
       </div>
-    </a-alert>
+    </a-alert> -->
+    <information-alert/>
 
     <menu-fluent />
 
@@ -98,9 +99,11 @@ import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
+import InformationAlert from "./components/TopAlert/InformationAlert"
 
 export default {
   components: {
+    InformationAlert,
     TableBase,
     MenuFluent,
     LeftPanel,
@@ -115,15 +118,15 @@ export default {
       console.log(e, "I was closed.");
       this.setVisibleAccountInformation(false);
     },
-    ...mapMutations("LeftPanel", {
+    ...mapMutations("LeftDialog/FileMenu/Layout", {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
     }),
-    ...mapMutations("Account", {
-      setVisibleAccountInformation: "setVisibleAccountInformation",
-      setMessageAccountInformation: "setMessageAccountInformation"
-    }),
-    ...mapMutations("diagram", {
+    // ...mapMutations("Account", {
+    //   setVisibleAccountInformation: "setVisibleAccountInformation",
+    //   setMessageAccountInformation: "setMessageAccountInformation"
+    // }),
+    ...mapMutations("Data/Project", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
       setLineStyleConnector: "setLineStyleConnector",
@@ -144,11 +147,11 @@ export default {
     onClose() {
       this.visible = false;
     },
-    ...mapActions("diagram", {
+    ...mapActions("Data/Project", {
       loadProjectUUID: "loadProjectUUID",
       setEmptyDiagram: "setEmptyDiagram"
     }),
-    ...mapActions("Account", {
+    ...mapActions("Data/Account", {
       globalReadAccount: "globalReadAccount"
     })
   },
@@ -230,15 +233,11 @@ export default {
     // }, 1000);
   },
   computed: {
-    ...mapState("diagram", {
+    ...mapState("Data/Project", {
       dataDiagram: state => state.dataDiagram,
       connectorNew: state => state.connectorNew,
       dataDiagramNew: state => state.dataDiagramNew,
       connectorNewKey: state => state.connectorNewKey
-    }),
-    ...mapState("Account", {
-      visibleAccountInformation: state => state.visibleAccountInformation,
-      messageAccountInformation: state => state.messageAccountInformation
     })
   },
   data() {
