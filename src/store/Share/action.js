@@ -7,7 +7,7 @@ export default {
     context.commit("setLoading", true);
     try {
       var shareStatusRespond = await requestHelper(SaveChangeShareStatus, {
-        id: context.rootState.diagram.projectDescription.id,
+        id: context.rootState.Data.Project.projectDescription.id,
         status: context.state.status,
         password: context.state.sharePassword
       });
@@ -35,7 +35,7 @@ export default {
     context.commit("setLoading", true);
     try {
       var shareStatusRespond = await requestHelper(ReadShareStatus, {
-        id: context.rootState.diagram.projectDescription.id
+        id: context.rootState.Data.Project.projectDescription.id
       });
       var payload = shareStatusRespond.payload;
       if (shareStatusRespond.success === true) {
