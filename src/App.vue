@@ -113,10 +113,19 @@ export default {
     TableDetail,
   },
   methods: {
+    onCloseMessage(e) {
+      // eslint-disable-next-line
+      console.log(e, "I was closed.");
+      this.setVisibleAccountInformation(false);
+    },
     ...mapMutations("LeftDialog/FileMenu/Layout", {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
     }),
+    // ...mapMutations("Account", {
+    //   setVisibleAccountInformation: "setVisibleAccountInformation",
+    //   setMessageAccountInformation: "setMessageAccountInformation"
+    // }),
     ...mapMutations("diagram", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
@@ -124,7 +133,15 @@ export default {
       addNewTable: "addNewTable",
       setHighLightRelation: "setHighLightRelation"
     }),
+    // setHighLightRelation() {
+    //   window.alert(JSON.stringify("saasd"));
+    // },
     editDataTable() {
+      // this.editTableName = tableName;
+      // this.editTableProperties = this.dataDiagram[tableName];
+      this.visible = true;
+    },
+    showDrawer() {
       this.visible = true;
     },
     onClose() {
@@ -182,17 +199,117 @@ export default {
       }
     }
 
+    // var flip = false;
+    // var cnn=this.connectorNewKey
+    // var hhh= this.setLineStyleConnector
+    // setInterval(function() {
+    //   if (flip === false) {
+    //     flip = true;
+    //     let styleL = {
+    //       shadowBlur: 5,
+    //       shadowColor: "#00D2FF"
+    //     };
+    //     Object.keys(cnn).forEach( key => {
+    //       // cnn[key].lineStyle = tmpLineStye;
+    //       hhh({
+    //         key:key,
+    //         style:styleL
+    //       })
+    //     });
+    //   } else {
+    //     flip = false;
+    //     let styleL = {
+    //       shadowBlur: 5,
+    //       shadowColor: "#00D2FF"
+    //     };
+    //     Object.keys(cnn).forEach( key => {
+    //       // cnn[key].lineStyle = tmpLineStye;
+    //       hhh({
+    //         key:key,
+    //         style:styleL
+    //       })
+    //     });
+    //   }
+    // }, 1000);
   },
   computed: {
     ...mapState("diagram", {
-      // dataDiagram: state => state.dataDiagram,
-      // connectorNew: state => state.connectorNew,
+      dataDiagram: state => state.dataDiagram,
+      connectorNew: state => state.connectorNew,
       dataDiagramNew: state => state.dataDiagramNew,
       connectorNewKey: state => state.connectorNewKey
+    }),
+    ...mapState("Account", {
+      visibleAccountInformation: state => state.visibleAccountInformation,
+      messageAccountInformation: state => state.messageAccountInformation
     })
   },
   data() {
     return {
+      editTableProperties: {
+        potition: {
+          x: 30,
+          y: 110
+        },
+        coloumns: {
+          id: {
+            comment: "",
+            dataType: "varchar(31)",
+            default: "",
+            primaryKey: true,
+            allowNull: false,
+            unique: false,
+            unsigned: false,
+            zeroFill: false,
+            autoIncrement: false,
+            foreignKey: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
+            }
+          },
+          jumlah_roda: {
+            comment: "",
+            dataType: "int(32)",
+            default: "",
+            primaryKey: false,
+            allowNull: false,
+            unique: false,
+            unsigned: false,
+            zeroFill: false,
+            autoIncrement: false,
+            foreignKey: false,
+            style: {
+              shadowBlur: 0,
+              shadowColor: "green"
+            }
+          }
+        },
+        association: [
+          {
+            type: "has",
+            table: "sopir",
+            foreignKey: "mobil_id",
+            sourceKey: "id",
+            potition: {
+              x: 100,
+              y: 50
+            }
+          },
+          {
+            type: "has",
+            table: "kernet",
+            foreignKey: "mobil_id",
+            sourceKey: "id",
+            potition: {
+              x: 100,
+              y: 50
+            }
+          }
+        ]
+      },
+      editTableName: "mobil",
+      visible: false,
       configKonva: {
         width: 1400,
         height: 700
