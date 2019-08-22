@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     ...mapMutations("TopAlert", {
-      openExport: "setVisible"
+      setVisible: "setVisible"
     }),
     onCloseMessage() {
       this.setVisible(false);
