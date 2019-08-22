@@ -260,7 +260,7 @@ export default {
     ...mapActions("Data/Project", {
       saveProject: "saveProject"
     }),
-    ...mapActions("Data/Account", {
+    ...mapActions("LeftDialog/FileMenu/Layout", {
       logoutAccount: "logoutAccount"
     }),
     ...mapMutations("ExportDesign", {
