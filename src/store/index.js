@@ -4,7 +4,7 @@ import GlobalLoading from "./GlobalLoading/module";
 import RightDialog from "./RightDialog/module";
 import LeftDialog from "./LeftDialog/module";
 import Data from "./Data/module";
-import TopAlert from "./TopAlert/module";
+import TopAlert from "./TopAlert/InformationAlert/module";
 // import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";
 // import Login from "./Login/module";
