@@ -18,13 +18,13 @@ import { mapMutations } from "vuex";
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState("TopAlert", {
+    ...mapState("TopAlert/InformationAlert", {
       visible: state => state.visible,
       message: state => state.message
     })
   },
   methods: {
-    ...mapMutations("TopAlert", {
+    ...mapMutations("TopAlert/InformationAlert", {
       setVisible: "setVisible"
     }),
     onCloseMessage() {
