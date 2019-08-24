@@ -4,7 +4,7 @@ import Vuex from "vuex";
 import RightDialog from "./RightDialog/module";
 import LeftDialog from "./LeftDialog/module";
 import Data from "./Data/module";
-import TopAlert from "./TopAlert/InformationAlert/module";
+import TopAlert from "./TopAlert/module";
 import Utill from "./Utill/module";
 // import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";

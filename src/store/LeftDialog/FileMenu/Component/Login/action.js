@@ -19,10 +19,10 @@ export default {
       context.rootCommit("Data/Account/setId", payload.id);
       context.rootCommit("Data/Account/setVerified", payload.verified);
       if (payload.verified === false) {
-        context.rootCommit("TopAlert/InformationAlert/setVisible", true);
-        context.rootCommit("TopAlert/InformationAlert/setMessage", "Your email need verify");
+        context.rootCommit("TopAlert/Information/Layout/setVisible", true);
+        context.rootCommit("TopAlert/Information/Layout/setMessage", "Your email need verify");
       } else {
-        context.rootCommit("TopAlert/InformationAlert/setVisible", false);
+        context.rootCommit("TopAlert/Information/Layout/setVisible", false);
       }
     } catch (error) {
       message.error(error.message, 2);

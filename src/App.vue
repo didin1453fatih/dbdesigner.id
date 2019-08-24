@@ -99,7 +99,7 @@ import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
-import InformationAlert from "./components/TopAlert/InformationAlert"
+import InformationAlert from "./components/TopAlert/Information/Layout"
 
 export default {
   components: {
