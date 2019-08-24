@@ -13,7 +13,7 @@ export default {
     context.rootCommit("LeftPanel/setPanelName", "open");
   }),
   loadProjectUUID: request2(async context => {
-    context.rootCommit("GlobalLoading/setVisible", true);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", true);
 
     try {
       var respond = await requestHelper(LoadProjectUUID, {
@@ -56,10 +56,10 @@ export default {
         message.error(error.message, 2);
       }
     }
-    context.rootCommit("GlobalLoading/setVisible", false);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", false);
   }),
   loadProject: request2(async context => {
-    context.rootCommit("GlobalLoading/setVisible", true);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", true);
     try {
       var respond = await requestHelper(LoadProject, {
         id: context.inputs.id
@@ -91,7 +91,7 @@ export default {
         message.error(error.message, 2);
       }
     }
-    context.rootCommit("GlobalLoading/setVisible", false);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", false);
   }),
   saveProject: request2(async context => {
     const hide = message.loading("Saving in progress..", 0);

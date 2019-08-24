@@ -3,7 +3,7 @@ import ReadAccount from "@/request/readAccount.request";
 import { request2, requestHelper } from "@/helper/RequestConnector";
 export default {
   globalReadAccount: request2(async context => {
-    context.rootCommit("GlobalLoading/setVisible", true);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", true);
     try {
       var respondAccount = await requestHelper(ReadAccount);
       var payload = respondAccount.payload;
@@ -37,6 +37,6 @@ export default {
       context.rootCommit("TopAlert/InformationAlert/setVisible", true);
       context.rootCommit("TopAlert/InformationAlert/setMessage", "You are guest");
     }
-    context.rootCommit("GlobalLoading/setVisible", false);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", false);
   }),
 };

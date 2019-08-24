@@ -81,7 +81,7 @@ export default {
     context.commit("setLoding", false);
   }),
   globalReadAccount: request2(async context => {
-    context.rootCommit("GlobalLoading/setVisible", true);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", true);
     try {
       var respondAccount = await requestHelper(ReadAccount);
       respondAccount = respondAccount.payload;
@@ -115,7 +115,7 @@ export default {
       context.commit("setVisibleAccountInformation", true);
       context.commit("setMessageAccountInformation", "You are guest");
     }
-    context.rootCommit("GlobalLoading/setVisible", false);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", false);
   }),
   changePassword: request2(async context => {
     context.commit("setLoadingChangePassword", true);
@@ -140,11 +140,11 @@ export default {
   }),
   logoutAccount: request2(async context => {
     // context.commit("setLoadingChangePassword", true);
-    context.rootCommit("GlobalLoading/setVisible", true);
+    context.rootCommit("Utill/LoadingGlobal/setVisible", true);
     try {
       await requestHelper(Logout);
       message.success("Logout", 2);
-      context.rootCommit("GlobalLoading/setVisible", false);
+      context.rootCommit("Utill/LoadingGlobal/setVisible", false);
       setTimeout(() => {
         window.location.href = "/";
       }, 500);
@@ -156,7 +156,7 @@ export default {
       } else {
         message.error(error.message, 2);
       }
-      context.rootCommit("GlobalLoading/setVisible", false);
+      context.rootCommit("Utill/LoadingGlobal/setVisible", false);
     }
   })
 };
