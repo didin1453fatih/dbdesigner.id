@@ -15,7 +15,7 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState("Utill/LoadingGlobal", {
+    ...mapState("Utill/LoadingGlobal/Layout", {
       visible: state => state.visible,
       message: state => state.message
     })

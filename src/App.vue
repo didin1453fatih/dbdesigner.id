@@ -93,7 +93,7 @@ import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import TableBase from "./components/MainCanvas/TableBase";
 import ConnectorBase from "./components/MainCanvas/ConnectorBase";
-import LoadingGlobal from "./components/Utill/LoadingGlobal";
+import LoadingGlobal from "./components/Utill/LoadingGlobal/Layout";
 import MenuFluent from "./components/TopMenu/MenuLayout.vue";
 import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
