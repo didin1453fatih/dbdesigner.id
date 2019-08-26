@@ -3,7 +3,7 @@ import ReadAccount from "@/request/readAccount.request";
 import { request2, requestHelper } from "@/helper/RequestConnector";
 export default {
   globalReadAccount: request2(async context => {
-    context.rootCommit("GlobalLoading/setVisible", true);
+    context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
     try {
       var respondAccount = await requestHelper(ReadAccount);
       var payload = respondAccount.payload;
@@ -14,10 +14,10 @@ export default {
       context.rootCommit("Data/Account/setId", payload.id);
       context.rootCommit("Data/Account/setVerified", payload.verified);
       if (payload.verified === false) {
-        context.rootCommit("TopAlert/InformationAlert/setVisible", true);
-        context.rootCommit("TopAlert/InformationAlert/setMessage", "Your email need verify");
+        context.rootCommit("TopAlert/Information/Layout/setVisible", true);
+        context.rootCommit("TopAlert/Information/Layout/setMessage", "Your email need verify");
       } else {
-        context.rootCommit("TopAlert/InformationAlert/setVisible", false);
+        context.rootCommit("TopAlert/Information/Layout/setVisible", false);
       }
     } catch (error) {
       if (error.code === 10) {
@@ -34,9 +34,9 @@ export default {
       } else {
         message.error(error.message, 2);
       }
-      context.rootCommit("TopAlert/InformationAlert/setVisible", true);
-      context.rootCommit("TopAlert/InformationAlert/setMessage", "You are guest");
+      context.rootCommit("TopAlert/Information/Layout/setVisible", true);
+      context.rootCommit("TopAlert/Information/Layout/setMessage", "You are guest");
     }
-    context.rootCommit("GlobalLoading/setVisible", false);
+    context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", false);
   }),
 };

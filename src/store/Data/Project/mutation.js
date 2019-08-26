@@ -14,7 +14,7 @@ export default {
    */
   async changeTablePotition(state, raw) {
     // eslint-disable-next-line
-    console.log("table key " + JSON.stringify(raw));
+    // console.log("table key " + JSON.stringify(raw));
     var val = raw.value;
     var tableKey = raw.tableKey;
     var draggedTable = state.dataDiagramNew[tableKey];
@@ -22,9 +22,9 @@ export default {
     draggedTable.point.x = val.currentTarget.attrs.x;
     draggedTable.point.y = val.currentTarget.attrs.y;
     // eslint-disable-next-line
-    console.log(
-      "draggedTable.association " + JSON.stringify(draggedTable.association)
-    );
+    // console.log(
+    //   "draggedTable.association " + JSON.stringify(draggedTable.association)
+    // );
     await Object.keys(draggedTable.association).forEach(key => {
       let conn =
         state.connectorNewKey[draggedTable.association[key].connector_id];
@@ -114,11 +114,11 @@ export default {
     var status = raw.status;
     var tableKey = raw.tableKey;
     // eslint-disable-next-line
-    console.log("status true " + tableKey);
+    // console.log("status true " + tableKey);
     // eslint-disable-next-line
-    console.log("data table assoc");
+    // console.log("data table assoc");
     // eslint-disable-next-line
-    console.log(JSON.stringify(state.dataDiagramNew[tableKey].association));
+    // console.log(JSON.stringify(state.dataDiagramNew[tableKey].association));
     await Object.keys(state.dataDiagramNew[tableKey].association).forEach(
       key => {
         if (state.dataDiagramNew[tableKey].association[key].type === "belong") {
@@ -145,10 +145,10 @@ export default {
               shadowColor: "green"
             };
             // eslint-disable-next-line
-            console.log(
-              "state.connectorNewKey[connectorId] " +
-                JSON.stringify(state.connectorNewKey[connectorId])
-            );
+            // console.log(
+            //   "state.connectorNewKey[connectorId] " +
+            //     JSON.stringify(state.connectorNewKey[connectorId])
+            // );
           } else if (status === false) {
             state.dataDiagramNew[tableKey].coloumns[foreignKeyId].style = {
               shadowBlur: 0,
@@ -176,7 +176,7 @@ export default {
             state.dataDiagramNew[tableKey].association[key].connector_id;
           if (status === true) {
             // eslint-disable-next-line
-            console.log("hidupkan biru " + connectorId);
+            // console.log("hidupkan biru " + connectorId);
             state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style = {
               shadowBlur: 5,
               shadowColor: "#00D2FF"
@@ -193,7 +193,7 @@ export default {
             };
           } else if (status === false) {
             // eslint-disable-next-line
-            console.log("matikan biru");
+            // console.log("matikan biru");
             state.dataDiagramNew[tableKey].coloumns[sourceKeyId].style = {
               shadowBlur: 0,
               shadowColor: "#00D2FF"
@@ -600,7 +600,7 @@ export default {
         connObj.head.association_id
       );
       // eslint-disable-next-line
-      console.log("delete assoc " + connObj.head.association_id);
+      // console.log("delete assoc " + connObj.head.association_id);
 
       // delete connector
       Vue.delete(state.connectorNewKey, assocForeignKeyObj.connector_id);
@@ -811,14 +811,14 @@ export default {
       association_id_foreignKey === null
     ) {
       // eslint-disable-next-line
-      console.log("table_id_source " + table_id_source);
+      // console.log("table_id_source " + table_id_source);
       let coloumn_id_default_sourceKey = Object.keys(
         state.dataDiagramNew[table_id_source].coloumns
       )[0];
       // eslint-disable-next-line
-      console.log(
-        "coloumn_id_default_sourceKey " + coloumn_id_default_sourceKey
-      );
+      // console.log(
+      //   "coloumn_id_default_sourceKey " + coloumn_id_default_sourceKey
+      // );
       let association_id_foreignKeyNew = "assoc_Foreign_" + uuidv4();
       let association_id_source = "assoc_Source_" + uuidv4();
       let connector_id = "conn_car_number_driver_id" + uuidv4();
@@ -838,11 +838,11 @@ export default {
         }
       };
       // eslint-disable-next-line
-      console.log("table_id_foreignKey " + table_id_foreignKey);
+      // console.log("table_id_foreignKey " + table_id_foreignKey);
       // eslint-disable-next-line
-      console.log(
-        "association_id_foreignKeyNew " + association_id_foreignKeyNew
-      );
+      // console.log(
+      //   "association_id_foreignKeyNew " + association_id_foreignKeyNew
+      // );
       Vue.set(
         state.dataDiagramNew[table_id_foreignKey].association,
         association_id_foreignKeyNew,
@@ -964,7 +964,7 @@ export default {
       };
       Vue.set(state.connectorNewKey, connector_id, tmpConnector);
       // eslint-disable-next-line
-      console.log(JSON.stringify(state.dataDiagramNew[table_id_source]));
+      // console.log(JSON.stringify(state.dataDiagramNew[table_id_source]));
     } else {
       var assocOBJ_foreignKey =
         state.dataDiagramNew[table_id_foreignKey].association[

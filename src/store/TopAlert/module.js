@@ -1,7 +1,7 @@
-import InformationAlert from "./InformationAlert/module";
+import Information from "./Information/module"
 export default {
   namespaced: true,
   modules: {
-    InformationAlert
+    Information
   }
 };

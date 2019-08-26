@@ -1,10 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import GlobalLoading from "./GlobalLoading/module";
+// import GlobalLoading from "./GlobalLoading/module";
 import RightDialog from "./RightDialog/module";
 import LeftDialog from "./LeftDialog/module";
 import Data from "./Data/module";
-import TopAlert from "./TopAlert/InformationAlert/module";
+import TopAlert from "./TopAlert/module";
+import Utill from "./Utill/module";
 // import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";
 // import Login from "./Login/module";
@@ -22,11 +23,12 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   strict: true,
   modules: {
+    Utill,
     TopAlert,
     Data,
     LeftDialog,
     RightDialog,
-    GlobalLoading,
+    // GlobalLoading,
     // Project,
     // UpdateProject
     // ExportAndShare,

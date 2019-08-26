@@ -28,7 +28,7 @@ export default {
     context.commit("setLoding", false);
   }),
   deleteProject: request2(async context => {
-    context.rootCommit("GlobalLoading/setVisible", true);
+    context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
     try {
       await requestHelper(DeleteProject, {
         id: context.rootState.diagram.projectDescription.id
@@ -46,6 +46,6 @@ export default {
         message.error(error.message, 2);
       }
     }
-    context.rootCommit("GlobalLoading/setVisible", false);
+    context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", false);
   })
 };

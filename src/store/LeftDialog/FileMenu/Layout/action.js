@@ -3,11 +3,11 @@ import Logout from "@/request/logoutAccount.request";
 import { request2, requestHelper } from "@/helper/RequestConnector";
 export default {
   logoutAccount: request2(async context => {
-    context.rootCommit("GlobalLoading/setVisible", true);
+    context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
     try {
       await requestHelper(Logout);
       message.success("Logout", 2);
-      context.rootCommit("GlobalLoading/setVisible", false);
+      context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", false);
       setTimeout(() => {
         window.location.href = "/";
       }, 500);
@@ -19,7 +19,7 @@ export default {
       } else {
         message.error(error.message, 2);
       }
-      context.rootCommit("GlobalLoading/setVisible", false);
+      context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", false);
     }
   })
 };
