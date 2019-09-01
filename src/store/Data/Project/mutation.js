@@ -13,6 +13,7 @@ export default {
    * @param { value : value of x  and y } raw
    */
   async changeTablePotition(state, raw) {
+
     // eslint-disable-next-line
     // console.log("table key " + JSON.stringify(raw));
     var val = raw.value;
@@ -25,7 +26,7 @@ export default {
     // console.log(
     //   "draggedTable.association " + JSON.stringify(draggedTable.association)
     // );
-    await Object.keys(draggedTable.association).forEach(key => {
+    Object.keys(draggedTable.association).forEach(key => {
       let conn =
         state.connectorNewKey[draggedTable.association[key].connector_id];
       var targetTable =
@@ -53,7 +54,10 @@ export default {
           tailX = targetTable.point.x;
           centralX = tailX - Math.abs(headX - tailX) / 2;
         } else if (draggedTable.point.x < targetTable.point.x) {
-          if (draggedTable.point.x + draggedTable.widthTable < targetTable.point.x) {
+          if (
+            draggedTable.point.x + draggedTable.widthTable <
+            targetTable.point.x
+          ) {
             headX = draggedTable.point.x + draggedTable.widthTable;
             centralX = headX + Math.abs(headX - tailX) / 2;
           } else {
@@ -85,7 +89,10 @@ export default {
           tailX = draggedTable.point.x;
           centralX = headX - Math.abs(headX - tailX) / 2;
         } else if (draggedTable.point.x < targetTable.point.x) {
-          if (draggedTable.point.x + draggedTable.widthTable < targetTable.point.x) {
+          if (
+            draggedTable.point.x + draggedTable.widthTable <
+            targetTable.point.x
+          ) {
             tailX = draggedTable.point.x + draggedTable.widthTable;
             centralX = tailX + Math.abs(headX - tailX) / 2;
           } else {
@@ -104,6 +111,9 @@ export default {
       }
       conn.points = tmp;
     });
+
+    // save table
+    state.isSaved = false;
   },
   /**
    *
@@ -258,6 +268,9 @@ export default {
   },
   updateTableName(state, raw) {
     state.dataDiagramNew[raw.table_id].table_name = raw.tableNewName;
+
+    // save table
+    state.isSaved = false;
   },
   deleteColoumn(state, raw) {
     var coloumn_id = raw.coloumn_id;
@@ -424,6 +437,9 @@ export default {
       // Delete coloumn
       Vue.delete(state.dataDiagramNew[table_id].coloumns, coloumn_id);
     }
+
+    // save table
+    state.isSaved = false;
   },
   setConfigTable(state, tableName) {
     state.configTable.tableName = tableName;
@@ -442,113 +458,120 @@ export default {
     ].coloumn_name = newName;
 
     //-------- get max character ----------------
-    var coloumns=state.dataDiagramNew[tableKey_id].coloumns
-    var maxCharacter=0
-    Object.keys(coloumns).forEach(coloumnKey=>{
-      if(maxCharacter<coloumns[coloumnKey].coloumn_name.length){
-        maxCharacter=coloumns[coloumnKey].coloumn_name.length
-      }      
-    })
+    var coloumns = state.dataDiagramNew[tableKey_id].coloumns;
+    var maxCharacter = 0;
+    Object.keys(coloumns).forEach(coloumnKey => {
+      if (maxCharacter < coloumns[coloumnKey].coloumn_name.length) {
+        maxCharacter = coloumns[coloumnKey].coloumn_name.length;
+      }
+    });
 
-    var newWidth=150
-    var countCharacter=maxCharacter;
-    // // eslint-disable-next-line    
+    var newWidth = 150;
+    var countCharacter = maxCharacter;
+    // // eslint-disable-next-line
     // console.log('width table '+countCharacter)
-    if(countCharacter>8){
-      newWidth=150+(countCharacter-8)*7      
+    if (countCharacter > 8) {
+      newWidth = 150 + (countCharacter - 8) * 7;
     }
 
+    state.dataDiagramNew[tableKey_id].widthTable = newWidth;
+    /**
+     * ###################################################
+     * ---------------------------------------------------
+     * Change arrow connector
+     * ---------------------------------------------------
+     * ###################################################
+     */
 
+    var tableKey = tableKey_id;
+    var draggedTable = state.dataDiagramNew[tableKey];
 
-    state.dataDiagramNew[tableKey_id].widthTable=newWidth
-/**
- * ###################################################
- * ---------------------------------------------------
- * Change arrow connector
- * ---------------------------------------------------
- * ###################################################
- */      
-      var tableKey = tableKey_id
-      var draggedTable = state.dataDiagramNew[tableKey];
-  
+    await Object.keys(draggedTable.association).forEach(key => {
+      let conn =
+        state.connectorNewKey[draggedTable.association[key].connector_id];
+      var targetTable =
+        state.dataDiagramNew[draggedTable.association[key].table_id];
 
-      await Object.keys(draggedTable.association).forEach(key => {
-        let conn =
-          state.connectorNewKey[draggedTable.association[key].connector_id];
-        var targetTable =
-          state.dataDiagramNew[draggedTable.association[key].table_id];
+      var tmp = [];
+      // Tail is has a arrow pointer
+      if (draggedTable.association[key].type === "belong") {
+        var headX =
+          draggedTable.point.x + draggedTable.association[key].point.x;
+        var headY =
+          draggedTable.point.y + draggedTable.association[key].point.y;
 
-        var tmp = [];
-        // Tail is has a arrow pointer
-        if (draggedTable.association[key].type === "belong") {
-          var headX =
-            draggedTable.point.x + draggedTable.association[key].point.x;
-          var headY =
-            draggedTable.point.y + draggedTable.association[key].point.y;
-  
-          let tailX = conn.points[6];
-          let tailY = conn.points[7];
-          var centralX;
-  
-          // System router draggable
+        let tailX = conn.points[6];
+        let tailY = conn.points[7];
+        var centralX;
+
+        // System router draggable
+        if (
+          draggedTable.point.x > targetTable.point.x &&
+          draggedTable.point.x < targetTable.point.x + targetTable.widthTable
+        ) {
+          tailX = targetTable.point.x;
+          centralX = tailX - Math.abs(headX - tailX) / 2;
+        } else if (draggedTable.point.x < targetTable.point.x) {
           if (
-            draggedTable.point.x > targetTable.point.x &&
-            draggedTable.point.x < targetTable.point.x + targetTable.widthTable
+            draggedTable.point.x + draggedTable.widthTable <
+            targetTable.point.x
           ) {
+            headX = draggedTable.point.x + draggedTable.widthTable;
+            centralX = headX + Math.abs(headX - tailX) / 2;
+          } else {
             tailX = targetTable.point.x;
-            centralX = tailX - Math.abs(headX - tailX) / 2;
-          } else if (draggedTable.point.x < targetTable.point.x) {
-            if (draggedTable.point.x + draggedTable.widthTable < targetTable.point.x) {
-              headX = draggedTable.point.x + draggedTable.widthTable;
-              centralX = headX + Math.abs(headX - tailX) / 2;
-            } else {
-              tailX = targetTable.point.x;
-              centralX = headX - Math.abs(headX - tailX) / 2;
-            }
-          } else {
-            tailX = targetTable.point.x + targetTable.widthTable;
             centralX = headX - Math.abs(headX - tailX) / 2;
           }
-          // End System router draggable
-  
-          tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
-        } else if (draggedTable.association[key].type === "has") {
-          var tailX =
-            draggedTable.point.x + draggedTable.association[key].point.x;
-          var tailY =
-            draggedTable.point.y + draggedTable.association[key].point.y;
-          let headX = conn.points[0];
-          let headY = conn.points[1];
-  
-          let centralX = headX - Math.abs(headX - tailX) / 2;
-          // System router draggable
-          if (
-            draggedTable.point.x > targetTable.point.x &&
-            draggedTable.point.x < targetTable.point.x + targetTable.widthTable
-          ) {
-            headX = targetTable.point.x;
-            tailX = draggedTable.point.x;
-            centralX = headX - Math.abs(headX - tailX) / 2;
-          } else if (draggedTable.point.x < targetTable.point.x) {
-            if (draggedTable.point.x + draggedTable.widthTable < targetTable.point.x) {
-              tailX = draggedTable.point.x + draggedTable.widthTable;
-              centralX = tailX + Math.abs(headX - tailX) / 2;
-            } else {
-              tailX = draggedTable.point.x;
-              headX = targetTable.point.x;
-              centralX = tailX - Math.abs(headX - tailX) / 2;
-            }
-          } else {
-            headX = targetTable.point.x + targetTable.widthTable;
-            tailX = draggedTable.point.x;
-            centralX = tailX - Math.abs(headX - tailX) / 2;
-          }
-          // End System router draggable
-  
-          tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+        } else {
+          tailX = targetTable.point.x + targetTable.widthTable;
+          centralX = headX - Math.abs(headX - tailX) / 2;
         }
-        conn.points = tmp;
-      });
+        // End System router draggable
+
+        tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+      } else if (draggedTable.association[key].type === "has") {
+        var tailX =
+          draggedTable.point.x + draggedTable.association[key].point.x;
+        var tailY =
+          draggedTable.point.y + draggedTable.association[key].point.y;
+        let headX = conn.points[0];
+        let headY = conn.points[1];
+
+        let centralX = headX - Math.abs(headX - tailX) / 2;
+        // System router draggable
+        if (
+          draggedTable.point.x > targetTable.point.x &&
+          draggedTable.point.x < targetTable.point.x + targetTable.widthTable
+        ) {
+          headX = targetTable.point.x;
+          tailX = draggedTable.point.x;
+          centralX = headX - Math.abs(headX - tailX) / 2;
+        } else if (draggedTable.point.x < targetTable.point.x) {
+          if (
+            draggedTable.point.x + draggedTable.widthTable <
+            targetTable.point.x
+          ) {
+            tailX = draggedTable.point.x + draggedTable.widthTable;
+            centralX = tailX + Math.abs(headX - tailX) / 2;
+          } else {
+            tailX = draggedTable.point.x;
+            headX = targetTable.point.x;
+            centralX = tailX - Math.abs(headX - tailX) / 2;
+          }
+        } else {
+          headX = targetTable.point.x + targetTable.widthTable;
+          tailX = draggedTable.point.x;
+          centralX = tailX - Math.abs(headX - tailX) / 2;
+        }
+        // End System router draggable
+
+        tmp = [headX, headY, centralX, headY, centralX, tailY, tailX, tailY];
+      }
+      conn.points = tmp;
+    });
+
+    // save table
+    state.isSaved = false;
   },
   async updateDataType(state, raw) {
     var tableKey_id = raw.tableKey_id;
@@ -557,6 +580,9 @@ export default {
     state.dataDiagramNew[tableKey_id].coloumns[
       coloumn_id
     ].dataType = newDataType;
+
+    // save table
+    state.isSaved = false;
   },
   async updatePrimaryKey(state, raw) {
     var tableKey_id = raw.tableKey_id;
@@ -565,12 +591,18 @@ export default {
     state.dataDiagramNew[tableKey_id].coloumns[
       coloumn_id
     ].primaryKey = primaryKey;
+
+    // save table
+    state.isSaved = false;
   },
   async updateAllowNull(state, raw) {
     var tableKey_id = raw.tableKey_id;
     var coloumn_id = raw.coloumn_id;
     var notNull = raw.notNull;
     state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].notNull = notNull;
+
+    // save table
+    state.isSaved = false;
   },
   async updateForeignKeyStatus(state, raw) {
     var tableKey_id = raw.tableKey_id;
@@ -615,18 +647,27 @@ export default {
         coloumn_id
       ].association_belong_id = null;
     }
+
+    // save table
+    state.isSaved = false;
   },
   async updateUnique(state, raw) {
     var tableKey_id = raw.tableKey_id;
     var coloumn_id = raw.coloumn_id;
     var unique = raw.unique;
     state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].unique = unique;
+
+    // save table
+    state.isSaved = false;
   },
   async updateUnsigned(state, raw) {
     var tableKey_id = raw.tableKey_id;
     var coloumn_id = raw.coloumn_id;
     var unsigned = raw.unsigned;
     state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].unsigned = unsigned;
+
+    // save table
+    state.isSaved = false;
   },
   async updateAutoIncrement(state, raw) {
     var tableKey_id = raw.tableKey_id;
@@ -635,6 +676,9 @@ export default {
     state.dataDiagramNew[tableKey_id].coloumns[
       coloumn_id
     ].autoIncrement = autoIncrement;
+
+    // save table
+    state.isSaved = false;
   },
   async updateAssociationBelongColoumnName(state, raw) {
     var association_id = raw.association_id;
@@ -747,6 +791,8 @@ export default {
     /**
      * End change route connector for reactive
      */
+    // save table
+    state.isSaved = false;
   },
   addNewColoumn(state, raw) {
     // var association_id_foreignKey= raw.association_id
@@ -786,6 +832,8 @@ export default {
     });
 
     // var coloumn_id_foreignKey=raw.thisForeignKey_id
+    // save table
+    state.isSaved = false;
   },
   async updateAssociationBelongTableName(state, raw) {
     var association_id_foreignKey = raw.association_id;
@@ -1115,6 +1163,9 @@ export default {
        * End change route connector for reactive
        */
     }
+
+    // save table
+    state.isSaved = false;
   },
   setLineStyleConnector(state, raw) {
     state.connectorNewKey[raw.key] = raw.style;
@@ -1290,6 +1341,8 @@ export default {
     });
 
     Vue.delete(state.dataDiagramNew, table_id);
+    // save table
+    state.isSaved = false;
   },
   addNewTable(state) {
     // state.dataDiagramNew[uuidv4()]={}
@@ -1297,7 +1350,7 @@ export default {
     Vue.set(state.dataDiagramNew, table_id, {
       table_name: "",
       widthTable: 150,
-      heightTable:0,      
+      heightTable: 0,
       point: {
         x: 30,
         y: 110
@@ -1349,6 +1402,9 @@ export default {
     state.tableDetail.isNewTable = true;
     state.tableDetail.isEditTableName = true;
     state.tableDetail.showDetailcoloumn = 0;
+
+    // save table
+    state.isSaved = false;
   },
   setIsEditTableName(state, value) {
     state.tableDetail.isEditTableName = value;
@@ -1386,6 +1442,9 @@ export default {
       association_belong_id: null,
       association_has_id: []
     });
+
+    // save table
+    state.isSaved = false;
   },
   setConnector(state, data) {
     state.connectorNewKey = data;
@@ -1406,7 +1465,7 @@ export default {
     state.projectDescription.created = data.created;
     state.projectDescription.updated = data.updated;
   },
-  deletedData(state){
+  deletedData(state) {
     state.projectDescription.id = null;
     state.projectDescription.uuid = null;
     state.projectDescription.title = null;
@@ -1420,5 +1479,11 @@ export default {
     state.projectDescription.updated = null;
     state.dataDiagramNew = {};
     state.connectorNewKey = {};
+  },
+  setIsSaved(state, value) {
+    state.isSaved = value;
+  },
+  setSavedMessage(state, value){
+    state.savedMessage=value;
   }
 };

@@ -39,7 +39,10 @@ export default {
         }
         context.commit("setProjectDescription", respond.payload);
         context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
-        context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "properties");
+        context.rootCommit(
+          "LeftDialog/FileMenu/Layout/setPanelName",
+          "properties"
+        );
         message.success("Opened", 2);
       }
     } catch (error) {
@@ -51,7 +54,10 @@ export default {
         );
 
         context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", true);
-        context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "OpenSharedWithPassword");
+        context.rootCommit(
+          "LeftDialog/FileMenu/Layout/setPanelName",
+          "OpenSharedWithPassword"
+        );
       } else {
         message.error(error.message, 2);
       }
@@ -82,6 +88,7 @@ export default {
       }
       context.commit("setProjectDescription", respond.payload);
       context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
+      context.commit("setIsSaved", true);
     } catch (error) {
       if (error.code === 10) {
         message.error("Login first to open project", 2);
@@ -94,8 +101,7 @@ export default {
     context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", false);
   }),
   saveProject: request2(async context => {
-    const hide = message.loading("Saving in progress..", 0);
-
+    context.commit("setSavedMessage", "Saving in progress...");
     try {
       await requestHelper(SaveProject, {
         id: context.state.projectDescription.id,
@@ -104,22 +110,75 @@ export default {
           diagram: context.state.dataDiagramNew
         })
       });
-      setTimeout(hide, 0);
+      var emote = [
+        "😁",
+        "😃",
+        "😄",
+        "😁",
+        "😆",
+        "️😊",
+        "🙂",
+        "🙃",
+        "😁",
+        "🤨",
+        "😏",
+        "😘",
+        "😏",
+        "😬",
+        "😯",
+        "👍"
+      ];
+      var randomValue = parseInt(Math.random() * 16);
+      context.commit(
+        "setSavedMessage",
+        "Saved.... " +
+          emote[randomValue] +
+          emote[randomValue] +
+          emote[randomValue]
+      );
       setTimeout(() => {
-        message.success("Saved Success", 1);
-      }, 500);
+        context.commit("setSavedMessage", "");
+      }, 1500);
     } catch (error) {
       if (error.code === 10) {
-        setTimeout(hide, 0);
+        context.commit("setSavedMessage", "Save failure...");
         message.error("Login first to save account", 2);
         context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", true);
         context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "login");
       } else {
-        setTimeout(hide, 0);
+        context.commit("setSavedMessage", "Save failure " + error.message);
         setTimeout(() => {
           message.error("Saved Failure " + error.message, 2);
         }, 500);
       }
     }
+  }),
+  autoSave: request2(async context => {
+    // eslint-disable-next-line
+    console.log("Auto Save starting");
+    var count = 0;
+    var isSavingProgress = false;
+    setInterval(async () => {
+      if (context.rootState.Data.Account.id !== null) {
+        if (isSavingProgress === false && context.state.isSaved === false) {
+          count++;
+        }
+
+        if (
+          context.state.isSaved === false &&
+          count >= 2 &&
+          isSavingProgress === false
+        ) {
+          if (context.state.projectDescription.id !== null) {
+            isSavingProgress = true;
+            count = 0;
+            await context.dispatch("saveProject");
+            count = 0;
+            isSavingProgress = false;
+            context.commit("setIsSaved", true);
+          }
+        }
+      }
+    }, 1000);
   })
 };

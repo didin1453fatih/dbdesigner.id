@@ -149,14 +149,14 @@ export default {
     },
     ...mapActions("Data/Project", {
       loadProjectUUID: "loadProjectUUID",
-      setEmptyDiagram: "setEmptyDiagram"
+      setEmptyDiagram: "setEmptyDiagram",
+      autoSave:'autoSave'
     }),
     ...mapActions("Data/Account", {
       globalReadAccount: "globalReadAccount"
     })
   },
   async mounted() {
-    // "ds".split
     if (window.location.toString().indexOf("uuid=") > 1) {
       var valueUUID = window.location.toString().split("uuid=")[1];
       this.globalReadAccount({
@@ -199,38 +199,7 @@ export default {
       }
     }
 
-    // var flip = false;
-    // var cnn=this.connectorNewKey
-    // var hhh= this.setLineStyleConnector
-    // setInterval(function() {
-    //   if (flip === false) {
-    //     flip = true;
-    //     let styleL = {
-    //       shadowBlur: 5,
-    //       shadowColor: "#00D2FF"
-    //     };
-    //     Object.keys(cnn).forEach( key => {
-    //       // cnn[key].lineStyle = tmpLineStye;
-    //       hhh({
-    //         key:key,
-    //         style:styleL
-    //       })
-    //     });
-    //   } else {
-    //     flip = false;
-    //     let styleL = {
-    //       shadowBlur: 5,
-    //       shadowColor: "#00D2FF"
-    //     };
-    //     Object.keys(cnn).forEach( key => {
-    //       // cnn[key].lineStyle = tmpLineStye;
-    //       hhh({
-    //         key:key,
-    //         style:styleL
-    //       })
-    //     });
-    //   }
-    // }, 1000);
+    this.autoSave();  
   },
   computed: {
     ...mapState("Data/Project", {
