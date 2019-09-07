@@ -7,13 +7,13 @@ export default {
     context.commit("setLoding", true);
     try {
       await requestHelper(UpdateProject, {
-        id: context.rootState.diagram.projectDescription.id,
+        id: context.rootState.Data.Project.projectDescription.id,
         title: context.state.title,
         description: context.state.description
       });
       message.success("Updated", 2);
       context.rootDispatch("Data/Project/loadProject", {
-        id: context.rootState.diagram.projectDescription.id
+        id: context.rootState.Data.Project.projectDescription.id
       });
       context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
     } catch (error) {
@@ -31,17 +31,21 @@ export default {
     context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
     try {
       await requestHelper(DeleteProject, {
-        id: context.rootState.diagram.projectDescription.id
+        id: context.rootState.Data.Project.projectDescription.id
       });
       message.success("Deleted", 2);
       context.commit("setTitle", null);
       context.commit("setDescription", null);
       context.rootCommit("Data/Project/deletedData");
+      context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "open");
+      var path = "/app?uuid="
+      window.history.pushState("", "", path);
+      document.title ="dbdesginer.id"
     } catch (error) {
       if (error.code === 10) {
         message.error("Login first to delete this project", 2);
-        context.rootCommit("LeftPanel/setVisible", true);
-        context.rootCommit("LeftPanel/setPanelName", "login");
+        context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", true);
+        context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "login");
       } else {
         message.error(error.message, 2);
       }

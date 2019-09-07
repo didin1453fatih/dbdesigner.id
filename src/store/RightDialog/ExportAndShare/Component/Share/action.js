@@ -20,8 +20,8 @@ export default {
     } catch (error) {
       if (error.code === 10) {
         message.error("Login first to save share status", 2);
-        context.rootCommit("LeftPanel/setVisible", true);
-        context.rootCommit("LeftPanel/setPanelName", "login");
+        context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", true);
+        context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "login");
       } else {
         message.error(error.message, 2);
       }
@@ -41,8 +41,8 @@ export default {
     } catch (error) {
       if (error.code === 10) {
         message.error("Login first to read share status", 2);
-        context.rootCommit("LeftPanel/setVisible", true);
-        context.rootCommit("LeftPanel/setPanelName", "login");
+        context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", true);
+        context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "login");
       } else {
         message.error(error.message, 2);
       }

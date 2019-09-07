@@ -43,8 +43,8 @@
       <div slot="message" style="text-align: center;">
         <b>{{messageAccountInformation}}</b>
       </div>
-    </a-alert> -->
-    <information-alert/>
+    </a-alert>-->
+    <information-alert />
 
     <menu-fluent />
 
@@ -99,7 +99,7 @@ import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
-import InformationAlert from "./components/TopAlert/Information/Layout"
+import InformationAlert from "./components/TopAlert/Information/Layout";
 
 export default {
   components: {
@@ -110,7 +110,7 @@ export default {
     ExportAndShare,
     LoadingGlobal,
     ConnectorBase,
-    TableDetail,
+    TableDetail
   },
   methods: {
     onCloseMessage(e) {
@@ -150,11 +150,14 @@ export default {
     ...mapActions("Data/Project", {
       loadProjectUUID: "loadProjectUUID",
       setEmptyDiagram: "setEmptyDiagram",
-      autoSave:'autoSave'
+      autoSave: "autoSave"
     }),
     ...mapActions("Data/Account", {
       globalReadAccount: "globalReadAccount"
     })
+  },
+  created(){
+    this.setEmptyDiagram();
   },
   async mounted() {
     if (window.location.toString().indexOf("uuid=") > 1) {
@@ -170,7 +173,6 @@ export default {
       await this.globalReadAccount({
         uuid: null
       });
-      // await this.setEmptyDiagram()
       var parsed = qs.parse(window.location.toString().split("#")[1]);
       if (parsed.src === "mail_confirmation") {
         if (parsed.action === "re_login") {
@@ -199,7 +201,7 @@ export default {
       }
     }
 
-    this.autoSave();  
+    this.autoSave();
   },
   computed: {
     ...mapState("Data/Project", {

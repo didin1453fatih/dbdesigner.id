@@ -5,6 +5,9 @@
         Makan
       </div>
     </div>-->
+    <div style="position: absolute;width: 100%;margin-top: 2px;">
+        <span style="font-size: 0.8rem; margin-left:40%;z-index: 10">{{savedMessage}}</span>
+    </div>    
     <ul class="tabs-holder">
       <li class="special" @click="openLeftPanel(true)">
         <a>File</a>
@@ -18,9 +21,6 @@
       <li>
         <a href="#tab_folder">Account</a>
       </li>
-      <div style="position: absolute;width: 100%;z-index: -1;margin-top: 4px;">
-        <span style="font-size: 0.8rem; margin-left:40%">{{savedMessage}}</span>
-      </div>
       <div style=";text-align: right;">
           <span style="font-size: 1.0rem;padding-top:5px; margin-right:5px">{{title}} ~ <b>{{username}}</b></span>
           <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>          

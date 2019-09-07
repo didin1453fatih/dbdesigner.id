@@ -2,7 +2,7 @@ import axios from "axios";
 export default {
   action: async (inputs, output) => {
     await axios
-      .get("/back-office/api/v1/project/readOne?id=" + inputs.id)
+      .get("/back-office/api/v1/project/readByUUID?uuid=" + inputs.uuid)
       .then(function(response) {
         if (response.data.success) {
           return output.success(response.data);

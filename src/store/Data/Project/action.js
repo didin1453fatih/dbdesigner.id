@@ -9,8 +9,7 @@ export default {
     context.commit("setDiagram", {});
 
     context.commit("deletedData");
-    // context.rootCommit("LeftPanel/setVisible", true);
-    context.rootCommit("LeftPanel/setPanelName", "open");
+    context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "open");
   }),
   loadProjectUUID: request2(async context => {
     context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
@@ -20,31 +19,30 @@ export default {
         uuid: context.inputs.uuid,
         password: context.inputs.password
       });
-      if (respond.success === true) {
-        var dataJSON = JSON.parse(respond.payload.data_design);
-        if (dataJSON !== null) {
-          if (dataJSON.connector !== undefined && dataJSON.connector !== null) {
-            context.commit("setConnector", dataJSON.connector);
-          } else {
-            context.commit("setConnector", {});
-          }
-          if (dataJSON.diagram !== undefined && dataJSON.diagram !== null) {
-            context.commit("setDiagram", dataJSON.diagram);
-          } else {
-            context.commit("setDiagram", {});
-          }
+      var dataJSON = JSON.parse(respond.payload.data_design);
+      if (dataJSON !== null) {
+        if (dataJSON.connector !== undefined && dataJSON.connector !== null) {
+          context.commit("setConnector", dataJSON.connector);
         } else {
           context.commit("setConnector", {});
+        }
+        if (dataJSON.diagram !== undefined && dataJSON.diagram !== null) {
+          context.commit("setDiagram", dataJSON.diagram);
+        } else {
           context.commit("setDiagram", {});
         }
-        context.commit("setProjectDescription", respond.payload);
-        context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
-        context.rootCommit(
-          "LeftDialog/FileMenu/Layout/setPanelName",
-          "properties"
-        );
-        message.success("Opened", 2);
+      } else {
+        context.commit("setConnector", {});
+        context.commit("setDiagram", {});
       }
+      document.title = respond.payload.title;
+      context.commit("setProjectDescription", respond.payload);
+      context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
+      context.rootCommit(
+        "LeftDialog/FileMenu/Layout/setPanelName",
+        "properties"
+      );
+      message.success("Opened", 2);
     } catch (error) {
       if (error.code === 23) {
         message.info(error.description.title + " Required password", 3);
@@ -68,7 +66,7 @@ export default {
     context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
     try {
       var respond = await requestHelper(LoadProject, {
-        id: context.inputs.id
+        uuid: context.inputs.uuid
       });
       var dataJSON = JSON.parse(respond.payload.data_design);
       if (dataJSON !== null) {
@@ -86,6 +84,9 @@ export default {
         context.commit("setConnector", {});
         context.commit("setDiagram", {});
       }
+      var path = "/app?uuid=" + respond.payload.uuid;
+      window.history.pushState("", "", path);
+      document.title = respond.payload.title;
       context.commit("setProjectDescription", respond.payload);
       context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
       context.commit("setIsSaved", true);
