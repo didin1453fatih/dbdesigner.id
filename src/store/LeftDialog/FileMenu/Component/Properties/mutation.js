@@ -1,5 +1,5 @@
 export default {
-  setLoding(state, value) {
+  setLoading(state, value) {
     state.loading = value;
   },
   setTitle(state, value) {

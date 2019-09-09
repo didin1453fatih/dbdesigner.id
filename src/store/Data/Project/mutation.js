@@ -1459,11 +1459,18 @@ export default {
     state.projectDescription.description = data.description;
     state.projectDescription.likes = data.likes;
     state.projectDescription.viewers = data.viewers;
-    state.projectDescription.status_share = data.status_share;
+    state.projectDescription.share_status = data.share_status;
+    state.projectDescription.share_link = data.share_link;
     state.projectDescription.password = data.password;
     state.projectDescription.user_id = data.user_id;
     state.projectDescription.created = data.created;
     state.projectDescription.updated = data.updated;
+  },
+  setProjectDescriptionShareStatus(state, value){
+    state.projectDescription.share_status = value;
+  },
+  setProjectDescriptionShareLink(state, value){
+    state.projectDescription.share_link = value;
   },
   deletedData(state) {
     state.projectDescription.id = null;
