@@ -25,27 +25,40 @@
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
                 @click="setPanelName('export')"
               >
-                <label style="color:white">Export</label>
+                <label style="color:white">SQL</label>
+              </div>
+              <div
+                style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ;"
+                @click="setPanelName('image')"
+              >
+                <label style="color:white">Image</label>
               </div>
               <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="setPanelName('share')"
               >
-                <label style="color:white">Share</label>
-              </div>
+                <label style="color:white">PDF</label>
+              </div>              
             </div>
           </td>
           <td style="background-color:#F1F1F1;vertical-align:top">
             <div
               v-if="panelName==='export'"
-              style="padding-top:30px; padding-left:25px; width:100%;height:-webkit-fill-available;"
+              style="padding-top:20px; padding-left:25px; width:100%;height:-webkit-fill-available;"
               class="fg-black"
             >
               <export/>
             </div>
             <div
+              v-else-if="panelName==='image'"
+              style="padding-top:20px; padding-left:25px; width:100%"
+              class="fg-black"
+            >
+              <image-export/>
+            </div>            
+            <div
               v-else-if="panelName==='share'"
-              style="padding-top:30px; padding-left:25px; width:100%"
+              style="padding-top:20px; padding-left:25px; width:100%"
               class="fg-black"
             >
               <Share/>
@@ -62,6 +75,7 @@ import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import Export from "./Component/Export";
 import Share from "./Component/Share";
+import ImageExport from "./Component/Image"
 export default {
   methods: {
     ...mapMutations("RightDialog/ExportAndShare/Layout", {
@@ -74,7 +88,8 @@ export default {
   },
   components: {
     Export,
-    Share
+    Share,
+    ImageExport
   },
   computed: {
     ...mapState("RightDialog/ExportAndShare/Layout", {

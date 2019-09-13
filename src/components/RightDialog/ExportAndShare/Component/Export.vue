@@ -1,16 +1,7 @@
 <template>
   <div>
-    <h3>Export</h3>
+    <h3>SQL</h3>
     <div v-if="step===0">
-      <div style="margin-top:20px">
-        <label>To</label>
-        <br>
-        <a-radio-group @change="onChangeTo" defaultChecked="sql" defaultValue="sql" style="margin-top:5px">
-          <a-radio-button value="sql">SQL</a-radio-button>
-          <a-radio-button value="image" disabled>Image</a-radio-button>
-          <a-radio-button value="pdf" disabled>PDF</a-radio-button>
-        </a-radio-group>
-      </div>
       <div style="margin-top:20px">
         <label>Database</label>
         <br>
