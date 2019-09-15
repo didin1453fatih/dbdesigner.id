@@ -69,13 +69,6 @@
               <image-export/>
             </div>            
             <div
-              v-else-if="panelName==='share'"
-              style="padding-top:20px; padding-left:25px; width:100%"
-              class="fg-black"
-            >
-              <Share/>
-            </div>
-            <div
               v-else-if="panelName==='pdf'"
               style="padding-top:20px; padding-left:25px; width:100%"
               class="fg-black"
@@ -107,7 +100,6 @@
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import Sql from "./Component/Sql";
-import Share from "./Component/Share";
 import ImageExport from "./Component/Image"
 import Pdf from "./Component/Pdf"
 import Laravel from "./Component/Laravel"
@@ -124,7 +116,6 @@ export default {
   },
   components: {
     Sql,
-    Share,
     ImageExport,
     Pdf,
     Laravel,
