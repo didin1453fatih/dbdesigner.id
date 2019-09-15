@@ -51,6 +51,13 @@
     <div style=" overflow: scroll;width:100%;height:470px">
       <v-stage :config="configKonva" ref="stage">
         <v-layer ref="layer">
+          <v-rect
+            :config="{
+              width: 1400,
+              height: 700,
+              fill: 'white'
+            }"
+          />
           <connector-base
             v-for="connectorKey in Object.keys(connectorNewKey)"
             v-bind:key="connectorKey"
@@ -164,7 +171,11 @@ export default {
     EventBus.$on("Canvas/exportToDataURL", options => {
       var imageData = this.$refs.stage.getStage().toDataURL(options);
       this.SET_IMAGE_BASE_64(imageData);
-    });    
+    });
+    EventBus.$on("Canvas/cropped", options => {
+      var cropImg = this.$refs.stage.getCroppedCanvas().toDataURL(options);
+      this.SET_IMAGE_BASE_64(cropImg);
+    });
   },
   async mounted() {
     if (window.location.toString().indexOf("uuid=") > 1) {
