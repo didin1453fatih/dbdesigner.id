@@ -49,8 +49,15 @@
     <menu-fluent />
 
     <div style=" overflow: scroll;width:100%;height:470px">
-      <v-stage :config="configKonva">
-        <v-layer>
+      <v-stage :config="configKonva" ref="stage">
+        <v-layer ref="layer">
+          <v-rect
+            :config="{
+              width: 1400,
+              height: 700,
+              fill: 'white'
+            }"
+          />
           <connector-base
             v-for="connectorKey in Object.keys(connectorNewKey)"
             v-bind:key="connectorKey"
@@ -80,7 +87,7 @@
       @close="onClose"
     />
     <left-panel />
-    <export-and-share />
+    <export />
     <loading-global />
   </div>
 </template>
@@ -96,18 +103,18 @@ import ConnectorBase from "./components/MainCanvas/ConnectorBase";
 import LoadingGlobal from "./components/Utill/LoadingGlobal/Layout";
 import MenuFluent from "./components/TopMenu/MenuLayout.vue";
 import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
-import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
+import Export from "./components/RightDialog/Export/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
 import InformationAlert from "./components/TopAlert/Information/Layout";
-
+import { EventBus } from "@/helper/EventBus";
 export default {
   components: {
     InformationAlert,
     TableBase,
     MenuFluent,
     LeftPanel,
-    ExportAndShare,
+    Export,
     LoadingGlobal,
     ConnectorBase,
     TableDetail
@@ -121,6 +128,9 @@ export default {
     ...mapMutations("LeftDialog/FileMenu/Layout", {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
+    }),
+    ...mapMutations("RightDialog/Export/Component/Image", {
+      SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
     // ...mapMutations("Account", {
     //   setVisibleAccountInformation: "setVisibleAccountInformation",
@@ -156,8 +166,16 @@ export default {
       globalReadAccount: "globalReadAccount"
     })
   },
-  created(){
+  created() {
     this.setEmptyDiagram();
+    EventBus.$on("Canvas/exportToDataURL", options => {
+      var imageData = this.$refs.stage.getStage().toDataURL(options);
+      this.SET_IMAGE_BASE_64(imageData);
+    });
+    EventBus.$on("Canvas/cropped", options => {
+      var cropImg = this.$refs.stage.getCroppedCanvas().toDataURL(options);
+      this.SET_IMAGE_BASE_64(cropImg);
+    });
   },
   async mounted() {
     if (window.location.toString().indexOf("uuid=") > 1) {

@@ -1,7 +1,7 @@
-import ExportAndShare from "./ExportAndShare/module";
+import Export from "./Export/module";
 export default {
   namespaced: true,
   modules: {
-    ExportAndShare: ExportAndShare
+    Export: Export
   }
 };
