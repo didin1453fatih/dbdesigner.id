@@ -40,10 +40,10 @@
         class="cropper-bg"
       >
         <div
-          :style="`position: absolute;z-index: 100;background-color:white; margin-top:${height/3}px;border-radius: 4px;
+          style="position: absolute;z-index: 100;background-color:white; margin-top:30vh;border-radius: 4px;
                   border: 1px solid transparent;-webkit-box-shadow: 0px 0px 5px 0px rgba(117,117,117,1);
                   -moz-box-shadow: 0px 0px 5px 0px rgba(117,117,117,1);
-                  box-shadow: 0px 0px 5px 0px rgba(117,117,117,1);`"
+                  box-shadow: 0px 0px 5px 0px rgba(117,117,117,1);"
         >
           <div
             style="padding-top:7px;padding-bottom:10px;padding-left:7px;padding-right:7px"
@@ -110,22 +110,12 @@ export default {
     })
   },
   mounted() {
-    // eslint-disable-next-line
-    console.log(window.innerHeight);
-    this.height = window.innerHeight;
   },
   methods: {
     zoomIn() {
-      // this.$refs.cropper.rotate(45);
-      // eslint-disable-next-line
-      // console.log(this.$refs.cropper)
-      // relativeZoom
-      this.zoomValue += 0.01;
       this.$refs.cropper.relativeZoom(0.1);
     },
     zoomOut() {
-      // this.$refs.cropper.zoom(-0.1);
-      this.zoomValue -= 0.01;
       this.$refs.cropper.relativeZoom(-0.1);
     },
     exportImage() {
@@ -133,7 +123,6 @@ export default {
         mimeType: this.mimeType,
         pixelRatio: this.quality
       });
-      this.step = 1;
       this.visiblePopUp = true;
       this.croppingRender = false;
       setTimeout(() => {
@@ -153,9 +142,6 @@ export default {
           this.mimeType.split("/")[1]
       );
     },
-    exportNextEvent() {
-      this.step = 1;
-    },
     ...mapMutations("RightDialog/ExportAndShare/Component/Image", {
       openExport: "setVisible"
     }),
@@ -169,17 +155,13 @@ export default {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      // delete link;
     },
     ...mapMutations("RightDialog/ExportAndShare/Component/Image", {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
     cropImage() {
       var cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-      // window.alert(cropImg)
       this.SET_IMAGE_BASE_64(cropImg);
-      // eslint-disable-next-line
-      console.log(this.imageBase64);
       this.croppingRender = false;
       this.SET_GLOBAL_LOADING(true);
       setTimeout(() => {
@@ -189,26 +171,16 @@ export default {
           this.SET_GLOBAL_LOADING(false);
         }, 100);
       }, 100);
-      // this.croppingRender=true
-      // EventBus.$emit("Canvas/cropped", {
-      //   mimeType: this.mimeType,
-      //   pixelRatio: this.quality
-      // });
     }
   },
   components: {
-    // Cropper,
     VueCropper
   },
   data() {
     return {
-      zoomValue: 0.5,
-      step: 0,
       mimeType: "image/png",
       quality: 1,
       visiblePopUp: false,
-      cropImg: "",
-      height: 0,
       croppingRender: true
     };
   }
