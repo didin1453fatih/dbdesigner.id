@@ -318,7 +318,7 @@ export default {
         this.setLeftPanelName('login')        
       }else if(this.title!==null){
         this.setVisibleExportAndShare(true);
-        this.setPanelNameExportAndShare('export')
+        this.setPanelNameExportAndShare('sql')
       }else{
         message.error('The project is empty')
       }

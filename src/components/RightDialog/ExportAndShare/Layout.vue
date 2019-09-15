@@ -23,7 +23,7 @@
               </div>
               <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
-                @click="setPanelName('export')"
+                @click="setPanelName('sql')"
               >
                 <label style="color:white">Sql</label>
               </div>
@@ -55,11 +55,11 @@
           </td>
           <td style="background-color:#F1F1F1;vertical-align:top">
             <div
-              v-if="panelName==='export'"
+              v-if="panelName==='sql'"
               style="padding-top:20px; padding-left:25px; width:100%;height:-webkit-fill-available;"
               class="fg-black"
             >
-              <export/>
+              <sql/>
             </div>
             <div
               v-else-if="panelName==='image'"
@@ -106,7 +106,7 @@
 <script>
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
-import Export from "./Component/Export";
+import Sql from "./Component/Sql";
 import Share from "./Component/Share";
 import ImageExport from "./Component/Image"
 import Pdf from "./Component/Pdf"
@@ -123,7 +123,7 @@ export default {
     }
   },
   components: {
-    Export,
+    Sql,
     Share,
     ImageExport,
     Pdf,

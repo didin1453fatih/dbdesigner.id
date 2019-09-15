@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>SQL</h3>
+    <h3>Sql</h3>
     <div v-if="step===0">
       <div style="margin-top:20px">
         <label>Database</label>

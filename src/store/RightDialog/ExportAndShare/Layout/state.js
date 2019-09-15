@@ -1,4 +1,4 @@
 export default {
   visible: false,
-  panelName:'export'
+  panelName: "sql"
 };
