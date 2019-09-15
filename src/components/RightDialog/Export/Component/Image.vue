@@ -102,7 +102,7 @@ import VueCropper from "vue-cropperjs";
 import "cropperjs/dist/cropper.css";
 export default {
   computed: {
-    ...mapState("RightDialog/ExportAndShare/Component/Image", {
+    ...mapState("RightDialog/Export/Component/Image", {
       imageBase64: state => state.imageBase64
     }),
     ...mapState("Data/Project", {
@@ -142,7 +142,7 @@ export default {
           this.mimeType.split("/")[1]
       );
     },
-    ...mapMutations("RightDialog/ExportAndShare/Component/Image", {
+    ...mapMutations("RightDialog/Export/Component/Image", {
       openExport: "setVisible"
     }),
     ...mapMutations("Utill/LoadingGlobal/Layout/", {
@@ -156,7 +156,7 @@ export default {
       link.click();
       document.body.removeChild(link);
     },
-    ...mapMutations("RightDialog/ExportAndShare/Component/Image", {
+    ...mapMutations("RightDialog/Export/Component/Image", {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
     cropImage() {

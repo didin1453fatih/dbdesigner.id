@@ -16,7 +16,7 @@ import Utill from "./Utill/module";
 // import Account from "./Account/module";
 // import Share from "./Share/module";
 // import OpenSharedWithPassword from "./OpenSharedWithPassword/module";
-// import ExportAndShare from "./ExportAndShare/module";
+// import Export from "./Export/module";
 // import Project from "./Project/module";
 Vue.use(Vuex);
 
@@ -31,7 +31,7 @@ export const store = new Vuex.Store({
     // GlobalLoading,
     // Project,
     // UpdateProject
-    // ExportAndShare,
+    // Export,
     // OpenSharedWithPassword,
     // Login,
     // Share,

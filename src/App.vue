@@ -87,7 +87,7 @@
       @close="onClose"
     />
     <left-panel />
-    <export-and-share />
+    <export />
     <loading-global />
   </div>
 </template>
@@ -103,7 +103,7 @@ import ConnectorBase from "./components/MainCanvas/ConnectorBase";
 import LoadingGlobal from "./components/Utill/LoadingGlobal/Layout";
 import MenuFluent from "./components/TopMenu/MenuLayout.vue";
 import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
-import ExportAndShare from "./components/RightDialog/ExportAndShare/Layout";
+import Export from "./components/RightDialog/Export/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
 import InformationAlert from "./components/TopAlert/Information/Layout";
@@ -114,7 +114,7 @@ export default {
     TableBase,
     MenuFluent,
     LeftPanel,
-    ExportAndShare,
+    Export,
     LoadingGlobal,
     ConnectorBase,
     TableDetail
@@ -129,7 +129,7 @@ export default {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
     }),
-    ...mapMutations("RightDialog/ExportAndShare/Component/Image", {
+    ...mapMutations("RightDialog/Export/Component/Image", {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
     // ...mapMutations("Account", {

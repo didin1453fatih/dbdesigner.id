@@ -281,7 +281,7 @@ export default {
       openLeftPanel: "setVisible",
       setLeftPanelName:"setPanelName"
     }),
-    ...mapMutations("RightDialog/ExportAndShare/Layout", {
+    ...mapMutations("RightDialog/Export/Layout", {
       setVisibleExportAndShare: "setVisible",
       setPanelNameExportAndShare:"setPanelName"
     }),

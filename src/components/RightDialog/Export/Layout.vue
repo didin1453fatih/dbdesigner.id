@@ -114,7 +114,7 @@ import Laravel from "./Component/Laravel"
 import Django from "./Component/Django"
 export default {
   methods: {
-    ...mapMutations("RightDialog/ExportAndShare/Layout", {
+    ...mapMutations("RightDialog/Export/Layout", {
       setVisible: "setVisible",
       setPanelName:"setPanelName"
     }),    
@@ -131,7 +131,7 @@ export default {
     Django
   },
   computed: {
-    ...mapState("RightDialog/ExportAndShare/Layout", {
+    ...mapState("RightDialog/Export/Layout", {
       visible: state => state.visible,
       panelName:state => state.panelName
     })    
