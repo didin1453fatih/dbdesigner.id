@@ -1,44 +1,30 @@
 <template>
   <div>
     <h3>Image</h3>
-    <div v-if="step===0">
-      <div style="margin-top:20px">
-        <label>Format</label>
-        <br />
-        <a-radio-group
-          v-model="mimeType"
-          defaultChecked="image/png"
-          defaultValue="image/png"
-          style="margin-top:5px"
-        >
-          <a-radio-button value="image/png">PNG</a-radio-button>
-          <a-radio-button value="image/jpeg">JPEG</a-radio-button>
-        </a-radio-group>
-      </div>
-      <div style="margin-top:20px">
-        <label>Quality</label>
-        <br />
-        <a-radio-group
-          v-model="quality"
-          :defaultChecked="1"
-          :defaultValue="1"
-          style="margin-top:5px"
-        >
-          <a-radio-button :value="1">Default</a-radio-button>
-          <a-radio-button :value="2">High</a-radio-button>
-          <a-radio-button :value="3">Best</a-radio-button>
-        </a-radio-group>
-      </div>
-      <div style="margin-top:30px;     text-align: right;">
-        <a-button style="right:40px" @click="exportImage()">Next</a-button>
-      </div>
+    <div style="margin-top:20px">
+      <label>Format</label>
+      <br />
+      <a-radio-group
+        v-model="mimeType"
+        defaultChecked="image/png"
+        defaultValue="image/png"
+        style="margin-top:5px"
+      >
+        <a-radio-button value="image/png">PNG</a-radio-button>
+        <a-radio-button value="image/jpeg">JPEG</a-radio-button>
+      </a-radio-group>
     </div>
-    <div v-else-if="step===1" style="padding-right:30px">
-      <img :src="imageBase64" />
-      <div style="margin-top:30px;     text-align: right;">
-        <a-button style="right:0px" @click="step=0">Back</a-button>
-        <a-button style="left:0px" @click="downloadEvent">Download</a-button>
-      </div>
+    <div style="margin-top:20px">
+      <label>Quality</label>
+      <br />
+      <a-radio-group v-model="quality" :defaultChecked="1" :defaultValue="1" style="margin-top:5px">
+        <a-radio-button :value="1">Default</a-radio-button>
+        <a-radio-button :value="2">High</a-radio-button>
+        <a-radio-button :value="3">Best</a-radio-button>
+      </a-radio-group>
+    </div>
+    <div style="margin-top:30px;     text-align: right;">
+      <a-button style="right:40px" @click="exportImage()">Next</a-button>
     </div>
     <a-drawer
       width="100%"
@@ -86,13 +72,6 @@
             <a-icon type="cloud-download" style="font-size: 27px;" />
           </div>
         </div>
-        <!-- <table style="width: -webkit-fill-available;
-         height: -webkit-fill-available;">
-          <tr>
-        <td style="background-color:#2B569A;width: 100%;vertical-align:top">-->
-        <!-- <a-row>
-        <a-col :span="16">-->
-        <!-- <div style="width:100vh; height:100vh; padding:10px"> -->
         <vue-cropper
           v-if="croppingRender===true"
           ref="cropper"
@@ -108,27 +87,6 @@
           alt="Source Image"
           :img-style="{ 'width': '100vh', 'height':'100vh' }"
         ></vue-cropper>
-        <!-- </div> -->
-        <!-- </a-col>
-        <a-col :span="8">-->
-
-        <!-- <img
-                    :src="cropImg"
-                    style="width: 200px; height: 150px; border: 1px solid gray"
-                    alt="Cropped Image"
-                  />
-        <button @click="cropImage" style="margin-right: 40px;">Crop</button>-->
-
-        <!-- </a-col>
-        </a-row>-->
-        <!-- </td>
-          </tr>
-        </table>-->
-
-        <!-- <div style="width:50%"> -->
-        <!-- <cropper ref="cropper" :src="imageBase64" /> -->
-
-        <!-- </div> -->
       </div>
     </a-drawer>
   </div>
@@ -139,8 +97,7 @@
 import { mapMutations } from "vuex";
 import { mapState } from "vuex";
 import { EventBus } from "@/helper/EventBus";
-import moment from 'moment'
-// import { Cropper } from "vue-advanced-cropper";
+import moment from "moment";
 import VueCropper from "vue-cropperjs";
 import "cropperjs/dist/cropper.css";
 export default {
@@ -152,7 +109,6 @@ export default {
       projectTitle: state => state.projectDescription.title
     })
   },
-  // context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
   mounted() {
     // eslint-disable-next-line
     console.log(window.innerHeight);
@@ -192,7 +148,7 @@ export default {
         this.imageBase64,
         this.projectTitle +
           "__dbdesigner.id__" +
-          moment().format('YYYY-MM-DD HH:mm:ss') +
+          moment().format("YYYY-MM-DD HH:mm:ss") +
           "." +
           this.mimeType.split("/")[1]
       );
@@ -229,6 +185,7 @@ export default {
       setTimeout(() => {
         this.croppingRender = true;
         setTimeout(() => {
+          this.$refs.cropper.relativeZoom(-0.1);
           this.SET_GLOBAL_LOADING(false);
         }, 100);
       }, 100);
