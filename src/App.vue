@@ -49,7 +49,7 @@
     <menu-fluent />
 
     <div style=" overflow: scroll;width:100%;height:470px">
-      <v-stage :config="configKonva" ref="stage">
+      <v-stage :config="configKonva" ref="stage" @wheel="onZooming">
         <v-layer ref="layer">
           <v-rect
             :config="{
@@ -120,6 +120,38 @@ export default {
     TableDetail
   },
   methods: {
+    onZooming(e) {
+      e.evt.preventDefault();
+      var oldScale = this.$refs.stage.getStage().scaleX();
+
+      var mousePointTo = {
+        x:
+          this.$refs.stage.getStage().getPointerPosition().x / oldScale -
+          this.$refs.stage.getStage().x() / oldScale,
+        y:
+          this.$refs.stage.getStage().getPointerPosition().y / oldScale -
+          this.$refs.stage.getStage().y() / oldScale
+      };
+
+      var newScale =
+        e.evt.deltaY > 0 ? oldScale * this.scaleBy : oldScale / this.scaleBy;
+      this.$refs.stage.getStage().scale({ x: newScale, y: newScale });
+
+      var newPos = {
+        x:
+          -(
+            mousePointTo.x -
+            this.$refs.stage.getStage().getPointerPosition().x / newScale
+          ) * newScale,
+        y:
+          -(
+            mousePointTo.y -
+            this.$refs.stage.getStage().getPointerPosition().y / newScale
+          ) * newScale
+      };
+      this.$refs.stage.getStage().position(newPos);
+      this.$refs.stage.getStage().batchDraw();
+    },
     onCloseMessage(e) {
       // eslint-disable-next-line
       console.log(e, "I was closed.");
@@ -176,6 +208,10 @@ export default {
       var cropImg = this.$refs.stage.getCroppedCanvas().toDataURL(options);
       this.SET_IMAGE_BASE_64(cropImg);
     });
+    EventBus.$on("Canvas/scale", options => {
+      this.$refs.stage.getStage().scale(options);
+      this.$refs.stage.getStage().batchDraw();
+    });
   },
   async mounted() {
     if (window.location.toString().indexOf("uuid=") > 1) {
@@ -231,6 +267,7 @@ export default {
   },
   data() {
     return {
+      scaleBy: 1.01,
       editTableProperties: {
         potition: {
           x: 30,

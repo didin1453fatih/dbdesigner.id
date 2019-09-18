@@ -6,8 +6,8 @@
       </div>
     </div>-->
     <div style="position: absolute;width: 100%;margin-top: 2px;">
-        <span style="font-size: 0.8rem; margin-left:40%;z-index: 10">{{savedMessage}}</span>
-    </div>    
+      <span style="font-size: 0.8rem; margin-left:40%;z-index: 10">{{savedMessage}}</span>
+    </div>
     <ul class="tabs-holder">
       <li class="special" @click="openLeftPanel(true)">
         <a>File</a>
@@ -22,9 +22,12 @@
         <a href="#tab_folder">Account</a>
       </li>
       <div style=";text-align: right;">
-          <span style="font-size: 1.0rem;padding-top:5px; margin-right:5px">{{title}} ~ <b>{{username}}</b></span>
-          <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>          
-      </div>      
+        <span style="font-size: 1.0rem;padding-top:5px; margin-right:5px">
+          {{title}} ~
+          <b>{{username}}</b>
+        </span>
+        <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>
+      </div>
     </ul>
     <div class="tabs-content">
       <div class="tab-panel" id="tab_home" style="display: block;">
@@ -47,16 +50,16 @@
               </button>
               <ul class="d-menu" data-role="dropdown">
                 <li>
-                  <a href="#">Message</a>
+                  <a >Message</a>
                 </li>
                 <li>
-                  <a href="#">Event</a>
+                  <a >Event</a>
                 </li>
                 <li>
-                  <a href="#">Meeting</a>
+                  <a >Meeting</a>
                 </li>
                 <li>
-                  <a href="#">Contact</a>
+                  <a >Contact</a>
                 </li>
               </ul>
             </div>-->
@@ -79,13 +82,13 @@
             </button>
             <ul class="d-menu" data-role="dropdown">
               <li>
-                <a href="#">Public</a>
+                <a>Public</a>
               </li>
               <li>
-                <a href="#">Link Only</a>
+                <a>Link Only</a>
               </li>
               <li>
-                <a href="#">With Password</a>
+                <a>With Password</a>
               </li>
             </ul>
           </div>
@@ -96,16 +99,16 @@
             </button>
             <ul class="d-menu" data-role="dropdown">
               <li>
-                <a href="#">SQL Create</a>
+                <a>SQL Create</a>
               </li>
               <li>
-                <a href="#">Link Only</a>
+                <a>Link Only</a>
               </li>
               <li>
-                <a href="#">PNG</a>
+                <a>PNG</a>
               </li>
               <li>
-                <a href="#">PDF</a>
+                <a>PDF</a>
               </li>
             </ul>
           </div>
@@ -113,110 +116,145 @@
           <div class="tab-group-caption">Export</div>
         </div>
 
-        <div class="tab-panel-group">
+        <!-- <div class="tab-panel-group">
           <div class="tab-content-segment">
             <button class="fluent-big-button" @click="openExport(true)" style="width:60px">
-              <img :src="topicIcon">
-              <!-- <span class="icon mif-paper-plane" style="width:50px"></span> -->
+              <img :src="topicIcon" />
               <span class="label" style="margin-top:5px">Comment</span>
             </button>
           </div>
           <div class="tab-content-segment">
             <button class="fluent-big-button" style="width:60px">
-              <img :src="helpSupport">
-              <!-- <span class="icon mif-share" style="width:50px"></span> -->
+              <img :src="helpSupport" />
               <span class="label" style="margin-top:5px">Help</span>
             </button>
           </div>
 
           <div class="tab-group-caption">Interaction</div>
-        </div>
+        </div>-->
 
+        <div class="tab-panel-group">
+          <div class="tab-group-content">
+            <div class="tab-content-segment" style="width: 75px;">
+              <button
+                class="fluent-button"
+                style="background: white;width:100%"
+                @click="pageEditable=0"
+              >
+                <span class="mif-flow-line" style="font-size: 15px;"></span>
+                <a-input
+                  v-if="pageEditable===0"
+                  style="font-size: 11px;
+                        height: 20px;
+                        border-radius: 0px;
+                        width: 40px;
+                        padding: 3px;
+                        border-color: rgb(217, 217, 217);
+                        box-shadow: none;"
+                  @blur="pageEditable=-1"
+                />
+                <span v-if="pageEditable!==0" class="label">90 px</span>
+              </button>
+              <button class="fluent-button" style="width:100%" @click="pageEditable=1">
+                <span
+                  class="mif-flow-line"
+                  style="
+                  -webkit-transform: rotate(90deg);
+                  -moz-transform: rotate(90deg);
+                  -o-transform: rotate(90deg);
+                  -ms-transform: rotate(90deg);
+                  transform: rotate(90deg);
+                  font-size: 15px;"
+                ></span>
+                <a-input
+                  @blur="pageEditable=-1"
+                  v-if="pageEditable===1"
+                  style="font-size: 11px;
+                        height: 20px;
+                        border-radius: 0px;
+                        width: 40px;
+                        padding: 3px;
+                        border-color: rgb(217, 217, 217);
+                        box-shadow: none;"
+                />
+                <span v-if="pageEditable!==1" class="label">90 px</span>
+              </button>
+              <div class="tab-content-segment" style="width:100%">
+                <button
+                  class="fluent-button dropdown-toggle dropdown-toggle-none-icon"
+                  style="width:100%;padding-right: 0px;"
+                >
+                  <span class="mif-search on-left"></span>
+                  <span class="label">100 %</span>
+                </button>
+                <ul class="d-menu" data-role="dropdown" style="display: none;width:78px">
+                  <li style="width:70px !important" @click="onZoom(1)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">10%</a>
+                  </li>
+                  <li style=";width:70px" @click="onZoom(2)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">20%</a>
+                  </li>
+                  <li style=";width:70px" @click="onZoom(100)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">30%</a>
+                  </li>
+                  <li style=";width:70px" @click="onZoom(500)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">40%</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- <button class="fluent-button">
+                <span class="mif-loop2"></span>Forward
+              </button>-->
+            </div>
+            <!-- <div class="tab-content-segment">
+              <button class="fluent-tool-button">
+                <img src="images/Notebook-Save.png" />
+              </button>
+              <button class="fluent-tool-button">
+                <img src="images/Folder-Rename.png" />
+              </button>
+              <button class="fluent-tool-button">
+                <img src="images/Calendar-Next.png" />
+              </button>
+            </div>-->
+          </div>
+          <div class="tab-group-caption">Page</div>
+        </div>
         <!-- <div class="tab-panel-group">
           <div class="tab-group-content">
+            <div class="input-control text">
+              <input type="text" />
+              <button class="button">
+                <span class="mif-search"></span>
+              </button>
+            </div>
+            <button class="fluent-button">
+              <span class="icon-book on-left"></span>Address Book
+            </button>
             <div class="tab-content-segment">
-               <div class="tab-content-segment active-container"> 
               <button class="fluent-button dropdown-toggle">
-                <span class="mif-share on-left"></span>
-                <span class="label">Share</span>
+                <span class="mif-filter on-left"></span>
+                <span class="label">Mail Filters</span>
               </button>
               <ul class="d-menu" data-role="dropdown" style="display: none;">
                 <li>
-                  <a href="#">Public</a>
+                  <a>Unread messages</a>
                 </li>
                 <li>
-                  <a href="#">Link Only</a>
+                  <a>Has attachments</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a>Important</a>
                 </li>
                 <li>
-                  <a href="#">With Password</a>
+                  <a>Broken</a>
                 </li>
               </ul>
-              <button class="fluent-button dropdown-toggle">
-                <span class="mif-paper-plane on-left"></span>
-                <span class="label">Export</span>
-              </button>
-              <ul class="d-menu" data-role="dropdown" style="display: none;">
-                <li>
-                  <a href="#">SQL Create</a>
-                </li>
-                <li>
-                  <a href="#">Link Only</a>
-                </li>
-                <li>
-                  <a href="#">PNG</a>
-                </li>
-                <li>
-                  <a href="#">PDF</a>
-                </li>
-        </ul>-->
-        <!-- </div> -->
-        <!-- <button class="fluent-button">
-                <span class="mif-loop"></span>Replay
-              </button>
-              <button class="fluent-button">
-                <span class="mif-infinite"></span>Replay all
-              </button>
-              <button class="fluent-button">
-                <span class="mif-loop2"></span>Forward
-        </button>-->
-        <!-- </div> -->
-        <!-- <div class="tab-content-segment">
-              <button class="fluent-tool-button">
-                <img src="images/Notebook-Save.png">
-              </button>
-              <button class="fluent-tool-button">
-                <img src="images/Folder-Rename.png">
-              </button>
-              <button class="fluent-tool-button">
-                <img src="images/Calendar-Next.png">
-              </button>
-        </div>-->
-        <!-- </div> -->
-        <!-- <div class="tab-content-segment">
-              <button class="fluent-big-button dropdown-toggle">
-                <span class="icon mif-paper-plane"></span>
-                <span class="label"  style="margin-top:5px">
-                    Export
-                </span>
-              </button>
-              <ul class="d-menu" data-role="dropdown">
-                <li>
-                  <a href="#">Message</a>
-                </li>
-                <li>
-                  <a href="#">Event</a>
-                </li>
-                <li>
-                  <a href="#">Meeting</a>
-                </li>
-                <li>
-                  <a href="#">Contact</a>
-                </li>
-              </ul>
-        </div>-->
-
-        <!-- <div class="tab-group-caption">Export</div>
-        </div>-->
+            </div>
+          </div>
+          <div class="tab-group-caption">Search</div>
+        </div> -->
       </div>
       <div class="tab-panel" id="tab_folder" style="display: block;">
         <div class="tab-panel-group">
@@ -224,7 +262,7 @@
             <div class="tab-content-segment">
               <button class="fluent-big-button" @click="logoutAccount">
                 <span class="mif-cancel" style="width:50px"></span>
-                <span class="label" style="margin-top:5px" >Logout</span>
+                <span class="label" style="margin-top:5px">Logout</span>
               </button>
             </div>
             <div class="tab-content-segment">
@@ -248,6 +286,7 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import topicIcon from "@/assets/icons8-topic-96.png";
 import helpSupport from "@/assets/icons8-online-support-filled-100.png";
+import { EventBus } from "@/helper/EventBus";
 export default {
   computed: {
     ...mapState("Data/Project", {
@@ -261,6 +300,12 @@ export default {
     })
   },
   methods: {
+    onZoom(value) {
+      EventBus.$emit("Canvas/scale", {
+        x: value,
+        y: value
+      });
+    },
     ...mapActions("Data/Project", {
       saveProject: "saveProject"
     }),
@@ -279,65 +324,66 @@ export default {
     }),
     ...mapMutations("LeftDialog/FileMenu/Layout", {
       openLeftPanel: "setVisible",
-      setLeftPanelName:"setPanelName"
+      setLeftPanelName: "setPanelName"
     }),
     ...mapMutations("RightDialog/Export/Layout", {
       setVisibleExportAndShare: "setVisible",
-      setPanelNameExportAndShare:"setPanelName"
+      setPanelNameExportAndShare: "setPanelName"
     }),
-    accountEvent(){
-      this.openLeftPanel(true)
-      this.setLeftPanelName('account')
+    accountEvent() {
+      this.openLeftPanel(true);
+      this.setLeftPanelName("account");
     },
-    saveProjectEvent(){
-      if(this.accountId===null){
-        message.error('You are the guest, Login first')
-        this.openLeftPanel(true)
-        this.setLeftPanelName('login')        
-      }else if(this.title!==null){
+    saveProjectEvent() {
+      if (this.accountId === null) {
+        message.error("You are the guest, Login first");
+        this.openLeftPanel(true);
+        this.setLeftPanelName("login");
+      } else if (this.title !== null) {
         this.saveProject();
-      }else{
-        message.error('The project is empty')
+      } else {
+        message.error("The project is empty");
       }
     },
-    addNewTableEvent(){
-      if(this.accountId===null){
-        message.error('You are the guest, Login first')
-        this.openLeftPanel(true)
-        this.setLeftPanelName('login')        
-      }else if(this.title!==null){
+    addNewTableEvent() {
+      if (this.accountId === null) {
+        message.error("You are the guest, Login first");
+        this.openLeftPanel(true);
+        this.setLeftPanelName("login");
+      } else if (this.title !== null) {
         this.addNewTable();
-      }else{
-        message.error('The project is empty')
-      }
-    },    
-    openExportPanel(){
-      if(this.accountId===null){
-        message.error('You are the guest, Login first')
-        this.openLeftPanel(true)
-        this.setLeftPanelName('login')        
-      }else if(this.title!==null){
-        this.setVisibleExportAndShare(true);
-        this.setPanelNameExportAndShare('sql')
-      }else{
-        message.error('The project is empty')
+      } else {
+        message.error("The project is empty");
       }
     },
-    openSharePanel(){
-      if(this.accountId===null){
-        message.error('You are the guest, Login first')
-        this.openLeftPanel(true)
-        this.setLeftPanelName('login')        
-      }else if(this.title!==null){
+    openExportPanel() {
+      if (this.accountId === null) {
+        message.error("You are the guest, Login first");
+        this.openLeftPanel(true);
+        this.setLeftPanelName("login");
+      } else if (this.title !== null) {
         this.setVisibleExportAndShare(true);
-        this.setPanelNameExportAndShare('share')
-      }else{
-        message.error('The project is empty')
+        this.setPanelNameExportAndShare("sql");
+      } else {
+        message.error("The project is empty");
+      }
+    },
+    openSharePanel() {
+      if (this.accountId === null) {
+        message.error("You are the guest, Login first");
+        this.openLeftPanel(true);
+        this.setLeftPanelName("login");
+      } else if (this.title !== null) {
+        this.setVisibleExportAndShare(true);
+        this.setPanelNameExportAndShare("share");
+      } else {
+        message.error("The project is empty");
       }
     }
   },
   data() {
     return {
+      pageEditable: 0,
       topicIcon: topicIcon,
       helpSupport: helpSupport
     };
@@ -348,3 +394,8 @@ export default {
 
 
 
+<style scoped>
+.dropdown-toggle-none-icon:before {
+  display: none !important;
+}
+</style>
