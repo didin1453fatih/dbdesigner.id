@@ -1,5 +1,9 @@
 <template>
-  <div class="fluent-menu" data-role="fluentmenu">
+  <div
+    class="fluent-menu"
+    data-role="fluentmenu"
+    style="border-bottom: solid 1px rgb(217, 217, 217);"
+  >
     <!-- <div style="    position: absolute;widt">
       <div style="right:0">
         Makan
@@ -12,13 +16,13 @@
       <li class="special" @click="openLeftPanel(true)">
         <a>File</a>
       </li>
-      <li class="active">
+      <li class="active" @click="ribbonMenuClick(1)">
         <a href="#tab_home">Home</a>
       </li>
-      <li class>
+      <li class @click="ribbonMenuClick(2)">
         <a href="#tab_mailings">Edit</a>
       </li>
-      <li>
+      <li @click="ribbonMenuClick(3)">
         <a href="#tab_folder">Account</a>
       </li>
       <div style=";text-align: right;">
@@ -29,7 +33,7 @@
         <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>
       </div>
     </ul>
-    <div class="tabs-content">
+    <div class="tabs-content" v-show="visibleRibbonMenu">
       <div class="tab-panel" id="tab_home" style="display: block;">
         <div class="tab-panel-group">
           <div class="tab-group-content">
@@ -254,7 +258,7 @@
             </div>
           </div>
           <div class="tab-group-caption">Search</div>
-        </div> -->
+        </div>-->
       </div>
       <div class="tab-panel" id="tab_folder" style="display: block;">
         <div class="tab-panel-group">
@@ -379,10 +383,20 @@ export default {
       } else {
         message.error("The project is empty");
       }
+    },
+    ribbonMenuClick(value) {
+      if (value == this.numberRibbonMenu) {
+        this.visibleRibbonMenu=!this.visibleRibbonMenu
+      } else {
+        this.visibleRibbonMenu = true;
+        this.numberRibbonMenu = value;
+      }
     }
   },
   data() {
     return {
+      visibleRibbonMenu: true,
+      numberRibbonMenu: 0,
       pageEditable: 0,
       topicIcon: topicIcon,
       helpSupport: helpSupport
