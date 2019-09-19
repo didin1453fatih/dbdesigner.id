@@ -48,37 +48,39 @@
 
     <menu-fluent />
 
-    <div style=" overflow: scroll;width:100%;height:470px">
-      <v-stage :config="configKonva" ref="stage" @wheel="onZooming">
-        <v-layer ref="layer">
-          <v-rect
-            :config="{
+    <div id="scroll-container">
+      <div id="large-container">
+        <v-stage :config="configKonva" ref="stage" @wheel="onZooming">
+          <v-layer ref="layer">
+            <v-rect
+              :config="{
               width: 1400,
               height: 700,
               fill: 'white'
             }"
-          />
-          <connector-base
-            v-for="connectorKey in Object.keys(connectorNewKey)"
-            v-bind:key="connectorKey"
-            :connectorObj="connectorNewKey[connectorKey]"
-            :connectorKey="connectorKey"
-          />
+            />
+            <connector-base
+              v-for="connectorKey in Object.keys(connectorNewKey)"
+              v-bind:key="connectorKey"
+              :connectorObj="connectorNewKey[connectorKey]"
+              :connectorKey="connectorKey"
+            />
 
-          <table-base
-            @highlight="highlightRelation"
-            v-for="tableKey in Object.keys(dataDiagramNew)"
-            v-bind:key="tableKey"
-            @editDataTable="editDataTable"
-            @changedPotition="changeTablePotition"
-            :tableKey="tableKey"
-            :coloumns="dataDiagramNew[tableKey].coloumns"
-            :tableName="dataDiagramNew[tableKey].table_name"
-            :potition="dataDiagramNew[tableKey].point"
-            :widthTable="dataDiagramNew[tableKey].widthTable"
-          />
-        </v-layer>
-      </v-stage>
+            <table-base
+              @highlight="highlightRelation"
+              v-for="tableKey in Object.keys(dataDiagramNew)"
+              v-bind:key="tableKey"
+              @editDataTable="editDataTable"
+              @changedPotition="changeTablePotition"
+              :tableKey="tableKey"
+              :coloumns="dataDiagramNew[tableKey].coloumns"
+              :tableName="dataDiagramNew[tableKey].table_name"
+              :potition="dataDiagramNew[tableKey].point"
+              :widthTable="dataDiagramNew[tableKey].widthTable"
+            />
+          </v-layer>
+        </v-stage>
+      </div>
     </div>
     <table-detail
       :visible="visible"
@@ -349,5 +351,19 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#large-container {
+  width: 3000px;
+  height: 3000px;
+  overflow: hidden;
+}
+
+#scroll-container {
+  width: 100%;
+  height: calc(100vh - 33px);
+  overflow: auto;
+  margin: 0px;
+  border: 0px solid grey;
 }
 </style>
