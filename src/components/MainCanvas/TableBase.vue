@@ -5,7 +5,7 @@
       y: potition.y,
     }"
     @dragmove="dragmove"
-    @dblclick="clickEvent"
+    @dblclick="tableDoubleClick"
     :draggable="true"
   >
     <v-rect
@@ -105,58 +105,54 @@ import primaryKeyImage from "@/assets/primary-key.png";
 import notNull from "@/assets/icons8-diamonds-40.png";
 import imageNullImage from "@/assets/icons8-diamonds-40-white.png";
 export default {
-  props: ["potition", "coloumns", "tableName", "tableKey","widthTable"],
+  props: ["potition", "coloumns", "tableName", "tableKey", "widthTable"],
   methods: {
     ...mapMutations("Data/Project", {
       setConfigTable: "setConfigTable",
       setTableKeyConfig: "setTableKeyConfig",
       setShowDetailTable: "setShowDetailTable"
     }),
+    ...mapMutations("Data/Project", {
+      changeTablePotition: "changeTablePotition",
+      highlightRelation: "highlightRelation",
+    }),
     selectRelation() {
-      this.$emit("highlight", {
+      this.highlightRelation({
         status: true,
         tableKey: this.tableKey
       });
     },
     deselectRelation() {
-      this.$emit("highlight", {
+      this.highlightRelation({
         status: false,
         tableKey: this.tableKey
       });
     },
     dragmove(val) {
-      this.$emit("changedPotition", {
+      this.changeTablePotition({
         value: val,
         tableKey: this.tableKey
       });
     },
-    clickEvent() {
-      // this.$emit("editDataTable");
-      // this.setConfigTable(this.tableName)
-      // this.setTableKeyConfig(this.tableKey)
+    tableDoubleClick() {
       this.setShowDetailTable(this.tableKey);
-    },
-    addPointAssotiation() {},
-    reaCalculatePointAsscotiation() {}
+    }
   },
   mounted() {
     const primaryKey = new window.Image();
     primaryKey.src = primaryKeyImage;
     primaryKey.onload = () => {
-      // set image only when it is loaded
       this.primaryKey = primaryKey;
     };
     const imageNotNull = new window.Image();
     imageNotNull.src = notNull;
     imageNotNull.onload = () => {
-      // set image only when it is loaded
       this.imageNotNull = imageNotNull;
     };
 
     const imageNull = new window.Image();
     imageNull.src = imageNullImage;
     imageNull.onload = () => {
-      // set image only when it is loaded
       this.imageNull = imageNull;
     };
   },
