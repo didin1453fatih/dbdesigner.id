@@ -50,13 +50,21 @@
 
     <div id="scroll-container">
       <div id="large-container">
-        <v-stage :config="configKonva" ref="stage" @wheel="onZooming">
+        <v-stage
+          :config=" {
+            width: 3000,
+            height: 3000,
+            draggable: true
+          }"
+          ref="stage"
+          @wheel="onZooming"
+        >
           <v-layer ref="layer">
             <v-rect
               :config="{
-              width: 1400,
-              height: 700,
-              fill: 'white'
+                width: 3000,
+                height: 3000,
+                fillPatternImage: bagroundPattern,
             }"
             />
             <connector-base
@@ -110,6 +118,7 @@ import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
 import InformationAlert from "./components/TopAlert/Information/Layout";
 import { EventBus } from "@/helper/EventBus";
+import bagroundPatternImage from "@/assets/canvas-background.png";
 export default {
   components: {
     InformationAlert,
@@ -216,6 +225,12 @@ export default {
     });
   },
   async mounted() {
+    const bagroundPattern = new window.Image();
+    bagroundPattern.src = bagroundPatternImage;
+    bagroundPattern.onload = () => {
+      // set image only when it is loaded
+      this.bagroundPattern = bagroundPattern;
+    };
     if (window.location.toString().indexOf("uuid=") > 1) {
       var valueUUID = window.location.toString().split("uuid=")[1];
       this.globalReadAccount({
@@ -269,6 +284,7 @@ export default {
   },
   data() {
     return {
+      bagroundPattern: null,
       scaleBy: 1.01,
       editTableProperties: {
         potition: {
@@ -333,11 +349,7 @@ export default {
         ]
       },
       editTableName: "mobil",
-      visible: false,
-      configKonva: {
-        width: 1400,
-        height: 700
-      }
+      visible: false
     };
   }
 };
@@ -357,6 +369,7 @@ export default {
   width: 3000px;
   height: 3000px;
   overflow: hidden;
+  background-color: #eeeeee;
 }
 
 #scroll-container {

@@ -142,7 +142,7 @@
             <div class="tab-content-segment" style="width: 75px;">
               <button
                 class="fluent-button"
-                style="background: white;width:100%"
+                style="width:100%"
                 @click="pageEditable=0"
               >
                 <span class="mif-flow-line" style="font-size: 15px;"></span>
@@ -210,17 +210,22 @@
                 <span class="mif-loop2"></span>Forward
               </button>-->
             </div>
-            <!-- <div class="tab-content-segment">
-              <button class="fluent-tool-button">
-                <img src="images/Notebook-Save.png" />
+            <div class="tab-content-segment">
+              <button class="fluent-tool-button" style="font-size: 25px;margin-top:3px">
+                <!-- <span class="mif-table on-left" style="font-size: 20px;"></span> -->
+                <img :src="gridIcon" />
               </button>
-              <button class="fluent-tool-button">
+              <button class="fluent-tool-button" style="font-size: 25px;margin-top:0px">
+                <!-- <span class="mif-table on-left" style="font-size: 20px;"></span> -->
+                <img :src="targetingFocusImage" />
+              </button>              
+              <!-- <button class="fluent-tool-button">
                 <img src="images/Folder-Rename.png" />
               </button>
               <button class="fluent-tool-button">
                 <img src="images/Calendar-Next.png" />
-              </button>
-            </div>-->
+              </button> -->
+            </div>
           </div>
           <div class="tab-group-caption">Page</div>
         </div>
@@ -289,6 +294,8 @@ import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import topicIcon from "@/assets/icons8-topic-96.png";
+import targetingFocusImage from "@/assets/square-targeting-focus.png";
+import gridIcon from "@/assets/grid-icon.png"
 import helpSupport from "@/assets/icons8-online-support-filled-100.png";
 import { EventBus } from "@/helper/EventBus";
 export default {
@@ -397,8 +404,10 @@ export default {
     return {
       visibleRibbonMenu: true,
       numberRibbonMenu: 0,
-      pageEditable: 0,
+      pageEditable: -1,
       topicIcon: topicIcon,
+      gridIcon : gridIcon,
+      targetingFocusImage:targetingFocusImage,
       helpSupport: helpSupport
     };
   }
