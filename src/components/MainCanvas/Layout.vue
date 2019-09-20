@@ -44,8 +44,8 @@
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
-import TableBase from "@/components/MainCanvas/TableBase";
-import ConnectorBase from "@/components/MainCanvas/ConnectorBase";
+import TableBase from "@/components/MainCanvas/component/TableBase";
+import ConnectorBase from "@/components/MainCanvas/component/ConnectorBase";
 import { EventBus } from "@/helper/EventBus";
 import bagroundPatternImage from "@/assets/canvas-background.png";
 export default {
