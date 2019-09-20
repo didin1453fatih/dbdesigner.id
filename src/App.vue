@@ -1,53 +1,7 @@
 <template>
   <div>
-    <!-- <a-menu
-      style="line-height: 33px;background:#E6E6E6;color:#1C2128"
-      size="small"
-      mode="horizontal"
-    >
-      <a-sub-menu>
-        <span slot="title" class="submenu-title-wrapper">
-          <a-icon type="profile"/>File
-        </span>
-        <a-menu-item-group title="Project">
-          <a-menu-item key="setting:3">Open Project</a-menu-item>
-          <a-menu-item key="setting:2">New Project</a-menu-item>
-        </a-menu-item-group>
-        <a-menu-item-group title="Table">
-          <a-menu-item key="setting:1" @click="addNewTable">New Table</a-menu-item>
-        </a-menu-item-group>
-      </a-sub-menu>
-      <a-menu-item key="history">
-        <a-icon type="clock-circle"/>History
-      </a-menu-item>
-
-      <a-menu-item key="export">
-        <a-icon type="gift"/>Export
-      </a-menu-item>
-
-      <a-menu-item key="share">
-        <a-icon type="rocket"/>Share
-      </a-menu-item>
-      <a-menu-item key="smile">
-        <a-icon type="smile"/>Help
-      </a-menu-item>
-    </a-menu>-->
-    <!-- :message="messageAccountInformation" -->
-    <!-- <a-alert
-      type="info"
-      closeText="Close"
-      v-if="visibleAccountInformation"
-      @close="onCloseMessage"
-      style="border-radius: 0px; "
-    >
-      <div slot="message" style="text-align: center;">
-        <b>{{messageAccountInformation}}</b>
-      </div>
-    </a-alert>-->
     <information-alert />
-
     <menu-fluent />
-
     <div id="scroll-container">
       <div id="large-container">
         <v-stage
@@ -78,7 +32,6 @@
               @highlight="highlightRelation"
               v-for="tableKey in Object.keys(dataDiagramNew)"
               v-bind:key="tableKey"
-              @editDataTable="editDataTable"
               @changedPotition="changeTablePotition"
               :tableKey="tableKey"
               :coloumns="dataDiagramNew[tableKey].coloumns"
@@ -90,12 +43,7 @@
         </v-stage>
       </div>
     </div>
-    <table-detail
-      :visible="visible"
-      :tableName="editTableName"
-      :tableProperties="editTableProperties"
-      @close="onClose"
-    />
+    <table-detail />
     <left-panel />
     <export />
     <loading-global />
@@ -163,11 +111,6 @@ export default {
       this.$refs.stage.getStage().position(newPos);
       this.$refs.stage.getStage().batchDraw();
     },
-    onCloseMessage(e) {
-      // eslint-disable-next-line
-      console.log(e, "I was closed.");
-      this.setVisibleAccountInformation(false);
-    },
     ...mapMutations("LeftDialog/FileMenu/Layout", {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
@@ -175,10 +118,6 @@ export default {
     ...mapMutations("RightDialog/Export/Component/Image", {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
-    // ...mapMutations("Account", {
-    //   setVisibleAccountInformation: "setVisibleAccountInformation",
-    //   setMessageAccountInformation: "setMessageAccountInformation"
-    // }),
     ...mapMutations("Data/Project", {
       changeTablePotition: "changeTablePotition",
       highlightRelation: "highlightRelation",
@@ -186,20 +125,6 @@ export default {
       addNewTable: "addNewTable",
       setHighLightRelation: "setHighLightRelation"
     }),
-    // setHighLightRelation() {
-    //   window.alert(JSON.stringify("saasd"));
-    // },
-    editDataTable() {
-      // this.editTableName = tableName;
-      // this.editTableProperties = this.dataDiagram[tableName];
-      this.visible = true;
-    },
-    showDrawer() {
-      this.visible = true;
-    },
-    onClose() {
-      this.visible = false;
-    },
     ...mapActions("Data/Project", {
       loadProjectUUID: "loadProjectUUID",
       setEmptyDiagram: "setEmptyDiagram",
@@ -228,7 +153,6 @@ export default {
     const bagroundPattern = new window.Image();
     bagroundPattern.src = bagroundPatternImage;
     bagroundPattern.onload = () => {
-      // set image only when it is loaded
       this.bagroundPattern = bagroundPattern;
     };
     if (window.location.toString().indexOf("uuid=") > 1) {
@@ -285,71 +209,7 @@ export default {
   data() {
     return {
       bagroundPattern: null,
-      scaleBy: 1.01,
-      editTableProperties: {
-        potition: {
-          x: 30,
-          y: 110
-        },
-        coloumns: {
-          id: {
-            comment: "",
-            dataType: "varchar(31)",
-            default: "",
-            primaryKey: true,
-            allowNull: false,
-            unique: false,
-            unsigned: false,
-            zeroFill: false,
-            autoIncrement: false,
-            foreignKey: false,
-            style: {
-              shadowBlur: 0,
-              shadowColor: "green"
-            }
-          },
-          jumlah_roda: {
-            comment: "",
-            dataType: "int(32)",
-            default: "",
-            primaryKey: false,
-            allowNull: false,
-            unique: false,
-            unsigned: false,
-            zeroFill: false,
-            autoIncrement: false,
-            foreignKey: false,
-            style: {
-              shadowBlur: 0,
-              shadowColor: "green"
-            }
-          }
-        },
-        association: [
-          {
-            type: "has",
-            table: "sopir",
-            foreignKey: "mobil_id",
-            sourceKey: "id",
-            potition: {
-              x: 100,
-              y: 50
-            }
-          },
-          {
-            type: "has",
-            table: "kernet",
-            foreignKey: "mobil_id",
-            sourceKey: "id",
-            potition: {
-              x: 100,
-              y: 50
-            }
-          }
-        ]
-      },
-      editTableName: "mobil",
-      visible: false
+      scaleBy: 1.01
     };
   }
 };
