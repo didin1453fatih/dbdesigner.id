@@ -157,8 +157,7 @@ export default {
     };
   },
   data() {
-    return {
-      isSelectRelation: false,
+    return {      
       primaryKey: null,
       imageNotNull: null,
       imageNull: null
