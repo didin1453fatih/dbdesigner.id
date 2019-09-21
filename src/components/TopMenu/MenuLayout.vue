@@ -140,14 +140,11 @@
         <div class="tab-panel-group">
           <div class="tab-group-content">
             <div class="tab-content-segment" style="width: 75px;">
-              <button
-                class="fluent-button"
-                style="width:100%"
-                @click="pageEditable=0"
-              >
+              <button class="fluent-button" style="width:100%" @click="widthClick">
                 <span class="mif-flow-line" style="font-size: 15px;"></span>
                 <a-input
                   v-if="pageEditable===0"
+                  ref="widthEdit"
                   style="font-size: 11px;
                         height: 20px;
                         border-radius: 0px;
@@ -159,7 +156,7 @@
                 />
                 <span v-if="pageEditable!==0" class="label">90 px</span>
               </button>
-              <button class="fluent-button" style="width:100%" @click="pageEditable=1">
+              <button class="fluent-button" style="width:100%" @click="heightClick">
                 <span
                   class="mif-flow-line"
                   style="
@@ -173,6 +170,7 @@
                 <a-input
                   @blur="pageEditable=-1"
                   v-if="pageEditable===1"
+                  ref="heightEdit"
                   style="font-size: 11px;
                         height: 20px;
                         border-radius: 0px;
@@ -189,21 +187,36 @@
                   style="width:100%;padding-right: 0px;"
                 >
                   <span class="mif-search on-left"></span>
-                  <span class="label">100 %</span>
+                  <a-input
+                    ref="heightEdit"
+                    style="font-size: 11px;
+                        height: 20px;
+                        border-radius: 0px;
+                        width: 40px;
+                        padding: 3px;
+                        border-color: rgb(217, 217, 217);
+                        box-shadow: none;"
+                  />
                 </button>
                 <ul class="d-menu" data-role="dropdown" style="display: none;width:78px">
-                  <li style="width:70px !important" @click="onZoom(1)">
-                    <a style=";width:78px  !important;  min-width: 0rem;">10%</a>
+                  <li style="width:70px !important" @click="onZoom(0.25)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">25%</a>
                   </li>
+                  <li style=";width:70px" @click="onZoom(0.5)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">50%</a>
+                  </li>
+                  <li style=";width:70px" @click="onZoom(0.75)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">75%</a>
+                  </li>
+                  <li style=";width:70px" @click="onZoom(1)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">100%</a>
+                  </li>
+                  <li style=";width:70px" @click="onZoom(1.25)">
+                    <a style=";width:78px  !important;  min-width: 0rem;">125%</a>
+                  </li>                  
                   <li style=";width:70px" @click="onZoom(2)">
-                    <a style=";width:78px  !important;  min-width: 0rem;">20%</a>
-                  </li>
-                  <li style=";width:70px" @click="onZoom(100)">
-                    <a style=";width:78px  !important;  min-width: 0rem;">30%</a>
-                  </li>
-                  <li style=";width:70px" @click="onZoom(500)">
-                    <a style=";width:78px  !important;  min-width: 0rem;">40%</a>
-                  </li>
+                    <a style=";width:78px  !important;  min-width: 0rem;">200%</a>
+                  </li>                  
                 </ul>
               </div>
               <!-- <button class="fluent-button">
@@ -218,13 +231,13 @@
               <button class="fluent-tool-button" style="font-size: 25px;margin-top:0px">
                 <!-- <span class="mif-table on-left" style="font-size: 20px;"></span> -->
                 <img :src="targetingFocusImage" />
-              </button>              
+              </button>
               <!-- <button class="fluent-tool-button">
                 <img src="images/Folder-Rename.png" />
               </button>
               <button class="fluent-tool-button">
                 <img src="images/Calendar-Next.png" />
-              </button> -->
+              </button>-->
             </div>
           </div>
           <div class="tab-group-caption">Page</div>
@@ -295,7 +308,7 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import topicIcon from "@/assets/icons8-topic-96.png";
 import targetingFocusImage from "@/assets/square-targeting-focus.png";
-import gridIcon from "@/assets/grid-icon.png"
+import gridIcon from "@/assets/grid-icon.png";
 import helpSupport from "@/assets/icons8-online-support-filled-100.png";
 import { EventBus } from "@/helper/EventBus";
 export default {
@@ -311,6 +324,18 @@ export default {
     })
   },
   methods: {
+    heightClick() {
+      this.pageEditable = 1;
+      setTimeout(() => {
+        this.$refs.heightEdit.focus();
+      }, 500);
+    },
+    widthClick() {
+      this.pageEditable = 0;
+      setTimeout(() => {
+        this.$refs.widthEdit.focus();
+      }, 500);
+    },
     onZoom(value) {
       EventBus.$emit("Canvas/scale", {
         x: value,
@@ -393,7 +418,7 @@ export default {
     },
     ribbonMenuClick(value) {
       if (value == this.numberRibbonMenu) {
-        this.visibleRibbonMenu=!this.visibleRibbonMenu
+        this.visibleRibbonMenu = !this.visibleRibbonMenu;
       } else {
         this.visibleRibbonMenu = true;
         this.numberRibbonMenu = value;
@@ -406,8 +431,8 @@ export default {
       numberRibbonMenu: 0,
       pageEditable: -1,
       topicIcon: topicIcon,
-      gridIcon : gridIcon,
-      targetingFocusImage:targetingFocusImage,
+      gridIcon: gridIcon,
+      targetingFocusImage: targetingFocusImage,
       helpSupport: helpSupport
     };
   }

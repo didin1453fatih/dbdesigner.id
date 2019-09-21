@@ -126,7 +126,7 @@ export default {
   width: 3000px;
   height: 3000px;
   overflow: hidden;
-  background-color: #eeeeee;
+  background-color: #4d4d4d;
 }
 
 #scroll-container {
