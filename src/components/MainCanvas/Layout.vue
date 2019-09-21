@@ -1,11 +1,20 @@
 <template>
-  <div id="scroll-container">
-    <div id="large-container">
+<!-- COnnect this height to  state to dynamic height in ribbon menu -->
+  <div id="scroll-container" :style="{
+      height: `calc(100vh - ${33}px)`
+    }">
+    <div
+      id="large-container"
+      :style="{
+        height: `${canvasProperties.height}px`,
+        width: `${canvasProperties.width}px`,
+       }"
+    >
+      <!-- draggable: true -->
       <v-stage
         :config=" {
-            width: 3000,
-            height: 3000,
-            draggable: true
+            width: canvasProperties.width,
+            height: canvasProperties.height,
           }"
         ref="stage"
         @wheel="onZooming"
@@ -13,8 +22,8 @@
         <v-layer ref="layer">
           <v-rect
             :config="{
-                width: 3000,
-                height: 3000,
+                width: canvasProperties.width,
+                height: canvasProperties.height,
                 fillPatternImage: bagroundPattern,
             }"
           />
@@ -90,7 +99,7 @@ export default {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
     ...mapActions("Data/Project", {
-      setEmptyDiagram: "setEmptyDiagram",
+      setEmptyDiagram: "setEmptyDiagram"
     })
   },
   created() {
@@ -120,7 +129,8 @@ export default {
       dataDiagram: state => state.dataDiagram,
       connectorNew: state => state.connectorNew,
       dataDiagramNew: state => state.dataDiagramNew,
-      connectorNewKey: state => state.connectorNewKey
+      connectorNewKey: state => state.connectorNewKey,
+      canvasProperties: state => state.canvasProperties
     })
   },
   data() {
@@ -131,3 +141,21 @@ export default {
   }
 };
 </script>
+
+<style>
+#large-container {
+  /* width: 100px;
+  height: 100px; */
+  overflow: hidden;
+  background-color: grey;
+}
+
+#scroll-container {
+  width: 100%;
+  background-color: grey;
+  /* height: calc(100vh - 33px); */
+  overflow: auto;
+  margin: 0px;
+  border: 0px solid grey;
+}
+</style>

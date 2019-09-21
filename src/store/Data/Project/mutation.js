@@ -13,7 +13,6 @@ export default {
    * @param { value : value of x  and y } raw
    */
   async changeTablePotition(state, raw) {
-
     // eslint-disable-next-line
     // console.log("table key " + JSON.stringify(raw));
     var val = raw.value;
@@ -1466,10 +1465,10 @@ export default {
     state.projectDescription.created = data.created;
     state.projectDescription.updated = data.updated;
   },
-  setProjectDescriptionShareStatus(state, value){
+  setProjectDescriptionShareStatus(state, value) {
     state.projectDescription.share_status = value;
   },
-  setProjectDescriptionShareLink(state, value){
+  setProjectDescriptionShareLink(state, value) {
     state.projectDescription.share_link = value;
   },
   deletedData(state) {
@@ -1487,10 +1486,19 @@ export default {
     state.dataDiagramNew = {};
     state.connectorNewKey = {};
   },
+  SET_CANVAS_HEIGHT(state, val) {
+    state.canvasProperties.height = val;
+  },
+  SET_CANVAS_WIDTH(state, val) {
+    state.canvasProperties.width = val;
+  },
+  SET_CANVAS_ZOOM(state, val){
+    state.canvasProperties.zoom = val;
+  },
   setIsSaved(state, value) {
     state.isSaved = value;
   },
-  setSavedMessage(state, value){
-    state.savedMessage=value;
+  setSavedMessage(state, value) {
+    state.savedMessage = value;
   }
 };

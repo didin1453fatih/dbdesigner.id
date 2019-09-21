@@ -144,6 +144,7 @@
                 <span class="mif-flow-line" style="font-size: 15px;"></span>
                 <a-input
                   v-if="pageEditable===0"
+                  :value="canvasProperties.height"
                   ref="widthEdit"
                   style="font-size: 11px;
                         height: 20px;
@@ -153,8 +154,9 @@
                         border-color: rgb(217, 217, 217);
                         box-shadow: none;"
                   @blur="pageEditable=-1"
+                  @change="SET_CANVAS_HEIGHT($event.target.value)"
                 />
-                <span v-if="pageEditable!==0" class="label">90 px</span>
+                <span v-if="pageEditable!==0" class="label">{{canvasProperties.height}} px</span>
               </button>
               <button class="fluent-button" style="width:100%" @click="heightClick">
                 <span
@@ -168,6 +170,7 @@
                   font-size: 15px;"
                 ></span>
                 <a-input
+                  :value="canvasProperties.width"
                   @blur="pageEditable=-1"
                   v-if="pageEditable===1"
                   ref="heightEdit"
@@ -178,8 +181,9 @@
                         padding: 3px;
                         border-color: rgb(217, 217, 217);
                         box-shadow: none;"
+                  @change="SET_CANVAS_WIDTH($event.target.value)"
                 />
-                <span v-if="pageEditable!==1" class="label">90 px</span>
+                <span v-if="pageEditable!==1" class="label">{{canvasProperties.width}} px</span>
               </button>
               <div class="tab-content-segment" style="width:100%">
                 <button
@@ -187,7 +191,8 @@
                   style="width:100%;padding-right: 0px;"
                 >
                   <span class="mif-search on-left"></span>
-                  <a-input
+                  <span class="label">{{canvasProperties.zoom*100}} %</span>
+                  <!-- <a-input
                     ref="heightEdit"
                     style="font-size: 11px;
                         height: 20px;
@@ -196,7 +201,7 @@
                         padding: 3px;
                         border-color: rgb(217, 217, 217);
                         box-shadow: none;"
-                  />
+                  />-->
                 </button>
                 <ul class="d-menu" data-role="dropdown" style="display: none;width:78px">
                   <li style="width:70px !important" @click="onZoom(0.25)">
@@ -213,10 +218,10 @@
                   </li>
                   <li style=";width:70px" @click="onZoom(1.25)">
                     <a style=";width:78px  !important;  min-width: 0rem;">125%</a>
-                  </li>                  
+                  </li>
                   <li style=";width:70px" @click="onZoom(2)">
                     <a style=";width:78px  !important;  min-width: 0rem;">200%</a>
-                  </li>                  
+                  </li>
                 </ul>
               </div>
               <!-- <button class="fluent-button">
@@ -316,7 +321,8 @@ export default {
     ...mapState("Data/Project", {
       title: state => state.projectDescription.title,
       description: state => state.projectDescription.description,
-      savedMessage: state => state.savedMessage
+      savedMessage: state => state.savedMessage,
+      canvasProperties: state => state.canvasProperties
     }),
     ...mapState("Data/Account", {
       username: state => state.username,
@@ -337,6 +343,7 @@ export default {
       }, 500);
     },
     onZoom(value) {
+      this.SET_CANVAS_ZOOM(value);
       EventBus.$emit("Canvas/scale", {
         x: value,
         y: value
@@ -356,7 +363,10 @@ export default {
       highlightRelation: "highlightRelation",
       setLineStyleConnector: "setLineStyleConnector",
       addNewTable: "addNewTable",
-      setHighLightRelation: "setHighLightRelation"
+      setHighLightRelation: "setHighLightRelation",
+      SET_CANVAS_HEIGHT: "SET_CANVAS_HEIGHT",
+      SET_CANVAS_WIDTH: "SET_CANVAS_WIDTH",
+      SET_CANVAS_ZOOM: "SET_CANVAS_ZOOM"
     }),
     ...mapMutations("LeftDialog/FileMenu/Layout", {
       openLeftPanel: "setVisible",

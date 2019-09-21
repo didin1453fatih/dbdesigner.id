@@ -121,19 +121,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
-#large-container {
-  width: 3000px;
-  height: 3000px;
-  overflow: hidden;
-  background-color: #4d4d4d;
-}
-
-#scroll-container {
-  width: 100%;
-  height: calc(100vh - 33px);
-  overflow: auto;
-  margin: 0px;
-  border: 0px solid grey;
-}
 </style>

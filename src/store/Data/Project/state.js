@@ -388,6 +388,13 @@ export default {
     created: "2019-05-16T14:03:36.000Z",
     updated: "2019-05-16T14:03:36.000Z"
   },
+  canvasProperties:{
+    width:1500,
+    height:700,
+    zoom:1,
+    canvas_position_x:0,
+    canvas_position_y:0
+  },
   isSaved:true,
   savedMessage:""
 };
