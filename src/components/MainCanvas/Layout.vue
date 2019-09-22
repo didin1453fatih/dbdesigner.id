@@ -18,6 +18,7 @@
         :config=" {
             width: canvasProperties.width,
             height: canvasProperties.height,
+            draggable: true
           }"
         ref="stage"
         @wheel="onZooming"
@@ -158,7 +159,7 @@ export default {
 
 #scroll-container {
   width: 100%;
-  background-color: grey;
+  background-color: red;
   /* height: calc(100vh - 33px); */
   overflow: auto;
   margin: 0px;
