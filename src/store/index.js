@@ -6,6 +6,7 @@ import LeftDialog from "./LeftDialog/module";
 import Data from "./Data/module";
 import TopAlert from "./TopAlert/module";
 import Utill from "./Utill/module";
+import TopMenu from "./TopMenu/module"
 // import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";
 // import Login from "./Login/module";
@@ -28,6 +29,7 @@ export const store = new Vuex.Store({
     Data,
     LeftDialog,
     RightDialog,
+    TopMenu,
     // GlobalLoading,
     // Project,
     // UpdateProject

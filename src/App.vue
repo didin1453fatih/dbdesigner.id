@@ -1,91 +1,9 @@
 <template>
   <div>
-    <!-- <a-menu
-      style="line-height: 33px;background:#E6E6E6;color:#1C2128"
-      size="small"
-      mode="horizontal"
-    >
-      <a-sub-menu>
-        <span slot="title" class="submenu-title-wrapper">
-          <a-icon type="profile"/>File
-        </span>
-        <a-menu-item-group title="Project">
-          <a-menu-item key="setting:3">Open Project</a-menu-item>
-          <a-menu-item key="setting:2">New Project</a-menu-item>
-        </a-menu-item-group>
-        <a-menu-item-group title="Table">
-          <a-menu-item key="setting:1" @click="addNewTable">New Table</a-menu-item>
-        </a-menu-item-group>
-      </a-sub-menu>
-      <a-menu-item key="history">
-        <a-icon type="clock-circle"/>History
-      </a-menu-item>
-
-      <a-menu-item key="export">
-        <a-icon type="gift"/>Export
-      </a-menu-item>
-
-      <a-menu-item key="share">
-        <a-icon type="rocket"/>Share
-      </a-menu-item>
-      <a-menu-item key="smile">
-        <a-icon type="smile"/>Help
-      </a-menu-item>
-    </a-menu>-->
-    <!-- :message="messageAccountInformation" -->
-    <!-- <a-alert
-      type="info"
-      closeText="Close"
-      v-if="visibleAccountInformation"
-      @close="onCloseMessage"
-      style="border-radius: 0px; "
-    >
-      <div slot="message" style="text-align: center;">
-        <b>{{messageAccountInformation}}</b>
-      </div>
-    </a-alert>-->
     <information-alert />
-
-    <menu-fluent />
-
-    <div style=" overflow: scroll;width:100%;height:470px">
-      <v-stage :config="configKonva" ref="stage">
-        <v-layer ref="layer">
-          <v-rect
-            :config="{
-              width: 1400,
-              height: 700,
-              fill: 'white'
-            }"
-          />
-          <connector-base
-            v-for="connectorKey in Object.keys(connectorNewKey)"
-            v-bind:key="connectorKey"
-            :connectorObj="connectorNewKey[connectorKey]"
-            :connectorKey="connectorKey"
-          />
-
-          <table-base
-            @highlight="highlightRelation"
-            v-for="tableKey in Object.keys(dataDiagramNew)"
-            v-bind:key="tableKey"
-            @editDataTable="editDataTable"
-            @changedPotition="changeTablePotition"
-            :tableKey="tableKey"
-            :coloumns="dataDiagramNew[tableKey].coloumns"
-            :tableName="dataDiagramNew[tableKey].table_name"
-            :potition="dataDiagramNew[tableKey].point"
-            :widthTable="dataDiagramNew[tableKey].widthTable"
-          />
-        </v-layer>
-      </v-stage>
-    </div>
-    <table-detail
-      :visible="visible"
-      :tableName="editTableName"
-      :tableProperties="editTableProperties"
-      @close="onClose"
-    />
+    <ribbon-menu />
+    <canvas-layout />
+    <table-detail />
     <left-panel />
     <export />
     <loading-global />
@@ -94,37 +12,28 @@
 
 <script>
 import qs from "querystringify";
-import { mapState } from "vuex";
 import { mapMutations } from "vuex";
-
 import { mapActions } from "vuex";
-import TableBase from "./components/MainCanvas/TableBase";
-import ConnectorBase from "./components/MainCanvas/ConnectorBase";
 import LoadingGlobal from "./components/Utill/LoadingGlobal/Layout";
-import MenuFluent from "./components/TopMenu/MenuLayout.vue";
+import RibbonMenu from "./components/TopMenu/Layout.vue";
 import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 import Export from "./components/RightDialog/Export/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
 import InformationAlert from "./components/TopAlert/Information/Layout";
-import { EventBus } from "@/helper/EventBus";
+import bagroundPatternImage from "@/assets/canvas-background.png";
+import CanvasLayout from "./components/MainCanvas/Layout";
 export default {
   components: {
+    CanvasLayout,
     InformationAlert,
-    TableBase,
-    MenuFluent,
+    RibbonMenu,
     LeftPanel,
     Export,
     LoadingGlobal,
-    ConnectorBase,
     TableDetail
   },
   methods: {
-    onCloseMessage(e) {
-      // eslint-disable-next-line
-      console.log(e, "I was closed.");
-      this.setVisibleAccountInformation(false);
-    },
     ...mapMutations("LeftDialog/FileMenu/Layout", {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
@@ -132,31 +41,6 @@ export default {
     ...mapMutations("RightDialog/Export/Component/Image", {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
-    // ...mapMutations("Account", {
-    //   setVisibleAccountInformation: "setVisibleAccountInformation",
-    //   setMessageAccountInformation: "setMessageAccountInformation"
-    // }),
-    ...mapMutations("Data/Project", {
-      changeTablePotition: "changeTablePotition",
-      highlightRelation: "highlightRelation",
-      setLineStyleConnector: "setLineStyleConnector",
-      addNewTable: "addNewTable",
-      setHighLightRelation: "setHighLightRelation"
-    }),
-    // setHighLightRelation() {
-    //   window.alert(JSON.stringify("saasd"));
-    // },
-    editDataTable() {
-      // this.editTableName = tableName;
-      // this.editTableProperties = this.dataDiagram[tableName];
-      this.visible = true;
-    },
-    showDrawer() {
-      this.visible = true;
-    },
-    onClose() {
-      this.visible = false;
-    },
     ...mapActions("Data/Project", {
       loadProjectUUID: "loadProjectUUID",
       setEmptyDiagram: "setEmptyDiagram",
@@ -168,16 +52,13 @@ export default {
   },
   created() {
     this.setEmptyDiagram();
-    EventBus.$on("Canvas/exportToDataURL", options => {
-      var imageData = this.$refs.stage.getStage().toDataURL(options);
-      this.SET_IMAGE_BASE_64(imageData);
-    });
-    EventBus.$on("Canvas/cropped", options => {
-      var cropImg = this.$refs.stage.getCroppedCanvas().toDataURL(options);
-      this.SET_IMAGE_BASE_64(cropImg);
-    });
   },
   async mounted() {
+    const bagroundPattern = new window.Image();
+    bagroundPattern.src = bagroundPatternImage;
+    bagroundPattern.onload = () => {
+      this.bagroundPattern = bagroundPattern;
+    };
     if (window.location.toString().indexOf("uuid=") > 1) {
       var valueUUID = window.location.toString().split("uuid=")[1];
       this.globalReadAccount({
@@ -221,84 +102,11 @@ export default {
 
     this.autoSave();
   },
-  computed: {
-    ...mapState("Data/Project", {
-      dataDiagram: state => state.dataDiagram,
-      connectorNew: state => state.connectorNew,
-      dataDiagramNew: state => state.dataDiagramNew,
-      connectorNewKey: state => state.connectorNewKey
-    })
-  },
+  computed: {},
   data() {
     return {
-      editTableProperties: {
-        potition: {
-          x: 30,
-          y: 110
-        },
-        coloumns: {
-          id: {
-            comment: "",
-            dataType: "varchar(31)",
-            default: "",
-            primaryKey: true,
-            allowNull: false,
-            unique: false,
-            unsigned: false,
-            zeroFill: false,
-            autoIncrement: false,
-            foreignKey: false,
-            style: {
-              shadowBlur: 0,
-              shadowColor: "green"
-            }
-          },
-          jumlah_roda: {
-            comment: "",
-            dataType: "int(32)",
-            default: "",
-            primaryKey: false,
-            allowNull: false,
-            unique: false,
-            unsigned: false,
-            zeroFill: false,
-            autoIncrement: false,
-            foreignKey: false,
-            style: {
-              shadowBlur: 0,
-              shadowColor: "green"
-            }
-          }
-        },
-        association: [
-          {
-            type: "has",
-            table: "sopir",
-            foreignKey: "mobil_id",
-            sourceKey: "id",
-            potition: {
-              x: 100,
-              y: 50
-            }
-          },
-          {
-            type: "has",
-            table: "kernet",
-            foreignKey: "mobil_id",
-            sourceKey: "id",
-            potition: {
-              x: 100,
-              y: 50
-            }
-          }
-        ]
-      },
-      editTableName: "mobil",
-      visible: false,
-      configKonva: {
-        width: 1400,
-        height: 700
-      }
+      bagroundPattern: null,
+      scaleBy: 1.01
     };
   }
 };
