@@ -1,8 +1,11 @@
 <template>
-<!-- COnnect this height to  state to dynamic height in ribbon menu -->
-  <div id="scroll-container" :style="{
-      height: `calc(100vh - ${33}px)`
-    }">
+  <!-- COnnect this height to  state to dynamic height in ribbon menu -->
+  <div
+    id="scroll-container"
+    :style="{
+      height: `calc(100vh - ${visible_ribbon_menu===false?33:150}px)`
+    }"
+  >
     <div
       id="large-container"
       :style="{
@@ -131,6 +134,9 @@ export default {
       dataDiagramNew: state => state.dataDiagramNew,
       connectorNewKey: state => state.connectorNewKey,
       canvasProperties: state => state.canvasProperties
+    }),
+    ...mapState("TopMenu/Layout", {
+      visible_ribbon_menu: state => state.visible_ribbon_menu
     })
   },
   data() {
