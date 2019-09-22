@@ -1,7 +1,7 @@
 <template>
   <div>
     <information-alert />
-    <menu-fluent />
+    <ribbon-menu />
     <canvas-layout />
     <table-detail />
     <left-panel />
@@ -15,7 +15,7 @@ import qs from "querystringify";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import LoadingGlobal from "./components/Utill/LoadingGlobal/Layout";
-import MenuFluent from "./components/TopMenu/MenuLayout.vue";
+import RibbonMenu from "./components/TopMenu/Layout.vue";
 import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 import Export from "./components/RightDialog/Export/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
@@ -27,7 +27,7 @@ export default {
   components: {
     CanvasLayout,
     InformationAlert,
-    MenuFluent,
+    RibbonMenu,
     LeftPanel,
     Export,
     LoadingGlobal,

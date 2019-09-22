@@ -16,13 +16,13 @@
       <li class="special" @click="openLeftPanel(true)">
         <a>File</a>
       </li>
-      <li class="active" @click="ribbonMenuClick(1)">
+      <li class="active" @click="ribbonMenuClick('home')">
         <a href="#tab_home">Home</a>
       </li>
-      <li class @click="ribbonMenuClick(2)">
+      <li class @click="ribbonMenuClick('edit')">
         <a href="#tab_mailings">Edit</a>
       </li>
-      <li @click="ribbonMenuClick(3)">
+      <li @click="ribbonMenuClick('account')">
         <a href="#tab_folder">Account</a>
       </li>
       <div style=";text-align: right;">
@@ -33,7 +33,7 @@
         <span class="mif-github fg-orange" style="font-size: 1.5rem;margin-right:10px"></span>
       </div>
     </ul>
-    <div class="tabs-content" v-show="visibleRibbonMenu">
+    <div class="tabs-content" v-show="visible_ribbon_menu">
       <div class="tab-panel" id="tab_home" style="display: block;">
         <div class="tab-panel-group">
           <div class="tab-group-content">
@@ -140,12 +140,12 @@
         <div class="tab-panel-group">
           <div class="tab-group-content">
             <div class="tab-content-segment" style="width: 75px;">
-              <button class="fluent-button" style="width:100%" @click="widthClick">
+              <button class="fluent-button" style="width:100%" @click="heightClick">
                 <span class="mif-flow-line" style="font-size: 15px;"></span>
                 <a-input
-                  v-if="pageEditable===0"
+                  v-if="pageSizeEdit==='height'"
                   :value="canvasProperties.height"
-                  ref="widthEdit"
+                  ref="heightEdit"
                   style="font-size: 11px;
                         height: 20px;
                         border-radius: 0px;
@@ -153,12 +153,12 @@
                         padding: 3px;
                         border-color: rgb(217, 217, 217);
                         box-shadow: none;"
-                  @blur="pageEditable=-1"
+                  @blur="pageSizeEdit=null"
                   @change="SET_CANVAS_HEIGHT($event.target.value)"
                 />
-                <span v-if="pageEditable!==0" class="label">{{canvasProperties.height}} px</span>
+                <span v-if="pageSizeEdit!=='height'" class="label">{{canvasProperties.height}} px</span>
               </button>
-              <button class="fluent-button" style="width:100%" @click="heightClick">
+              <button class="fluent-button" style="width:100%" @click="widthClick">
                 <span
                   class="mif-flow-line"
                   style="
@@ -171,9 +171,9 @@
                 ></span>
                 <a-input
                   :value="canvasProperties.width"
-                  @blur="pageEditable=-1"
-                  v-if="pageEditable===1"
-                  ref="heightEdit"
+                  @blur="pageSizeEdit=null"
+                  v-if="pageSizeEdit==='width'"
+                  ref="widthEdit"
                   style="font-size: 11px;
                         height: 20px;
                         border-radius: 0px;
@@ -183,7 +183,7 @@
                         box-shadow: none;"
                   @change="SET_CANVAS_WIDTH($event.target.value)"
                 />
-                <span v-if="pageEditable!==1" class="label">{{canvasProperties.width}} px</span>
+                <span v-if="pageSizeEdit!=='width'" class="label">{{canvasProperties.width}} px</span>
               </button>
               <div class="tab-content-segment" style="width:100%">
                 <button
@@ -327,17 +327,20 @@ export default {
     ...mapState("Data/Account", {
       username: state => state.username,
       accountId: state => state.id
+    }),
+    ...mapState("TopMenu/Layout", {
+      visible_ribbon_menu: state => state.visible_ribbon_menu
     })
   },
   methods: {
     heightClick() {
-      this.pageEditable = 1;
+      this.pageSizeEdit = "height";
       setTimeout(() => {
         this.$refs.heightEdit.focus();
       }, 500);
     },
     widthClick() {
-      this.pageEditable = 0;
+      this.pageSizeEdit = "width";
       setTimeout(() => {
         this.$refs.widthEdit.focus();
       }, 500);
@@ -357,6 +360,9 @@ export default {
     }),
     ...mapMutations("ExportDesign", {
       openExport: "setVisible"
+    }),
+    ...mapMutations("TopMenu/Layout", {
+      SET_VISIBLE_RIBBON_MENU: "SET_VISIBLE_RIBBON_MENU"
     }),
     ...mapMutations("Data/Project", {
       changeTablePotition: "changeTablePotition",
@@ -426,20 +432,19 @@ export default {
         message.error("The project is empty");
       }
     },
-    ribbonMenuClick(value) {
-      if (value == this.numberRibbonMenu) {
-        this.visibleRibbonMenu = !this.visibleRibbonMenu;
+    ribbonMenuClick(name) {
+      if (name == this.activeRibbonMenu) {
+        this.SET_VISIBLE_RIBBON_MENU(!this.visible_ribbon_menu);
       } else {
-        this.visibleRibbonMenu = true;
-        this.numberRibbonMenu = value;
+        this.SET_VISIBLE_RIBBON_MENU(true);
+        this.activeRibbonMenu = name;
       }
     }
   },
   data() {
     return {
-      visibleRibbonMenu: true,
-      numberRibbonMenu: 0,
-      pageEditable: -1,
+      activeRibbonMenu: "home",
+      pageSizeEdit: null,
       topicIcon: topicIcon,
       gridIcon: gridIcon,
       targetingFocusImage: targetingFocusImage,
