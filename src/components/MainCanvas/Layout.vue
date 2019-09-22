@@ -82,6 +82,7 @@ export default {
 
       var newScale =
         e.evt.deltaY > 0 ? oldScale * this.scaleBy : oldScale / this.scaleBy;
+      this.SET_CANVAS_ZOOM(newScale);
       this.$refs.stage.getStage().scale({ x: newScale, y: newScale });
 
       var newPos = {
@@ -102,6 +103,9 @@ export default {
     ...mapMutations("RightDialog/Export/Component/Image", {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
+    ...mapMutations("Data/Project", {
+      SET_CANVAS_ZOOM: "SET_CANVAS_ZOOM"
+    }),
     ...mapActions("Data/Project", {
       setEmptyDiagram: "setEmptyDiagram"
     })
@@ -118,6 +122,10 @@ export default {
     });
     EventBus.$on("Canvas/scale", options => {
       this.$refs.stage.getStage().scale(options);
+      this.$refs.stage.getStage().batchDraw();
+    });
+    EventBus.$on("Canvas/resetPotition", () => {
+      this.$refs.stage.getStage().position(0, 0);
       this.$refs.stage.getStage().batchDraw();
     });
   },
@@ -159,7 +167,8 @@ export default {
 
 #scroll-container {
   width: 100%;
-  background-color: red;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVDhPY2xoaGDABp49ewZloQImKE00GNVADGBMS0uDMlGBlJQUlIUKRmQo0VoDAwMABSUF0YPFlT4AAAAASUVORK5CYII=");
+  /* background-color: red; */
   /* height: calc(100vh - 33px); */
   overflow: auto;
   margin: 0px;

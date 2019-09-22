@@ -191,7 +191,7 @@
                   style="width:100%;padding-right: 0px;"
                 >
                   <span class="mif-search on-left"></span>
-                  <span class="label">{{canvasProperties.zoom*100}} %</span>
+                  <span class="label">{{(canvasProperties.zoom*100).toFixed(0)}} %</span>
                   <!-- <a-input
                     ref="heightEdit"
                     style="font-size: 11px;
@@ -229,11 +229,24 @@
               </button>-->
             </div>
             <div class="tab-content-segment">
-              <button class="fluent-tool-button" style="font-size: 25px;margin-top:3px">
+              <button
+                class="fluent-tool-button"
+                style="font-size: 25px;margin-top:0px;padding-bottom:5px;padding-top:5px"
+              >
                 <!-- <span class="mif-table on-left" style="font-size: 20px;"></span> -->
                 <img :src="gridIcon" />
               </button>
-              <button class="fluent-tool-button" style="font-size: 25px;margin-top:0px">
+              <button
+                class="fluent-tool-button"
+                style="font-size: 25px;padding-top:5px;padding-bottom:5px"
+              >
+                <img :src="blankIcon" />
+              </button>
+              <button
+                class="fluent-tool-button"
+                style="font-size: 25px;margin-top:0px;padding-bottom:5px;padding-top:5px"
+                @click="resetPotition"
+              >
                 <!-- <span class="mif-table on-left" style="font-size: 20px;"></span> -->
                 <img :src="targetingFocusImage" />
               </button>
@@ -314,6 +327,7 @@ import { mapState } from "vuex";
 import topicIcon from "@/assets/icons8-topic-96.png";
 import targetingFocusImage from "@/assets/square-targeting-focus.png";
 import gridIcon from "@/assets/grid-icon.png";
+import blankIcon from "@/assets/blank.png";
 import helpSupport from "@/assets/icons8-online-support-filled-100.png";
 import { EventBus } from "@/helper/EventBus";
 export default {
@@ -333,6 +347,9 @@ export default {
     })
   },
   methods: {
+    resetPotition() {
+      EventBus.$emit("Canvas/resetPotition");
+    },
     heightClick() {
       this.pageSizeEdit = "height";
       setTimeout(() => {
@@ -447,6 +464,7 @@ export default {
       pageSizeEdit: null,
       topicIcon: topicIcon,
       gridIcon: gridIcon,
+      blankIcon: blankIcon,
       targetingFocusImage: targetingFocusImage,
       helpSupport: helpSupport
     };
