@@ -65,7 +65,7 @@
                 strokeWidth: 0,
             }"
             />
-          </v-layer> -->
+          </v-layer>-->
         </v-stage>
       </div>
     </div>
@@ -76,7 +76,7 @@
       min-width: 0px;
       padding: 0px;"
     >
-      <li>
+      <li @click="addNewTableEvent">
         <a
           style="padding-top: 5px;
                 padding-left: 12px;
@@ -84,14 +84,14 @@
                 padding-bottom: 2px;"
         >New Table</a>
       </li>
-      <li>
+      <!-- <li>
         <a
           style="padding-top: 2px;
                 padding-left: 12px;
                 padding-right: 10px;
                 padding-bottom: 4px;"
         >New Note</a>
-      </li>
+      </li> -->
       <a-divider
         style="background:rgb(217, 217, 217);padding:0px;margin:1px; min-width: 95%;width: 95%;"
       />
@@ -140,9 +140,9 @@
  * NOTE ignored bug.
  * Scale is not perfect for match with pointer potition in :
  * 1. Right click menu Zoom-In and Zoom-Out
- * 2. Cursor left click in zoom-in or zoom-out 
- * 
- * Solution 
+ * 2. Cursor left click in zoom-in or zoom-out
+ *
+ * Solution
  * - Record center potition every scroll down and scroll up in canvas properties,
  * and zoom to this potition.
  */
@@ -161,6 +161,12 @@ export default {
     VueContext
   },
   methods: {
+    addNewTableEvent() {
+      this.addNewTableWithPosition({
+        x: this.right_click_dialog_potition_x,
+        y: this.right_click_dialog_potition_y
+      });
+    },
     setCursor(mode) {
       if (mode === "grab") {
         this.canvas_draggable = true;
@@ -208,7 +214,7 @@ export default {
           this.$refs.stage.getStage().getPointerPosition().x;
 
         // this.right_click_dialog_visible = true;
-        this.$refs.menu.open(e);
+        // this.$refs.menu.open(e);
       } else {
         if (this.cursor_mode === "zoom-in") {
           this.SET_CANVAS_ZOOM(this.canvasProperties.zoom + 0.25);
@@ -266,7 +272,8 @@ export default {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
     ...mapMutations("Data/Project", {
-      SET_CANVAS_ZOOM: "SET_CANVAS_ZOOM"
+      SET_CANVAS_ZOOM: "SET_CANVAS_ZOOM",
+      addNewTableWithPosition: "addNewTableWithPosition"
     }),
     ...mapActions("Data/Project", {
       setEmptyDiagram: "setEmptyDiagram"

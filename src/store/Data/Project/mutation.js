@@ -1405,6 +1405,48 @@ export default {
     // save table
     state.isSaved = false;
   },
+  addNewTableWithPosition(state,position) {
+    let table_id = uuidv4();
+    Vue.set(state.dataDiagramNew, table_id, {
+      table_name: "",
+      widthTable: 150,
+      heightTable: 0,
+      point: {
+        x: position.x,
+        y: position.y
+      },
+      coloumns: {
+        coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
+          coloumn_name: "id",
+          comment: "",
+          dataType: "integer",
+          default: "",
+          primaryKey: true,
+          notNull: false,
+          unique: false,
+          foreignKey: false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: true,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          },
+          association_belong_id: null,
+          association_has_id: []
+        }
+      },
+      association: {}
+    });
+    state.tableDetail.table_id = table_id;
+    state.tableDetail.visible = true;
+    state.tableDetail.isNewTable = true;
+    state.tableDetail.isEditTableName = true;
+    state.tableDetail.showDetailcoloumn = 0;
+
+    // save table
+    state.isSaved = false;
+  },  
   setIsEditTableName(state, value) {
     state.tableDetail.isEditTableName = value;
   },
