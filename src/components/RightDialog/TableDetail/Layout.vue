@@ -211,7 +211,7 @@
                       <span style="padding-right:5px">Default</span>
                     </a-col>
                     <a-col :span="18">
-                      <a-input style="width:170px" size="small" placeholder="small size"/>
+                      <a-input style="width:170px" size="small" placeholder="Default value"/>
                     </a-col>
                     <a-col :span="1"></a-col>
                   </a-row>
