@@ -469,8 +469,8 @@ export default {
     var countCharacter = maxCharacter;
     // // eslint-disable-next-line
     // console.log('width table '+countCharacter)
-    if (countCharacter > 8) {
-      newWidth = 150 + (countCharacter - 8) * 7;
+    if (countCharacter > 5) {
+      newWidth = 150 + (countCharacter - 5) * 7;
     }
 
     state.dataDiagramNew[tableKey_id].widthTable = newWidth;

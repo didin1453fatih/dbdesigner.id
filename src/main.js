@@ -24,8 +24,10 @@ import {
   Modal,
   Divider,
   Alert,
-  Select
+  Select,
+  AutoComplete
 } from "ant-design-vue";
+Vue.use(AutoComplete);
 Vue.use(Button);
 Vue.use(Row);
 Vue.use(Col);

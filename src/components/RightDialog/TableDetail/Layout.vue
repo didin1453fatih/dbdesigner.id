@@ -2,7 +2,7 @@
   <a-drawer
     v-if="dataDiagramNew[tableKeyConfig]!==undefined"
     placement="right"
-    :width="520"
+    :width="620"
     :closable="false"
     @close="onClose"
     :visible="visible"
@@ -43,15 +43,15 @@
           <td>
             <span style="margin-left:10px">Column Name</span>
           </td>
-          <td width="20%">
+          <td width="23%">
             <span style="margin-left:10px">Data Type</span>
           </td>
-          <td width="9%" align="center">PK</td>
-          <td width="9%" align="center">NN</td>
-          <td width="9%" align="center">UQ</td>
-          <td width="9%" align="center">UN</td>
-          <td width="9%" align="center">AI</td>
-          <td width="7%" align="center"></td>
+          <td width="7%" align="center">PK</td>
+          <td width="7%" align="center">NN</td>
+          <td width="7%" align="center">UQ</td>
+          <td width="7%" align="center">UN</td>
+          <td width="7%" align="center">AI</td>
+          <td width="5%" align="center"></td>
         </tr>
         <template
           v-for="(keyColoumn,index) in Object.keys(dataDiagramNew[tableKeyConfig].coloumns)"
@@ -69,7 +69,7 @@
                         src="@/assets/primary-key.png"
                         width="14px"
                         style="vertical-align: baseline; "
-                      >
+                      />
                     </span>
                     <span
                       style="margin-left:7px"
@@ -79,7 +79,7 @@
                         src="@/assets/icons8-diamonds-40.png"
                         width="14px"
                         style="vertical-align: baseline; "
-                      >
+                      />
                     </span>
                     <span
                       style="margin-left:7px"
@@ -89,35 +89,53 @@
                         src="@/assets/icons8-diamonds-40-white.png"
                         width="14px"
                         style="vertical-align: baseline; "
-                      >
+                      />
                     </span>
                   </td>
                   <td align="left">
                     <div style="margin-left:5px">
-                    <a-input
-                      @blur="isEditColoumnName = false"
-                      placeholder="Coloumn name"
-                      v-if="showDetailcoloumn===index"
-                      size="small"
-                      @input="updateColoumnName({
+                      <a-input
+                        @blur="isEditColoumnName = false"
+                        placeholder="Coloumn name"
+                        v-if="showDetailcoloumn===index"
+                        size="small"
+                        @input="updateColoumnName({
                         tableKey_id:tableKeyConfig,
                         coloumn_id:keyColoumn,
                         newName:$event.target.value
                       })"
-                      :value="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name"
-                    />
-                    <div
-                      @click="showDetail(index,keyColoumn)"
-                      v-else
-                      style="width:100%;"
-                    >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name}}&nbsp;</div>
+                        :value="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name"
+                      />
+                      <div
+                        @click="showDetail(index,keyColoumn)"
+                        v-else
+                        style="width:100%;"
+                      >{{dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].coloumn_name}}&nbsp;</div>
                     </div>
                   </td>
                 </tr>
               </table>
             </td>
             <td>
-              <a-input
+              <a-auto-complete
+                size="small"
+                @blur="isEditColoumnType = false"
+                v-if="showDetailcoloumn===index"
+                :dataSource="dataSource"
+                @change="updateDataType({
+                  tableKey_id:tableKeyConfig,
+                  coloumn_id:keyColoumn,
+                  newDataType:$event
+                })"
+                :autoFocus="false"
+                :backfill="true"
+                :defaultOpen="false"
+                @search="handleSearch"
+                placeholder="Data type"
+                :defaultValue="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].dataType"
+              />
+                <!-- :value="cache_data_type"               -->
+              <!-- <a-input
                 @blur="isEditColoumnType = false"
                 v-if="showDetailcoloumn===index"
                 size="small"
@@ -128,7 +146,7 @@
                   newDataType:$event.target.value
                 })"
                 :value="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].dataType"
-              />
+              />-->
               <div
                 @click="showDetail(index,keyColoumn)"
                 v-else
@@ -191,7 +209,7 @@
                 @click="setShowDetailcoloumn(-1)"
                 type="caret-up"
               />
-              <a-icon v-else @click="showDetail(index,keyColoumn)" type="caret-down"/>
+              <a-icon v-else @click="showDetail(index,keyColoumn)" type="caret-down" />
             </td>
           </tr>
           <template v-if="showDetailcoloumn===index">
@@ -211,7 +229,7 @@
                       <span style="padding-right:5px">Default</span>
                     </a-col>
                     <a-col :span="18">
-                      <a-input style="width:170px" size="small" placeholder="Default value"/>
+                      <a-input style="width:170px" size="small" placeholder="Default value" />
                     </a-col>
                     <a-col :span="1"></a-col>
                   </a-row>
@@ -543,10 +561,40 @@ export default {
       this.setShowDetailcoloumn(
         Object.keys(this.dataDiagramNew[this.table_id].coloumns).length - 1
       );
+    },
+    handleSearch(value) {
+       // eslint-disable-next-line
+      console.log(value)
+      this.dataSource = [];
+      this.data_types.forEach(dataType => {
+        if (dataType.indexOf(value.toUpperCase()) >= 0) {
+          this.dataSource.push(dataType);
+        }
+      });
     }
   },
   data() {
     return {
+      data_types: [
+        "TINYINT",
+        "SMALLINT",
+        "MEDIUMINT",
+        "INT",
+        "BIGINT",
+        "FLOAT",
+        "DOUBLE",
+        "DATETIME",
+        "DATE",
+        "TIMESTAMP",
+        "CHAR",
+        "VARCHAR",
+        "BINARY",
+        "VARBINARY",
+        "BLOB",
+        "TEXT",
+        "JSON"
+      ],
+      dataSource: [],
       visibleMessageColoumn: true,
       isVisibleNewColoumn: false,
       newColoumn: {
