@@ -31,6 +31,23 @@ export default {
         } else {
           context.commit("setDiagram", {});
         }
+
+        // eslint-disable-next-line
+        console.log(JSON.stringify(dataJSON.canvas));
+        if (dataJSON.canvas !== undefined && dataJSON.canvas !== null) {
+          // eslint-disable-next-line
+          console.log(JSON.stringify(dataJSON.canvas));
+          context.commit("SET_CANVAS_PROPERTIES", dataJSON.canvas);
+        } else {
+          // Default canvas properties
+          context.commit("SET_CANVAS_PROPERTIES", {
+            width: 1500,
+            height: 700,
+            zoom: 1,
+            canvas_position_x: 0,
+            canvas_position_y: 0
+          });
+        }
       } else {
         context.commit("setConnector", {});
         context.commit("setDiagram", {});
@@ -80,6 +97,18 @@ export default {
         } else {
           context.commit("setDiagram", {});
         }
+        if (dataJSON.canvas !== undefined && dataJSON.canvas !== null) {
+          context.commit("SET_CANVAS_PROPERTIES", dataJSON.canvas);
+        } else {
+          // Default canvas properties
+          context.commit("SET_CANVAS_PROPERTIES", {
+            width: 1500,
+            height: 700,
+            zoom: 1,
+            canvas_position_x: 0,
+            canvas_position_y: 0
+          });
+        }
       } else {
         context.commit("setConnector", {});
         context.commit("setDiagram", {});
@@ -108,7 +137,8 @@ export default {
         id: context.state.projectDescription.id,
         data_design: JSON.stringify({
           connector: context.state.connectorNewKey,
-          diagram: context.state.dataDiagramNew
+          diagram: context.state.dataDiagramNew,
+          canvas: context.state.canvasProperties
         })
       });
       var emote = [

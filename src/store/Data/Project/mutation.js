@@ -1530,12 +1530,19 @@ export default {
   },
   SET_CANVAS_HEIGHT(state, val) {
     state.canvasProperties.height = val;
+    // save table
+    state.isSaved = false;    
   },
   SET_CANVAS_WIDTH(state, val) {
     state.canvasProperties.width = val;
+    // save table
+    state.isSaved = false;
   },
   SET_CANVAS_ZOOM(state, val){
     state.canvasProperties.zoom = val;
+  },
+  SET_CANVAS_PROPERTIES(state, data){
+    state.canvasProperties=data
   },
   setIsSaved(state, value) {
     state.isSaved = value;

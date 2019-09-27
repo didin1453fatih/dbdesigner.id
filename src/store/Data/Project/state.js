@@ -393,7 +393,8 @@ export default {
     height:700,
     zoom:1,
     canvas_position_x:0,
-    canvas_position_y:0
+    canvas_position_y:0,
+    grid_background: true
   },
   isSaved:true,
   savedMessage:""
