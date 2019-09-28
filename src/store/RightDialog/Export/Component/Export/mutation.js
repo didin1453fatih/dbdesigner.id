@@ -83,18 +83,25 @@ function createTableTemplete(tableName, coloumns) {
 function createColoumnTemplete(coloumn) {
   var notNullValue = " NOT NULL";
   var autoIncrementValue = " AUTO_INCREMENT";
+  var default_value_template=""
   if (coloumn.notNull === false) {
     notNullValue = "";
   }
   if (coloumn.autoIncrement === false) {
     autoIncrementValue = "";
   }
+
+  if (coloumn.default !=="" && coloumn.default !==null && coloumn.default !==undefined) {
+    default_value_template = " DEFAULT '"+coloumn.default+"'";
+  }
+  
   return (
     "`"+coloumn.coloumn_name+"`" +
     " " +
     coloumn.dataType +
     notNullValue +
-    autoIncrementValue
+    autoIncrementValue +
+    default_value_template
   );
 }
 

@@ -13,7 +13,7 @@ export default {
       context.commit("setTitle", "");
       context.commit("setDescription", "");
       context.rootDispatch("Data/Project/loadProject", {
-        id: respond.payload.id
+        uuid: respond.payload.uuid
       });
     } catch (error) {
       if (error.code === 10) {
