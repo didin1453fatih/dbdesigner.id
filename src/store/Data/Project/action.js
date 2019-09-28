@@ -1,5 +1,5 @@
 import { message } from "ant-design-vue";
-import LoadProjectUUID from "@/request/readOneProjectUUID.request";
+// import LoadProjectUUID from "@/request/readOneProjectUUID.request";
 import LoadProject from "@/request/readOneProject.request";
 import SaveProject from "@/request/saveProject.request";
 import { request2, requestHelper } from "@/helper/RequestConnector";
@@ -11,74 +11,74 @@ export default {
     context.commit("deletedData");
     context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "open");
   }),
-  loadProjectUUID: request2(async context => {
-    context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
+  // loadProjectUUID: request2(async context => {
+  //   context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
 
-    try {
-      var respond = await requestHelper(LoadProjectUUID, {
-        uuid: context.inputs.uuid,
-        password: context.inputs.password
-      });
-      var dataJSON = JSON.parse(respond.payload.data_design);
-      if (dataJSON !== null) {
-        if (dataJSON.connector !== undefined && dataJSON.connector !== null) {
-          context.commit("setConnector", dataJSON.connector);
-        } else {
-          context.commit("setConnector", {});
-        }
-        if (dataJSON.diagram !== undefined && dataJSON.diagram !== null) {
-          context.commit("setDiagram", dataJSON.diagram);
-        } else {
-          context.commit("setDiagram", {});
-        }
+  //   try {
+  //     var respond = await requestHelper(LoadProjectUUID, {
+  //       uuid: context.inputs.uuid,
+  //       password: context.inputs.password
+  //     });
+  //     var dataJSON = JSON.parse(respond.payload.data_design);
+  //     if (dataJSON !== null) {
+  //       if (dataJSON.connector !== undefined && dataJSON.connector !== null) {
+  //         context.commit("setConnector", dataJSON.connector);
+  //       } else {
+  //         context.commit("setConnector", {});
+  //       }
+  //       if (dataJSON.diagram !== undefined && dataJSON.diagram !== null) {
+  //         context.commit("setDiagram", dataJSON.diagram);
+  //       } else {
+  //         context.commit("setDiagram", {});
+  //       }
 
-        // eslint-disable-next-line
-        console.log(JSON.stringify(dataJSON.canvas));
-        if (dataJSON.canvas !== undefined && dataJSON.canvas !== null) {
-          // eslint-disable-next-line
-          console.log(JSON.stringify(dataJSON.canvas));
-          context.commit("SET_CANVAS_PROPERTIES", dataJSON.canvas);
-        } else {
-          // Default canvas properties
-          context.commit("SET_CANVAS_PROPERTIES", {
-            width: 1500,
-            height: 700,
-            zoom: 1,
-            canvas_position_x: 0,
-            canvas_position_y: 0
-          });
-        }
-      } else {
-        context.commit("setConnector", {});
-        context.commit("setDiagram", {});
-      }
-      document.title = respond.payload.title;
-      context.commit("setProjectDescription", respond.payload);
-      context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
-      context.rootCommit(
-        "LeftDialog/FileMenu/Layout/setPanelName",
-        "properties"
-      );
-      message.success("Opened", 2);
-    } catch (error) {
-      if (error.code === 23) {
-        message.info(error.description.title + " Required password", 3);
-        context.rootCommit(
-          "OpenSharedWithPassword/setUUID",
-          context.inputs.uuid
-        );
+  //       // eslint-disable-next-line
+  //       console.log(JSON.stringify(dataJSON.canvas));
+  //       if (dataJSON.canvas !== undefined && dataJSON.canvas !== null) {
+  //         // eslint-disable-next-line
+  //         console.log(JSON.stringify(dataJSON.canvas));
+  //         context.commit("SET_CANVAS_PROPERTIES", dataJSON.canvas);
+  //       } else {
+  //         // Default canvas properties
+  //         context.commit("SET_CANVAS_PROPERTIES", {
+  //           width: 1500,
+  //           height: 700,
+  //           zoom: 1,
+  //           canvas_position_x: 0,
+  //           canvas_position_y: 0
+  //         });
+  //       }
+  //     } else {
+  //       context.commit("setConnector", {});
+  //       context.commit("setDiagram", {});
+  //     }
+  //     document.title = respond.payload.title;
+  //     context.commit("setProjectDescription", respond.payload);
+  //     context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
+  //     context.rootCommit(
+  //       "LeftDialog/FileMenu/Layout/setPanelName",
+  //       "properties"
+  //     );
+  //     message.success("Opened", 2);
+  //   } catch (error) {
+  //     if (error.code === 23) {
+  //       message.info(error.description.title + " Required password", 3);
+  //       context.rootCommit(
+  //         "OpenSharedWithPassword/setUUID",
+  //         context.inputs.uuid
+  //       );
 
-        context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", true);
-        context.rootCommit(
-          "LeftDialog/FileMenu/Layout/setPanelName",
-          "OpenSharedWithPassword"
-        );
-      } else {
-        message.error(error.message, 2);
-      }
-    }
-    context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", false);
-  }),
+  //       context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", true);
+  //       context.rootCommit(
+  //         "LeftDialog/FileMenu/Layout/setPanelName",
+  //         "OpenSharedWithPassword"
+  //       );
+  //     } else {
+  //       message.error(error.message, 2);
+  //     }
+  //   }
+  //   context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", false);
+  // }),
   loadProject: request2(async context => {
     context.rootCommit("Utill/LoadingGlobal/Layout/setVisible", true);
     try {

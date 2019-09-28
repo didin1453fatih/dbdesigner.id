@@ -42,7 +42,7 @@ export default {
       SET_IMAGE_BASE_64: "SET_IMAGE_BASE_64"
     }),
     ...mapActions("Data/Project", {
-      loadProjectUUID: "loadProjectUUID",
+      loadProject: "loadProject",
       setEmptyDiagram: "setEmptyDiagram",
       autoSave: "autoSave"
     }),
@@ -64,9 +64,8 @@ export default {
       this.globalReadAccount({
         uuid: valueUUID
       });
-      this.loadProjectUUID({
-        uuid: valueUUID,
-        password: null
+      this.loadProject({
+        uuid: valueUUID
       });
     } else {
       await this.globalReadAccount({
