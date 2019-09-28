@@ -1,6 +1,7 @@
 <template>
   <div>
     <information-alert />
+    <warning-alert />
     <ribbon-menu />
     <canvas-layout />
     <table-detail />
@@ -21,12 +22,15 @@ import Export from "./components/RightDialog/Export/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
 import InformationAlert from "./components/TopAlert/Information/Layout";
+import WarningAlert from "./components/TopAlert/Warning/Layout";
 import bagroundPatternImage from "@/assets/canvas-background.png";
 import CanvasLayout from "./components/MainCanvas/Layout";
+import Bowser from "bowser";
 export default {
   components: {
     CanvasLayout,
     InformationAlert,
+    WarningAlert,
     RibbonMenu,
     LeftPanel,
     Export,
@@ -48,6 +52,10 @@ export default {
     }),
     ...mapActions("Data/Account", {
       globalReadAccount: "globalReadAccount"
+    }),
+    ...mapMutations("TopAlert/Warning/Layout", {
+      setWarningBrowserVisible: "setVisible",
+      setWarningBrowserMessage: "setMessage"
     })
   },
   created() {
@@ -97,6 +105,15 @@ export default {
           message.success(parsed.message, 7);
         }
       }
+    }
+
+    const browser = Bowser.getParser(window.navigator.userAgent);
+    if(browser.getBrowserName().toLowerCase().indexOf('chrome')<0){
+      this.setWarningBrowserMessage(
+        "You detect use "+browser.getBrowserName()+"!!!  "+
+        "Use Chrome browser for better experience 😃😃😃"
+      );
+      this.setWarningBrowserVisible(true);
     }
 
     this.autoSave();
