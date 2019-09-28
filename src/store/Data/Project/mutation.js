@@ -603,6 +603,26 @@ export default {
     // save table
     state.isSaved = false;
   },
+
+  async UPDATE_DEFAULT_VALUE(state, raw) {
+    var tableKey_id = raw.tableKey_id;
+    var coloumn_id = raw.coloumn_id;
+    var default_value = raw.default_value;
+    state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].default = default_value;
+
+    // save table
+    state.isSaved = false;
+  },  
+
+  async UPDATE_COMMENT(state, raw) {
+    var tableKey_id = raw.tableKey_id;
+    var coloumn_id = raw.coloumn_id;
+    var comment = raw.comment;
+    state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].comment = comment;
+
+    // save table
+    state.isSaved = false;
+  },    
   async updateForeignKeyStatus(state, raw) {
     var tableKey_id = raw.tableKey_id;
     var coloumn_id = raw.coloumn_id;

@@ -134,7 +134,7 @@
                 placeholder="Data type"
                 :defaultValue="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].dataType"
               />
-                <!-- :value="cache_data_type"               -->
+              <!-- :value="cache_data_type"               -->
               <!-- <a-input
                 @blur="isEditColoumnType = false"
                 v-if="showDetailcoloumn===index"
@@ -229,7 +229,17 @@
                       <span style="padding-right:5px">Default</span>
                     </a-col>
                     <a-col :span="18">
-                      <a-input style="width:170px" size="small" placeholder="Default value" />
+                      <a-input
+                        :value="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].default"
+                        @change="UPDATE_DEFAULT_VALUE({
+                            tableKey_id:tableKeyConfig,
+                            coloumn_id:keyColoumn,
+                            default_value:$event.target.value
+                        })"
+                        style="width:170px"
+                        size="small"
+                        placeholder="Default value"
+                      />
                     </a-col>
                     <a-col :span="1"></a-col>
                   </a-row>
@@ -255,6 +265,12 @@
                     </a-col>
                     <a-col :span="18" align="top">
                       <a-textarea
+                        :value="dataDiagramNew[tableKeyConfig].coloumns[keyColoumn].comment"
+                        @change="UPDATE_COMMENT({
+                            tableKey_id:tableKeyConfig,
+                            coloumn_id:keyColoumn,
+                            comment:$event.target.value
+                        })"                      
                         style="width:170px"
                         size="small"
                         placeholder="Give note  of your table"
@@ -519,7 +535,9 @@ export default {
       setShowDetailcoloumn: "setShowDetailcoloumn",
       addNewEmptyColoumn: "addNewEmptyColoumn",
       setVisibleDetailTable: "setVisibleDetailTable",
-      updateDataType: "updateDataType"
+      updateDataType: "updateDataType",
+      UPDATE_DEFAULT_VALUE: "UPDATE_DEFAULT_VALUE",
+      UPDATE_COMMENT: "UPDATE_COMMENT"
     }),
     showDetail(val, keyColoumn) {
       this.isVisibleNewColoumn = false;
@@ -563,8 +581,6 @@ export default {
       );
     },
     handleSearch(value) {
-       // eslint-disable-next-line
-      console.log(value)
       this.dataSource = [];
       this.data_types.forEach(dataType => {
         if (dataType.indexOf(value.toUpperCase()) >= 0) {
