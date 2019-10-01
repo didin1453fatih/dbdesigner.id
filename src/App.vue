@@ -7,6 +7,7 @@
     <table-detail />
     <left-panel />
     <export />
+    <fork/>
     <loading-global />
   </div>
 </template>
@@ -19,6 +20,7 @@ import LoadingGlobal from "./components/Utill/LoadingGlobal/Layout";
 import RibbonMenu from "./components/TopMenu/Layout.vue";
 import LeftPanel from "./components/LeftDialog/FileMenu/Layout.vue";
 import Export from "./components/RightDialog/Export/Layout";
+import Fork from "./components/RightDialog/Fork/Layout";
 import TableDetail from "./components/RightDialog/TableDetail/Layout.vue";
 import { message } from "ant-design-vue";
 import InformationAlert from "./components/TopAlert/Information/Layout";
@@ -35,7 +37,8 @@ export default {
     LeftPanel,
     Export,
     LoadingGlobal,
-    TableDetail
+    TableDetail,
+    Fork
   },
   methods: {
     ...mapMutations("LeftDialog/FileMenu/Layout", {
