@@ -22,9 +22,10 @@ export default {
       context.rootCommit("Data/Account/setId", payload.id);
       context.rootCommit("Data/Account/setVerified", payload.verified);
       if (context.rootState.RightDialog.Fork.Layout.visible === false) {
-        context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "new");
+        context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "open");
       } else {
         context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
+        context.rootDispatch("RightDialog/Fork/Layout/readOriginInfo")
       }
       if (payload.verified === false) {
         context.rootCommit("TopAlert/Information/Layout/setVisible", true);

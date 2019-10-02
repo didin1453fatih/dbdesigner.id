@@ -12,12 +12,19 @@ export default {
       var payload = respondAccount.payload;
 
       message.success("Login Success", 2);
-      context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "open");
       context.rootCommit("Data/Account/setGender", payload.gender);
       context.rootCommit("Data/Account/setUsername", payload.user_name);
       context.rootCommit("Data/Account/setEmail", payload.email);
       context.rootCommit("Data/Account/setId", payload.id);
       context.rootCommit("Data/Account/setVerified", payload.verified);
+
+      if (context.rootState.RightDialog.Fork.Layout.visible === false) {
+        context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "open");
+      } else {
+        context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
+        context.rootDispatch("RightDialog/Fork/Layout/readOriginInfo")
+      }
+
       if (payload.verified === false) {
         context.rootCommit("TopAlert/Information/Layout/setVisible", true);
         context.rootCommit("TopAlert/Information/Layout/setMessage", "Your email need verify");

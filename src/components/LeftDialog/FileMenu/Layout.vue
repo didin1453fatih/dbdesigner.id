@@ -8,7 +8,7 @@
   >
     <div
       style="width: -webkit-fill-available;
-         height: -webkit-fill-available;margin:-24px"
+         height: 100vh;margin:-24px"
     >
       <table style="width: -webkit-fill-available;
          height: -webkit-fill-available;">
@@ -58,6 +58,7 @@
                 </div>-->
               </div>
               <div
+                v-show="id!==null"
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="setPanelName('account')"
               >

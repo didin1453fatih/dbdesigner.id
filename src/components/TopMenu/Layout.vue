@@ -26,10 +26,7 @@
         <a href="#tab_folder">Account</a>
       </li>
       <div style=";text-align: right;">
-        <span
-          @click="openForkMenu()"
-          style="font-size: 1.0rem;padding-top:5px; margin-right:5px"
-        >
+        <span @click="openForkMenu()" style="font-size: 1.0rem;padding-top:5px; margin-right:5px">
           <b style="color:#fa6800">Fork</b> for use this public design
         </span>
         <span
@@ -358,10 +355,10 @@ export default {
     })
   },
   methods: {
-    openForkMenu() {
+    async openForkMenu() {
       this.setVisibleForkMenu(true);
-      this.setStepForkMenu('info')      
-      this.readOriginInfo()
+      this.setStepForkMenu("info");
+      await this.readOriginInfo();
     },
     resetPotition() {
       EventBus.$emit("Canvas/resetPotition");
@@ -399,7 +396,7 @@ export default {
     }),
     ...mapMutations("RightDialog/Fork/Layout", {
       setVisibleForkMenu: "SET_VISIBLE",
-      setStepForkMenu:"SET_STEP"
+      setStepForkMenu: "SET_STEP"
     }),
     ...mapMutations("TopMenu/Layout", {
       SET_VISIBLE_RIBBON_MENU: "SET_VISIBLE_RIBBON_MENU"

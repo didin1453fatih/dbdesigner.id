@@ -106,11 +106,21 @@
                     disabled
                   />
                   <label>Share</label>
-                  <a-input
+                  <br />
+                  <a-select
+                    :defaultValue="forker_share_status"
+                    style="margin-top:3px;margin-bottom:7px; width:100px"
+                    @change="SET_FORKER_SHARE_STATUS"
+                  >
+                    <a-select-option :value="0">Private</a-select-option>
+                    <a-select-option :value="2">Public</a-select-option>
+                  </a-select>
+                  <br />
+                  <!-- <a-input
                     @change="SET_FORKER_SHARE_STATUS($event.target.value)"
                     :value="forker_share_status"
                     style="margin-top:3px;margin-bottom:7px"
-                  />
+                  />-->
                   <label>Description</label>
                   <a-textarea
                     @change="SET_FORKER_DESCRIPTION($event.target.value)"
@@ -134,7 +144,13 @@
                   spin
                 >
                   <h3>Fork {{loading_execute===true?'Executing':'Finished'}}</h3>
-                  <div style="margin-top:52px;margin-bottom:52px;right:0;align:right">{{emote}}</div>
+                  <div style="margin-top:52px;margin-bottom:52px;right:0;align:right">
+                    {{emote}}
+                    <div v-show="this.loading_execute==false">
+                      Design forked ✔
+                      Design loaded in canvas ✔
+                    </div>
+                  </div>
                   <div style="margin-top:30px;     text-align: right;">
                     <a-button style="right:0px" @click="SET_VISIBLE(false)">Close</a-button>
                   </div>
@@ -200,7 +216,7 @@ export default {
               if (count++ <= 3) {
                 this.emote += ". ";
               } else if (count >= 4) {
-                this.emote += " Finish";
+                this.emote += " Finish ✔";
                 clearInterval(interDot);
               }
             }, 300);

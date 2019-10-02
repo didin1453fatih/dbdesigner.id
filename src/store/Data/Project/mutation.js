@@ -448,7 +448,7 @@ export default {
   setVisibleConfigTable(state, val) {
     state.visibleConfigTable = val;
   },
-  async updateColoumnName(state, raw) {
+  updateColoumnName(state, raw) {
     var tableKey_id = raw.tableKey_id;
     var coloumn_id = raw.coloumn_id;
     var newName = raw.newName;
@@ -485,7 +485,7 @@ export default {
     var tableKey = tableKey_id;
     var draggedTable = state.dataDiagramNew[tableKey];
 
-    await Object.keys(draggedTable.association).forEach(key => {
+    Object.keys(draggedTable.association).forEach(key => {
       let conn =
         state.connectorNewKey[draggedTable.association[key].connector_id];
       var targetTable =

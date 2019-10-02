@@ -11,7 +11,6 @@ export default {
       var respond = await requestHelper(ReadOriginInfo, {
         uuid: origin_uuid
       });
-      context.commit("SET_LOADING_READ_INFO", false);
       var payload = respond.payload;
       context.commit("SET_ORIGIN_TITLE", payload.title);
       context.commit("SET_ORIGIN_OWNER", payload.owner);
@@ -40,6 +39,7 @@ export default {
         message.error(error.message, 2);
       }
     }
+    context.commit("SET_LOADING_READ_INFO", false);
   }),
   execute: request2(async context => {
     try {
