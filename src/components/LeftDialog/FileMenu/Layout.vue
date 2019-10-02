@@ -66,6 +66,13 @@
               <div
                 v-show="id===null"
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
+                @click="setPanelName('registration')"
+              >
+                <label style="color:white">Registration</label>
+              </div>              
+              <div
+                v-show="id===null"
+                style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="setPanelName('login')"
               >
                 <label style="color:white">Login</label>
@@ -128,7 +135,14 @@
               class="fg-black"
             >
               <open-shared-with-password/>
-            </div>            
+            </div>    
+            <div
+              v-else-if="panelName==='registration'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <registration/>
+            </div>                        
           </td>
         </tr>
       </table>
@@ -147,6 +161,7 @@ import Properties from "./Component/Properties";
 import Login from "./Component/Login";
 import Account from "./Component/Account";
 import OpenSharedWithPassword from './Component/OpenSharedWithPassword'
+import Registration from "./Component/Registration"
 export default {
   methods: {
     ...mapMutations("LeftDialog/FileMenu/Layout", {
@@ -167,7 +182,8 @@ export default {
     Properties,
     Login,
     Account,
-    OpenSharedWithPassword
+    OpenSharedWithPassword,
+    Registration
   },
   computed: {
     ...mapState("LeftDialog/FileMenu/Layout", {
