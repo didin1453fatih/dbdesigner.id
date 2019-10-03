@@ -19,7 +19,6 @@
           <a-select-option value="L">Male</a-select-option>
           <a-select-option value="P">Female</a-select-option>
         </a-select>
-        <!-- <a-input :value="gender" defaultValue="L" style="margin-top:5px"/> -->
       </div>
       <div style="margin-top:20px">
         <label>Username</label>

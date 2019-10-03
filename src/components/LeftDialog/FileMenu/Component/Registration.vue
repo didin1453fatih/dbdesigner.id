@@ -19,12 +19,16 @@
             placeholder="Input Full Name"
           />
           <label>Gender</label>
-          <a-input
-            :value="gender"
-            @change="SET_GENDER($event.target.value)"
-            style="margin-top:3px"
-            placeholder="Input Gender"
-          />
+          <br />
+          <a-select
+            :defaultValue="gender"
+            style="margin-top:3px;width:100%"
+            @change="SET_GENDER"
+          >
+            <a-select-option value="L">Male</a-select-option>
+            <a-select-option value="P">Female</a-select-option>
+          </a-select>
+          <br />          
           <label>Email</label>
           <a-input
             :value="email"

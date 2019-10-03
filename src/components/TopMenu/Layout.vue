@@ -26,14 +26,16 @@
         <a href="#tab_folder">Account</a>
       </li>
       <div style=";text-align: right;">
-        <span @click="openForkMenu()" style="font-size: 1.0rem;padding-top:5px; margin-right:5px">
-          <b style="color:#fa6800">Fork</b> for use this public design
+        <span v-if="project_share_status===2&&project_owner!==accountId">
+          <span @click="openForkMenu()" style="font-size: 1.0rem;padding-top:5px; margin-right:5px">
+            <b style="color:#fa6800">Fork</b> for use this public design
+          </span>
+          <span
+            @click="openForkMenu()"
+            class="mif-spoon-fork fg-orange"
+            style="font-size: 1.2rem;margin-right:20px"
+          ></span>
         </span>
-        <span
-          @click="openForkMenu()"
-          class="mif-spoon-fork fg-orange"
-          style="font-size: 1.2rem;margin-right:20px"
-        ></span>
         <span style="font-size: 1.0rem;padding-top:5px; margin-right:5px">
           {{title}} ~
           <b>{{username}}</b>
@@ -344,7 +346,9 @@ export default {
       title: state => state.projectDescription.title,
       description: state => state.projectDescription.description,
       savedMessage: state => state.savedMessage,
-      canvasProperties: state => state.canvasProperties
+      canvasProperties: state => state.canvasProperties,
+      project_share_status: state => state.projectDescription.share_status,
+      project_owner: state => state.projectDescription.user_id
     }),
     ...mapState("Data/Account", {
       username: state => state.username,

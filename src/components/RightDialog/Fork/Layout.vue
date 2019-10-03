@@ -109,7 +109,7 @@
                   <br />
                   <a-select
                     :defaultValue="forker_share_status"
-                    style="margin-top:3px;margin-bottom:7px; width:100px"
+                    style="margin-top:3px;margin-bottom:7px; width:100%"
                     @change="SET_FORKER_SHARE_STATUS"
                   >
                     <a-select-option :value="0">Private</a-select-option>
@@ -215,8 +215,11 @@ export default {
             var interDot = setInterval(() => {
               if (count++ <= 3) {
                 this.emote += ". ";
-              } else if (count >= 4) {
+              } else if (count >= 2) {
                 this.emote += " Finish ✔";
+                setTimeout(() => {
+                  this.SET_VISIBLE(false);
+                }, 500);
                 clearInterval(interDot);
               }
             }, 300);
