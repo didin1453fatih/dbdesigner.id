@@ -7,6 +7,7 @@
           <label>Email</label>
           <a-input
             :value="email"
+            name="email"
             @change="setEmail($event.target.value)"
             style="margin-top:3px"
             placeholder="Input Email"
@@ -14,6 +15,7 @@
           <label>Password</label>
           <a-input
             type="password"
+            name="password"
             :value="password"
             @change="setPassword($event.target.value)"
             style="margin-top:3px"

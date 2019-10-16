@@ -20,15 +20,11 @@
           />
           <label>Gender</label>
           <br />
-          <a-select
-            :defaultValue="gender"
-            style="margin-top:3px;width:100%"
-            @change="SET_GENDER"
-          >
+          <a-select :defaultValue="gender" style="margin-top:3px;width:100%" @change="SET_GENDER">
             <a-select-option value="L">Male</a-select-option>
             <a-select-option value="P">Female</a-select-option>
           </a-select>
-          <br />          
+          <br />
           <label>Email</label>
           <a-input
             :value="email"
@@ -53,8 +49,15 @@
             placeholder="input confirm password"
           />
         </div>
-        <div style="margin-top:15px;     text-align: right;">
-          <a-button style="right:0" @click="doLogin">Submit</a-button>
+        <div style="margin-top:15px;">
+          <a-row>
+            <a-col :span="12">
+              <a @click="setPanelName('login')">Have account ? Login</a>
+            </a-col>
+            <a-col :span="12" style="text-align: right;">
+              <a-button style="right:0" @click="doLogin">Submit</a-button>
+            </a-col>
+          </a-row>
         </div>
       </div>
     </a-spin>
@@ -90,7 +93,10 @@ export default {
       SET_EMAIL: "SET_EMAIL",
       SET_PASSWORD: "SET_PASSWORD",
       SET_PASSWORD_CONFIRM: "SET_PASSWORD_CONFIRM"
-    })
+    }),
+    ...mapMutations("LeftDialog/FileMenu/Layout", {
+      setPanelName: "setPanelName"
+    }),
   },
   data() {
     return {

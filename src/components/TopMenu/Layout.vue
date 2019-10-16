@@ -27,7 +27,7 @@
       </li>
       <div style=";text-align: right;">
         <span v-if="project_share_status===2&&project_owner!==accountId">
-          <span @click="openForkMenu()" style="font-size: 1.0rem;padding-top:5px; margin-right:5px">
+          <span @click="openForkMenu()" style="font-size: 1.0rem;padding-top:5px; margin-right:5px;cursor:pointer">
             <b style="color:#fa6800">Fork</b> for use this public design
           </span>
           <span
