@@ -8,10 +8,10 @@
   >
     <div
       style="width: -webkit-fill-available;
-         height: -webkit-fill-available;margin:-24px"
+         height: 100vh;margin:-24px"
     >
       <table style="width: -webkit-fill-available;
-         height: -webkit-fill-available;">
+         height: 100%">
         <tr>
           <td style="background-color:#2B569A;width: 100px;vertical-align:top">
             <div style="padding-top:10px;height:-webkit-fill-available;;">

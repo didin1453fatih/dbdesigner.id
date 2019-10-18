@@ -1,6 +1,7 @@
 <template>
   <!-- COnnect this height to  state to dynamic height in ribbon menu -->
   <div>
+  <div v-if="project_description_uuid!==null">
     <div
       @contextmenu.prevent="$refs.menu.open"
       id="scroll-container"
@@ -133,6 +134,12 @@
       </li>
     </vue-context>
   </div>
+  <div v-else>
+    <start-panel   :style="{
+      height: `calc(100vh - ${visible_ribbon_menu===false?33:150}px)`
+    }"/>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -154,11 +161,13 @@ import ConnectorBase from "@/components/MainCanvas/component/ConnectorBase";
 import { EventBus } from "@/helper/EventBus";
 import bagroundPatternImage from "@/assets/canvas-background.png";
 import { VueContext } from "vue-context";
+import StartPanel from "@/components/MainCanvas/component/StartPanel"
 export default {
   components: {
     TableBase,
     ConnectorBase,
-    VueContext
+    VueContext,
+    StartPanel
   },
   methods: {
     addNewTableEvent() {
@@ -313,7 +322,8 @@ export default {
       connectorNew: state => state.connectorNew,
       dataDiagramNew: state => state.dataDiagramNew,
       connectorNewKey: state => state.connectorNewKey,
-      canvasProperties: state => state.canvasProperties
+      canvasProperties: state => state.canvasProperties,
+      project_description_uuid : state => state.projectDescription.uuid
     }),
     ...mapState("TopMenu/Layout", {
       visible_ribbon_menu: state => state.visible_ribbon_menu
