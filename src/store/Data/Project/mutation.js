@@ -1378,7 +1378,7 @@ export default {
         coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
           coloumn_name: "id",
           comment: "",
-          dataType: "integer",
+          dataType: "INT",
           default: "",
           primaryKey: true,
           notNull: false,
@@ -1439,7 +1439,7 @@ export default {
         coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
           coloumn_name: "id",
           comment: "",
-          dataType: "integer",
+          dataType: "INT",
           default: "",
           primaryKey: true,
           notNull: false,
