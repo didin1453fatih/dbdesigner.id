@@ -9,6 +9,8 @@
       height: `calc(100vh - ${visible_ribbon_menu===false?33:150}px)`
     }"
     >
+    <!-- For smothing zoom value in design do next version -->
+    <!-- height: `${canvasProperties.height*(canvasProperties.zoom<=1?1:canvasProperties.zoom)}px`, -->
       <div
         id="large-container"
         :style="{
