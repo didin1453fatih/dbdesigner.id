@@ -148,20 +148,20 @@ export default {
     }),
     setPanelName(value) {
       if (value === "new" && this.account_id === null) {
-        return message.error("You must login first to create new design ", 2);
+        return message.error("You must login first to create new design 😉", 2);
       }
 
       if (value === "open" && this.account_id === null) {
-        return message.error("You must login first to open the design ", 2);
+        return message.error("You must login first to open the design 😉", 2);
       }
 
       if (value === "properties" && this.account_id === null) {
-        return message.error("You must login first to open the properties ", 2);
+        return message.error("You must login first to open the properties 😉", 2);
       }
 
       if (value === "properties" && this.project_description_uuid === null && this.account_id !== null) {
-        message.error(
-          "You must login open the project before see description",
+        message.warning(
+          "open the project before see description 😎",
           2
         );
         return this.SET_PANEL_NAME("open");
