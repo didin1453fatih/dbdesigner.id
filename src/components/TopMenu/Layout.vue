@@ -467,8 +467,8 @@ export default {
         this.openLeftPanel(true);
         this.setLeftPanelName("login");
       } else if (this.title !== null) {
-        this.setVisibleExportAndShare(true);
-        this.setPanelNameExportAndShare("share");
+        this.openLeftPanel(true);
+        this.setLeftPanelName("properties");
       } else {
         message.error("The project is empty");
       }
