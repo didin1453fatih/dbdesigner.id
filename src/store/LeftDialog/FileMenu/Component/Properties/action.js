@@ -14,7 +14,7 @@ export default {
       });
       message.success("Updated", 2);
       context.rootDispatch("Data/Project/loadProject", {
-        id: context.rootState.Data.Project.projectDescription.id
+        uuid: context.rootState.Data.Project.projectDescription.uuid
       });
       context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
     } catch (error) {

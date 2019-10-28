@@ -314,9 +314,9 @@ export default {
     bagroundPattern.onload = () => {
       this.bagroundPattern = bagroundPattern;
     };
-    this.$refs.stage.getStage().on("contentContextmenu", e => {
-      e.evt.preventDefault();
-    });
+    // this.$refs.stage.getStage().on("contentContextmenu", e => {
+    //   e.evt.preventDefault();
+    // });
   },
   computed: {
     ...mapState("Data/Project", {
