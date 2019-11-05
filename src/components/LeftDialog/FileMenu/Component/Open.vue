@@ -2,18 +2,23 @@
   <a-spin :indicator="indicator" :spinning="loading" type="sync" size="large" spin>
     <div>
       <h3>Open</h3>
-      <a-input-search placeholder="input search text" @search="onSearch" enterButton/>
-      <div  style="overflow-y: auto; height:480px; border: 1px solid #e8e8e8;padding: 4px 12px;margin-top:20px">
-        <a-list itemLayout="horizontal" :dataSource="data" >
-          <a-list-item @dblclick="openProjectEvent(item.id)" slot="renderItem" slot-scope="item" class="disable-select">
+      <a-input-search placeholder="input search text" @search="onSearch" enterButton />
+      <div
+        style="overflow-y: auto; height:480px; border: 1px solid #e8e8e8;padding: 4px 12px;margin-top:20px"
+      >
+        <a-list itemLayout="horizontal" :dataSource="data">
+          <a-list-item
+            @dblclick="openProjectEvent(item.uuid)"
+            slot="renderItem"
+            slot-scope="item"
+            class="disable-select"
+          >
             <a-list-item-meta :description="fomatDate(item.created)">
               <div slot="title" style="width:100%">
-                <span>
-                  {{item.title}}
-                </span>
+                <span>{{item.title}}</span>
                 <!-- <a-icon type="delete"  style="right:0px;position: absolute;color:red;"/> -->
-              </div>              
-              <a-avatar shape="square" size="large" slot="avatar" :src="databaseIcon"/>
+              </div>
+              <a-avatar shape="square" size="large" slot="avatar" :src="databaseIcon" />
             </a-list-item-meta>
           </a-list-item>
         </a-list>
@@ -22,7 +27,7 @@
   </a-spin>
 </template>
 <script>
-import moment from "moment"
+import moment from "moment";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 
@@ -34,21 +39,21 @@ export default {
     });
   },
   computed: {
-    ...mapState("ListProject", {
+    ...mapState("LeftDialog/FileMenu/Component/Open", {
       data: state => state.data,
       loading: state => state.loading
     })
   },
   methods: {
-    ...mapActions("ListProject", {
+    ...mapActions("LeftDialog/FileMenu/Component/Open", {
       getData: "getData"
     }),
-    ...mapActions("diagram", {
+    ...mapActions("Data/Project", {
       loadProject: "loadProject"
     }),
-    openProjectEvent(id) {
+    openProjectEvent(uuid) {
       this.loadProject({
-        id: id
+        uuid: uuid
       });
     },
     onSearch(value) {
@@ -56,8 +61,8 @@ export default {
         keyword: value
       });
     },
-    fomatDate(val){
-        return moment(val).format('YYYY-MM-DD hh:mm:ss')
+    fomatDate(val) {
+      return moment(val).format("YYYY-MM-DD hh:mm:ss");
     }
   },
   data() {
@@ -72,11 +77,11 @@ export default {
 
 <style>
 .disable-select {
-    user-select: none; /* supported by Chrome and Opera */
-   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-   -moz-user-select: none; /* Firefox */
-   -ms-user-select: none; /* Internet Explorer/Edge */
-   cursor: pointer;
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  cursor: pointer;
 }
 </style>

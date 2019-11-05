@@ -6,10 +6,8 @@
     @close="setVisible(false)"
     :visible="visible"
   >
-    <div
-      style="width: -webkit-fill-available;
-         height: -webkit-fill-available;margin:-24px"
-    >
+    <div style="width: -webkit-fill-available;
+         height: 100vh;margin:-24px">
       <table style="width: -webkit-fill-available;
          height: -webkit-fill-available;">
         <tr>
@@ -19,26 +17,14 @@
                 style="width:100%; padding-left:13px;padding-top:3px; padding-bottom:3px; "
                 @click="closeFilePanel"
               >
-                <img src="@/assets/icons8-go-back-50.png" width="35px">
+                <img src="@/assets/icons8-go-back-50.png" width="35px" />
               </div>
-              <!-- <div
-                style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
-                @click="panelName='login'"
-              >
-                <label style="color:white">Login</label>
-              </div>-->
               <div
                 style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ; margin-top:10px;"
                 @click="setPanelName('new')"
               >
                 <label style="color:white">New</label>
               </div>
-              <!-- <div
-                style="width:100%;font-weight: 300; padding-left:13px;padding-top:3px; padding-bottom:3px ;"
-                @click="panelName='update'"
-              >
-                <label style="color:white">Update</label>
-              </div>-->
               <div
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="setPanelName('open')"
@@ -54,29 +40,35 @@
               <div
                 style="width:100%; font-weight: 300;padding-left:13px;margin-top:13px; margin-bottom:13px ;"
               >
-                <!-- <div style="color:white;background:white;height:0.5px; width:75%">
-                </div>-->
               </div>
               <div
+                v-show="account_id!==null"
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="setPanelName('account')"
               >
                 <label style="color:white">Account</label>
-              </div>                         
+              </div>
               <div
-                v-show="id===null"
+                v-show="account_id===null"
+                style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
+                @click="setPanelName('registration')"
+              >
+                <label style="color:white">Registration</label>
+              </div>
+              <div
+                v-show="account_id===null"
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="setPanelName('login')"
               >
                 <label style="color:white">Login</label>
               </div>
               <div
-                v-show="id!==null"
+                v-show="account_id!==null"
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="logoutAccount()"
               >
                 <label style="color:white">Logout</label>
-              </div>                 
+              </div>
             </div>
           </td>
           <td style="background-color:#F1F1F1;vertical-align:top">
@@ -85,50 +77,50 @@
               style="padding-top:30px; padding-left:25px; width:300px"
               class="fg-black"
             >
-              <new-panel/>
+              <new-panel />
             </div>
             <div
               v-else-if="panelName==='open'"
               style="padding-top:30px; padding-left:25px; width:300px"
               class="fg-black"
             >
-              <open-panel/>
-            </div>
-            <div
-              v-else-if="panelName==='update'"
-              style="padding-top:30px; padding-left:25px; width:300px"
-              class="fg-black"
-            >
-              <update-panel/>
+              <open-panel />
             </div>
             <div
               v-else-if="panelName==='properties'"
               style="padding-top:30px; padding-left:25px; width:300px"
               class="fg-black"
             >
-              <properties/>
+              <properties />
             </div>
             <div
               v-else-if="panelName==='login'"
               style="padding-top:30px; padding-left:25px; width:300px"
               class="fg-black"
             >
-              <login/>
+              <login />
             </div>
             <div
               v-else-if="panelName==='account'"
               style="padding-top:30px; padding-left:25px; width:300px"
               class="fg-black"
             >
-              <account/>
+              <account />
             </div>
             <div
               v-else-if="panelName==='OpenSharedWithPassword'"
               style="padding-top:30px; padding-left:25px; width:300px"
               class="fg-black"
             >
-              <open-shared-with-password/>
-            </div>            
+              <open-shared-with-password />
+            </div>
+            <div
+              v-else-if="panelName==='registration'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <registration />
+            </div>
           </td>
         </tr>
       </table>
@@ -142,46 +134,70 @@ import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import NewPanel from "./Component/New";
 import OpenPanel from "./Component/Open";
-import UpdatePanel from "./Component/Update";
 import Properties from "./Component/Properties";
 import Login from "./Component/Login";
 import Account from "./Component/Account";
-import OpenSharedWithPassword from './Component/OpenSharedWithPassword'
+import OpenSharedWithPassword from "./Component/OpenSharedWithPassword";
+import Registration from "./Component/Registration";
+import { message } from "ant-design-vue";
 export default {
   methods: {
-    ...mapMutations("LeftPanel", {
+    ...mapMutations("LeftDialog/FileMenu/Layout", {
       setVisible: "setVisible",
-      setPanelName: "setPanelName"
+      SET_PANEL_NAME: "setPanelName"
     }),
+    setPanelName(value) {
+      if (value === "new" && this.account_id === null) {
+        return message.error("You must login first to create new design 😉", 2);
+      }
+
+      if (value === "open" && this.account_id === null) {
+        return message.error("You must login first to open the design 😉", 2);
+      }
+
+      if (value === "properties" && this.account_id === null) {
+        return message.error("You must login first to open the properties 😉", 2);
+      }
+
+      if (value === "properties" && this.project_description_uuid === null && this.account_id !== null) {
+        message.warning(
+          "open the project before see description 😎",
+          2
+        );
+        return this.SET_PANEL_NAME("open");
+      }
+      this.SET_PANEL_NAME(value);
+    },
     closeFilePanel() {
       this.setVisible(false);
     },
-    ...mapActions("Account", {
+    ...mapActions("LeftDialog/FileMenu/Layout", {
       logoutAccount: "logoutAccount"
     })
   },
   components: {
     NewPanel,
     OpenPanel,
-    UpdatePanel,
     Properties,
     Login,
     Account,
-    OpenSharedWithPassword
+    OpenSharedWithPassword,
+    Registration
   },
   computed: {
-    ...mapState("LeftPanel", {
+    ...mapState("LeftDialog/FileMenu/Layout", {
       visible: state => state.visible,
       panelName: state => state.panelName
     }),
-    ...mapState("Account", {
-      id: state => state.id
+    ...mapState("Data/Account", {
+      account_id: state => state.id
+    }),
+    ...mapState("Data/Project", {
+      project_description_uuid: state => state.projectDescription.uuid
     })
   },
   data() {
-    return {
-      // panelName: "open"
-    };
+    return {};
   }
 };
 </script>

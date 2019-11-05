@@ -39,7 +39,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions("diagram", {
+    ...mapActions("Data/Project", {
       loadProjectUUID: "loadProjectUUID"
     }),
     ...mapMutations("OpenSharedWithPassword", {
