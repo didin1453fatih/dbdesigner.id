@@ -7,6 +7,7 @@
           <label>Email</label>
           <a-input
             :value="email"
+            name="email"
             @change="setEmail($event.target.value)"
             style="margin-top:3px"
             placeholder="Input Email"
@@ -14,14 +15,21 @@
           <label>Password</label>
           <a-input
             type="password"
+            name="password"
             :value="password"
             @change="setPassword($event.target.value)"
             style="margin-top:3px"
             placeholder="input password"
           />
         </div>
-        <div style="margin-top:15px;     text-align: right;">
-          <a-button style="right:0" @click="doLogin">Login</a-button>
+        <div style="margin-top:15px;">
+          <a-row>
+            <a-col :span="12"><a>Forget password ?</a></a-col>
+            <a-col :span="12" style="text-align: right;">
+              <a-button style="right:0" @click="doLogin">Login</a-button>
+            </a-col>
+          </a-row>
+          
         </div>
       </div>
     </a-spin>

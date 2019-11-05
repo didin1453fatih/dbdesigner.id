@@ -6,6 +6,7 @@ import LeftDialog from "./LeftDialog/module";
 import Data from "./Data/module";
 import TopAlert from "./TopAlert/module";
 import Utill from "./Utill/module";
+import TopMenu from "./TopMenu/module"
 // import diagram from "./diagram/module";
 // import LeftPanel from "./LeftPanel/module";
 // import Login from "./Login/module";
@@ -16,7 +17,7 @@ import Utill from "./Utill/module";
 // import Account from "./Account/module";
 // import Share from "./Share/module";
 // import OpenSharedWithPassword from "./OpenSharedWithPassword/module";
-// import ExportAndShare from "./ExportAndShare/module";
+// import Export from "./Export/module";
 // import Project from "./Project/module";
 Vue.use(Vuex);
 
@@ -28,10 +29,11 @@ export const store = new Vuex.Store({
     Data,
     LeftDialog,
     RightDialog,
+    TopMenu,
     // GlobalLoading,
     // Project,
     // UpdateProject
-    // ExportAndShare,
+    // Export,
     // OpenSharedWithPassword,
     // Login,
     // Share,

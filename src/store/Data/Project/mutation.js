@@ -13,7 +13,6 @@ export default {
    * @param { value : value of x  and y } raw
    */
   async changeTablePotition(state, raw) {
-
     // eslint-disable-next-line
     // console.log("table key " + JSON.stringify(raw));
     var val = raw.value;
@@ -449,7 +448,7 @@ export default {
   setVisibleConfigTable(state, val) {
     state.visibleConfigTable = val;
   },
-  async updateColoumnName(state, raw) {
+  updateColoumnName(state, raw) {
     var tableKey_id = raw.tableKey_id;
     var coloumn_id = raw.coloumn_id;
     var newName = raw.newName;
@@ -470,8 +469,8 @@ export default {
     var countCharacter = maxCharacter;
     // // eslint-disable-next-line
     // console.log('width table '+countCharacter)
-    if (countCharacter > 8) {
-      newWidth = 150 + (countCharacter - 8) * 7;
+    if (countCharacter > 5) {
+      newWidth = 150 + (countCharacter - 5) * 7;
     }
 
     state.dataDiagramNew[tableKey_id].widthTable = newWidth;
@@ -486,7 +485,7 @@ export default {
     var tableKey = tableKey_id;
     var draggedTable = state.dataDiagramNew[tableKey];
 
-    await Object.keys(draggedTable.association).forEach(key => {
+    Object.keys(draggedTable.association).forEach(key => {
       let conn =
         state.connectorNewKey[draggedTable.association[key].connector_id];
       var targetTable =
@@ -604,6 +603,26 @@ export default {
     // save table
     state.isSaved = false;
   },
+
+  async UPDATE_DEFAULT_VALUE(state, raw) {
+    var tableKey_id = raw.tableKey_id;
+    var coloumn_id = raw.coloumn_id;
+    var default_value = raw.default_value;
+    state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].default = default_value;
+
+    // save table
+    state.isSaved = false;
+  },  
+
+  async UPDATE_COMMENT(state, raw) {
+    var tableKey_id = raw.tableKey_id;
+    var coloumn_id = raw.coloumn_id;
+    var comment = raw.comment;
+    state.dataDiagramNew[tableKey_id].coloumns[coloumn_id].comment = comment;
+
+    // save table
+    state.isSaved = false;
+  },    
   async updateForeignKeyStatus(state, raw) {
     var tableKey_id = raw.tableKey_id;
     var coloumn_id = raw.coloumn_id;
@@ -1359,7 +1378,7 @@ export default {
         coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
           coloumn_name: "id",
           comment: "",
-          dataType: "integer",
+          dataType: "INT",
           default: "",
           primaryKey: true,
           notNull: false,
@@ -1406,6 +1425,48 @@ export default {
     // save table
     state.isSaved = false;
   },
+  addNewTableWithPosition(state,position) {
+    let table_id = uuidv4();
+    Vue.set(state.dataDiagramNew, table_id, {
+      table_name: "",
+      widthTable: 150,
+      heightTable: 0,
+      point: {
+        x: position.x,
+        y: position.y
+      },
+      coloumns: {
+        coloumn_car_id_885ddad7_c509_4d5e_ab2e_dc5cb06d0e35: {
+          coloumn_name: "id",
+          comment: "",
+          dataType: "INT",
+          default: "",
+          primaryKey: true,
+          notNull: false,
+          unique: false,
+          foreignKey: false,
+          unsigned: false,
+          zeroFill: false,
+          autoIncrement: true,
+          style: {
+            shadowBlur: 0,
+            shadowColor: "green"
+          },
+          association_belong_id: null,
+          association_has_id: []
+        }
+      },
+      association: {}
+    });
+    state.tableDetail.table_id = table_id;
+    state.tableDetail.visible = true;
+    state.tableDetail.isNewTable = true;
+    state.tableDetail.isEditTableName = true;
+    state.tableDetail.showDetailcoloumn = 0;
+
+    // save table
+    state.isSaved = false;
+  },  
   setIsEditTableName(state, value) {
     state.tableDetail.isEditTableName = value;
   },
@@ -1459,11 +1520,18 @@ export default {
     state.projectDescription.description = data.description;
     state.projectDescription.likes = data.likes;
     state.projectDescription.viewers = data.viewers;
-    state.projectDescription.status_share = data.status_share;
+    state.projectDescription.share_status = data.share_status;
+    state.projectDescription.share_link = data.share_link;
     state.projectDescription.password = data.password;
     state.projectDescription.user_id = data.user_id;
     state.projectDescription.created = data.created;
     state.projectDescription.updated = data.updated;
+  },
+  setProjectDescriptionShareStatus(state, value) {
+    state.projectDescription.share_status = value;
+  },
+  setProjectDescriptionShareLink(state, value) {
+    state.projectDescription.share_link = value;
   },
   deletedData(state) {
     state.projectDescription.id = null;
@@ -1480,10 +1548,26 @@ export default {
     state.dataDiagramNew = {};
     state.connectorNewKey = {};
   },
+  SET_CANVAS_HEIGHT(state, val) {
+    state.canvasProperties.height = val;
+    // save table
+    state.isSaved = false;    
+  },
+  SET_CANVAS_WIDTH(state, val) {
+    state.canvasProperties.width = val;
+    // save table
+    state.isSaved = false;
+  },
+  SET_CANVAS_ZOOM(state, val){
+    state.canvasProperties.zoom = val;
+  },
+  SET_CANVAS_PROPERTIES(state, data){
+    state.canvasProperties=data
+  },
   setIsSaved(state, value) {
     state.isSaved = value;
   },
-  setSavedMessage(state, value){
-    state.savedMessage=value;
+  setSavedMessage(state, value) {
+    state.savedMessage = value;
   }
 };

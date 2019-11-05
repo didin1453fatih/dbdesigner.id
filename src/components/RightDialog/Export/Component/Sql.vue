@@ -1,16 +1,7 @@
 <template>
   <div>
-    <h3>Export</h3>
+    <h3>Sql</h3>
     <div v-if="step===0">
-      <div style="margin-top:20px">
-        <label>To</label>
-        <br>
-        <a-radio-group @change="onChangeTo" defaultChecked="sql" defaultValue="sql" style="margin-top:5px">
-          <a-radio-button value="sql">SQL</a-radio-button>
-          <a-radio-button value="image" disabled>Image</a-radio-button>
-          <a-radio-button value="pdf" disabled>PDF</a-radio-button>
-        </a-radio-group>
-      </div>
       <div style="margin-top:20px">
         <label>Database</label>
         <br>
@@ -60,7 +51,7 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState("RightDialog/ExportAndShare/Component/Export", {
+    ...mapState("RightDialog/Export/Component/Export", {
       sqlScript: state => state.diagramScript
     })
   },
@@ -78,10 +69,10 @@ export default {
         scriptType: this.scriptType
       });
     },
-    ...mapActions("RightDialog/ExportAndShare/Component/Export", {
+    ...mapActions("RightDialog/Export/Component/Export", {
       goExport: "goExport"
     }),
-    ...mapMutations("RightDialog/ExportAndShare/Component/Export", {
+    ...mapMutations("RightDialog/Export/Component/Export", {
       openExport: "setVisible"
     })
   },

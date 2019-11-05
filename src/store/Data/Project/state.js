@@ -381,11 +381,20 @@ export default {
     description: "123",
     likes: 0,
     viewers: 0,
-    status_share: 0,
+    share_status: 0,
+    share_link:"",
     password: null,
     user_id: 8,
     created: "2019-05-16T14:03:36.000Z",
     updated: "2019-05-16T14:03:36.000Z"
+  },
+  canvasProperties:{
+    width:1500,
+    height:700,
+    zoom:1,
+    canvas_position_x:0,
+    canvas_position_y:0,
+    grid_background: true
   },
   isSaved:true,
   savedMessage:""
