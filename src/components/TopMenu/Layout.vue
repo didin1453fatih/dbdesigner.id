@@ -27,7 +27,10 @@
       </li>
       <div style=";text-align: right;">
         <span v-if="project_share_status===2&&project_owner!==accountId&&project_owner!==null">
-          <span @click="openForkMenu()" style="font-size: 1.0rem;padding-top:5px; margin-right:5px;cursor:pointer">
+          <span
+            @click="openForkMenu()"
+            style="font-size: 1.0rem;padding-top:5px; margin-right:5px;cursor:pointer"
+          >
             <b style="color:#fa6800">Fork</b> for use this public design
           </span>
           <span
@@ -270,41 +273,17 @@
           </div>
           <div class="tab-group-caption">Page</div>
         </div>
-        <!-- <div class="tab-panel-group">
+        <div class="tab-panel-group">
           <div class="tab-group-content">
-            <div class="input-control text">
-              <input type="text" />
-              <button class="button">
-                <span class="mif-search"></span>
-              </button>
-            </div>
-            <button class="fluent-button">
-              <span class="icon-book on-left"></span>Address Book
-            </button>
             <div class="tab-content-segment">
-              <button class="fluent-button dropdown-toggle">
-                <span class="mif-filter on-left"></span>
-                <span class="label">Mail Filters</span>
+              <button class="fluent-big-button" @click="feedbackLink" style="width:60px">
+                <img :src="feedbackImage" />
+                <span class="label" style="margin-top:5px">Feedback</span>
               </button>
-              <ul class="d-menu" data-role="dropdown" style="display: none;">
-                <li>
-                  <a>Unread messages</a>
-                </li>
-                <li>
-                  <a>Has attachments</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <a>Important</a>
-                </li>
-                <li>
-                  <a>Broken</a>
-                </li>
-              </ul>
             </div>
           </div>
-          <div class="tab-group-caption">Search</div>
-        </div>-->
+          <div class="tab-group-caption">Feedback</div>
+        </div>
       </div>
       <div class="tab-panel" id="tab_folder" style="display: block;">
         <div class="tab-panel-group">
@@ -334,6 +313,7 @@ import { message } from "ant-design-vue";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
+import feedbackImage from "@/assets/feedback-icon.png";
 import topicIcon from "@/assets/icons8-topic-96.png";
 import targetingFocusImage from "@/assets/square-targeting-focus.png";
 import gridIcon from "@/assets/grid-icon.png";
@@ -480,6 +460,12 @@ export default {
         this.SET_VISIBLE_RIBBON_MENU(true);
         this.activeRibbonMenu = name;
       }
+    },
+    feedbackLink() {
+      window.open(
+        "https://docs.google.com/forms/d/e/1FAIpQLSfXcQbo-F7uPZFiRAQSNf2eEU4tGZZkCwTzUEUm9zxkhs2ZHg/viewform?edit2=2_ABaOnufO-EDXX_4WBhqFP8KoyoEKmWfK-TGj6mvG3xy-Q4QPQpm8AtKVU-3VymoLi05ucZs",
+        "_blank"
+      );
     }
   },
   data() {
@@ -490,7 +476,8 @@ export default {
       gridIcon: gridIcon,
       blankIcon: blankIcon,
       targetingFocusImage: targetingFocusImage,
-      helpSupport: helpSupport
+      helpSupport: helpSupport,
+      feedbackImage: feedbackImage
     };
   }
 };
