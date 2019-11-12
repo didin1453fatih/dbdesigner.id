@@ -4,6 +4,7 @@ import Account from "./Account/module";
 import Login from "./Login/module";
 import Properties from "./Properties/module";
 import Registration from "./Registration/module";
+import ForgotPassword from "./ForgotPassword/module"
 export default {
   namespaced: true,
   modules: {
@@ -12,6 +13,7 @@ export default {
     Open,
     Login,
     Properties,
-    Registration
+    Registration,
+    ForgotPassword
   }
 };
