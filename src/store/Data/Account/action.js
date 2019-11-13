@@ -21,7 +21,7 @@ export default {
       }
     } catch (error) {
       if (error.code === 10) {
-        if (context.inputs.uuid === null) {
+        if (context.inputs === undefined || context.inputs.uuid === undefined || context.inputs.uuid === null) {
           message.error("Login first to start design", 3);
           context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", true);
           context.rootCommit(

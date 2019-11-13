@@ -6,6 +6,7 @@ import Properties from "./Properties/module";
 import Registration from "./Registration/module";
 import ForgotPassword from "./ForgotPassword/module"
 import ResetPassword from "./ResetPassword/module"
+import EmailConfirmation from "./EmailConfirmation/module"
 export default {
   namespaced: true,
   modules: {
@@ -16,6 +17,7 @@ export default {
     Properties,
     Registration,
     ForgotPassword,
-    ResetPassword
+    ResetPassword,
+    EmailConfirmation
   }
 };

@@ -141,6 +141,13 @@
               class="fg-black"
             >
               <reset-password />
+            </div>         
+            <div
+              v-else-if="panelName==='emailConfirmation'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <email-confirmation />
             </div>                        
           </td>
         </tr>
@@ -162,6 +169,7 @@ import Login from "./Component/Login";
 import Account from "./Component/Account";
 import OpenSharedWithPassword from "./Component/OpenSharedWithPassword";
 import Registration from "./Component/Registration";
+import EmailConfirmation from "./Component/EmailConfirmation"
 import { message } from "ant-design-vue";
 export default {
   methods: {
@@ -207,7 +215,8 @@ export default {
     OpenSharedWithPassword,
     Registration,
     ForgotPassword,
-    ResetPassword
+    ResetPassword,
+    EmailConfirmation
   },
   computed: {
     ...mapState("LeftDialog/FileMenu/Layout", {
