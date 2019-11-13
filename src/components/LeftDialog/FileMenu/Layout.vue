@@ -134,7 +134,14 @@
               class="fg-black"
             >
               <forgot-password />
-            </div>            
+            </div>     
+            <div
+              v-else-if="panelName==='resetPassword'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <reset-password />
+            </div>                        
           </td>
         </tr>
       </table>
@@ -146,6 +153,7 @@
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
+import ResetPassword from "./Component/ResetPassword"
 import ForgotPassword from "./Component/ForgotPassword"
 import NewPanel from "./Component/New";
 import OpenPanel from "./Component/Open";
@@ -198,7 +206,8 @@ export default {
     Account,
     OpenSharedWithPassword,
     Registration,
-    ForgotPassword
+    ForgotPassword,
+    ResetPassword
   },
   computed: {
     ...mapState("LeftDialog/FileMenu/Layout", {

@@ -5,6 +5,7 @@ import Login from "./Login/module";
 import Properties from "./Properties/module";
 import Registration from "./Registration/module";
 import ForgotPassword from "./ForgotPassword/module"
+import ResetPassword from "./ResetPassword/module"
 export default {
   namespaced: true,
   modules: {
@@ -14,6 +15,7 @@ export default {
     Login,
     Properties,
     Registration,
-    ForgotPassword
+    ForgotPassword,
+    ResetPassword
   }
 };
