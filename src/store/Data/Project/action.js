@@ -113,7 +113,7 @@ export default {
         context.commit("setConnector", {});
         context.commit("setDiagram", {});
       }
-      var path = "?uuid=" + respond.payload.uuid;
+      var path = "?action=open&uuid=" + respond.payload.uuid;
       window.history.pushState("", "", path);
       document.title = respond.payload.title;
       context.commit("setProjectDescription", respond.payload);
