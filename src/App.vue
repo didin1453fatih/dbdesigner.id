@@ -7,7 +7,7 @@
     <table-detail />
     <left-panel />
     <export />
-    <fork/>
+    <fork />
     <loading-global />
   </div>
 </template>
@@ -41,6 +41,15 @@ export default {
     Fork
   },
   methods: {
+    ...mapActions("LeftDialog/FileMenu/Component/EmailConfirmation", {
+      emailConfirmation: "emailConfirmation"
+    }),
+    ...mapMutations("LeftDialog/FileMenu/Component/EmailConfirmation", {
+      SET_TOKEN_EMAIL_CONFIRMATION: "SET_TOKEN"
+    }),
+    ...mapMutations("LeftDialog/FileMenu/Component/ResetPassword", {
+      SET_TOKEN_RESET_PASSWORD: "SET_TOKEN"
+    }),
     ...mapMutations("LeftDialog/FileMenu/Layout", {
       leftPanelSetVisible: "setVisible",
       leftPanelSetPanelName: "setPanelName"
@@ -70,53 +79,66 @@ export default {
     bagroundPattern.onload = () => {
       this.bagroundPattern = bagroundPattern;
     };
-    if (window.location.toString().indexOf("uuid=") > 1) {
-      var valueUUID = window.location.toString().split("uuid=")[1];
-      this.globalReadAccount({
-        uuid: valueUUID
-      });
-      this.loadProject({
-        uuid: valueUUID
-      });
-    } else {
-      await this.globalReadAccount({
-        uuid: null
-      });
-      var parsed = qs.parse(window.location.toString().split("#")[1]);
-      if (parsed.src === "mail_confirmation") {
-        if (parsed.action === "re_login") {
-          this.leftPanelSetVisible(true);
-          this.leftPanelSetPanelName("login");
-          message.success(parsed.message, 7);
-        } else if (parsed.action === "open_project") {
-          this.leftPanelSetVisible(true);
-          this.leftPanelSetPanelName("open");
-          message.success(parsed.message, 7);
-        } else if (parsed.action === "error_email_confirmation_expired") {
-          this.leftPanelSetVisible(true);
-          this.leftPanelSetPanelName("login");
-          message.error(parsed.message, 7);
-        } else if (parsed.action === "token_not_valid") {
-          this.leftPanelSetVisible(true);
-          this.leftPanelSetPanelName("login");
-          message.error(parsed.message, 7);
-        }
-      } else if (parsed.src === "registration") {
-        if (parsed.action === "new_project") {
-          this.leftPanelSetVisible(true);
-          this.leftPanelSetPanelName("new");
-          message.success(parsed.message, 7);
-        }
+
+    const browser = Bowser.getParser(window.navigator.userAgent);
+    if (
+      browser
+        .getBrowserName()
+        .toLowerCase()
+        .indexOf("chrome") < 0
+    ) {
+      this.setWarningBrowserMessage(
+        "You detect use " +
+          browser.getBrowserName() +
+          "!!!  " +
+          "Use Chrome browser for better experience 😃😃😃"
+      );
+      this.setWarningBrowserVisible(true);
+    }
+
+    var parsed = qs.parse(window.location.toString().split("?")[1]);
+
+    if (parsed.message !== undefined) {
+      if (parsed.success == "true") {
+        message.success(parsed.message, 2);
+      } else if (parsed.success == "false") {
+        message.error(parsed.message, 2);
       }
     }
 
-    const browser = Bowser.getParser(window.navigator.userAgent);
-    if(browser.getBrowserName().toLowerCase().indexOf('chrome')<0){
-      this.setWarningBrowserMessage(
-        "You detect use "+browser.getBrowserName()+"!!!  "+
-        "Use Chrome browser for better experience 😃😃😃"
-      );
-      this.setWarningBrowserVisible(true);
+    switch (parsed.action) {
+      case "reset-password":
+        this.leftPanelSetVisible(true);
+        this.leftPanelSetPanelName("resetPassword");
+        this.SET_TOKEN_RESET_PASSWORD(parsed.token);
+        break;
+      case "email-confirmation":
+        this.leftPanelSetVisible(true);
+        this.leftPanelSetPanelName("emailConfirmation");
+        this.SET_TOKEN_EMAIL_CONFIRMATION(parsed.token);
+        this.emailConfirmation();
+        break;
+      case "open":
+        this.globalReadAccount({
+          uuid: parsed.uuid
+        });
+        this.loadProject({
+          uuid: parsed.uuid
+        });
+        break;
+      case "re-login":
+        this.leftPanelSetVisible(true);
+        this.leftPanelSetPanelName("login");
+        break;
+      // case "open-project":
+      //   this.globalReadAccount();
+      //   break;
+      // case "new-project":
+      //   this.globalReadAccount();
+      //   break;
+      default:
+        this.globalReadAccount();
+        break;
     }
 
     this.autoSave();
