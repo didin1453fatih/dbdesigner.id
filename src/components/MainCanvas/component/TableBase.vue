@@ -6,7 +6,7 @@
     }"
     @dragmove="dragmove"
     @dblclick="tableDoubleClick"
-    :draggable="true"
+    :draggable="this.user_id !== this.project_owner_id?false:true"
   >
     <v-rect
       @mouseover="selectRelation"
@@ -100,12 +100,21 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import primaryKeyImage from "@/assets/primary-key.png";
 import notNull from "@/assets/icons8-diamonds-40.png";
 import imageNullImage from "@/assets/icons8-diamonds-40-white.png";
 export default {
   props: ["potition", "coloumns", "tableName", "tableKey", "widthTable"],
+  computed: {
+    ...mapState("Data/Project", {
+      project_owner_id: state => state.projectDescription.user_id
+    }),
+    ...mapState("Data/Account", {
+      user_id: state => state.id
+    })
+  },
   methods: {
     ...mapMutations("Data/Project", {
       setConfigTable: "setConfigTable",
@@ -114,7 +123,7 @@ export default {
     }),
     ...mapMutations("Data/Project", {
       changeTablePotition: "changeTablePotition",
-      highlightRelation: "highlightRelation",
+      highlightRelation: "highlightRelation"
     }),
     selectRelation() {
       this.highlightRelation({
@@ -157,7 +166,7 @@ export default {
     };
   },
   data() {
-    return {      
+    return {
       primaryKey: null,
       imageNotNull: null,
       imageNull: null
