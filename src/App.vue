@@ -126,9 +126,23 @@ export default {
           uuid: parsed.uuid
         });
         break;
+      case "login":
+        this.globalReadAccount({
+          uuid: parsed.uuid
+        });
+        this.leftPanelSetVisible(true);
+        this.leftPanelSetPanelName("login");
+        break;
       case "re-login":
         this.leftPanelSetVisible(true);
         this.leftPanelSetPanelName("login");
+        break;
+      case "registration":
+        this.globalReadAccount({
+          uuid: parsed.uuid
+        });
+        this.leftPanelSetVisible(true);
+        this.leftPanelSetPanelName("registration");
         break;
       // case "open-project":
       //   this.globalReadAccount();
