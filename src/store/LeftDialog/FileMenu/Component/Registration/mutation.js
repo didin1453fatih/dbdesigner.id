@@ -19,5 +19,8 @@ export default {
   },
   SET_PASSWORD_CONFIRM(state, value) {
     state.password_confirm = value;
+  },
+  SET_STATUS_CHECK_USER_NAME(state, value) {
+    state.status_check_user_name = value;
   }
 };

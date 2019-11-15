@@ -7,10 +7,29 @@
           <label>Username</label>
           <a-input
             :value="user_name"
-            @change="SET_USER_NAME($event.target.value)"
+            @change="SET_USER_NAME($event.target.value);checkUsername();"
             style="margin-top:3px"
             placeholder="Input Username"
-          />
+          >
+            <a-icon
+              v-if="status_check_user_name==='checking'"
+              slot="suffix"
+              type="loading"
+              style="color: rgba(43, 86, 154,.75)"
+            />
+            <a-icon
+              v-else-if="status_check_user_name==='ok'"
+              slot="suffix"
+              type="check-circle"
+              style="color: rgba(0,100,0,.45)"
+            />
+            <a-icon
+              v-else-if="status_check_user_name==='error'"
+              slot="suffix"
+              type="close-circle"
+              style="color: rgba(245, 34, 45,.75)"
+            />
+          </a-input>
           <label>Full Name</label>
           <a-input
             :value="complete_name"
@@ -55,7 +74,7 @@
               <a @click="setPanelName('login')">Have account ? Login</a>
             </a-col>
             <a-col :span="12" style="text-align: right;">
-              <a-button style="right:0" @click="doLogin">Submit</a-button>
+              <a-button style="right:0" @click="submitRegistration">Submit</a-button>
             </a-col>
           </a-row>
         </div>
@@ -78,12 +97,14 @@ export default {
       gender: state => state.gender,
       email: state => state.email,
       password: state => state.password,
-      password_confirm: state => state.password_confirm
+      password_confirm: state => state.password_confirm,
+      status_check_user_name: state => state.status_check_user_name
     })
   },
   methods: {
     ...mapActions("LeftDialog/FileMenu/Component/Registration", {
-      doLogin: "doLogin"
+      submitRegistration: "submitRegistration",
+      checkUsername: "checkUsername"
     }),
     ...mapMutations("LeftDialog/FileMenu/Component/Registration", {
       SET_LOADING: "SET_LOADING",
@@ -96,7 +117,7 @@ export default {
     }),
     ...mapMutations("LeftDialog/FileMenu/Layout", {
       setPanelName: "setPanelName"
-    }),
+    })
   },
   data() {
     return {

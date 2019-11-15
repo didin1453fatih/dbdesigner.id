@@ -1,8 +1,9 @@
 import { message } from "ant-design-vue";
 import RegistrationRequest from "@/request/Account/registration.request";
+import CheckUsernameRequest from "@/request/Account/checkUsername.request";
 import { request2, requestHelper } from "@/helper/RequestConnector";
 export default {
-  doLogin: request2(async context => {
+  submitRegistration: request2(async context => {
     context.commit("SET_LOADING", true);
     try {
       var respondAccount = await requestHelper(RegistrationRequest, {
@@ -25,7 +26,7 @@ export default {
         context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "open");
       } else {
         context.rootCommit("LeftDialog/FileMenu/Layout/setVisible", false);
-        context.rootDispatch("RightDialog/Fork/Layout/readOriginInfo")
+        context.rootDispatch("RightDialog/Fork/Layout/readOriginInfo");
       }
       if (payload.verified === false) {
         context.rootCommit("TopAlert/Information/Layout/setVisible", true);
@@ -40,5 +41,17 @@ export default {
       message.error(error.message, 2);
     }
     context.commit("SET_LOADING", false);
+  }),
+  checkUsername: request2(async context => {
+    context.commit("SET_STATUS_CHECK_USER_NAME", "checking");
+    try {
+      await requestHelper(CheckUsernameRequest, {
+        user_name: context.state.user_name
+      });
+
+      context.commit("SET_STATUS_CHECK_USER_NAME", "ok");
+    } catch (error) {
+      context.commit("SET_STATUS_CHECK_USER_NAME", "error");
+    }
   })
 };
