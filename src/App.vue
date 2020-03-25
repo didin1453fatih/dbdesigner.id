@@ -138,18 +138,19 @@ export default {
         this.leftPanelSetPanelName("login");
         break;
       case "registration":
-        this.globalReadAccount({
-          uuid: parsed.uuid
-        });
         this.leftPanelSetVisible(true);
         this.leftPanelSetPanelName("registration");
         break;
-      // case "open-project":
-      //   this.globalReadAccount();
-      //   break;
-      // case "new-project":
-      //   this.globalReadAccount();
-      //   break;
+      case "open-project":
+        this.globalReadAccount();
+        this.leftPanelSetVisible(true);
+        this.leftPanelSetPanelName("open");        
+        break;
+      case "new-project":
+        this.globalReadAccount();
+        this.leftPanelSetVisible(true);
+        this.leftPanelSetPanelName("new");        
+        break;
       default:
         this.globalReadAccount();
         break;
