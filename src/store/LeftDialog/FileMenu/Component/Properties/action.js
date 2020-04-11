@@ -39,7 +39,7 @@ export default {
       context.commit("setDescription", null);
       context.rootCommit("Data/Project/deletedData");
       context.rootCommit("LeftDialog/FileMenu/Layout/setPanelName", "open");
-      var path = "/app?uuid=";
+      var path = "?uuid=";
       window.history.pushState("", "", path);
       document.title = "dbdesginer.id";
     } catch (error) {

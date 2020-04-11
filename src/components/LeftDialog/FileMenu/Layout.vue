@@ -51,17 +51,24 @@
               <div
                 v-show="account_id===null"
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
-                @click="setPanelName('registration')"
-              >
-                <label style="color:white">Registration</label>
-              </div>
-              <div
-                v-show="account_id===null"
-                style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
                 @click="setPanelName('login')"
               >
                 <label style="color:white">Login</label>
-              </div>
+              </div>                  
+              <div
+                v-show="account_id===null"
+                style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
+                @click="setPanelName('forgotPassword')"
+              >
+                <label style="color:white">Forgot</label>
+              </div>                        
+              <div
+                v-show="account_id===null"
+                style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
+                @click="setPanelName('registration')"
+              >
+                <label style="color:white">Registration</label>
+              </div>              
               <div
                 v-show="account_id!==null"
                 style="width:100%; font-weight: 300;padding-left:13px;padding-top:3px; padding-bottom:3px ;"
@@ -121,6 +128,27 @@
             >
               <registration />
             </div>
+            <div
+              v-else-if="panelName==='forgotPassword'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <forgot-password />
+            </div>     
+            <div
+              v-else-if="panelName==='resetPassword'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <reset-password />
+            </div>         
+            <div
+              v-else-if="panelName==='emailConfirmation'"
+              style="padding-top:30px; padding-left:25px; width:300px"
+              class="fg-black"
+            >
+              <email-confirmation />
+            </div>                        
           </td>
         </tr>
       </table>
@@ -132,6 +160,8 @@
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
+import ResetPassword from "./Component/ResetPassword"
+import ForgotPassword from "./Component/ForgotPassword"
 import NewPanel from "./Component/New";
 import OpenPanel from "./Component/Open";
 import Properties from "./Component/Properties";
@@ -139,6 +169,7 @@ import Login from "./Component/Login";
 import Account from "./Component/Account";
 import OpenSharedWithPassword from "./Component/OpenSharedWithPassword";
 import Registration from "./Component/Registration";
+import EmailConfirmation from "./Component/EmailConfirmation"
 import { message } from "ant-design-vue";
 export default {
   methods: {
@@ -182,7 +213,10 @@ export default {
     Login,
     Account,
     OpenSharedWithPassword,
-    Registration
+    Registration,
+    ForgotPassword,
+    ResetPassword,
+    EmailConfirmation
   },
   computed: {
     ...mapState("LeftDialog/FileMenu/Layout", {

@@ -6,4 +6,5 @@ export default {
   email: "",
   password: "",
   password_confirm:"",
+  status_check_user_name:""
 };
