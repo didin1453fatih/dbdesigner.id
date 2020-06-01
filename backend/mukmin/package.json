@@ -1,0 +1,17 @@
+{
+  "name": "mukmin",
+  "version": "0.0.2",
+  "description": "framework for mvc backend for nice people in the earth",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+"repository": {
+    "type": "git",
+    "url": "git+https://github.com/mukminjs/mukmin.git"
+  },
+
+  "homepage": "https://github.com/mukminjs/mukmin#readme",
+  "author": "didin1453fatih",
+  "license": "ISC"
+}
