@@ -7,6 +7,11 @@ This Database designer build on vueJS framework, html5, canvasJS, sqlite and nod
 application at https://app.dbdesigner.id 
 
 I was refactoring all this backend engine for make it portable and easy to install in another machine.
+This database designer divide to 3 parts.
+1. backend locate in directory backend this handle communication with sqlite
+2. frontend this vueJS frontend. To run this project need compile vue to `dist` directory.
+3. admin is CLI to manage this project like user management and host name configuration
+
 
 You can install this database designer in your private server too.
 ## Instalation
@@ -18,6 +23,44 @@ You can install this database designer in your private server too.
 # node app
 ```
 
+## How to use admin CLI
+Database designer user admin CLI to manage all backend. This can make simple  use this database designer in
+private server without integration with email. 
+`admin/admin.js` is main entry point.
+###  Add user
+```
+# node admin/admin.js add user
+```
+
+### List user
+
+```
+# node admin/admin.js list user
+```
+
+### Edit user
+To use edit username is required
+```
+# node admin/admin.js edit user [username]
+```
+
+
+### Get Detail user
+To get detail, username is required
+```
+# node admin/admin.js get user [username]
+```
+
+
+### Get Hostname
+```
+# node admin/admin.js get hots_name 
+```
+
+### Set Hostname
+```
+# node admin/admin.js set hots_name [new name]
+```
 
 # DBdesigner.id
 This is simple and open source db designer based on vueJS framework, html5, canvasJS and nodeJS as backend. 
