@@ -44,9 +44,12 @@ CREATE TABLE ${diagram[tableKey].table_name} (
                         : diagram[tableKey].coloumns[columnKey].dataType
                 }${
                     !(
-                        Object.keys(diagram[tableKey].coloumns).filter(
-                            (columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey
-                        ).length - 1
+                        // check for multiple primary keys
+                        (
+                            Object.keys(diagram[tableKey].coloumns).filter(
+                                (columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey
+                            ).length - 1
+                        )
                     )
                         ? diagram[tableKey].coloumns[columnKey].primaryKey
                             ? " PRIMARY KEY"
@@ -62,6 +65,7 @@ CREATE TABLE ${diagram[tableKey].table_name} (
                 }`
         )
         .concat(
+            // multiple primary keys
             Object.keys(diagram[tableKey].coloumns).filter(
                 (columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey
             ).length - 1
@@ -74,6 +78,7 @@ CREATE TABLE ${diagram[tableKey].table_name} (
                 : []
         )
         .concat(
+            // foreig keys
             Object.keys(diagram[tableKey].coloumns)
                 .filter((columnKey) => diagram[tableKey].coloumns[columnKey].foreignKey)
                 .map((columnKey, index) => {
