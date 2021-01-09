@@ -42,7 +42,17 @@ CREATE TABLE ${diagram[tableKey].table_name} (
                     diagram[tableKey].coloumns[columnKey].dataType == "INT"
                         ? "INTEGER"
                         : diagram[tableKey].coloumns[columnKey].dataType
-                } ${diagram[tableKey].coloumns[columnKey].primaryKey ? "PRIMARY KEY" : ""}${
+                }${
+                    !(
+                        Object.keys(diagram[tableKey].coloumns).filter(
+                            (columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey
+                        ).length - 1
+                    )
+                        ? diagram[tableKey].coloumns[columnKey].primaryKey
+                            ? " PRIMARY KEY"
+                            : ""
+                        : ""
+                }${
                     diagram[tableKey].coloumns[columnKey].primaryKey &&
                     diagram[tableKey].coloumns[columnKey].autoIncrement
                         ? " AUTOINCREMENT"
@@ -50,6 +60,18 @@ CREATE TABLE ${diagram[tableKey].table_name} (
                 }${diagram[tableKey].coloumns[columnKey].notNull ? " NOT NULL" : ""}${
                     diagram[tableKey].coloumns[columnKey].unique ? " UNIQUE" : ""
                 }`
+        )
+        .concat(
+            Object.keys(diagram[tableKey].coloumns).filter(
+                (columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey
+            ).length - 1
+                ? [
+                      `PRIMARY KEY (${Object.keys(diagram[tableKey].coloumns)
+                          .filter((columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey)
+                          .map((columnKey) => diagram[tableKey].coloumns[columnKey].coloumn_name)
+                          .join(", ")})`,
+                  ]
+                : []
         )
         .concat(
             Object.keys(diagram[tableKey].coloumns)
