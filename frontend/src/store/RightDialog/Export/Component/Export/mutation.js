@@ -3,7 +3,7 @@ export default {
         state.visible = value;
     },
     setDiagramScript(state, obj) {
-        var {val, dbType} = obj
+        var { val, dbType } = obj;
         switch (dbType) {
             case "mysql":
                 state.diagramScript = exportEngin(val);
@@ -17,7 +17,7 @@ export default {
         }
     },
     getScriptDrop(state, obj) {
-        var {val, dbType} = obj
+        var { val, dbType } = obj;
         state.diagramScript = createDropScript(val);
     },
 };
@@ -39,7 +39,9 @@ CREATE TABLE ${diagram[tableKey].table_name} (
         .map(
             (columnKey) =>
                 `${diagram[tableKey].coloumns[columnKey].coloumn_name} ${
-                    diagram[tableKey].coloumns[columnKey].dataType
+                    diagram[tableKey].coloumns[columnKey].dataType == "INT"
+                        ? "INTEGER"
+                        : diagram[tableKey].coloumns[columnKey].dataType
                 } ${diagram[tableKey].coloumns[columnKey].primaryKey ? "PRIMARY KEY" : ""}${
                     diagram[tableKey].coloumns[columnKey].primaryKey &&
                     diagram[tableKey].coloumns[columnKey].autoIncrement
