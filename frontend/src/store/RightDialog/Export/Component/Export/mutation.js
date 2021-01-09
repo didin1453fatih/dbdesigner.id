@@ -68,7 +68,10 @@ CREATE TABLE ${diagram[tableKey].table_name} (
             // multiple primary keys
             Object.keys(diagram[tableKey].coloumns).filter(
                 (columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey
-            ).length - 1
+            ).length &&
+                Object.keys(diagram[tableKey].coloumns).filter(
+                    (columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey
+                ).length - 1
                 ? [
                       `PRIMARY KEY (${Object.keys(diagram[tableKey].coloumns)
                           .filter((columnKey) => diagram[tableKey].coloumns[columnKey].primaryKey)
