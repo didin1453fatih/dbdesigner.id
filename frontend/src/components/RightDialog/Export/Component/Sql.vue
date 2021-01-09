@@ -83,6 +83,7 @@ export default {
         scriptType: this.scriptType,
         dbType: this.dbType ? this.dbType : "mysql",
       });
+      this.dbType = "mysql";
     },
     ...mapActions("RightDialog/Export/Component/Export", {
       goExport: "goExport",
