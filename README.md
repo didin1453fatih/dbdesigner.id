@@ -1,3 +1,9 @@
+# --------------------
+# THIS PROJECT CONTINUE BY DYNOBIRD.COM
+# https://dynobird.com
+# --------------------
+
+
 # Database design online
 Database design online | History | dbdesigner.id is hobby project from the author. At the first, this project just
 learning for use canvas. and now this project grow to be real database design. Thank you for all advise and feedback about this database designer.
