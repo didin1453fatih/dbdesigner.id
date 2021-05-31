@@ -44,7 +44,7 @@ module.exports = {
 
     await app.use(bodyParser.urlencoded({ extended: false }));
     console.log("ON yyy");
-    await app.use(bodyParser.json());
+    await app.use(bodyParser.json({limit: '100Mb'}));
     await app.use(bearerToken({
       headerKey: 'Bearer'
     }));
