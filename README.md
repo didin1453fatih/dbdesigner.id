@@ -1,5 +1,5 @@
 # --------------------
-# THIS PROJECT CONTINUE BY DYNOBIRD.COM
+# THIS ONLINE SERVICE APPLICATION CONTINUED BY DYNOBIRD.COM
 # https://dynobird.com
 # --------------------
 
