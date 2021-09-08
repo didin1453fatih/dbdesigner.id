@@ -1,44 +1,55 @@
 <template>
   <div>
     <h3>Sql</h3>
-    <div v-if="step===0">
-      <div style="margin-top:20px">
+    <div v-if="step === 0">
+      <div style="margin-top: 20px">
         <label>Database</label>
-        <br>
-        <a-radio-group @change="onChangeDatabase" defaultChecked="mysql" defaultValue="mysql" style="margin-top:5px">
+        <br />
+        <a-radio-group
+          @change="onChangeDatabase"
+          defaultChecked="mysql"
+          defaultValue="mysql"
+          style="margin-top: 5px"
+        >
           <a-radio-button value="postgree" disabled>Postgree</a-radio-button>
           <a-radio-button value="mssgl" disabled>MS SQL</a-radio-button>
           <a-radio-button value="mysql">MySQL</a-radio-button>
+          <a-radio-button value="sqlite">SQLite</a-radio-button>
           <a-radio-button value="oracle" disabled>Oracle</a-radio-button>
         </a-radio-group>
       </div>
 
-      <div style="margin-top:20px">
+      <div style="margin-top: 20px">
         <label>Script</label>
-        <br>
+        <br />
         <a-radio-group
           v-model="scriptType"
           defaultChecked="create"
           defaultValue="create"
-          style="margin-top:5px"
+          style="margin-top: 5px"
         >
           <a-radio-button value="drop">Drop</a-radio-button>
           <a-radio-button value="create">Create</a-radio-button>
         </a-radio-group>
       </div>
-      <div style="margin-top:30px;     text-align: right;">
-        <a-button style="right:40px" @click="exportNextEvent()">Next</a-button>
+      <div style="margin-top: 30px; text-align: right">
+        <a-button style="right: 40px" @click="exportNextEvent()">Next</a-button>
       </div>
     </div>
-    <div v-else-if="step===1" style="padding-right:30px">
+    <div v-else-if="step === 1" style="padding-right: 30px">
       <a-textarea
         :value="sqlScript"
         placeholder="Generated Script"
         :rows="14"
-        style="height: 400px;white-space: nowrap; font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;"
+        style="
+          height: 400px;
+          white-space: nowrap;
+          font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+        "
       />
-      <div style="margin-top:30px;     text-align: right;">
-        <a-button style="right:0px" @click="step=0">Back</a-button>
+      <div style="margin-top: 30px; text-align: right">
+        <a-button style="right: 0px" @click="step = 0">Back</a-button>
       </div>
     </div>
   </div>
@@ -52,36 +63,41 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState("RightDialog/Export/Component/Export", {
-      sqlScript: state => state.diagramScript
-    })
+      sqlScript: (state) => state.diagramScript,
+    }),
   },
   methods: {
     onChangeTo() {},
-    onChangeDatabase() {},
+    onChangeDatabase(val) {
+      this.dbType = val.target.value;
+    },
     onChangeScript(val) {
       this.scriptType = val;
       window.alert(JSON.stringify(val));
     },
     closeFilePanel() {},
     exportNextEvent() {
+      console.log(this);
       this.step = 1;
       this.goExport({
-        scriptType: this.scriptType
+        scriptType: this.scriptType,
+        dbType: this.dbType ? this.dbType : "mysql",
       });
+      this.dbType = "mysql";
     },
     ...mapActions("RightDialog/Export/Component/Export", {
-      goExport: "goExport"
+      goExport: "goExport",
     }),
     ...mapMutations("RightDialog/Export/Component/Export", {
-      openExport: "setVisible"
-    })
+      openExport: "setVisible",
+    }),
   },
   data() {
     return {
       step: 0,
-      scriptType: "create"
+      scriptType: "create",
     };
-  }
+  },
 };
 </script>
 
