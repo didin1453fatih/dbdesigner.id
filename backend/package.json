@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ajv": "6.10.0",
+    "ajv": "6.12.3",
     "ajv-errors": "^1.0.1",
     "axios": "^0.18.0",
     "bcrypt": "3.0.8",
