@@ -1,12 +1,7 @@
-# --------------------
-# THIS ONLINE SERVICE APPLICATION CONTINUED BY DYNOBIRD.COM
-# https://dynobird.com
-# --------------------
-
-
 # Database design online
 Database design online | History | dbdesigner.id is hobby project from the author. At the first, this project just
 learning for use canvas. and now this project grow to be real database design. Thank you for all advise and feedback about this database designer.
+This online service application move to https://dynobird.com
 
 ## Tech Stack
 This Database designer build on vueJS framework, html5, canvasJS, sqlite and nodeJS as backend. Every one can try database designer 
